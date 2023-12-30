@@ -1,10 +1,9 @@
 # OpenAI SDK by Codexio
 
+![Maven Central](https://img.shields.io/maven-central/v/bg.codexio.ai/openai-api-sdk.svg)
 [![Build](https://github.com/CodexioLtd/openai-api-sdk/actions/workflows/maven.yml/badge.svg)](https://github.com/CodexioLtd/openai-api-sdk/actions/workflows/maven.yml)
 [![Coverage](https://codecov.io/github/CodexioLtd/openai-api-sdk/graph/badge.svg?token=013OEUIYWI)](https://codecov.io/github/CodexioLtd/openai-api-sdk)
 [![License](https://img.shields.io/github/license/CodexioLtd/openai-api-sdk.svg)](https://github.com/CodexioLtd/openai-api-sdk/blob/master/LICENSE)
-
-
 
 This library provides a Software Development Kit (SDK) for Java 21+ compliant runtimes
 to connect to an OpenAI API and execute both synchronous and asynchronous (via callbacks
@@ -17,81 +16,79 @@ Of course, due to its native SDK, objects of any kind are easily created.
 
 ## Table of Contents
 
-* [OpenAI SDK by Codexio](#openai-sdk-by-codexio)
-    * [Table of Contents](#table-of-contents)
-    * [Quick Start](#quick-start)
-    * [Available SDKs](#available-sdks)
-        * [List](#list)
-        * [Simple Usage Similarity](#simple-usage-similarity)
-        * [Authentication and Model Choosing Similarity](#authentication-and-model-choosing-similarity)
-    * [Credential Management](#credential-management)
-        * [Configuring Authentication](#configuring-authentication)
-    * [HTTP Context](#http-context)
-        * [Fine Grained Control over HTTP Client](#fine-grained-control-over-http-client)
-    * [HTTP Client Logging](#http-client-logging)
-    * [AI Models](#ai-models)
-    * [Runtime Selection](#runtime-selection)
-        * [Examples](#examples)
-    * [Chat API SDK](#chat-api-sdk)
-        * [AI Behavior](#ai-behavior)
-        * [Manual Configuration](#manual-configuration)
-            * [Tokens Configuration](#tokens-configuration)
-            * [Tools Configuration](#tools-configuration)
-    * [Images API SDK](#images-api-sdk)
-        * [Creating Images](#creating-images)
-            * [Simplified Usage](#simplified-usage)
-            * [Model Choosing](#model-choosing)
-            * [Styling - **DALL-E-3 only**](#styling---dall-e-3-only)
-            * [Quality - **DALL-E-3 only**](#quality---dall-e-3-only)
-            * [Choices - **DALL-E-2 only**](#choices---dall-e-2-only)
-            * [Size](#size)
-            * [Format](#format)
-            * [Runtime Selection](#runtime-selection-1)
-            * [Prompt](#prompt)
-            * [Response Handling](#response-handling)
-        * [Editing Images](#editing-images)
-            * [Image to Edit](#image-to-edit)
-            * [Mask](#mask)
-            * [Choices](#choices)
-            * [Size](#size-1)
-            * [Format](#format-1)
-            * [Runtime Selection](#runtime-selection-2)
-            * [Prompt](#prompt-1)
-            * [Response Handling](#response-handling-1)
-        * [Creating Image Variations](#creating-image-variations)
-            * [Image to Create Variations for](#image-to-create-variations-for)
-            * [Choices](#choices-1)
-            * [Size](#size-2)
-            * [Format](#format-2)
-            * [Runtime Selection](#runtime-selection-3)
-            * [Response handling](#response-handling-2)
-    * [Vision API SDK](#vision-api-sdk)
-        * [Simplified Usage](#simplified-usage-1)
-        * [Model Choosing](#model-choosing-1)
-        * [Tokens Configuration](#tokens-configuration-1)
-        * [Image for Explanation](#image-for-explanation)
-        * [Image Detail Stage](#image-detail-stage)
-        * [Continuous Prompt](#continuous-prompt)
-        * [Runtime Selection](#runtime-selection-4)
-    * [Speech API SDK](#speech-api-sdk)
-        * [Simplified Usage](#simplified-usage-2)
-        * [Model Choosing](#model-choosing-2)
-        * [Speaker Voice](#speaker-voice)
-        * [Output Audio Format](#output-audio-format)
-        * [Playback Speed](#playback-speed)
-        * [Generate Audio File](#generate-audio-file)
-    * [Transcription API SDK](#transcription-api-sdk)
-        * [Simplified Usage](#simplified-usage-3)
-        * [Model Choosing](#model-choosing-3)
-        * [Uploading Audio File](#uploading-audio-file)
-        * [Setting Temperature](#setting-temperature)
-        * [Inputting Language](#inputting-language)
-        * [Configuring Response Format](#configuring-response-format)
-        * [Additional Prompting](#additional-prompting)
-    * [Translation API SDK](#translation-api-sdk)
-        * [Example](#example)
-    * [Contributing](#contributing)
-    * [License](#license)
+* [Quick Start](#quick-start)
+* [Available SDKs](#available-sdks)
+    * [List](#list)
+    * [Simple Usage Similarity](#simple-usage-similarity)
+    * [Authentication and Model Choosing Similarity](#authentication-and-model-choosing-similarity)
+* [Credential Management](#credential-management)
+    * [Configuring Authentication](#configuring-authentication)
+* [HTTP Context](#http-context)
+    * [Fine Grained Control over HTTP Client](#fine-grained-control-over-http-client)
+* [HTTP Client Logging](#http-client-logging)
+* [AI Models](#ai-models)
+* [Runtime Selection](#runtime-selection)
+    * [Examples](#examples)
+* [Chat API SDK](#chat-api-sdk)
+    * [AI Behavior](#ai-behavior)
+    * [Manual Configuration](#manual-configuration)
+        * [Tokens Configuration](#tokens-configuration)
+        * [Tools Configuration](#tools-configuration)
+* [Images API SDK](#images-api-sdk)
+    * [Creating Images](#creating-images)
+        * [Simplified Usage](#simplified-usage)
+        * [Model Choosing](#model-choosing)
+        * [Styling - **DALL-E-3 only**](#styling---dall-e-3-only)
+        * [Quality - **DALL-E-3 only**](#quality---dall-e-3-only)
+        * [Choices - **DALL-E-2 only**](#choices---dall-e-2-only)
+        * [Size](#size)
+        * [Format](#format)
+        * [Runtime Selection](#runtime-selection-1)
+        * [Prompt](#prompt)
+        * [Response Handling](#response-handling)
+    * [Editing Images](#editing-images)
+        * [Image to Edit](#image-to-edit)
+        * [Mask](#mask)
+        * [Choices](#choices)
+        * [Size](#size-1)
+        * [Format](#format-1)
+        * [Runtime Selection](#runtime-selection-2)
+        * [Prompt](#prompt-1)
+        * [Response Handling](#response-handling-1)
+    * [Creating Image Variations](#creating-image-variations)
+        * [Image to Create Variations for](#image-to-create-variations-for)
+        * [Choices](#choices-1)
+        * [Size](#size-2)
+        * [Format](#format-2)
+        * [Runtime Selection](#runtime-selection-3)
+        * [Response handling](#response-handling-2)
+* [Vision API SDK](#vision-api-sdk)
+    * [Simplified Usage](#simplified-usage-1)
+    * [Model Choosing](#model-choosing-1)
+    * [Tokens Configuration](#tokens-configuration-1)
+    * [Image for Explanation](#image-for-explanation)
+    * [Image Detail Stage](#image-detail-stage)
+    * [Continuous Prompt](#continuous-prompt)
+    * [Runtime Selection](#runtime-selection-4)
+* [Speech API SDK](#speech-api-sdk)
+    * [Simplified Usage](#simplified-usage-2)
+    * [Model Choosing](#model-choosing-2)
+    * [Speaker Voice](#speaker-voice)
+    * [Output Audio Format](#output-audio-format)
+    * [Playback Speed](#playback-speed)
+    * [Generate Audio File](#generate-audio-file)
+* [Transcription API SDK](#transcription-api-sdk)
+    * [Simplified Usage](#simplified-usage-3)
+    * [Model Choosing](#model-choosing-3)
+    * [Uploading Audio File](#uploading-audio-file)
+    * [Setting Temperature](#setting-temperature)
+    * [Inputting Language](#inputting-language)
+    * [Configuring Response Format](#configuring-response-format)
+    * [Additional Prompting](#additional-prompting)
+* [Translation API SDK](#translation-api-sdk)
+    * [Example](#example)
+* [Contributing](#contributing)
+* [License](#license)
 
 ## Quick Start
 
@@ -101,6 +98,32 @@ In the next chapters you will see an explanation of all key concepts.
 1. First of all, make sure you have created an API Key from [here](https://platform.openai.com/api-keys).
 2. Create a new Java CLI Project with Maven
 3. Add the library as a dependency in your project
+
+```xml
+<dependency>
+    <groupId>bg.codexio.ai</groupId>
+    <artifactId>openai-api-sdk</artifactId>
+    <version>0.8.0.BETA</version>
+</dependency>
+```
+
+- **Optional**: *If you don't need the whole SDK, but for instance only HTTP Clients or Payload Types, you can use
+  one (or more) of the following **artfiactId**s:*
+
+    <details>
+    <summary>
+    Click here to see
+    </summary>
+    
+    | Artifact              | Description                                                                                       |
+    |-----------------------|---------------------------------------------------------------------------------------------------|
+    | `openai-api-models`   | Contains info only for AI Model namings, such as GPT-4-Preview, DALL-E-2 and so on                |
+    | `openai-api-payload`  | Contains Request/Response DTO models and related information                                      |
+    | `openai-api-http`     | Contains HTTP Clients such as `ChatHttpExecutor`, `CreateImageHttpExecutor`, etc., ...            |
+    | `openai-api-examples` | Usually you do not import this artfiactId, rather you can check the source code for some examples |
+    
+    </details>
+
 4. Create in your `src/main/resources` folder a file named `openai-credentials.json` with the following content:
 
 ```json
@@ -115,7 +138,8 @@ In the next chapters you will see an explanation of all key concepts.
 ```java
 public class Main {
     public static void main(String[] args) {
-        String answer = Chat.simply().ask("Can you calculate 2+2?");
+        String answer = Chat.simply()
+                            .ask("Can you calculate 2+2?");
         System.out.println(answer);
     }
 }
@@ -132,7 +156,8 @@ Yes, 2 + 2 equals 4.
 ```java
 public class Main {
     public static void main(String[] args) {
-        String imageUrl = Images.simply().generate("Cat holding a Java cup of coffee.");
+        String imageUrl = Images.simply()
+                                .generate("Cat holding a Java cup of coffee.");
         System.out.println(imageUrl);
     }
 }
@@ -156,11 +181,11 @@ For example:
 public class Main {
     public static void main(String[] args) {
         String answer = Chat.authenticate(FromJson.AUTH)
-                .and()
-                .poweredByGPT40()
-                .inventive()
-                .noExcuses()
-                .ask("Write me a metal song about how cool Java is.");
+                            .and()
+                            .poweredByGPT40()
+                            .inventive()
+                            .noExcuses()
+                            .ask("Write me a metal song about how cool Java is.");
 
         System.out.println(answer);
     }
@@ -245,8 +270,10 @@ start to differ in the settings that are more naturally associated to one over t
 ```java
 public class Main {
     public static void main(String[] args) {
-        String answer = Chat.simply().ask("How much is 2+2?");
-        String imageUrl = Images.simply().generate("Cat holding a Java cup of coffee.");
+        String answer = Chat.simply()
+                            .ask("How much is 2+2?");
+        String imageUrl = Images.simply()
+                                .generate("Cat holding a Java cup of coffee.");
     }
 }
 ```
@@ -257,24 +284,24 @@ public class Main {
 public class Main {
     public static void main(String[] args) {
         TemperatureStage temperatureStage = Chat.authenticate(FromJson.AUTH)
-                .and()
-                .poweredByGPT40();
+                                                .and()
+                                                .poweredByGPT40();
 
         FormatStage formatStage = Images.authenticate(FromJson.AUTH)
-                .and()
-                .poweredByDallE3();
+                                        .and()
+                                        .poweredByDallE3();
 
         TokenStage tokenStage = Vision.authenticate(FromJson.AUTH)
-                .and()
-                .poweredByGpt40Vision();
+                                      .and()
+                                      .poweredByGpt40Vision();
 
         VoiceStage voiceStage = Speech.authenticate(FromJson.AUTH)
-                .and()
-                .hdPowered();
+                                      .and()
+                                      .hdPowered();
 
         AudioFileStage audioFileStage = Transcription.authenticate(FromJson.AUTH)
-                .and()
-                .poweredByWhisper10();
+                                                     .and()
+                                                     .poweredByWhisper10();
     }
 }
 ```
@@ -353,20 +380,22 @@ For example:
 ```java
 public class Main {
     public static void main(String[] args) {
-        String answer = Chat.throughHttp(
-                        new ChatHttpExecutor(
-                                new OkHttpClient.Builder()
-                                        .connectionPool(new ConnectionPool(5, 5, TimeUnit.MINUTES))
-                                        .build(),
-                                "https://your-custom-openai-url.com/api/v1",
-                                new ObjectMapper()
-                        )
-                ).turboPowered()
-                .deterministic()
-                .developer("Java")
-                .andRespond()
-                .immediate()
-                .ask("Is Java the best?");
+        String answer = Chat.throughHttp(new ChatHttpExecutor(
+                                    new OkHttpClient.Builder().connectionPool(new ConnectionPool(
+                                                                      5,
+                                                                      5,
+                                                                      TimeUnit.MINUTES
+                                                              ))
+                                                              .build(),
+                                    "https://your-custom-openai-url.com/api/v1",
+                                    new ObjectMapper()
+                            ))
+                            .turboPowered()
+                            .deterministic()
+                            .developer("Java")
+                            .andRespond()
+                            .immediate()
+                            .ask("Is Java the best?");
 
         System.out.println(answer);
     }
@@ -382,19 +411,21 @@ There are several points where requests and responses are being logged. Here's a
 ```java
 log(
         "Incoming request to {}{} with body: {}",
-        this.baseUrl,
-        this.resourceUri,
+                this.
+        baseUrl,
+        this.
+        resourceUri,
         json
-);
+        );
 ```
 
 - If error response is received, the RAW response is logged before being converted to an Error DTO:
 
 ```java
 log(
-        "Received error response: {}", 
+        "Received error response: {}",
         response
-);
+        );
 ```
 
 - When response body is consumed as a string and before being converted to a Response DTO
@@ -402,9 +433,9 @@ log(
 
 ```java
 log(
-        "Received raw response: {}", 
+        "Received raw response: {}",
         body
-);
+        );
 ```
 
 Logging is not enabled by default. You can enable it by supplying an environment variable on startup named:
@@ -466,20 +497,20 @@ Usually, the code chain ends in the following manner:
 public class Main {
     public static void main(String[] args) {
         var response = RuntimeSelectionStage.andRespond()
-                .immediate()
-                .specificMethodForSendingRequest();
+                                            .immediate()
+                                            .specificMethodForSendingRequest();
 
         doSomethingWith(response);
 
         RuntimeSelectionStage.andRespond()
-                .async()
-                .specificMethodForSendingRequest()
-                .then(response -> doSomethingWith(response));
+                             .async()
+                             .specificMethodForSendingRequest()
+                             .then(response -> doSomethingWith(response));
 
         RuntimeSelectionStage.andRespond()
-                .reactive()
-                .specificMethodForSendingRequest()
-                .subscribe(response -> doSomethingWith(response));
+                             .reactive()
+                             .specificMethodForSendingRequest()
+                             .subscribe(response -> doSomethingWith(response));
     }
 }
 ```
@@ -508,116 +539,116 @@ public class Main {
     public static void main(String[] args) {
         // Chat Async
         Chat.defaults()
-                .and()
-                .poweredByGPT40()
-                .deterministic()
-                .andRespond()
-                .async() // starts here
-                .ask("2+2?")
-                .then(System.out::println);
+            .and()
+            .poweredByGPT40()
+            .deterministic()
+            .andRespond()
+            .async() // starts here
+            .ask("2+2?")
+            .then(System.out::println);
 
         // Chat Reactive
         Chat.defaults()
-                .and()
-                .poweredByGPT40()
-                .deterministic()
-                .andRespond()
-                .reactive() // starts here
-                .ask("2+2?")
-                .subscribe(System.out::println);
-        
+            .and()
+            .poweredByGPT40()
+            .deterministic()
+            .andRespond()
+            .reactive() // starts here
+            .ask("2+2?")
+            .subscribe(System.out::println);
+
         // Images Async
         Images.defaults()
-                .and()
-                .creating()
-                .poweredByDallE3()
-                .vivid()
-                .highDefinitioned()
-                .portrait()
-                .expectUrl()
-                .andRespond()
-                .async()
-                .instruct("ginger cat enjoying cinnamon rolls and a cup of coffee")
-                .whenDownloaded(
-                        new File("var/tmp/targetFolder"),
-                        files -> System.out.println(files[0].getAbsoluteFile())
-                );
+              .and()
+              .creating()
+              .poweredByDallE3()
+              .vivid()
+              .highDefinitioned()
+              .portrait()
+              .expectUrl()
+              .andRespond()
+              .async()
+              .instruct("ginger cat enjoying cinnamon rolls and a cup of coffee")
+              .whenDownloaded(
+                      new File("var/tmp/targetFolder"),
+                      files -> System.out.println(files[0].getAbsoluteFile())
+              );
 
         // Images Reactive
         Images.defaults()
-                .and()
-                .creating()
-                .poweredByDallE3()
-                .vivid()
-                .highDefinitioned()
-                .portrait()
-                .expectUrl()
-                .andRespond()
-                .reactive()
-                .generate("Ginger cat enjoying cinnamon rolls and a cup of coffee")
-                .download(new File("var/tmp/targetFolder"))
-                .subscribe(file -> System.out.println(file.getAbsoluteFile()));
+              .and()
+              .creating()
+              .poweredByDallE3()
+              .vivid()
+              .highDefinitioned()
+              .portrait()
+              .expectUrl()
+              .andRespond()
+              .reactive()
+              .generate("Ginger cat enjoying cinnamon rolls and a cup of coffee")
+              .download(new File("var/tmp/targetFolder"))
+              .subscribe(file -> System.out.println(file.getAbsoluteFile()));
 
         // Speech Async - then(response -> { ... })
         Speech.defaults()
-                .and()
-                .hdPowered()
-                .defaultSpeaker()
-                .mp3()
-                .fast()
-                .async() // starts here
-                .dictate("There is a story to tell.")
-                .whenDownloadedTo(new File("/var/tmp/targetFolder"))
-                .then(downloadedFile -> System.out.println(downloadedFile.getAbsolutePath()));
+              .and()
+              .hdPowered()
+              .defaultSpeaker()
+              .mp3()
+              .fast()
+              .async() // starts here
+              .dictate("There is a story to tell.")
+              .whenDownloadedTo(new File("/var/tmp/targetFolder"))
+              .then(downloadedFile -> System.out.println(downloadedFile.getAbsolutePath()));
 
         // Speech Async - onEachLine(line -> { ... })
         Speech.defaults()
-                .and()
-                .hdPowered()
-                .defaultSpeaker()
-                .mp3()
-                .fast()
-                .async() // starts here
-                .dictate("There is a story to tell.")
-                .whenDownloadedTo(new File("/var/tmp/targetFolder"))
-                .onEachLine(binaryStringResponseLine -> System.out.println(binaryStringResponseLine.length()));
+              .and()
+              .hdPowered()
+              .defaultSpeaker()
+              .mp3()
+              .fast()
+              .async() // starts here
+              .dictate("There is a story to tell.")
+              .whenDownloadedTo(new File("/var/tmp/targetFolder"))
+              .onEachLine(binaryStringResponseLine -> System.out.println(binaryStringResponseLine.length()));
 
         // Speech Reactive
         Speech.defaults()
-                .and()
-                .hdPowered()
-                .defaultSpeaker()
-                .mp3()
-                .fast()
-                .reactive() // starts here
-                .dictate("There is a story to tell.")
-                .downloadTo(new File("/var/tmp/targetFolder"))
-                .subscribe(downloadedFile -> System.out.println(downloadedFile.getAbsolutePath()));
+              .and()
+              .hdPowered()
+              .defaultSpeaker()
+              .mp3()
+              .fast()
+              .reactive() // starts here
+              .dictate("There is a story to tell.")
+              .downloadTo(new File("/var/tmp/targetFolder"))
+              .subscribe(downloadedFile -> System.out.println(downloadedFile.getAbsolutePath()));
 
         // Transcription Async
         Transcription.defaults()
-                .and()
-                .poweredByWhisper10()
-                .transcribe(new File("/var/audio/file.mp3"))
-                .deterministic()
-                .talkingInEnglish()
-                .subtitles()
-                .async() // starts here
-                .guide("This is my graduate speech.")
-                .then(response -> System.out.println(response.text()));
+                     .and()
+                     .poweredByWhisper10()
+                     .transcribe(new File("/var/audio/file.mp3"))
+                     .deterministic()
+                     .talkingInEnglish()
+                     .subtitles()
+                     .async() // starts here
+                     .guide("This is my graduate speech.")
+                     .then(response -> System.out.println(response.text()));
 
         // Transcription Reactive
         Transcription.defaults()
-                .and()
-                .poweredByWhisper10()
-                .transcribe(new File("/var/audio/file.mp3"))
-                .deterministic()
-                .talkingInEnglish()
-                .subtitles()
-                .reactive() // starts here
-                .guide("This is my graduate speech.")
-                .response()
-                .subscribe(response -> System.out.println(response.text()));
+                     .and()
+                     .poweredByWhisper10()
+                     .transcribe(new File("/var/audio/file.mp3"))
+                     .deterministic()
+                     .talkingInEnglish()
+                     .subtitles()
+                     .reactive() // starts here
+                     .guide("This is my graduate speech.")
+                     .response()
+                     .subscribe(response -> System.out.println(response.text()));
     }
 }
 ```
@@ -652,9 +683,9 @@ are still given the option to use the enumerations for `Creativity` (temperature
 public class Main {
     public static void main(String[] args) {
         Chat.authenticate(FromJson.AUTH)
-                .and()
-                .poweredByGPT40()
-                .creativeAs(Creativity.INTRODUCE_SOME_RANDOMNESS);
+            .and()
+            .poweredByGPT40()
+            .creativeAs(Creativity.INTRODUCE_SOME_RANDOMNESS);
     }
 }
 ```
@@ -671,9 +702,9 @@ for the penalties (e.g. `0.8` for `0.2` creativity). To do so, use `scaleRepetit
 public class Main {
     public static void main(String[] args) {
         Chat.authenticate(FromJson.AUTH)
-                .and()
-                .poweredByGPT40()
-                .scaleRepetitionToCreativity(Creativity.INTRODUCE_SOME_RANDOMNESS);
+            .and()
+            .poweredByGPT40()
+            .scaleRepetitionToCreativity(Creativity.INTRODUCE_SOME_RANDOMNESS);
     }
 }
 ```
@@ -684,9 +715,9 @@ Or, you can leave us to decide based on what you want, such as:
 public class Main {
     public static void main(String[] args) {
         Chat.authenticate(FromJson.AUTH)
-                .and()
-                .poweredByGPT40()
-                .imaginative();
+            .and()
+            .poweredByGPT40()
+            .imaginative();
     }
 }
 ```
@@ -697,9 +728,9 @@ or
 public class Main {
     public static void main(String[] args) {
         Chat.authenticate(FromJson.AUTH)
-                .and()
-                .poweredByGPT40()
-                .predictable();
+            .and()
+            .poweredByGPT40()
+            .predictable();
     }
 }
 ```
@@ -714,16 +745,16 @@ method to invoke changes in the accuracy as well:
 public class Main {
     public static void main(String[] args) {
         Chat.authenticate(FromJson.AUTH)
-                .and()
-                .poweredByGPT40()
-                .deepConfigure()
-                .accuracy() // accuracy configuration
-                .withFrequencyPenalty(ALMOST_GOOD)
-                .withPresencePenalty(ALMOST_GOOD)
-                .withTemperature(TRULY_DETERMINISTIC)
-                .withSamplingProbability(TRULY_DETERMINISTIC)
-                .and()
-                .done();
+            .and()
+            .poweredByGPT40()
+            .deepConfigure()
+            .accuracy() // accuracy configuration
+            .withFrequencyPenalty(ALMOST_GOOD)
+            .withPresencePenalty(ALMOST_GOOD)
+            .withTemperature(TRULY_DETERMINISTIC)
+            .withSamplingProbability(TRULY_DETERMINISTIC)
+            .and()
+            .done();
     }
 }
 ```
@@ -742,21 +773,24 @@ when the AI shall stop generating and how many answers it should generate:
 public class Main {
     public static void main(String[] args) {
         Chat.authenticate(FromJson.AUTH)
-                .and()
-                .poweredByGPT40()
-                .deepConfigure()
-                .accuracy()
-                .withFrequencyPenalty(ALMOST_GOOD)
-                .withPresencePenalty(ALMOST_GOOD)
-                .withTemperature(TRULY_DETERMINISTIC)
-                .withSamplingProbability(TRULY_DETERMINISTIC)
-                .and()
-                .tokens() // tokens configuration
-                .max(3000)
-                .stopAt("That's all folks", "Fine!")
-                .choices(2)
-                .and()
-                .done();
+            .and()
+            .poweredByGPT40()
+            .deepConfigure()
+            .accuracy()
+            .withFrequencyPenalty(ALMOST_GOOD)
+            .withPresencePenalty(ALMOST_GOOD)
+            .withTemperature(TRULY_DETERMINISTIC)
+            .withSamplingProbability(TRULY_DETERMINISTIC)
+            .and()
+            .tokens() // tokens configuration
+            .max(3000)
+            .stopAt(
+                    "That's all folks",
+                    "Fine!"
+            )
+            .choices(2)
+            .and()
+            .done();
     }
 }
 ```
@@ -787,16 +821,16 @@ a request that you can send to Google Maps API by a normal chat prompt. Here is 
 public class Main {
     public static void main(String[] args) {
         String answer = Chat.authenticate(FromJson.AUTH)
-                .and()
-                .poweredByGPT40()
-                .deepConfigure()
-                .tools()
-                .chooseTool(GetNearbyPlaces.FUNCTION)
-                .and()
-                .done()
-                .andRespond()
-                .immediate()
-                .ask("Restaurants in Sofia 10 min by walk in city centre.");
+                            .and()
+                            .poweredByGPT40()
+                            .deepConfigure()
+                            .tools()
+                            .chooseTool(GetNearbyPlaces.FUNCTION)
+                            .and()
+                            .done()
+                            .andRespond()
+                            .immediate()
+                            .ask("Restaurants in Sofia 10 min by walk in city centre.");
 
         System.out.println(answer);
     }
@@ -820,7 +854,8 @@ The function `GetNearbyPlaces` is one of the reference implementations we have p
 can do the same fashion your own functions as well. Here is the code of `GetNearbyPlaces`:
 
 ```java
-public class GetNearbyPlaces extends ChatFunction {
+public class GetNearbyPlaces
+        extends ChatFunction {
 
     public static final FunctionTool FUNCTION = new FunctionTool(new GetNearbyPlaces());
     public static final FunctionTool.FunctionToolChoice CHOICE = new FunctionTool.FunctionToolChoice(new GetNearbyPlacesFunctionChoice());
@@ -830,19 +865,30 @@ public class GetNearbyPlaces extends ChatFunction {
                 "Gets the nearby places of a given type, in a certain radius for a geolocation.",
                 "getNearbyPlaces",
                 Map.of(
-                        "type", "object",
-                        "properties", Map.of(
-                                "location", Map.of(
-                                        "type", "string",
-                                        "description", "Comma separated geo coordinates such as 45,6789,12.3456"
+                        "type",
+                        "object",
+                        "properties",
+                        Map.of(
+                                "location",
+                                Map.of(
+                                        "type",
+                                        "string",
+                                        "description",
+                                        "Comma separated geo coordinates such as 45,6789,12.3456"
                                 ),
-                                "radius", Map.of(
-                                        "type", "number",
-                                        "description", "Radius in meters such as 1500 for 1.5km"
+                                "radius",
+                                Map.of(
+                                        "type",
+                                        "number",
+                                        "description",
+                                        "Radius in meters such as 1500 for 1.5km"
                                 ),
-                                "type", Map.of(
-                                        "type", "string",
-                                        "description", "Place type such as gas station, restaurant, hotel, atm, etc."
+                                "type",
+                                Map.of(
+                                        "type",
+                                        "string",
+                                        "description",
+                                        "Place type such as gas station, restaurant, hotel, atm, etc."
                                 )
                         )
                 ),
@@ -850,10 +896,12 @@ public class GetNearbyPlaces extends ChatFunction {
         );
     }
 
-    public record GetNearbyPlacesFunctionChoice() implements FunctionChoice {
+    public record GetNearbyPlacesFunctionChoice()
+            implements FunctionChoice {
         @Override
         public String name() {
-            return GetNearbyPlaces.FUNCTION.function().getName();
+            return GetNearbyPlaces.FUNCTION.function()
+                                           .getName();
         }
     }
 }
@@ -883,8 +931,7 @@ Use `simply()` to bypass the optional configuration and jump directly to providi
 ```java
 public class Main {
     public static void main(String[] args) {
-        String imageUrl = Images
-                                .simply()
+        String imageUrl = Images.simply()
                                 .generate("Ginger cat enjoying a cinnamon roll and a cup of coffee");
     }
 }
@@ -900,11 +947,10 @@ provided by the following fluent methods:
 ```java
 public class Main {
     public static void main(String[] args) {
-        Images
-                .authenticate(FromJson.AUTH)
-                .and()
-                .creating()
-                .poweredByDallE2();
+        Images.authenticate(FromJson.AUTH)
+              .and()
+              .creating()
+              .poweredByDallE2();
     }
 }
 ```
@@ -914,11 +960,10 @@ and
 ```java
 public class Main {
     public static void main(String[] args) {
-        Images
-                .authenticate(FromJson.AUTH)
-                .and()
-                .creating()
-                .poweredByDallE3();
+        Images.authenticate(FromJson.AUTH)
+              .and()
+              .creating()
+              .poweredByDallE3();
     }
 }
 ```
@@ -943,12 +988,11 @@ Style can be either `vivid()`:
 ```java
 public class Main {
     public static void main(String[] args) {
-        Images
-                .authenticate(FromJson.AUTH)
-                .and()
-                .creating()
-                .poweredByDallE3()
-                .vivid();
+        Images.authenticate(FromJson.AUTH)
+              .and()
+              .creating()
+              .poweredByDallE3()
+              .vivid();
     }
 }
 ```
@@ -958,12 +1002,11 @@ or `natural()`:
 ```java
 public class Main {
     public static void main(String[] args) {
-        Images
-                .authenticate(FromJson.AUTH)
-                .and()
-                .creating()
-                .poweredByDallE3()
-                .natural();
+        Images.authenticate(FromJson.AUTH)
+              .and()
+              .creating()
+              .poweredByDallE3()
+              .natural();
     }
 }
 ```
@@ -982,13 +1025,12 @@ The quality of the image is also configurable for DALL-E-3, providing two option
 ```java
 public class Main {
     public static void main(String[] args) {
-        Images
-                .authenticate(FromJson.AUTH)
-                .and()
-                .creating()
-                .poweredByDallE3()
-                .vivid()
-                .highDefinitioned();
+        Images.authenticate(FromJson.AUTH)
+              .and()
+              .creating()
+              .poweredByDallE3()
+              .vivid()
+              .highDefinitioned();
     }
 }
 ```
@@ -998,13 +1040,12 @@ and
 ```java
 public class Main {
     public static void main(String[] args) {
-        Images
-                .authenticate(FromJson.AUTH)
-                .and()
-                .creating()
-                .poweredByDallE3()
-                .vivid()
-                .standardQuality();
+        Images.authenticate(FromJson.AUTH)
+              .and()
+              .creating()
+              .poweredByDallE3()
+              .vivid()
+              .standardQuality();
     }
 }
 ```
@@ -1022,12 +1063,11 @@ You can set the number of choices using:
 ```java
 public class Main {
     public static void main(String[] args) {
-        Images
-                .authenticate(FromJson.AUTH)
-                .and()
-                .creating()
-                .poweredByDallE2()
-                .withChoices(5);
+        Images.authenticate(FromJson.AUTH)
+              .and()
+              .creating()
+              .poweredByDallE2()
+              .withChoices(5);
     }
 }
 ```
@@ -1037,12 +1077,11 @@ or fallback to a single choice:
 ```java
 public class Main {
     public static void main(String[] args) {
-        Images
-                .authenticate(FromJson.AUTH)
-                .and()
-                .creating()
-                .poweredByDallE2()
-                .singleChoice();
+        Images.authenticate(FromJson.AUTH)
+              .and()
+              .creating()
+              .poweredByDallE2()
+              .singleChoice();
     }
 }
 ```
@@ -1065,13 +1104,12 @@ In this case, an example configuration will look like:
 ```java
 public class Main {
     public static void main(String[] args) {
-        Images
-                .authenticate(FromJson.AUTH)
-                .and()
-                .creating()
-                .poweredByDallE2()
-                .singleChoice()
-                .bigSquare();
+        Images.authenticate(FromJson.AUTH)
+              .and()
+              .creating()
+              .poweredByDallE2()
+              .singleChoice()
+              .bigSquare();
     }
 }
 ```
@@ -1090,14 +1128,13 @@ In this case, an example configuration will look like:
 ```java
 public class Main {
     public static void main(String[] args) {
-        Images
-                .authenticate(FromJson.AUTH)
-                .and()
-                .creating()
-                .poweredByDallE3()
-                .vivid()
-                .highDefinitioned()
-                .portrait();
+        Images.authenticate(FromJson.AUTH)
+              .and()
+              .creating()
+              .poweredByDallE3()
+              .vivid()
+              .highDefinitioned()
+              .portrait();
     }
 }
 ```
@@ -1115,15 +1152,14 @@ The format configuration has the following options:
 ```java
 public class Main {
     public static void main(String[] args) {
-        Images
-                .authenticate(FromJson.AUTH)
-                .and()
-                .creating()
-                .poweredByDallE3()
-                .vivid()
-                .highDefinitioned()
-                .portrait()
-                .expectUrl();
+        Images.authenticate(FromJson.AUTH)
+              .and()
+              .creating()
+              .poweredByDallE3()
+              .vivid()
+              .highDefinitioned()
+              .portrait()
+              .expectUrl();
     }
 }
 ```
@@ -1132,16 +1168,15 @@ and
 
 ```java
 public class Main {
-    public static void main(String[] args){
-        Images
-                .authenticate(FromJson.AUTH)
-                .and()
-                .creating()
-                .poweredByDallE3()
-                .vivid()
-                .highDefinitioned()
-                .portrait()
-                .expectBase64();
+    public static void main(String[] args) {
+        Images.authenticate(FromJson.AUTH)
+              .and()
+              .creating()
+              .poweredByDallE3()
+              .vivid()
+              .highDefinitioned()
+              .portrait()
+              .expectBase64();
     }
 }
 ```
@@ -1154,17 +1189,16 @@ of the runtimes, already explained in details in this document. Basically, the t
 ```java
 public class Main {
     public static void main(String[] args) {
-        Images
-                .authenticate(FromJson.AUTH)
-                .and()
-                .creating()
-                .poweredByDallE3()
-                .vivid()
-                .highDefinitioned()
-                .portrait()
-                .expectBase64()
-                .andRespond()
-                .immediate();
+        Images.authenticate(FromJson.AUTH)
+              .and()
+              .creating()
+              .poweredByDallE3()
+              .vivid()
+              .highDefinitioned()
+              .portrait()
+              .expectBase64()
+              .andRespond()
+              .immediate();
     }
 }
 ```
@@ -1172,17 +1206,16 @@ public class Main {
 ```java
 public class Main {
     public static void main(String[] args) {
-        Images
-                .authenticate(FromJson.AUTH)
-                .and()
-                .creating()
-                .poweredByDallE3()
-                .vivid()
-                .highDefinitioned()
-                .portrait()
-                .expectBase64()
-                .andRespond()
-                .async();
+        Images.authenticate(FromJson.AUTH)
+              .and()
+              .creating()
+              .poweredByDallE3()
+              .vivid()
+              .highDefinitioned()
+              .portrait()
+              .expectBase64()
+              .andRespond()
+              .async();
     }
 }
 ```
@@ -1192,17 +1225,16 @@ or
 ```java
 public class Main {
     public static void main(String[] args) {
-        Images
-                .authenticate(FromJson.AUTH)
-                .and()
-                .creating()
-                .poweredByDallE3()
-                .vivid()
-                .highDefinitioned()
-                .portrait()
-                .expectBase64()
-                .andRespond()
-                .reactive();
+        Images.authenticate(FromJson.AUTH)
+              .and()
+              .creating()
+              .poweredByDallE3()
+              .vivid()
+              .highDefinitioned()
+              .portrait()
+              .expectBase64()
+              .andRespond()
+              .reactive();
     }
 }
 ```
@@ -1215,18 +1247,17 @@ The prompt is set using the `generate()` method, for example:
 ```java
 public class Main {
     public static void main(String[] args) {
-        Images
-                .authenticate(FromJson.AUTH)
-                .and()
-                .creating()
-                .poweredByDallE3()
-                .vivid()
-                .highDefinitioned()
-                .portrait()
-                .expectBase64()
-                .andRespond()
-                .immediate()
-                .generate("Ginger cat enjoying cinnamon rolls and a cup of coffee");
+        Images.authenticate(FromJson.AUTH)
+              .and()
+              .creating()
+              .poweredByDallE3()
+              .vivid()
+              .highDefinitioned()
+              .portrait()
+              .expectBase64()
+              .andRespond()
+              .immediate()
+              .generate("Ginger cat enjoying cinnamon rolls and a cup of coffee");
     }
 }
 ```
@@ -1239,19 +1270,18 @@ respectively:
 ```java
 public class Main {
     public static void main(String[] args) {
-        Images
-                .authenticate(FromJson.AUTH)
-                .and()
-                .creating()
-                .poweredByDallE3()
-                .vivid()
-                .highDefinitioned()
-                .portrait()
-                .expectBase64()
-                .andRespond()
-                .immediate()
-                .generate("Ginger can enjoying cinnamon rolls and a cup of coffee")
-                .andGetRaw();
+        Images.authenticate(FromJson.AUTH)
+              .and()
+              .creating()
+              .poweredByDallE3()
+              .vivid()
+              .highDefinitioned()
+              .portrait()
+              .expectBase64()
+              .andRespond()
+              .immediate()
+              .generate("Ginger can enjoying cinnamon rolls and a cup of coffee")
+              .andGetRaw();
     }
 }
 ```
@@ -1261,19 +1291,18 @@ and
 ```java
 public class Main {
     public static void main(String[] args) {
-        Images
-                .authenticate(FromJson.AUTH)
-                .and()
-                .creating()
-                .poweredByDallE3()
-                .vivid()
-                .highDefinitioned()
-                .portrait()
-                .expectBase64()
-                .andRespond()
-                .immediate()
-                .generate("Ginger can enjoying cinnamon rolls and a cup of coffee")
-                .andDownload(new File("/var/target/folder"));
+        Images.authenticate(FromJson.AUTH)
+              .and()
+              .creating()
+              .poweredByDallE3()
+              .vivid()
+              .highDefinitioned()
+              .portrait()
+              .expectBase64()
+              .andRespond()
+              .immediate()
+              .generate("Ginger can enjoying cinnamon rolls and a cup of coffee")
+              .andDownload(new File("/var/target/folder"));
     }
 }
 ```
@@ -1292,10 +1321,9 @@ The file is mandatory and is set using:
 ```java
 public class Main {
     public static void main(String[] args) {
-        Images
-                .authenticate(FromJson.AUTH)
-                .and()
-                .editing(new File("/var/images/image.png"));
+        Images.authenticate(FromJson.AUTH)
+              .and()
+              .editing(new File("/var/images/image.png"));
     }
 }
 ```
@@ -1309,11 +1337,10 @@ as the input image. If you have a mask to provide, then all you need to do is:
 ```java
 public class Main {
     public static void main(String[] args) {
-        Images
-                .authenticate(FromJson.AUTH)
-                .and()
-                .editing(new File("/var/images/image.png"))
-                .masked(new File("/var/images/mask.png"));
+        Images.authenticate(FromJson.AUTH)
+              .and()
+              .editing(new File("/var/images/image.png"))
+              .masked(new File("/var/images/mask.png"));
     }
 }
 ```
@@ -1401,11 +1428,13 @@ And here is an example of using one of those possibilities to set a mask:
 ```java
 public class Main {
     public static void main(String[] args) {
-        Images
-                .authenticate(FromJson.AUTH)
-                .and()
-                .editing(new File("/var/images/image.png"))
-                .masked(PopularColor.PURPLE, ColorDeviation.BALANCED_TOLERANCE);
+        Images.authenticate(FromJson.AUTH)
+              .and()
+              .editing(new File("/var/images/image.png"))
+              .masked(
+                      PopularColor.PURPLE,
+                      ColorDeviation.BALANCED_TOLERANCE
+              );
     }
 }
 ```
@@ -1420,12 +1449,14 @@ You can set the number of choices using:
 ```java
 public class Main {
     public static void main(String[] args) {
-        Images
-                .authenticate(FromJson.AUTH)
-                .and()
-                .editing(new File("/var/images/image.png"))
-                .masked(PopularColor.PURPLE, ColorDeviation.BALANCED_TOLERANCE)
-                .singleChoice();
+        Images.authenticate(FromJson.AUTH)
+              .and()
+              .editing(new File("/var/images/image.png"))
+              .masked(
+                      PopularColor.PURPLE,
+                      ColorDeviation.BALANCED_TOLERANCE
+              )
+              .singleChoice();
     }
 }
 ```
@@ -1435,12 +1466,11 @@ or fallback to a single choice:
 ```java
 public class Main {
     public static void main(String[] args) {
-        Images
-                .authenticate(FromJson.AUTH)
-                .and()
-                .creating()
-                .poweredByDallE2()
-                .singleChoice();
+        Images.authenticate(FromJson.AUTH)
+              .and()
+              .creating()
+              .poweredByDallE2()
+              .singleChoice();
     }
 }
 ```
@@ -1462,13 +1492,15 @@ In this case, an example configuration will look like:
 ```java
 public class Main {
     public static void main(String[] args) {
-        Images
-                .authenticate(FromJson.AUTH)
-                .and()
-                .editing(new File("/var/images/image.png"))
-                .masked(PopularColor.PURPLE, ColorDeviation.BALANCED_TOLERANCE)
-                .singleChoice()
-                .mediumSquare();
+        Images.authenticate(FromJson.AUTH)
+              .and()
+              .editing(new File("/var/images/image.png"))
+              .masked(
+                      PopularColor.PURPLE,
+                      ColorDeviation.BALANCED_TOLERANCE
+              )
+              .singleChoice()
+              .mediumSquare();
     }
 }
 ```
@@ -1485,14 +1517,16 @@ The format configuration has the following options:
 ```java
 public class Main {
     public static void main(String[] args) {
-        Images
-                .authenticate(FromJson.AUTH)
-                .and()
-                .editing(new File("/var/images/image.png"))
-                .masked(PopularColor.PURPLE, ColorDeviation.BALANCED_TOLERANCE)
-                .singleChoice()
-                .mediumSquare()
-                .expectUrl();
+        Images.authenticate(FromJson.AUTH)
+              .and()
+              .editing(new File("/var/images/image.png"))
+              .masked(
+                      PopularColor.PURPLE,
+                      ColorDeviation.BALANCED_TOLERANCE
+              )
+              .singleChoice()
+              .mediumSquare()
+              .expectUrl();
     }
 }
 ```
@@ -1502,14 +1536,16 @@ and
 ```java
 public class Main {
     public static void main(String[] args) {
-        Images
-                .authenticate(FromJson.AUTH)
-                .and()
-                .editing(new File("/var/images/image.png"))
-                .masked(PopularColor.PURPLE, ColorDeviation.BALANCED_TOLERANCE)
-                .singleChoice()
-                .mediumSquare()
-                .expectBase64();
+        Images.authenticate(FromJson.AUTH)
+              .and()
+              .editing(new File("/var/images/image.png"))
+              .masked(
+                      PopularColor.PURPLE,
+                      ColorDeviation.BALANCED_TOLERANCE
+              )
+              .singleChoice()
+              .mediumSquare()
+              .expectBase64();
     }
 }
 ```
@@ -1522,16 +1558,18 @@ of the runtimes, already explained in details in this document. Basically, the t
 ```java
 public class Main {
     public static void main(String[] args) {
-        Images
-                .authenticate(FromJson.AUTH)
-                .and()
-                .editing(new File("/var/images/image.png"))
-                .masked(PopularColor.PURPLE, ColorDeviation.BALANCED_TOLERANCE)
-                .singleChoice()
-                .mediumSquare()
-                .expectUrl()
-                .andRespond()
-                .immediate();
+        Images.authenticate(FromJson.AUTH)
+              .and()
+              .editing(new File("/var/images/image.png"))
+              .masked(
+                      PopularColor.PURPLE,
+                      ColorDeviation.BALANCED_TOLERANCE
+              )
+              .singleChoice()
+              .mediumSquare()
+              .expectUrl()
+              .andRespond()
+              .immediate();
     }
 }
 ```
@@ -1539,16 +1577,18 @@ public class Main {
 ```java
 public class Main {
     public static void main(String[] args) {
-        Images
-                .authenticate(FromJson.AUTH)
-                .and()
-                .editing(new File("/var/images/image.png"))
-                .masked(PopularColor.PURPLE, ColorDeviation.BALANCED_TOLERANCE)
-                .singleChoice()
-                .mediumSquare()
-                .expectUrl()
-                .andRespond()
-                .async();
+        Images.authenticate(FromJson.AUTH)
+              .and()
+              .editing(new File("/var/images/image.png"))
+              .masked(
+                      PopularColor.PURPLE,
+                      ColorDeviation.BALANCED_TOLERANCE
+              )
+              .singleChoice()
+              .mediumSquare()
+              .expectUrl()
+              .andRespond()
+              .async();
     }
 }
 
@@ -1559,16 +1599,18 @@ or
 ```java
 public class Main {
     public static void main(String[] args) {
-        Images
-                .authenticate(FromJson.AUTH)
-                .and()
-                .editing(new File("/var/images/image.png"))
-                .masked(PopularColor.PURPLE, ColorDeviation.BALANCED_TOLERANCE)
-                .singleChoice()
-                .mediumSquare()
-                .expectUrl()
-                .andRespond()
-                .reactive();
+        Images.authenticate(FromJson.AUTH)
+              .and()
+              .editing(new File("/var/images/image.png"))
+              .masked(
+                      PopularColor.PURPLE,
+                      ColorDeviation.BALANCED_TOLERANCE
+              )
+              .singleChoice()
+              .mediumSquare()
+              .expectUrl()
+              .andRespond()
+              .reactive();
     }
 }
 ```
@@ -1581,17 +1623,19 @@ The prompt is set using the `generate()` method, for example:
 ```java
 public class Main {
     public static void main(String[] args) {
-        Images
-                .authenticate(FromJson.AUTH)
-                .and()
-                .editing(new File("/var/images/image.png"))
-                .masked(PopularColor.PURPLE, ColorDeviation.BALANCED_TOLERANCE)
-                .singleChoice()
-                .mediumSquare()
-                .expectUrl()
-                .andRespond()
-                .immediate()
-                .generate("Ginger cat enjoying cinnamon rolls and a very big cup of coffee");
+        Images.authenticate(FromJson.AUTH)
+              .and()
+              .editing(new File("/var/images/image.png"))
+              .masked(
+                      PopularColor.PURPLE,
+                      ColorDeviation.BALANCED_TOLERANCE
+              )
+              .singleChoice()
+              .mediumSquare()
+              .expectUrl()
+              .andRespond()
+              .immediate()
+              .generate("Ginger cat enjoying cinnamon rolls and a very big cup of coffee");
     }
 }
 ```
@@ -1604,18 +1648,20 @@ respectively:
 ```java
 public class Main {
     public static void main(String[] args) {
-        Images
-                .authenticate(FromJson.AUTH)
-                .and()
-                .editing(new File("/var/images/image.png"))
-                .masked(PopularColor.PURPLE, ColorDeviation.BALANCED_TOLERANCE)
-                .singleChoice()
-                .mediumSquare()
-                .expectUrl()
-                .andRespond()
-                .immediate()
-                .generate("Ginger cat enjoying cinnamon rolls and a very big cup of coffee")
-                .andGetRaw();
+        Images.authenticate(FromJson.AUTH)
+              .and()
+              .editing(new File("/var/images/image.png"))
+              .masked(
+                      PopularColor.PURPLE,
+                      ColorDeviation.BALANCED_TOLERANCE
+              )
+              .singleChoice()
+              .mediumSquare()
+              .expectUrl()
+              .andRespond()
+              .immediate()
+              .generate("Ginger cat enjoying cinnamon rolls and a very big cup of coffee")
+              .andGetRaw();
     }
 }
 ```
@@ -1625,18 +1671,20 @@ and
 ```java
 public class Main {
     public static void main(String[] args) {
-        Images
-                .authenticate(FromJson.AUTH)
-                .and()
-                .editing(new File("/var/images/image.png"))
-                .masked(PopularColor.PURPLE, ColorDeviation.BALANCED_TOLERANCE)
-                .singleChoice()
-                .mediumSquare()
-                .expectUrl()
-                .andRespond()
-                .immediate()
-                .generate("Ginger cat enjoying cinnamon rolls and a very big cup of coffee")
-                .andDownload(new File("/var/target/folder"));
+        Images.authenticate(FromJson.AUTH)
+              .and()
+              .editing(new File("/var/images/image.png"))
+              .masked(
+                      PopularColor.PURPLE,
+                      ColorDeviation.BALANCED_TOLERANCE
+              )
+              .singleChoice()
+              .mediumSquare()
+              .expectUrl()
+              .andRespond()
+              .immediate()
+              .generate("Ginger cat enjoying cinnamon rolls and a very big cup of coffee")
+              .andDownload(new File("/var/target/folder"));
     }
 }
 ```
@@ -1655,10 +1703,9 @@ The file is mandatory and is set using:
 ```java
 public class Main {
     public static void main(String[] args) {
-        Images
-                .authenticate(FromJson.AUTH)
-                .and()
-                .another(new File("/var/images/image.png"));
+        Images.authenticate(FromJson.AUTH)
+              .and()
+              .another(new File("/var/images/image.png"));
     }
 }
 ```
@@ -1673,11 +1720,10 @@ You can set the number of choices using:
 ```java
 public class Main {
     public static void main(String[] args) {
-        Images
-                .authenticate(FromJson.AUTH)
-                .and()
-                .another(new File("/var/images/image.png"))
-                .withChoices(5);
+        Images.authenticate(FromJson.AUTH)
+              .and()
+              .another(new File("/var/images/image.png"))
+              .withChoices(5);
     }
 }
 ```
@@ -1687,11 +1733,10 @@ or fallback to a single choice:
 ```java
 public class Main {
     public static void main(String[] args) {
-        Images
-                .authenticate(FromJson.AUTH)
-                .and()
-                .another(new File("/var/images/image.png"))
-                .singleChoice();
+        Images.authenticate(FromJson.AUTH)
+              .and()
+              .another(new File("/var/images/image.png"))
+              .singleChoice();
     }
 }
 ```
@@ -1713,12 +1758,11 @@ In this case, an example configuration will look like:
 ```java
 public class Main {
     public static void main(String[] args) {
-        Images
-                .authenticate(FromJson.AUTH)
-                .and()
-                .another(new File("/var/images/image.png"))
-                .withChoices(5)
-                .bigSquare();
+        Images.authenticate(FromJson.AUTH)
+              .and()
+              .another(new File("/var/images/image.png"))
+              .withChoices(5)
+              .bigSquare();
     }
 }
 ```
@@ -1735,13 +1779,12 @@ The format configuration has the following options:
 ```java
 public class Main {
     public static void main(String[] args) {
-        Images
-                .authenticate(FromJson.AUTH)
-                .and()
-                .another(new File("/var/images/image.png"))
-                .withChoices(5)
-                .bigSquare()
-                .expectUrl();
+        Images.authenticate(FromJson.AUTH)
+              .and()
+              .another(new File("/var/images/image.png"))
+              .withChoices(5)
+              .bigSquare()
+              .expectUrl();
     }
 }
 ```
@@ -1751,13 +1794,12 @@ and
 ```java
 public class Main {
     public static void main(String[] args) {
-        Images
-                .authenticate(FromJson.AUTH)
-                .and()
-                .another(new File("/var/images/image.png"))
-                .withChoices(5)
-                .bigSquare()
-                .expectBase64();
+        Images.authenticate(FromJson.AUTH)
+              .and()
+              .another(new File("/var/images/image.png"))
+              .withChoices(5)
+              .bigSquare()
+              .expectBase64();
     }
 }
 ```
@@ -1770,15 +1812,14 @@ of the runtimes, already explained in details in this document. Basically, the t
 ```java
 public class Main {
     public static void main(String[] args) {
-        Images
-                .authenticate(FromJson.AUTH)
-                .and()
-                .another(new File("/var/images/image.png"))
-                .withChoices(5)
-                .bigSquare()
-                .expectUrl()
-                .andRespond()
-                .immediate();
+        Images.authenticate(FromJson.AUTH)
+              .and()
+              .another(new File("/var/images/image.png"))
+              .withChoices(5)
+              .bigSquare()
+              .expectUrl()
+              .andRespond()
+              .immediate();
     }
 }
 ```
@@ -1786,15 +1827,14 @@ public class Main {
 ```java
 public class Main {
     public static void main(String[] args) {
-        Images
-                .authenticate(FromJson.AUTH)
-                .and()
-                .another(new File("/var/images/image.png"))
-                .withChoices(5)
-                .bigSquare()
-                .expectUrl()
-                .andRespond()
-                .async();
+        Images.authenticate(FromJson.AUTH)
+              .and()
+              .another(new File("/var/images/image.png"))
+              .withChoices(5)
+              .bigSquare()
+              .expectUrl()
+              .andRespond()
+              .async();
     }
 }
 ```
@@ -1804,15 +1844,14 @@ or
 ```java
 public class Main {
     public static void main(String[] args) {
-        Images
-                .authenticate(FromJson.AUTH)
-                .and()
-                .another(new File("/var/images/image.png"))
-                .withChoices(5)
-                .bigSquare()
-                .expectUrl()
-                .andRespond()
-                .reactive();
+        Images.authenticate(FromJson.AUTH)
+              .and()
+              .another(new File("/var/images/image.png"))
+              .withChoices(5)
+              .bigSquare()
+              .expectUrl()
+              .andRespond()
+              .reactive();
     }
 }
 ```
@@ -1826,16 +1865,15 @@ respectively:
 ```java
 public class Main {
     public static void main(String[] args) {
-        Images
-                .authenticate(FromJson.AUTH)
-                .and()
-                .another(new File("/var/images/image.png"))
-                .withChoices(5)
-                .bigSquare()
-                .expectUrl()
-                .andRespond()
-                .immediate()
-                .andGetRaw();
+        Images.authenticate(FromJson.AUTH)
+              .and()
+              .another(new File("/var/images/image.png"))
+              .withChoices(5)
+              .bigSquare()
+              .expectUrl()
+              .andRespond()
+              .immediate()
+              .andGetRaw();
     }
 }
 ```
@@ -1845,16 +1883,15 @@ and
 ```java
 public class Main {
     public static void main(String[] args) {
-        Images
-                .authenticate(FromJson.AUTH)
-                .and()
-                .another(new File("/var/images/image.png"))
-                .withChoices(5)
-                .bigSquare()
-                .expectUrl()
-                .andRespond()
-                .immediate()
-                .andDownload(new File("/var/target/folder"));
+        Images.authenticate(FromJson.AUTH)
+              .and()
+              .another(new File("/var/images/image.png"))
+              .withChoices(5)
+              .bigSquare()
+              .expectUrl()
+              .andRespond()
+              .immediate()
+              .andDownload(new File("/var/target/folder"));
     }
 }
 ```
@@ -1902,8 +1939,8 @@ the chances for that to result in an error are big. In the standard case, this s
 public class Main {
     public static void main(String[] args) {
         Vision.defaults()
-                .and()
-                .poweredByGpt40Vision();
+              .and()
+              .poweredByGpt40Vision();
     }
 }
 ```
@@ -1921,9 +1958,9 @@ of money saving. In the code, it looks like that:
 public class Main {
     public static void main(String[] args) {
         Vision.defaults()
-                .and()
-                .poweredByGpt40Vision()
-                .limitResponseTo(300);
+              .and()
+              .poweredByGpt40Vision()
+              .limitResponseTo(300);
     }
 }
 ```
@@ -1941,10 +1978,10 @@ Passing the image looks like the following:
 public class Main {
     public static void main(String[] args) {
         Vision.defaults()
-                .and()
-                .poweredByGpt40Vision()
-                .limitResponseTo(300)
-                .explain(new File("/var/tmp/image.png"));
+              .and()
+              .poweredByGpt40Vision()
+              .limitResponseTo(300)
+              .explain(new File("/var/tmp/image.png"));
     }
 }
 ```
@@ -1955,10 +1992,10 @@ or
 public class Main {
     public static void main(String[] args) {
         Vision.defaults()
-                .and()
-                .poweredByGpt40Vision()
-                .limitResponseTo(300)
-                .explain("StringForBase64FileHere");
+              .and()
+              .poweredByGpt40Vision()
+              .limitResponseTo(300)
+              .explain("StringForBase64FileHere");
     }
 }
 ```
@@ -1972,11 +2009,11 @@ Currently, there are only 2 options, values of the `DetailedAnalyze` enumeration
 public class Main {
     public static void main(String[] args) {
         Vision.defaults()
-                .and()
-                .poweredByGpt40Vision()
-                .limitResponseTo(300)
-                .explain(new File("/var/tmp/image.png"))
-                .analyze(DetailedAnalyze.HIGH);
+              .and()
+              .poweredByGpt40Vision()
+              .limitResponseTo(300)
+              .explain(new File("/var/tmp/image.png"))
+              .analyze(DetailedAnalyze.HIGH);
     }
 }
 ```
@@ -1987,11 +2024,11 @@ and
 public class Main {
     public static void main(String[] args) {
         Vision.defaults()
-                .and()
-                .poweredByGpt40Vision()
-                .limitResponseTo(300)
-                .explain(new File("/var/tmp/image.png"))
-                .analyze(DetailedAnalyze.LOW);
+              .and()
+              .poweredByGpt40Vision()
+              .limitResponseTo(300)
+              .explain(new File("/var/tmp/image.png"))
+              .analyze(DetailedAnalyze.LOW);
     }
 }
 ```
@@ -2006,12 +2043,12 @@ the `explainAnother()` method and passing the next image as a file or Base 64 st
 public class Main {
     public static void main(String[] args) {
         Vision.defaults()
-                .and()
-                .poweredByGpt40Vision()
-                .limitResponseTo(300)
-                .explain(new File("/var/tmp/image.png"))
-                .analyze(DetailedAnalyze.HIGH)
-                .explainAnother("ABase64StringHere");
+              .and()
+              .poweredByGpt40Vision()
+              .limitResponseTo(300)
+              .explain(new File("/var/tmp/image.png"))
+              .analyze(DetailedAnalyze.HIGH)
+              .explainAnother("ABase64StringHere");
     }
 }
 ```
@@ -2025,15 +2062,15 @@ Once you've called it, you can choose among the three possible runtime options:
 public class Main {
     public static void main(String[] args) {
         Vision.defaults()
-                .and()
-                .poweredByGpt40Vision()
-                .limitResponseTo(300)
-                .explain(new File("/var/tmp/image.png"))
-                .analyze(DetailedAnalyze.HIGH)
-                .explainAnother("/ABase64StringHere")
-                .analyze(DetailedAnalyze.LOW)
-                .andRespond()
-                .immediate();
+              .and()
+              .poweredByGpt40Vision()
+              .limitResponseTo(300)
+              .explain(new File("/var/tmp/image.png"))
+              .analyze(DetailedAnalyze.HIGH)
+              .explainAnother("/ABase64StringHere")
+              .analyze(DetailedAnalyze.LOW)
+              .andRespond()
+              .immediate();
     }
 }
 ```
@@ -2042,15 +2079,15 @@ public class Main {
 public class Main {
     public static void main(String[] args) {
         Vision.defaults()
-                .and()
-                .poweredByGpt40Vision()
-                .limitResponseTo(300)
-                .explain(new File("/var/tmp/image.png"))
-                .analyze(DetailedAnalyze.HIGH)
-                .explainAnother("ABase64StringHere")
-                .analyze(DetailedAnalyze.LOW)
-                .andRespond()
-                .async();
+              .and()
+              .poweredByGpt40Vision()
+              .limitResponseTo(300)
+              .explain(new File("/var/tmp/image.png"))
+              .analyze(DetailedAnalyze.HIGH)
+              .explainAnother("ABase64StringHere")
+              .analyze(DetailedAnalyze.LOW)
+              .andRespond()
+              .async();
     }
 }
 ```
@@ -2061,59 +2098,59 @@ or
 public class Main {
     public static void main(String[] args) {
         Vision.defaults()
-                .and()
-                .poweredByGpt40Vision()
-                .limitResponseTo(300)
-                .explain(new File("/var/tmp/image.png"))
-                .analyze(DetailedAnalyze.HIGH)
-                .explainAnother("ABase64StringHere")
-                .analyze(DetailedAnalyze.LOW)
-                .andRespond()
-                .reactive();
+              .and()
+              .poweredByGpt40Vision()
+              .limitResponseTo(300)
+              .explain(new File("/var/tmp/image.png"))
+              .analyze(DetailedAnalyze.HIGH)
+              .explainAnother("ABase64StringHere")
+              .analyze(DetailedAnalyze.LOW)
+              .andRespond()
+              .reactive();
     }
 }
 ```
 
 ### Prompt
 
-You can optionally provide a prompt for the vision API to clarify your requirements even further. 
-This can be done by passing the prompt to the `describe()` method. If you don't need any additional 
+You can optionally provide a prompt for the vision API to clarify your requirements even further.
+This can be done by passing the prompt to the `describe()` method. If you don't need any additional
 clarifications, you can just call this method to finish the request configuration.
 
 ```java
 public class Main {
     public static void main(String[] args) {
         Vision.defaults()
-                .and()
-                .poweredByGpt40Vision()
-                .limitResponseTo(300)
-                .explain(new File("/var/tmp/image.png"))
-                .analyze(DetailedAnalyze.HIGH)
-                .explainAnother("/ABase64StringHere")
-                .analyze(DetailedAnalyze.LOW)
-                .andRespond()
-                .immediate()
-                .describe("What are the colors in the image");
+              .and()
+              .poweredByGpt40Vision()
+              .limitResponseTo(300)
+              .explain(new File("/var/tmp/image.png"))
+              .analyze(DetailedAnalyze.HIGH)
+              .explainAnother("/ABase64StringHere")
+              .analyze(DetailedAnalyze.LOW)
+              .andRespond()
+              .immediate()
+              .describe("What are the colors in the image");
     }
 }
 ```
 
-or 
+or
 
 ```java
 public class Main {
     public static void main(String[] args) {
         Vision.defaults()
-                .and()
-                .poweredByGpt40Vision()
-                .limitResponseTo(300)
-                .explain(new File("/var/tmp/image.png"))
-                .analyze(DetailedAnalyze.HIGH)
-                .explainAnother("/ABase64StringHere")
-                .analyze(DetailedAnalyze.LOW)
-                .andRespond()
-                .immediate()
-                .describe();
+              .and()
+              .poweredByGpt40Vision()
+              .limitResponseTo(300)
+              .explain(new File("/var/tmp/image.png"))
+              .analyze(DetailedAnalyze.HIGH)
+              .explainAnother("/ABase64StringHere")
+              .analyze(DetailedAnalyze.LOW)
+              .andRespond()
+              .immediate()
+              .describe();
     }
 }
 ```
@@ -2132,8 +2169,8 @@ Use `simply()` to bypass the optional configuration and jump directly to providi
 public class Main {
     public static void main(String[] args) throws IOException {
         File downloadedAudioFile = Speech.simply()
-                .dictate("There is a story to tell")
-                .downloadTo(new File("/var/target/folder"));
+                                         .dictate("There is a story to tell")
+                                         .downloadTo(new File("/var/target/folder"));
     }
 }
 ```
@@ -2149,8 +2186,8 @@ by the following fluent methods:
 public class Main {
     public static void main(String[] args) {
         Speech.authenticate(FromJson.AUTH)
-                .and()
-                .defaultModel();
+              .and()
+              .defaultModel();
     }
 }
 ```
@@ -2161,8 +2198,8 @@ and
 public class Main {
     public static void main(String[] args) {
         Speech.authenticate(FromJson.AUTH)
-                .and()
-                .hdPowered();
+              .and()
+              .hdPowered();
     }
 }
 ```
@@ -2176,9 +2213,9 @@ are listed in the `Speaker` enumeration. Use it as this:
 public class Main {
     public static void main(String[] args) {
         Speech.authenticate(FromJson.AUTH)
-                .and()
-                .hdPowered()
-                .voiceOf(Speaker.FABLE);
+              .and()
+              .hdPowered()
+              .voiceOf(Speaker.FABLE);
     }
 }
 ```
@@ -2189,9 +2226,9 @@ or use the default speaker voice:
 public class Main {
     public static void main(String[] args) {
         Speech.authenticate(FromJson.AUTH)
-                .and()
-                .hdPowered()
-                .defaultSpeaker();
+              .and()
+              .hdPowered()
+              .defaultSpeaker();
     }
 }
 ```
@@ -2205,10 +2242,10 @@ are listed in the `AudioFormat` enumeration. Use it as this:
 public class Main {
     public static void main(String[] args) {
         Speech.authenticate(FromJson.AUTH)
-                .and()
-                .hdPowered()
-                .defaultSpeaker()
-                .audio(AudioFormat.FLAC);
+              .and()
+              .hdPowered()
+              .defaultSpeaker()
+              .audio(AudioFormat.FLAC);
     }
 }
 ```
@@ -2219,10 +2256,10 @@ or use some of the fluent methods to choose the format:
 public class Main {
     public static void main(String[] args) {
         Speech.authenticate(FromJson.AUTH)
-                .and()
-                .hdPowered()
-                .defaultSpeaker()
-                .forStreaming();
+              .and()
+              .hdPowered()
+              .defaultSpeaker()
+              .forStreaming();
     }
 }
 ```
@@ -2236,11 +2273,11 @@ one of the listed values in the `Speed` enumeration, such as:
 public class Main {
     public static void main(String[] args) {
         Speech.authenticate(FromJson.AUTH)
-                .and()
-                .hdPowered()
-                .defaultSpeaker()
-                .forStreaming()
-                .playback(0.36);
+              .and()
+              .hdPowered()
+              .defaultSpeaker()
+              .forStreaming()
+              .playback(0.36);
     }
 }
 ```
@@ -2251,11 +2288,11 @@ or
 public class Main {
     public static void main(String[] args) {
         Speech.authenticate(FromJson.AUTH)
-                .and()
-                .hdPowered()
-                .defaultSpeaker()
-                .forStreaming()
-                .playback(Speed.HALF_SLOW);
+              .and()
+              .hdPowered()
+              .defaultSpeaker()
+              .forStreaming()
+              .playback(Speed.HALF_SLOW);
     }
 }
 ```
@@ -2267,11 +2304,11 @@ or use one of the fluent methods:
 public class Main {
     public static void main(String[] args) {
         Speech.authenticate(FromJson.AUTH)
-                .and()
-                .hdPowered()
-                .defaultSpeaker()
-                .forStreaming()
-                .sameSpeed();
+              .and()
+              .hdPowered()
+              .defaultSpeaker()
+              .forStreaming()
+              .sameSpeed();
     }
 }
 ```
@@ -2286,14 +2323,14 @@ to configure where the audio file to be downloaded to:
 public class Main {
     public static void main(String[] args) throws IOException {
         File downloadedAudioFile = Speech.authenticate(FromJson.AUTH)
-                .and()
-                .hdPowered()
-                .defaultSpeaker()
-                .forStreaming()
-                .sameSpeed()
-                .immediate()
-                .dictate("There is a story to tell.")
-                .downloadTo(new File("/var/target/folder"));
+                                         .and()
+                                         .hdPowered()
+                                         .defaultSpeaker()
+                                         .forStreaming()
+                                         .sameSpeed()
+                                         .immediate()
+                                         .dictate("There is a story to tell.")
+                                         .downloadTo(new File("/var/target/folder"));
     }
 }
 ```
@@ -2312,9 +2349,9 @@ For simplicity we are using the blocking one (`immediate()`).
 public class Main {
     public static void main(String[] args) {
         String transcription = Transcription.simply()
-                .transcribe(new File("/var/audio/file.mp3"))
-                .unguided()
-                .text();
+                                            .transcribe(new File("/var/audio/file.mp3"))
+                                            .unguided()
+                                            .text();
     }
 }
 ```
@@ -2327,8 +2364,8 @@ Models can be only `whisper-1`.
 public class Main {
     public static void main(String[] args) {
         Transcription.defaults()
-                .and()
-                .poweredByWhisper10();
+                     .and()
+                     .poweredByWhisper10();
     }
 }
 ```
@@ -2342,9 +2379,9 @@ In fact, the only rules that apply here, are the rules given by JVM to construct
 public class Main {
     public static void main(String[] args) {
         Transcription.defaults()
-                .and()
-                .poweredByWhisper10()
-                .transcribe(new File("/var/audio/file.mp3"));
+                     .and()
+                     .poweredByWhisper10()
+                     .transcribe(new File("/var/audio/file.mp3"));
     }
 }
 ```
@@ -2359,10 +2396,10 @@ covered in [Chat API SDK / AI Behavior](#AI-Behavior). Use it as follows:
 public class Main {
     public static void main(String[] args) {
         Transcription.defaults()
-                .and()
-                .poweredByWhisper10()
-                .transcribe(new File("/var/audio/file.mp3"))
-                .creativeAs(Creativity.INVENTIVE_AND_UNEXPECTED);
+                     .and()
+                     .poweredByWhisper10()
+                     .transcribe(new File("/var/audio/file.mp3"))
+                     .creativeAs(Creativity.INVENTIVE_AND_UNEXPECTED);
     }
 }
 ```
@@ -2373,10 +2410,10 @@ or by one of the fluent methods:
 public class Main {
     public static void main(String[] args) {
         Transcription.defaults()
-                .and()
-                .poweredByWhisper10()
-                .transcribe(new File("/var/audio/file.mp3"))
-                .deterministic();
+                     .and()
+                     .poweredByWhisper10()
+                     .transcribe(new File("/var/audio/file.mp3"))
+                     .deterministic();
     }
 }
 ```
@@ -2390,11 +2427,11 @@ supply it as an `ISO-639-1` format, such as `en`, `de`, `fr`, `ro`, `bg`, `pl`, 
 public class Main {
     public static void main(String[] args) {
         Transcription.defaults()
-                .and()
-                .poweredByWhisper10()
-                .transcribe(new File("/var/audio/file.mp3"))
-                .deterministic()
-                .talkingIn("bg");
+                     .and()
+                     .poweredByWhisper10()
+                     .transcribe(new File("/var/audio/file.mp3"))
+                     .deterministic()
+                     .talkingIn("bg");
     }
 }
 ```
@@ -2405,11 +2442,11 @@ or by one of the fluent methods:
 public class Main {
     public static void main(String[] args) {
         Transcription.defaults()
-                .and()
-                .poweredByWhisper10()
-                .transcribe(new File("/var/audio/file.mp3"))
-                .deterministic()
-                .talkingInDeutsch();
+                     .and()
+                     .poweredByWhisper10()
+                     .transcribe(new File("/var/audio/file.mp3"))
+                     .deterministic()
+                     .talkingInDeutsch();
     }
 }
 ```
@@ -2427,13 +2464,13 @@ In order to specify the response format, use one of the fluent methods:
 ```java
 public class Main {
     public static void main(String[] args) {
-         Transcription.defaults()
-                .and()
-                 .poweredByWhisper10()
-                 .transcribe(new File("/var/audio/file.mp3"))
-                 .deterministic()
-                 .talkingInDeutsch()
-                 .subtitles(); // or subtitlesWithMetadata(), or justText()
+        Transcription.defaults()
+                     .and()
+                     .poweredByWhisper10()
+                     .transcribe(new File("/var/audio/file.mp3"))
+                     .deterministic()
+                     .talkingInDeutsch()
+                     .subtitles(); // or subtitlesWithMetadata(), or justText()
     }
 }
 ```
@@ -2464,15 +2501,15 @@ Use `guide(String)` to provide the additional prompt or `unguide()` to leave it 
 public class Main {
     public static void main(String[] args) {
         String transcript = Transcription.defaults()
-                .and()
-                .poweredByWhisper10()
-                .transcribe(new File("/var/files/java.wav"))
-                .deterministic()
-                .talkingInEnglish()
-                .subtitles()
-                .immediate()
-                .guide("It is a rap song.")
-                .text();
+                                         .and()
+                                         .poweredByWhisper10()
+                                         .transcribe(new File("/var/files/java.wav"))
+                                         .deterministic()
+                                         .talkingInEnglish()
+                                         .subtitles()
+                                         .immediate()
+                                         .guide("It is a rap song.")
+                                         .text();
 
         System.out.println(transcript);
     }
@@ -2509,14 +2546,14 @@ The idea is that you supply an audio file in language that is not English, and r
 public class Main {
     public static void main(String[] args) {
         String translation = Translation.defaults()
-                .and()
-                .poweredByWhisper10()
-                .translate(new File("/var/files/java.wav"))
-                .randomized()
-                .subtitles()
-                .immediate()
-                .guide("It is a rap song.")
-                .text();
+                                        .and()
+                                        .poweredByWhisper10()
+                                        .translate(new File("/var/files/java.wav"))
+                                        .randomized()
+                                        .subtitles()
+                                        .immediate()
+                                        .guide("It is a rap song.")
+                                        .text();
 
         System.out.println(translation);
     }
