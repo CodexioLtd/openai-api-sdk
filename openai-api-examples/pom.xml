@@ -7,18 +7,22 @@
     <parent>
         <groupId>bg.codexio.ai</groupId>
         <artifactId>openai-api</artifactId>
-        <version>0.8.0-SNAPSHOT</version>
+        <version>0.8.0.BETA</version>
     </parent>
 
     <artifactId>openai-api-examples</artifactId>
     <packaging>jar</packaging>
+
+    <properties>
+        <skipDeploy>false</skipDeploy>
+    </properties>
 
     <dependencies>
 
         <dependency>
             <groupId>bg.codexio.ai</groupId>
             <artifactId>openai-api-sdk</artifactId>
-            <version>0.8.0-SNAPSHOT</version>
+            <version>0.8.0.BETA</version>
         </dependency>
 
         <dependency>
