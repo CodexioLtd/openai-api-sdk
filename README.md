@@ -21,7 +21,7 @@
 
 ## Preambule
 
-This library provides a Software Development Kit (SDK) for Java 21+ compliant runtimes
+This library provides a Software Development Kit (SDK) for Java 17+ compliant runtimes
 to connect to an OpenAI API and execute both synchronous and asynchronous (via callbacks
 or the Reactor Pattern) calls.
 
@@ -537,10 +537,7 @@ public class Main {
   callbacks. Most of the APIs support two subscription promises - one for a stringified line of
   the response (not recommended, but gives a lot of control if necessary) and another for
   the whole response. Usually with `async().method().onEachLine(line -> { ... })` and
-  `async().method().thne(response -> { ... })`. In Java 21 it
-  uses [Virtual Threads](https://docs.oracle.com/en/java/javase/21/core/virtual-threads.html#GUID-DC4306FC-D6C1-4BCC-AECE-48C32C1A8DAA)
-  thanks to the
-  underlying [Square's OkHttp Client](https://square.github.io/okhttp/changelogs/changelog/#version-500-alpha12).
+  `async().method().thne(response -> { ... })`. 
 - `reactive()` - mostly the same as `async()`, but utilizes the `Mono<T>` and `Flux<T>`
   patterns from Project Reactor. **This is only recommended if your codebase is already
   fully reactive, using something like `Reactor Netty`**. Otherwise, the overhead of
