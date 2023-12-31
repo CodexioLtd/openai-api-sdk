@@ -1,6 +1,6 @@
 # OpenAI SDK by Codexio
 
-![Maven Central](https://img.shields.io/maven-central/v/bg.codexio.ai/openai-api-sdk.svg)
+[![Maven Central](https://img.shields.io/maven-central/v/bg.codexio.ai/openai-api-sdk.svg)](https://central.sonatype.com/artifact/bg.codexio.ai/openai-api-sdk)
 [![Build](https://github.com/CodexioLtd/openai-api-sdk/actions/workflows/maven.yml/badge.svg)](https://github.com/CodexioLtd/openai-api-sdk/actions/workflows/maven.yml)
 [![Coverage](https://codecov.io/github/CodexioLtd/openai-api-sdk/graph/badge.svg?token=013OEUIYWI)](https://codecov.io/github/CodexioLtd/openai-api-sdk)
 [![License](https://img.shields.io/github/license/CodexioLtd/openai-api-sdk.svg)](https://github.com/CodexioLtd/openai-api-sdk/blob/master/LICENSE)
