@@ -3,10 +3,10 @@ name: Maven Build
 on:
   push:
     branches:
-    - master
+    - release/jdk-17
   pull_request:
     branches:
-    - master
+    - release/jdk-17
 
 jobs:
   build:
