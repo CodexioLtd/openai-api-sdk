@@ -6,7 +6,7 @@
 
     <groupId>bg.codexio.ai</groupId>
     <artifactId>openai-api</artifactId>
-    <version>0.8.1.BETA-SNAPSHOT</version>
+    <version>0.8.0.BETA-JDK17-SNAPSHOT</version>
     <packaging>pom</packaging>
 
     <name>Codexio Ltd. OpenAI API</name>
@@ -55,7 +55,7 @@
 
 
     <properties>
-        <java.version>21</java.version>
+        <java.version>17</java.version>
         <maven.compiler.source>${java.version}</maven.compiler.source>
         <maven.compiler.target>${java.version}</maven.compiler.target>
 
