@@ -1,9 +1,25 @@
-# OpenAI SDK by Codexio
+<h1 align="center">OpenAI SDK by Codexio</h1>
+
+<p align="center">
+    <img src="./project-logo.png" width="240" height="120"/>
+    <br/>
+    <em>
+        Use artificial intelligence the intelligent way.
+    </em>
+</p>
+
+<p align="center">
 
 [![Maven Central](https://img.shields.io/maven-central/v/bg.codexio.ai/openai-api-sdk.svg)](https://central.sonatype.com/artifact/bg.codexio.ai/openai-api-sdk)
 [![Build](https://github.com/CodexioLtd/openai-api-sdk/actions/workflows/maven.yml/badge.svg)](https://github.com/CodexioLtd/openai-api-sdk/actions/workflows/maven.yml)
 [![Coverage](https://codecov.io/github/CodexioLtd/openai-api-sdk/graph/badge.svg?token=013OEUIYWI)](https://codecov.io/github/CodexioLtd/openai-api-sdk)
 [![License](https://img.shields.io/github/license/CodexioLtd/openai-api-sdk.svg)](https://github.com/CodexioLtd/openai-api-sdk/blob/master/LICENSE)
+
+</p>
+
+<hr/>
+
+## Preambule
 
 This library provides a Software Development Kit (SDK) for Java 21+ compliant runtimes
 to connect to an OpenAI API and execute both synchronous and asynchronous (via callbacks
