@@ -46,7 +46,7 @@ public class ReactiveContextStageTest {
         ));
 
         var response = this.reactiveContextStage.askRaw("Test Question")
-                                                .response()
+                                                .getResponse()
                                                 .block();
 
         assertEquals(

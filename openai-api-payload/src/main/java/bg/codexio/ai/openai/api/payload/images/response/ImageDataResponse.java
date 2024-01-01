@@ -6,11 +6,18 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
-public record ImageDataResponse(
-        Long created,
-        List<ImageResponse> data
-)
+public final class ImageDataResponse
         implements Mergeable<ImageDataResponse> {
+    private final Long created;
+    private final List<ImageResponse> data;
+
+    public ImageDataResponse(
+            Long created,
+            List<ImageResponse> data
+    ) {
+        this.created = created;
+        this.data = data;
+    }
 
     public static ImageDataResponse empty() {
         return new ImageDataResponse(
@@ -45,5 +52,40 @@ public record ImageDataResponse(
                 )
         );
     }
+
+    public Long created() {
+        return created;
+    }
+
+    public List<ImageResponse> data() {
+        return data;
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (obj == this) {
+            return true;
+        }
+        if (obj == null || obj.getClass() != this.getClass()) {
+            return false;
+        }
+        var that = (ImageDataResponse) obj;
+        return Objects.equals(this.created,
+                              that.created) && Objects.equals(this.data,
+                                                              that.data);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(created,
+                            data);
+    }
+
+    @Override
+    public String toString() {
+        return "ImageDataResponse[" + "created=" + created + ", " + "data="
+                + data + ']';
+    }
+
 
 }

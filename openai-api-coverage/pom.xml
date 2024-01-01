@@ -6,7 +6,7 @@
     <parent>
         <groupId>bg.codexio.ai</groupId>
         <artifactId>openai-api</artifactId>
-        <version>0.8.1.BETA-SNAPSHOT</version>
+        <version>0.8.0.BETA-JDK11-SNAPSHOT</version>
     </parent>
 
     <artifactId>openai-api-coverage</artifactId>
@@ -15,7 +15,7 @@
     <description>Codexio Ltd. Open AI API SDK Test Coverage Aggregate Module</description>
 
     <properties>
-        <internal.modules.version>0.8.1.BETA-SNAPSHOT</internal.modules.version>
+        <internal.modules.version>0.8.0.BETA-JDK11-SNAPSHOT</internal.modules.version>
         <skipDeploy>false</skipDeploy>
     </properties>
 

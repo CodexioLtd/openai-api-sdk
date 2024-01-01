@@ -4,17 +4,30 @@ import bg.codexio.ai.openai.api.payload.Streamable;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 /**
  * Represents a
  * <a href="https://platform.openai.com/docs/guides/vision/quick-start">Vision</a> request
  */
-public record VisionRequest(
-        String model,
-        List<MessageContentHolder> messages,
-        Integer maxTokens
-)
+public final class VisionRequest
         implements Streamable {
+    private final String model;
+    private final List<MessageContentHolder> messages;
+    private final Integer maxTokens;
+
+    /**
+     *
+     */
+    public VisionRequest(
+            String model,
+            List<MessageContentHolder> messages,
+            Integer maxTokens
+    ) {
+        this.model = model;
+        this.messages = messages;
+        this.maxTokens = maxTokens;
+    }
 
     public static VisionRequest empty() {
         return new VisionRequest(
@@ -72,4 +85,46 @@ public record VisionRequest(
                 maxTokens
         );
     }
+
+    public String model() {
+        return model;
+    }
+
+    public List<MessageContentHolder> messages() {
+        return messages;
+    }
+
+    public Integer maxTokens() {
+        return maxTokens;
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (obj == this) {
+            return true;
+        }
+        if (obj == null || obj.getClass() != this.getClass()) {
+            return false;
+        }
+        var that = (VisionRequest) obj;
+        return Objects.equals(this.model,
+                              that.model) && Objects.equals(this.messages,
+                                                            that.messages)
+                && Objects.equals(this.maxTokens,
+                                  that.maxTokens);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(model,
+                            messages,
+                            maxTokens);
+    }
+
+    @Override
+    public String toString() {
+        return "VisionRequest[" + "model=" + model + ", " + "messages="
+                + messages + ", " + "maxTokens=" + maxTokens + ']';
+    }
+
 }

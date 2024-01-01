@@ -15,7 +15,7 @@ public class ChatAskReactive {
                     "Are cinnamon rolls a cool dessert?",
                     "What types of cinnamon rolls exist?"
             )
-            .lines()
+            .getLines()
             .subscribe(System.out::println);
     }
 }

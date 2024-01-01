@@ -9,10 +9,19 @@ import java.util.Objects;
  * Represents an
  * <a href="https://platform.openai.com/docs/api-reference/audiot>Audio#response</a>
  */
-public record AudioBinaryResponse(
-        byte[] bytes
-)
+public final class AudioBinaryResponse
         implements Mergeable<AudioBinaryResponse> {
+    private final byte[] bytes;
+
+    /**
+     *
+     */
+    public AudioBinaryResponse(
+            byte[] bytes
+    ) {
+        this.bytes = bytes;
+    }
+
     @Override
     public AudioBinaryResponse merge(AudioBinaryResponse other) {
         return new AudioBinaryResponse(Objects.requireNonNullElse(
@@ -40,4 +49,14 @@ public record AudioBinaryResponse(
     public int hashCode() {
         return Arrays.hashCode(bytes);
     }
+
+    public byte[] bytes() {
+        return bytes;
+    }
+
+    @Override
+    public String toString() {
+        return "AudioBinaryResponse[" + "bytes=" + bytes + ']';
+    }
+
 }

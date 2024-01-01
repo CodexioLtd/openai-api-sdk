@@ -8,20 +8,17 @@ import reactor.core.publisher.Mono;
 import java.util.function.Consumer;
 
 /**
- * <p>
  * Abstraction over HTTP execution to OpenAPI.
  * It takes a potentially {@link Streamable} request,
  * and sends HTTP request, which execution can be
  * immediately executed in a blocking manner, or
  * scheduled for execution in asynchronous
  * (reactive included) fashion.
- * </p>
  *
  * @param <I> The request (Input) model
  * @param <O> The response (Output) model
  */
-public interface OpenAIHttpExecutor<I extends Streamable,
-        O extends Mergeable<O>> {
+public interface OpenAIHttpExecutor<I extends Streamable, O extends Mergeable<O>> {
 
     /**
      * Executes HTTP request synchronously
@@ -32,35 +29,25 @@ public interface OpenAIHttpExecutor<I extends Streamable,
     O execute(I request);
 
     /**
-     * <p>
      * Executes HTTP request asynchronously.
      * Since response can be streamed, it can be
      * potentially beneficial for the developer,
      * to subscribe to each line, hence the callback
      * parameter.
-     * </p>
-     * <p>
      * It makes a little bit more sense to subscribe,
      * to the whole response, using the finalizer parameter.
-     * </p>
      *
      * @param request   The request (Input) model
      * @param callBack  A callback of type stringLine -> consume(stringLine)
      * @param finalizer A callback of type outputModel -> consume(outputModel)
      */
-    void executeAsync(
-            I request,
-            Consumer<String> callBack,
-            Consumer<O> finalizer
-    );
+    void executeAsync(I request, Consumer<String> callBack, Consumer<O> finalizer);
 
     /**
-     * <p>
      * Executes HTTP request in reactive fashion.
      * We strongly recommend to use this only if
      * a real reactive runtime is present, such as
      * <a href="https://github.com/reactor/reactor-netty">Reactor netty</a>.
-     * </p>
      *
      * @param request The request (Input) model
      * @return {@link ReactiveExecution<O>} object holding a single observable
@@ -71,12 +58,10 @@ public interface OpenAIHttpExecutor<I extends Streamable,
     ReactiveExecution<O> executeReactive(I request);
 
     /**
-     * <p>
      * Denotes whether the response can be streamed,
      * mostly taking into account the value of {@link Streamable#stream()}
      * which usually is implemented like inputModel -> inputModel.stream() &&
      * specificApiLogic.
-     * </p>
      *
      * @param input The request (Input) model
      * @return boolean saying if you can stream the response or not.
@@ -87,12 +72,23 @@ public interface OpenAIHttpExecutor<I extends Streamable,
     /**
      * Data holder for the response of {@link #executeReactive(Streamable)}
      *
-     * @param lines    Observable to all string lines of the response
-     * @param response Observable to single emit of the whole response object
-     * @param <O>      The response (Output) model
+     * @param <O> The response (Output) model
      */
-    record ReactiveExecution<O>(
-            Flux<String> lines,
-            Mono<O> response
-    ) {}
+    class ReactiveExecution<O> {
+        private final Flux<String> lines;
+        private final Mono<O> response;
+
+        public ReactiveExecution(Flux<String> lines, Mono<O> response) {
+            this.lines = lines;
+            this.response = response;
+        }
+
+        public Flux<String> getLines() {
+            return lines;
+        }
+
+        public Mono<O> getResponse() {
+            return response;
+        }
+    }
 }

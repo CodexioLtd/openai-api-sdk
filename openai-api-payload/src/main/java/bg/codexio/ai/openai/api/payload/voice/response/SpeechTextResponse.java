@@ -8,10 +8,19 @@ import java.util.Objects;
  * Represents an
  * <a href="https://platform.openai.com/docs/api-reference/audiot>Audio#response</a>
  */
-public record SpeechTextResponse(
-        String text
-)
+public final class SpeechTextResponse
         implements Mergeable<SpeechTextResponse> {
+    private final String text;
+
+    /**
+     *
+     */
+    public SpeechTextResponse(
+            String text
+    ) {
+        this.text = text;
+    }
+
     @Override
     public SpeechTextResponse merge(SpeechTextResponse other) {
         return new SpeechTextResponse(Objects.requireNonNullElse(
@@ -22,4 +31,32 @@ public record SpeechTextResponse(
                 ""
         ));
     }
+
+    public String text() {
+        return text;
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (obj == this) {
+            return true;
+        }
+        if (obj == null || obj.getClass() != this.getClass()) {
+            return false;
+        }
+        var that = (SpeechTextResponse) obj;
+        return Objects.equals(this.text,
+                              that.text);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(text);
+    }
+
+    @Override
+    public String toString() {
+        return "SpeechTextResponse[" + "text=" + text + ']';
+    }
+
 }

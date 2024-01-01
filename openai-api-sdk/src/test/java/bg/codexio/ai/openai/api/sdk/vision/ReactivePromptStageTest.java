@@ -97,11 +97,11 @@ public class ReactivePromptStageTest {
 
         var lines = String.join(
                 ",",
-                execution.lines()
+                execution.getLines()
                          .collectList()
                          .block()
         );
-        var response = execution.response()
+        var response = execution.getResponse()
                                 .block();
         assertAll(
                 () -> assertEquals(

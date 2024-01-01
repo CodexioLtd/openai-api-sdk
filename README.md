@@ -116,6 +116,7 @@ In the next chapters you will see an explanation of all key concepts.
 3. Add the library as a dependency in your project
 
 ```xml
+
 <dependency>
     <groupId>bg.codexio.ai</groupId>
     <artifactId>openai-api-sdk</artifactId>
@@ -130,14 +131,14 @@ In the next chapters you will see an explanation of all key concepts.
     <summary>
     Click here to see
     </summary>
-    
-    | Artifact              | Description                                                                                       |
-    |-----------------------|---------------------------------------------------------------------------------------------------|
-    | `openai-api-models`   | Contains info only for AI Model namings, such as GPT-4-Preview, DALL-E-2 and so on                |
-    | `openai-api-payload`  | Contains Request/Response DTO models and related information                                      |
-    | `openai-api-http`     | Contains HTTP Clients such as `ChatHttpExecutor`, `CreateImageHttpExecutor`, etc., ...            |
-    | `openai-api-examples` | Usually you do not import this artfiactId, rather you can check the source code for some examples |
-    
+
+  | Artifact              | Description                                                                                       |
+      |-----------------------|---------------------------------------------------------------------------------------------------|
+  | `openai-api-models`   | Contains info only for AI Model namings, such as GPT-4-Preview, DALL-E-2 and so on                |
+  | `openai-api-payload`  | Contains Request/Response DTO models and related information                                      |
+  | `openai-api-http`     | Contains HTTP Clients such as `ChatHttpExecutor`, `CreateImageHttpExecutor`, etc., ...            |
+  | `openai-api-examples` | Usually you do not import this artfiactId, rather you can check the source code for some examples |
+
     </details>
 
 4. Create in your `src/main/resources` folder a file named `openai-credentials.json` with the following content:
@@ -331,11 +332,15 @@ Credentials are passed to the SDK via instantiating the `openai-api-payload/ApiC
 object, which looks like:
 
 ```java
-public record ApiCredentials(
-        String apiKey,
-        String organization,
-        String baseUrl
-) {}
+public final class ApiCredentials {
+
+    public static final String BASE_URL = "https://api.openai.com/v1";
+    private final String apiKey;
+    private final String organization;
+    private final String baseUrl;
+
+    // constructor and getters here
+}
 ```
 
 Where `organization` and `baseUrl` are not mandatory, it will fall back to no specific
@@ -663,7 +668,7 @@ public class Main {
                      .subtitles()
                      .reactive() // starts here
                      .guide("This is my graduate speech.")
-                     .response()
+                     .getResponse()
                      .subscribe(response -> System.out.println(response.text()));
     }
 }
@@ -912,13 +917,13 @@ public class GetNearbyPlaces
         );
     }
 
-    public record GetNearbyPlacesFunctionChoice()
-            implements FunctionChoice {
-        @Override
-        public String name() {
-            return GetNearbyPlaces.FUNCTION.function()
-                                           .getName();
-        }
+    public class GetNearbyPlaces
+            extends ChatFunction {
+
+        public static final FunctionTool FUNCTION = new FunctionTool(new GetNearbyPlaces());
+        public static final FunctionTool.FunctionToolChoice CHOICE = new FunctionTool.FunctionToolChoice(new GetNearbyPlacesFunctionChoice());
+
+        // constructor and getters here
     }
 }
 ```

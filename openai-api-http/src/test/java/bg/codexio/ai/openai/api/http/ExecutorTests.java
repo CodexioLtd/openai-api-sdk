@@ -13,6 +13,7 @@ import org.jetbrains.annotations.NotNull;
 import org.mockito.stubbing.Answer;
 
 import java.io.IOException;
+import java.util.Objects;
 import java.util.function.Consumer;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -294,7 +295,7 @@ public class ExecutorTests {
 
         assertEquals(
                 responseBody,
-                execution.lines()
+                execution.getLines()
                          .blockFirst()
         );
     }
@@ -321,7 +322,7 @@ public class ExecutorTests {
 
         assertEquals(
                 responseDto,
-                execution.response()
+                execution.getResponse()
                          .block()
         );
     }
@@ -353,7 +354,7 @@ public class ExecutorTests {
 
         var exception = assertThrows(
                 HttpCallFailedException.class,
-                () -> execution.lines()
+                () -> execution.getLines()
                                .blockFirst()
         );
 
@@ -393,7 +394,7 @@ public class ExecutorTests {
 
         var exception = assertThrows(
                 OpenAIRespondedNot2xxException.class,
-                () -> execution.lines()
+                () -> execution.getLines()
                                .blockFirst()
         );
 
@@ -422,7 +423,7 @@ public class ExecutorTests {
 
         assertEquals(
                 streamResponseBody,
-                execution.lines()
+                execution.getLines()
                          .reduce((a, b) -> a + b)
                          .block()
         );
@@ -450,7 +451,7 @@ public class ExecutorTests {
 
         assertEquals(
                 streamResponseDto,
-                execution.response()
+                execution.getResponse()
                          .block()
         );
     }
@@ -566,11 +567,18 @@ public class ExecutorTests {
         executor.setMultipartBoundary(boundary);
     }
 
-    public record MockCall(
-            Response execute,
-            boolean shouldFail
-    )
+    public static final class MockCall
             implements Call {
+        private final Response execute;
+        private final boolean shouldFail;
+
+        public MockCall(
+                Response execute,
+                boolean shouldFail
+        ) {
+            this.execute = execute;
+            this.shouldFail = shouldFail;
+        }
 
 
         @Override
@@ -625,6 +633,45 @@ public class ExecutorTests {
         public Request request() {
             return null;
         }
+
+        @Override
+        public Response execute() {
+            return execute;
+        }
+
+        public boolean shouldFail() {
+            return shouldFail;
+        }
+
+        @Override
+        public boolean equals(Object obj) {
+            if (obj == this) {
+                return true;
+            }
+            if (obj == null || obj.getClass() != this.getClass()) {
+                return false;
+            }
+            var that = (MockCall) obj;
+            return Objects.equals(
+                    this.execute,
+                    that.execute
+            ) && this.shouldFail == that.shouldFail;
+        }
+
+        @Override
+        public int hashCode() {
+            return Objects.hash(
+                    execute,
+                    shouldFail
+            );
+        }
+
+        @Override
+        public String toString() {
+            return "MockCall[" + "execute=" + execute + ", " + "shouldFail="
+                    + shouldFail + ']';
+        }
+
     }
 
 }
