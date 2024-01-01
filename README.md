@@ -10,7 +10,7 @@
 
 <div align="center">
 
-[![Maven Central](https://img.shields.io/maven-central/v/bg.codexio.ai/openai-api-sdk.svg)](https://central.sonatype.com/artifact/bg.codexio.ai/openai-api-sdk)
+[![Maven Central](https://img.shields.io/maven-central/v/bg.codexio.ai/openai-api-sdk?versionSuffix=JDK17&color=EE5A9C)](https://central.sonatype.com/artifact/bg.codexio.ai/openai-api-sdk)
 [![Build](https://github.com/CodexioLtd/openai-api-sdk/actions/workflows/maven.yml/badge.svg)](https://github.com/CodexioLtd/openai-api-sdk/actions/workflows/maven.yml)
 [![Coverage](https://codecov.io/github/CodexioLtd/openai-api-sdk/graph/badge.svg?token=013OEUIYWI)](https://codecov.io/github/CodexioLtd/openai-api-sdk)
 [![License](https://img.shields.io/github/license/CodexioLtd/openai-api-sdk.svg)](https://github.com/CodexioLtd/openai-api-sdk/blob/master/LICENSE)
@@ -21,7 +21,7 @@
 
 ## Preambule
 
-This library provides a Software Development Kit (SDK) for Java 21+ compliant runtimes
+This library provides a Software Development Kit (SDK) for Java 17<sup>([see others](#supported-java-versions))</sup> compliant runtimes
 to connect to an OpenAI API and execute both synchronous and asynchronous (via callbacks
 or the Reactor Pattern) calls.
 
@@ -33,6 +33,7 @@ Of course, due to its native SDK, objects of any kind are easily created.
 ## Table of Contents
 
 * [Quick Start](#quick-start)
+* [Supported Java Version](#supported-java-versions)
 * [Available SDKs](#available-sdks)
     * [List](#list)
     * [Simple Usage Similarity](#simple-usage-similarity)
@@ -120,7 +121,7 @@ In the next chapters you will see an explanation of all key concepts.
 <dependency>
     <groupId>bg.codexio.ai</groupId>
     <artifactId>openai-api-sdk</artifactId>
-    <version>0.8.0.BETA</version>
+    <version>0.8.0.BETA-JDK17</version>
 </dependency>
 ```
 
@@ -261,6 +262,20 @@ Java, you make every byte worthwhile.
 ```
 
 </details>
+
+## Supported Java Versions
+
+The `master` branch builds versions for JDK 21. This is the current Java version and the artifacts built from 
+`master` does not contain any JDK suffix. However, there are several other branches which build versions
+for different JDKs. See the table below:
+
+| Branch                                                                             | Target JDK | Artifact Version Pattern                |
+|------------------------------------------------------------------------------------|------------|-----------------------------------------|
+| [master](https://github.com/CodexioLtd/openai-api-sdk/tree/master)                 | 21         | X.Y.Z[.a] (e.g. 0.8.0.BETA)             |
+| [release/jdk-17](https://github.com/CodexioLtd/openai-api-sdk/tree/release/jdk-17) | 17         | X.Y.Z[.a]-JDK17 (e.g. 0.8.0.BETA-JDK17) |
+| [release/jdk-11](https://github.com/CodexioLtd/openai-api-sdk/tree/release/jdk-11) | 11         | X.Y.Z[.a]-JDK11 (e.g. 0.8.0.BETA-JDK11) |
+| [release/jdk-8](https://github.com/CodexioLtd/openai-api-sdk/tree/release/jdk-8)   | 8          | X.Y.Z[.a]-JDK8 (e.g. 0.8.0.BETA-JDK8)   |
+
 
 ## Available SDKs
 
@@ -542,10 +557,7 @@ public class Main {
   callbacks. Most of the APIs support two subscription promises - one for a stringified line of
   the response (not recommended, but gives a lot of control if necessary) and another for
   the whole response. Usually with `async().method().onEachLine(line -> { ... })` and
-  `async().method().thne(response -> { ... })`. In Java 21 it
-  uses [Virtual Threads](https://docs.oracle.com/en/java/javase/21/core/virtual-threads.html#GUID-DC4306FC-D6C1-4BCC-AECE-48C32C1A8DAA)
-  thanks to the
-  underlying [Square's OkHttp Client](https://square.github.io/okhttp/changelogs/changelog/#version-500-alpha12).
+  `async().method().thne(response -> { ... })`. 
 - `reactive()` - mostly the same as `async()`, but utilizes the `Mono<T>` and `Flux<T>`
   patterns from Project Reactor. **This is only recommended if your codebase is already
   fully reactive, using something like `Reactor Netty`**. Otherwise, the overhead of
