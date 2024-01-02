@@ -21,7 +21,7 @@
 
 ## Preambule
 
-This library provides a Software Development Kit (SDK) for Java 17<sup>([see others](#supported-java-versions))</sup>
+This library provides a Software Development Kit (SDK) for Java 11<sup>([see others](#supported-java-versions))</sup>
 compliant runtimes
 to connect to an OpenAI API and execute both synchronous and asynchronous (via callbacks
 or the Reactor Pattern) calls.
@@ -135,7 +135,7 @@ In the next chapters you will see an explanation of all key concepts.
     </summary>
 
   | Artifact              | Description                                                                                       |
-        |-----------------------|---------------------------------------------------------------------------------------------------|
+  |-----------------------|---------------------------------------------------------------------------------------------------|
   | `openai-api-models`   | Contains info only for AI Model namings, such as GPT-4-Preview, DALL-E-2 and so on                |
   | `openai-api-payload`  | Contains Request/Response DTO models and related information                                      |
   | `openai-api-http`     | Contains HTTP Clients such as `ChatHttpExecutor`, `CreateImageHttpExecutor`, etc., ...            |
@@ -929,11 +929,10 @@ public class GetNearbyPlaces
         );
     }
 
-    public class GetNearbyPlaces
-            extends ChatFunction {
-
-        public static final FunctionTool FUNCTION = new FunctionTool(new GetNearbyPlaces());
-        public static final FunctionTool.FunctionToolChoice CHOICE = new FunctionTool.FunctionToolChoice(new GetNearbyPlacesFunctionChoice());
+    public static final class GetNearbyPlacesFunctionChoice
+            implements FunctionChoice {
+        public GetNearbyPlacesFunctionChoice() {
+        }
 
         // constructor and getters here
     }

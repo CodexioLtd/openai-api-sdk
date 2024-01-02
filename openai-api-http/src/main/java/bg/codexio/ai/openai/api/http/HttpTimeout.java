@@ -11,9 +11,6 @@ public final class HttpTimeout {
     private final long period;
     private final TimeUnit timeUnit;
 
-    /**
-     *
-     */
     public HttpTimeout(
             long period,
             TimeUnit timeUnit
