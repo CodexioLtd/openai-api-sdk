@@ -15,7 +15,12 @@ public final class ChatChoiceResponse
 
     public ChatChoiceResponse(
     ) {
-        this(null, null, null, 1);
+        this(
+                null,
+                null,
+                null,
+                1
+        );
     }
 
     public ChatChoiceResponse(
@@ -120,19 +125,26 @@ public final class ChatChoiceResponse
             return false;
         }
         var that = (ChatChoiceResponse) obj;
-        return Objects.equals(this.message,
-                              that.message) && Objects.equals(this.delta,
-                                                              that.delta)
-                && Objects.equals(this.finishReason,
-                                  that.finishReason) && this.index == that.index;
+        return Objects.equals(
+                this.message,
+                that.message
+        ) && Objects.equals(
+                this.delta,
+                that.delta
+        ) && Objects.equals(
+                this.finishReason,
+                that.finishReason
+        ) && this.index == that.index;
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(message,
-                            delta,
-                            finishReason,
-                            index);
+        return Objects.hash(
+                message,
+                delta,
+                finishReason,
+                index
+        );
     }
 
     @Override

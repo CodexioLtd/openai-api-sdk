@@ -29,8 +29,7 @@ public class GetCurrentWeather
                                         "string",
                                         "description",
                                         "The city and state, e.g. San "
-                                                + "Francisco,"
-                                                + " CA"
+                                                + "Francisco," + " CA"
                                 ),
                                 "unit",
                                 Map.of(
@@ -48,19 +47,20 @@ public class GetCurrentWeather
     }
 
     public static final class GetCurrentWeatherFunctionChoice
-                implements FunctionChoice {
+            implements FunctionChoice {
         public GetCurrentWeatherFunctionChoice() {
         }
 
         @Override
-            public String name() {
-                return GetCurrentWeather.FUNCTION.function()
-                                                 .getName();
-            }
+        public String name() {
+            return GetCurrentWeather.FUNCTION.function()
+                                             .getName();
+        }
 
         @Override
         public boolean equals(Object obj) {
-            return obj == this || obj != null && obj.getClass() == this.getClass();
+            return obj == this
+                    || obj != null && obj.getClass() == this.getClass();
         }
 
         @Override
@@ -73,6 +73,6 @@ public class GetCurrentWeather
             return "GetCurrentWeatherFunctionChoice[]";
         }
 
-        }
+    }
 
 }

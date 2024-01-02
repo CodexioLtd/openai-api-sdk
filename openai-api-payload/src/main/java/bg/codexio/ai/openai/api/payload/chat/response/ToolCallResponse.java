@@ -13,7 +13,12 @@ public final class ToolCallResponse
     private final FunctionResponse function;
 
     public ToolCallResponse() {
-        this(null, null, null, null);
+        this(
+                null,
+                null,
+                null,
+                null
+        );
     }
 
     public ToolCallResponse(
@@ -90,20 +95,29 @@ public final class ToolCallResponse
             return false;
         }
         var that = (ToolCallResponse) obj;
-        return Objects.equals(this.index,
-                              that.index) && Objects.equals(this.id,
-                                                            that.id)
-                && Objects.equals(this.type,
-                                  that.type) && Objects.equals(this.function,
-                                                               that.function);
+        return Objects.equals(
+                this.index,
+                that.index
+        ) && Objects.equals(
+                this.id,
+                that.id
+        ) && Objects.equals(
+                this.type,
+                that.type
+        ) && Objects.equals(
+                this.function,
+                that.function
+        );
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(index,
-                            id,
-                            type,
-                            function);
+        return Objects.hash(
+                index,
+                id,
+                type,
+                function
+        );
     }
 
     @Override

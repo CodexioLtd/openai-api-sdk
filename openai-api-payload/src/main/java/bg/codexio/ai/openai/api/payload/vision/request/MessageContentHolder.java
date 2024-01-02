@@ -58,8 +58,10 @@ public final class MessageContentHolder {
             return false;
         }
         var that = (MessageContentHolder) obj;
-        return Objects.equals(this.content,
-                              that.content);
+        return Objects.equals(
+                this.content,
+                that.content
+        );
     }
 
     @Override

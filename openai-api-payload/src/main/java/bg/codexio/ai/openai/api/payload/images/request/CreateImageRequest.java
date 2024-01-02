@@ -97,30 +97,45 @@ public final class CreateImageRequest
             return false;
         }
         var that = (CreateImageRequest) obj;
-        return Objects.equals(this.prompt,
-                              that.prompt) && Objects.equals(this.model,
-                                                             that.model)
-                && Objects.equals(this.n,
-                                  that.n) && Objects.equals(this.quality,
-                                                            that.quality)
-                && Objects.equals(this.responseFormat,
-                                  that.responseFormat) && Objects.equals(this.size,
-                                                                         that.size) && Objects.equals(this.style,
-                                                                                                      that.style)
-                && Objects.equals(this.user,
-                                  that.user);
+        return Objects.equals(
+                this.prompt,
+                that.prompt
+        ) && Objects.equals(
+                this.model,
+                that.model
+        ) && Objects.equals(
+                this.n,
+                that.n
+        ) && Objects.equals(
+                this.quality,
+                that.quality
+        ) && Objects.equals(
+                this.responseFormat,
+                that.responseFormat
+        ) && Objects.equals(
+                this.size,
+                that.size
+        ) && Objects.equals(
+                this.style,
+                that.style
+        ) && Objects.equals(
+                this.user,
+                that.user
+        );
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(prompt,
-                            model,
-                            n,
-                            quality,
-                            responseFormat,
-                            size,
-                            style,
-                            user);
+        return Objects.hash(
+                prompt,
+                model,
+                n,
+                quality,
+                responseFormat,
+                size,
+                style,
+                user
+        );
     }
 
     @Override

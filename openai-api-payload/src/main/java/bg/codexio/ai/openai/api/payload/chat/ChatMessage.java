@@ -12,7 +12,11 @@ public final class ChatMessage {
     private final List<ToolCallResponse> toolCalls;
 
     public ChatMessage() {
-        this(null, null, null);
+        this(
+                null,
+                null,
+                null
+        );
     }
 
     public ChatMessage(
@@ -52,18 +56,25 @@ public final class ChatMessage {
             return false;
         }
         var that = (ChatMessage) obj;
-        return Objects.equals(this.role,
-                              that.role) && Objects.equals(this.content,
-                                                           that.content)
-                && Objects.equals(this.toolCalls,
-                                  that.toolCalls);
+        return Objects.equals(
+                this.role,
+                that.role
+        ) && Objects.equals(
+                this.content,
+                that.content
+        ) && Objects.equals(
+                this.toolCalls,
+                that.toolCalls
+        );
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(role,
-                            content,
-                            toolCalls);
+        return Objects.hash(
+                role,
+                content,
+                toolCalls
+        );
     }
 
     @Override

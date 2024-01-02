@@ -52,7 +52,7 @@ public class AsyncContextStageTest {
                 responses[0],
                 CHAT_MESSAGE_RESPONSE.choices()
                                      .get(0)
-                        .message()
+                                     .message()
                                      .content()
         );
     }

@@ -13,7 +13,10 @@ public final class ImageDataResponse
     private final List<ImageResponse> data;
 
     public ImageDataResponse() {
-        this(null, null);
+        this(
+                null,
+                null
+        );
     }
 
     public ImageDataResponse(
@@ -77,15 +80,21 @@ public final class ImageDataResponse
             return false;
         }
         var that = (ImageDataResponse) obj;
-        return Objects.equals(this.created,
-                              that.created) && Objects.equals(this.data,
-                                                              that.data);
+        return Objects.equals(
+                this.created,
+                that.created
+        ) && Objects.equals(
+                this.data,
+                that.data
+        );
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(created,
-                            data);
+        return Objects.hash(
+                created,
+                data
+        );
     }
 
     @Override

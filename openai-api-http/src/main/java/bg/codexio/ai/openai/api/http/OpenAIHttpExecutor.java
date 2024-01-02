@@ -18,7 +18,8 @@ import java.util.function.Consumer;
  * @param <I> The request (Input) model
  * @param <O> The response (Output) model
  */
-public interface OpenAIHttpExecutor<I extends Streamable, O extends Mergeable<O>> {
+public interface OpenAIHttpExecutor<I extends Streamable,
+        O extends Mergeable<O>> {
 
     /**
      * Executes HTTP request synchronously
@@ -41,7 +42,11 @@ public interface OpenAIHttpExecutor<I extends Streamable, O extends Mergeable<O>
      * @param callBack  A callback of type stringLine -> consume(stringLine)
      * @param finalizer A callback of type outputModel -> consume(outputModel)
      */
-    void executeAsync(I request, Consumer<String> callBack, Consumer<O> finalizer);
+    void executeAsync(
+            I request,
+            Consumer<String> callBack,
+            Consumer<O> finalizer
+    );
 
     /**
      * Executes HTTP request in reactive fashion.
@@ -78,7 +83,10 @@ public interface OpenAIHttpExecutor<I extends Streamable, O extends Mergeable<O>
         private final Flux<String> lines;
         private final Mono<O> response;
 
-        public ReactiveExecution(Flux<String> lines, Mono<O> response) {
+        public ReactiveExecution(
+                Flux<String> lines,
+                Mono<O> response
+        ) {
             this.lines = lines;
             this.response = response;
         }

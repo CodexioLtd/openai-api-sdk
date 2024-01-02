@@ -123,15 +123,21 @@ public final class HttpExecutorContext {
             return false;
         }
         var that = (HttpExecutorContext) obj;
-        return Objects.equals(this.credentials,
-                              that.credentials) && Objects.equals(this.timeouts,
-                                                                  that.timeouts);
+        return Objects.equals(
+                this.credentials,
+                that.credentials
+        ) && Objects.equals(
+                this.timeouts,
+                that.timeouts
+        );
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(credentials,
-                            timeouts);
+        return Objects.hash(
+                credentials,
+                timeouts
+        );
     }
 
     @Override

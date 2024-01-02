@@ -1,7 +1,6 @@
 package bg.codexio.ai.openai.api.payload.chat.response;
 
 import bg.codexio.ai.openai.api.payload.Mergeable;
-import com.fasterxml.jackson.annotation.JsonAutoDetect;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 import java.util.Objects;
@@ -13,7 +12,11 @@ public final class ChatUsageResponse
     private final int totalTokens;
 
     public ChatUsageResponse() {
-        this(0, 0, 0);
+        this(
+                0,
+                0,
+                0
+        );
     }
 
     public ChatUsageResponse(
@@ -74,9 +77,11 @@ public final class ChatUsageResponse
 
     @Override
     public int hashCode() {
-        return Objects.hash(promptTokens,
-                            completionTokens,
-                            totalTokens);
+        return Objects.hash(
+                promptTokens,
+                completionTokens,
+                totalTokens
+        );
     }
 
     @Override

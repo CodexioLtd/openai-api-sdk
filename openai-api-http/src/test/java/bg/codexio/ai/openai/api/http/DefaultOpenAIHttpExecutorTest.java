@@ -595,33 +595,23 @@ public class DefaultOpenAIHttpExecutorTest {
                            );
 
         assertEquals(
-                "--test-boundary\n" +
-                        "Content-Disposition: form-data; name=\"id\"\n" +
-                        "\n" +
-                        "50\n" +
-                        "--test-boundary\n" +
-                        "Content-Disposition: form-data; name=\"img\"; filename=\"fake-image.png\"\n" +
-                        "Content-Type: application/octet-stream\n" +
-                        "\n" +
-                        "test\n" +
-                        "--test-boundary\n" +
-                        "Content-Disposition: form-data; name=\"name\"\n" +
-                        "\n" +
-                        "test-name\n" +
-                        "--test-boundary\n" +
-                        "Content-Disposition: form-data; name=\"stream\"\n" +
-                        "\n" +
-                        "false\n" +
-                        "--test-boundary\n" +
-                        "Content-Disposition: form-data; name=\"id\"\n" +
-                        "\n" +
-                        "50\n" +
-                        "--test-boundary\n" +
-                        "Content-Disposition: form-data; name=\"img\"; filename=\"fake-image.png\"\n" +
-                        "Content-Type: application/octet-stream\n" +
-                        "\n" +
-                        "test\n" +
-                        "--test-boundary--\n",
+                "--test-boundary\n"
+                        + "Content-Disposition: form-data; name=\"id\"\n" + "\n"
+                        + "50\n" + "--test-boundary\n"
+                        + "Content-Disposition: form-data; name=\"img\"; "
+                        + "filename=\"fake-image.png\"\n"
+                        + "Content-Type: application/octet-stream\n" + "\n"
+                        + "test\n" + "--test-boundary\n"
+                        + "Content-Disposition: form-data; name=\"name\"\n"
+                        + "\n" + "test-name\n" + "--test-boundary\n"
+                        + "Content-Disposition: form-data; name=\"stream\"\n"
+                        + "\n" + "false\n" + "--test-boundary\n"
+                        + "Content-Disposition: form-data; name=\"id\"\n" + "\n"
+                        + "50\n" + "--test-boundary\n"
+                        + "Content-Disposition: form-data; name=\"img\"; "
+                        + "filename=\"fake-image.png\"\n"
+                        + "Content-Type: application/octet-stream\n" + "\n"
+                        + "test\n" + "--test-boundary--\n",
                 result
         );
 
@@ -640,11 +630,15 @@ public class DefaultOpenAIHttpExecutorTest {
     }
 
 
-    static class MockRequest implements Streamable {
+    static class MockRequest
+            implements Streamable {
         private final String name;
         private final boolean stream;
 
-        public MockRequest(String name, boolean stream) {
+        public MockRequest(
+                String name,
+                boolean stream
+        ) {
             this.name = name;
             this.stream = stream;
         }
@@ -663,7 +657,8 @@ public class DefaultOpenAIHttpExecutorTest {
         }
     }
 
-    static class MockFormData implements Streamable {
+    static class MockFormData
+            implements Streamable {
         private final int id;
         private final File img;
         private final File nullImg;
@@ -671,7 +666,11 @@ public class DefaultOpenAIHttpExecutorTest {
         private final MockFormData self;
         private final MockFormData nullSelf;
 
-        public MockFormData(int id, File img, MockRequest nested) {
+        public MockFormData(
+                int id,
+                File img,
+                MockRequest nested
+        ) {
             this.id = id;
             this.img = img;
             this.nullImg = null;
@@ -710,15 +709,22 @@ public class DefaultOpenAIHttpExecutorTest {
         }
     }
 
-    static class MockResponse implements Mergeable<MockResponse> {
+    static class MockResponse
+            implements Mergeable<MockResponse> {
         private final int id;
         private final String name;
 
         public MockResponse() {
-            this(0, null);
+            this(
+                    0,
+                    null
+            );
         }
 
-        public MockResponse(int id, String name) {
+        public MockResponse(
+                int id,
+                String name
+        ) {
             this.id = id;
             this.name = name;
         }
@@ -736,22 +742,32 @@ public class DefaultOpenAIHttpExecutorTest {
         @Override
         public MockResponse merge(MockResponse other) {
             return new MockResponse(
-                    Math.max(this.id, other.id),
+                    Math.max(
+                            this.id,
+                            other.id
+                    ),
                     this.name + other.name
             );
         }
 
         @Override
         public boolean equals(Object obj) {
-            if (this == obj) return true;
-            if (obj == null || getClass() != obj.getClass()) return false;
+            if (this == obj) {
+                return true;
+            }
+            if (obj == null || getClass() != obj.getClass()) {
+                return false;
+            }
             MockResponse that = (MockResponse) obj;
             return id == that.id && name.equals(that.name);
         }
 
         @Override
         public int hashCode() {
-            return Objects.hash(this.id, this.name);
+            return Objects.hash(
+                    this.id,
+                    this.name
+            );
         }
     }
 

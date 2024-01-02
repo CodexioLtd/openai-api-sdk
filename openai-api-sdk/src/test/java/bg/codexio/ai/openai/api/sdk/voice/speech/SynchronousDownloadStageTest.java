@@ -4,8 +4,6 @@ import bg.codexio.ai.openai.api.http.voice.SpeechHttpExecutor;
 import bg.codexio.ai.openai.api.payload.voice.AudioFormat;
 import bg.codexio.ai.openai.api.payload.voice.request.SpeechRequest;
 import bg.codexio.ai.openai.api.payload.voice.response.AudioBinaryResponse;
-import bg.codexio.ai.openai.api.sdk.voice.speech.DownloadExecutor;
-import bg.codexio.ai.openai.api.sdk.voice.speech.SynchronousDownloadStage;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.MockedStatic;
@@ -47,7 +45,8 @@ public class SynchronousDownloadStageTest {
             mockData.executorMock()
                     .thenReturn(new File(filePath));
 
-            var result = this.synchronousDownloadStage.downloadTo(mockData.targetFolder());
+            var result =
+                    this.synchronousDownloadStage.downloadTo(mockData.targetFolder());
             assertEquals(
                     filePath.replace(
                             "/",
@@ -94,12 +93,17 @@ public class SynchronousDownloadStageTest {
         );
     }
 
-    static class MockData implements AutoCloseable {
+    static class MockData
+            implements AutoCloseable {
         private final OngoingStubbing<Object> executorMock;
         private final File targetFolder;
         private final MockedStatic<DownloadExecutor> utils;
 
-        public MockData(OngoingStubbing<Object> executorMock, File targetFolder, MockedStatic<DownloadExecutor> utils) {
+        public MockData(
+                OngoingStubbing<Object> executorMock,
+                File targetFolder,
+                MockedStatic<DownloadExecutor> utils
+        ) {
             this.executorMock = executorMock;
             this.targetFolder = targetFolder;
             this.utils = utils;

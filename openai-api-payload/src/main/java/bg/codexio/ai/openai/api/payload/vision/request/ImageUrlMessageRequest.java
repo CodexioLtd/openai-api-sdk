@@ -37,8 +37,10 @@ public final class ImageUrlMessageRequest
             return false;
         }
         var that = (ImageUrlMessageRequest) obj;
-        return Objects.equals(this.imageUrl,
-                              that.imageUrl);
+        return Objects.equals(
+                this.imageUrl,
+                that.imageUrl
+        );
     }
 
     @Override

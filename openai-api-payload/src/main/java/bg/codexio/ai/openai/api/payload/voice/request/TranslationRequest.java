@@ -18,6 +18,7 @@ public final class TranslationRequest
     private final String prompt;
     private final String responseFormat;
     private final Double temperature;
+
     public TranslationRequest() {
         this(
                 null,
@@ -272,7 +273,8 @@ public final class TranslationRequest
         public String toString() {
             return "Builder[" + "file=" + file + ", " + "model=" + model + ", "
                     + "prompt=" + prompt + ", " + "responseFormat="
-                    + responseFormat + ", " + "temperature=" + temperature + ']';
+                    + responseFormat + ", " + "temperature=" + temperature
+                    + ']';
         }
 
     }

@@ -304,38 +304,57 @@ public final class ImageRequestBuilder<R extends ImageRequest> {
             return false;
         }
         var that = (ImageRequestBuilder) obj;
-        return Objects.equals(this.specificRequestCreator,
-                              that.specificRequestCreator)
-                && Objects.equals(this.prompt,
-                                  that.prompt) && Objects.equals(this.model,
-                                                                 that.model)
-                && Objects.equals(this.n,
-                                  that.n) && Objects.equals(this.quality,
-                                                            that.quality)
-                && Objects.equals(this.responseFormat,
-                                  that.responseFormat) && Objects.equals(this.size,
-                                                                         that.size) && Objects.equals(this.style,
-                                                                                                      that.style)
-                && Objects.equals(this.user,
-                                  that.user) && Objects.equals(this.image,
-                                                               that.image)
-                && Objects.equals(this.mask,
-                                  that.mask);
+        return Objects.equals(
+                this.specificRequestCreator,
+                that.specificRequestCreator
+        ) && Objects.equals(
+                this.prompt,
+                that.prompt
+        ) && Objects.equals(
+                this.model,
+                that.model
+        ) && Objects.equals(
+                this.n,
+                that.n
+        ) && Objects.equals(
+                this.quality,
+                that.quality
+        ) && Objects.equals(
+                this.responseFormat,
+                that.responseFormat
+        ) && Objects.equals(
+                this.size,
+                that.size
+        ) && Objects.equals(
+                this.style,
+                that.style
+        ) && Objects.equals(
+                this.user,
+                that.user
+        ) && Objects.equals(
+                this.image,
+                that.image
+        ) && Objects.equals(
+                this.mask,
+                that.mask
+        );
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(specificRequestCreator,
-                            prompt,
-                            model,
-                            n,
-                            quality,
-                            responseFormat,
-                            size,
-                            style,
-                            user,
-                            image,
-                            mask);
+        return Objects.hash(
+                specificRequestCreator,
+                prompt,
+                model,
+                n,
+                quality,
+                responseFormat,
+                size,
+                style,
+                user,
+                image,
+                mask
+        );
     }
 
     @Override

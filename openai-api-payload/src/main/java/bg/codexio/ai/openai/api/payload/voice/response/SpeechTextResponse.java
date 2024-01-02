@@ -48,8 +48,10 @@ public final class SpeechTextResponse
             return false;
         }
         var that = (SpeechTextResponse) obj;
-        return Objects.equals(this.text,
-                              that.text);
+        return Objects.equals(
+                this.text,
+                that.text
+        );
     }
 
     @Override

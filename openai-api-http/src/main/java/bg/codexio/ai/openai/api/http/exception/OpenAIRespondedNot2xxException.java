@@ -15,7 +15,8 @@ public class OpenAIRespondedNot2xxException
         super(String.format(
                 "HTTP status: %d. Response: %s",
                 httpStatusCode,
-                errorHolder.error().message()
+                errorHolder.error()
+                           .message()
         ));
 
         this.errorHolder = errorHolder;

@@ -341,8 +341,7 @@ public final class TranscriptionRequest
             return "Builder[" + "file=" + file + ", " + "model=" + model + ", "
                     + "language=" + language + ", " + "prompt=" + prompt + ", "
                     + "responseFormat=" + responseFormat + ", " + "temperature="
-                    + temperature + "stream="
-                    + stream + ']';
+                    + temperature + "stream=" + stream + ']';
         }
 
     }

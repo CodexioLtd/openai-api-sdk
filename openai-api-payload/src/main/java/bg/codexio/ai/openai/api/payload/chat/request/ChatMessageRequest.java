@@ -32,21 +32,23 @@ public final class ChatMessageRequest
     private final String user;
 
     public ChatMessageRequest() {
-        this(null,
-             new ArrayList<>(),
-             0.0,
-             null,
-             150,
-             1,
-             0.0,
-             null,
-             null,
-             false,
-             1.0,
-             1.0,
-             new ArrayList<>(),
-             null,
-             null);
+        this(
+                null,
+                new ArrayList<>(),
+                0.0,
+                null,
+                150,
+                1,
+                0.0,
+                null,
+                null,
+                false,
+                1.0,
+                1.0,
+                new ArrayList<>(),
+                null,
+                null
+        );
     }
 
     public ChatMessageRequest(

@@ -3,8 +3,6 @@ package bg.codexio.ai.openai.api.payload.chat.response;
 import bg.codexio.ai.openai.api.payload.Mergeable;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
-import java.util.Arrays;
-import java.util.Collections;
 import java.util.List;
 import java.util.Objects;
 
@@ -22,7 +20,14 @@ public final class ChatMessageResponse
     private final List<ChatChoiceResponse> choices;
 
     public ChatMessageResponse() {
-        this(null, null, 1, null, null, null);
+        this(
+                null,
+                null,
+                1,
+                null,
+                null,
+                null
+        );
     }
 
     public ChatMessageResponse(
@@ -120,24 +125,34 @@ public final class ChatMessageResponse
             return false;
         }
         var that = (ChatMessageResponse) obj;
-        return Objects.equals(this.id,
-                              that.id) && Objects.equals(this.object,
-                                                         that.object)
-                && this.created == that.created && Objects.equals(this.model,
-                                                                  that.model)
-                && Objects.equals(this.usage,
-                                  that.usage) && Objects.equals(this.choices,
-                                                                that.choices);
+        return Objects.equals(
+                this.id,
+                that.id
+        ) && Objects.equals(
+                this.object,
+                that.object
+        ) && this.created == that.created && Objects.equals(
+                this.model,
+                that.model
+        ) && Objects.equals(
+                this.usage,
+                that.usage
+        ) && Objects.equals(
+                this.choices,
+                that.choices
+        );
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id,
-                            object,
-                            created,
-                            model,
-                            usage,
-                            choices);
+        return Objects.hash(
+                id,
+                object,
+                created,
+                model,
+                usage,
+                choices
+        );
     }
 
     @Override

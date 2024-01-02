@@ -12,7 +12,11 @@ public final class ImageResponse
     private final String revisedPrompt;
 
     public ImageResponse() {
-        this(null, null, null);
+        this(
+                null,
+                null,
+                null
+        );
     }
 
     public ImageResponse(
@@ -75,18 +79,25 @@ public final class ImageResponse
             return false;
         }
         var that = (ImageResponse) obj;
-        return Objects.equals(this.b64Json,
-                              that.b64Json) && Objects.equals(this.url,
-                                                              that.url)
-                && Objects.equals(this.revisedPrompt,
-                                  that.revisedPrompt);
+        return Objects.equals(
+                this.b64Json,
+                that.b64Json
+        ) && Objects.equals(
+                this.url,
+                that.url
+        ) && Objects.equals(
+                this.revisedPrompt,
+                that.revisedPrompt
+        );
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(b64Json,
-                            url,
-                            revisedPrompt);
+        return Objects.hash(
+                b64Json,
+                url,
+                revisedPrompt
+        );
     }
 
     @Override

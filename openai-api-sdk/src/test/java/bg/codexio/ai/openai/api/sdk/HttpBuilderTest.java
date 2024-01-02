@@ -21,7 +21,10 @@ public class HttpBuilderTest {
 
     @BeforeEach
     public void setUp() {
-        this.httpBuilder = new HttpBuilder<>(CTX, NextStage::new);
+        this.httpBuilder = new HttpBuilder<>(
+                CTX,
+                NextStage::new
+        );
     }
 
     @Test
@@ -30,7 +33,10 @@ public class HttpBuilderTest {
 
         assertAll(
                 () -> assertNotNull(nextStage.getMapper()),
-                () -> assertEquals(CTX, nextStage.getCtx())
+                () -> assertEquals(
+                        CTX,
+                        nextStage.getCtx()
+                )
         );
     }
 
@@ -40,14 +46,24 @@ public class HttpBuilderTest {
         var nextStage = this.httpBuilder.understanding(mapper);
 
         assertAll(
-                () -> assertEquals(mapper, nextStage.getMapper()),
-                () -> assertEquals(CTX, nextStage.getCtx())
+                () -> assertEquals(
+                        mapper,
+                        nextStage.getMapper()
+                ),
+                () -> assertEquals(
+                        CTX,
+                        nextStage.getCtx()
+                )
         );
     }
 
     @Test
     public void testWithCallTimeout_expectNewTimeout() {
-        var nextStage = this.httpBuilder.withCallTimeout(50, TimeUnit.MICROSECONDS).and();
+        var nextStage = this.httpBuilder.withCallTimeout(
+                                    50,
+                                    TimeUnit.MICROSECONDS
+                            )
+                                        .and();
 
         assertAll(
                 () -> assertNotNull(nextStage.getMapper()),
@@ -55,9 +71,18 @@ public class HttpBuilderTest {
                         new HttpExecutorContext(
                                 new ApiCredentials("test-key"),
                                 new HttpTimeouts(
-                                        new HttpTimeout(50, TimeUnit.MICROSECONDS),
-                                        new HttpTimeout(3, TimeUnit.MINUTES),
-                                        new HttpTimeout(3, TimeUnit.MINUTES)
+                                        new HttpTimeout(
+                                                50,
+                                                TimeUnit.MICROSECONDS
+                                        ),
+                                        new HttpTimeout(
+                                                3,
+                                                TimeUnit.MINUTES
+                                        ),
+                                        new HttpTimeout(
+                                                3,
+                                                TimeUnit.MINUTES
+                                        )
                                 )
                         ),
                         nextStage.getCtx()
@@ -67,7 +92,11 @@ public class HttpBuilderTest {
 
     @Test
     public void testWithConnectTimeout_expectNewTimeout() {
-        var nextStage = this.httpBuilder.withConnectTimeout(2, TimeUnit.HOURS).and();
+        var nextStage = this.httpBuilder.withConnectTimeout(
+                                    2,
+                                    TimeUnit.HOURS
+                            )
+                                        .and();
 
         assertAll(
                 () -> assertNotNull(nextStage.getMapper()),
@@ -75,9 +104,18 @@ public class HttpBuilderTest {
                         new HttpExecutorContext(
                                 new ApiCredentials("test-key"),
                                 new HttpTimeouts(
-                                        new HttpTimeout(3, TimeUnit.MINUTES),
-                                        new HttpTimeout(2, TimeUnit.HOURS),
-                                        new HttpTimeout(3, TimeUnit.MINUTES)
+                                        new HttpTimeout(
+                                                3,
+                                                TimeUnit.MINUTES
+                                        ),
+                                        new HttpTimeout(
+                                                2,
+                                                TimeUnit.HOURS
+                                        ),
+                                        new HttpTimeout(
+                                                3,
+                                                TimeUnit.MINUTES
+                                        )
                                 )
                         ),
                         nextStage.getCtx()
@@ -87,7 +125,11 @@ public class HttpBuilderTest {
 
     @Test
     public void testWithReadTimeout_expectNewTimeout() {
-        var nextStage = this.httpBuilder.withReadTimeout(4, TimeUnit.DAYS).and();
+        var nextStage = this.httpBuilder.withReadTimeout(
+                                    4,
+                                    TimeUnit.DAYS
+                            )
+                                        .and();
 
         assertAll(
                 () -> assertNotNull(nextStage.getMapper()),
@@ -95,9 +137,18 @@ public class HttpBuilderTest {
                         new HttpExecutorContext(
                                 new ApiCredentials("test-key"),
                                 new HttpTimeouts(
-                                        new HttpTimeout(3, TimeUnit.MINUTES),
-                                        new HttpTimeout(3, TimeUnit.MINUTES),
-                                        new HttpTimeout(4, TimeUnit.DAYS)
+                                        new HttpTimeout(
+                                                3,
+                                                TimeUnit.MINUTES
+                                        ),
+                                        new HttpTimeout(
+                                                3,
+                                                TimeUnit.MINUTES
+                                        ),
+                                        new HttpTimeout(
+                                                4,
+                                                TimeUnit.DAYS
+                                        )
                                 )
                         ),
                         nextStage.getCtx()
@@ -109,7 +160,10 @@ public class HttpBuilderTest {
         private final HttpExecutorContext ctx;
         private final ObjectMapper mapper;
 
-        public NextStage(HttpExecutorContext ctx, ObjectMapper mapper) {
+        public NextStage(
+                HttpExecutorContext ctx,
+                ObjectMapper mapper
+        ) {
             this.ctx = ctx;
             this.mapper = mapper;
         }

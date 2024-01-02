@@ -74,18 +74,25 @@ public final class ApiCredentials {
             return false;
         }
         var that = (ApiCredentials) obj;
-        return Objects.equals(this.apiKey,
-                              that.apiKey) && Objects.equals(this.organization,
-                                                             that.organization)
-                && Objects.equals(this.baseUrl,
-                                  that.baseUrl);
+        return Objects.equals(
+                this.apiKey,
+                that.apiKey
+        ) && Objects.equals(
+                this.organization,
+                that.organization
+        ) && Objects.equals(
+                this.baseUrl,
+                that.baseUrl
+        );
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(apiKey,
-                            organization,
-                            baseUrl);
+        return Objects.hash(
+                apiKey,
+                organization,
+                baseUrl
+        );
     }
 
     @Override

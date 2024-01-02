@@ -12,7 +12,12 @@ public final class ErrorResponse {
 
     public ErrorResponse(
     ) {
-        this(null, null, null, null);
+        this(
+                null,
+                null,
+                null,
+                null
+        );
     }
 
     public ErrorResponse(
@@ -56,20 +61,29 @@ public final class ErrorResponse {
             return false;
         }
         var that = (ErrorResponse) obj;
-        return Objects.equals(this.message,
-                              that.message) && Objects.equals(this.type,
-                                                              that.type)
-                && Objects.equals(this.param,
-                                  that.param) && Objects.equals(this.code,
-                                                                that.code);
+        return Objects.equals(
+                this.message,
+                that.message
+        ) && Objects.equals(
+                this.type,
+                that.type
+        ) && Objects.equals(
+                this.param,
+                that.param
+        ) && Objects.equals(
+                this.code,
+                that.code
+        );
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(message,
-                            type,
-                            param,
-                            code);
+        return Objects.hash(
+                message,
+                type,
+                param,
+                code
+        );
     }
 
     @Override

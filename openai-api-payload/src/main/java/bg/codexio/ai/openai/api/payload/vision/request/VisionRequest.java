@@ -18,7 +18,11 @@ public final class VisionRequest
     private final Integer maxTokens;
 
     public VisionRequest() {
-        this(null, null, null);
+        this(
+                null,
+                null,
+                null
+        );
     }
 
     public VisionRequest(
@@ -114,18 +118,25 @@ public final class VisionRequest
             return false;
         }
         var that = (VisionRequest) obj;
-        return Objects.equals(this.model,
-                              that.model) && Objects.equals(this.messages,
-                                                            that.messages)
-                && Objects.equals(this.maxTokens,
-                                  that.maxTokens);
+        return Objects.equals(
+                this.model,
+                that.model
+        ) && Objects.equals(
+                this.messages,
+                that.messages
+        ) && Objects.equals(
+                this.maxTokens,
+                that.maxTokens
+        );
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(model,
-                            messages,
-                            maxTokens);
+        return Objects.hash(
+                model,
+                messages,
+                maxTokens
+        );
     }
 
     @Override

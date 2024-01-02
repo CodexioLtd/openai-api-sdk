@@ -35,8 +35,10 @@ public final class QuestionVisionRequest
             return false;
         }
         var that = (QuestionVisionRequest) obj;
-        return Objects.equals(this.text,
-                              that.text);
+        return Objects.equals(
+                this.text,
+                that.text
+        );
     }
 
     @Override

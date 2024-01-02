@@ -96,30 +96,45 @@ public final class EditImageRequest
             return false;
         }
         var that = (EditImageRequest) obj;
-        return Objects.equals(this.image,
-                              that.image) && Objects.equals(this.prompt,
-                                                            that.prompt)
-                && Objects.equals(this.mask,
-                                  that.mask) && Objects.equals(this.model,
-                                                               that.model)
-                && Objects.equals(this.n,
-                                  that.n) && Objects.equals(this.size,
-                                                            that.size)
-                && Objects.equals(this.responseFormat,
-                                  that.responseFormat) && Objects.equals(this.user,
-                                                                         that.user);
+        return Objects.equals(
+                this.image,
+                that.image
+        ) && Objects.equals(
+                this.prompt,
+                that.prompt
+        ) && Objects.equals(
+                this.mask,
+                that.mask
+        ) && Objects.equals(
+                this.model,
+                that.model
+        ) && Objects.equals(
+                this.n,
+                that.n
+        ) && Objects.equals(
+                this.size,
+                that.size
+        ) && Objects.equals(
+                this.responseFormat,
+                that.responseFormat
+        ) && Objects.equals(
+                this.user,
+                that.user
+        );
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(image,
-                            prompt,
-                            mask,
-                            model,
-                            n,
-                            size,
-                            responseFormat,
-                            user);
+        return Objects.hash(
+                image,
+                prompt,
+                mask,
+                model,
+                n,
+                size,
+                responseFormat,
+                user
+        );
     }
 
     @Override

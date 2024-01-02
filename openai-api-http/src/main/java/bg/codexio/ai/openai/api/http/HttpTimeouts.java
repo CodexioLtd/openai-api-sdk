@@ -44,18 +44,25 @@ public final class HttpTimeouts {
             return false;
         }
         var that = (HttpTimeouts) obj;
-        return Objects.equals(this.call,
-                              that.call) && Objects.equals(this.connect,
-                                                           that.connect)
-                && Objects.equals(this.read,
-                                  that.read);
+        return Objects.equals(
+                this.call,
+                that.call
+        ) && Objects.equals(
+                this.connect,
+                that.connect
+        ) && Objects.equals(
+                this.read,
+                that.read
+        );
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(call,
-                            connect,
-                            read);
+        return Objects.hash(
+                call,
+                connect,
+                read
+        );
     }
 
     @Override

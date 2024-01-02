@@ -12,7 +12,10 @@ public final class ImageUrlRequest {
     private final String detail;
 
     public ImageUrlRequest() {
-        this(null, null);
+        this(
+                null,
+                null
+        );
     }
 
     public ImageUrlRequest(
@@ -82,15 +85,21 @@ public final class ImageUrlRequest {
             return false;
         }
         var that = (ImageUrlRequest) obj;
-        return Objects.equals(this.url,
-                              that.url) && Objects.equals(this.detail,
-                                                          that.detail);
+        return Objects.equals(
+                this.url,
+                that.url
+        ) && Objects.equals(
+                this.detail,
+                that.detail
+        );
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(url,
-                            detail);
+        return Objects.hash(
+                url,
+                detail
+        );
     }
 
     @Override

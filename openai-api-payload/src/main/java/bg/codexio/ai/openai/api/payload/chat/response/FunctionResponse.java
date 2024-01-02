@@ -12,7 +12,10 @@ public final class FunctionResponse
 
     public FunctionResponse(
     ) {
-        this(null, null);
+        this(
+                null,
+                null
+        );
     }
 
     public FunctionResponse(
@@ -65,15 +68,21 @@ public final class FunctionResponse
             return false;
         }
         var that = (FunctionResponse) obj;
-        return Objects.equals(this.name,
-                              that.name) && Objects.equals(this.arguments,
-                                                           that.arguments);
+        return Objects.equals(
+                this.name,
+                that.name
+        ) && Objects.equals(
+                this.arguments,
+                that.arguments
+        );
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(name,
-                            arguments);
+        return Objects.hash(
+                name,
+                arguments
+        );
     }
 
     @Override

@@ -41,8 +41,10 @@ public final class FunctionTool
             return false;
         }
         var that = (FunctionTool) obj;
-        return Objects.equals(this.function,
-                              that.function);
+        return Objects.equals(
+                this.function,
+                that.function
+        );
     }
 
     @Override
@@ -56,7 +58,8 @@ public final class FunctionTool
     }
 
 
-    public static final class FunctionToolChoice implements ChatToolChoice {
+    public static final class FunctionToolChoice
+            implements ChatToolChoice {
         private final FunctionChoice function;
 
         public FunctionToolChoice(FunctionChoice function) {

@@ -31,7 +31,7 @@ public class ReactiveDownloadStage
      */
     public Mono<File> downloadTo(File targetFolder) {
         return this.executor.executeReactive(this.requestBuilder.build())
-                .response()
+                            .response()
                             .handle((response, sink) -> {
                                 try {
                                     sink.next(DownloadExecutor.downloadTo(

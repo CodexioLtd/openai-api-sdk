@@ -39,14 +39,18 @@ public final class HttpTimeout {
             return false;
         }
         var that = (HttpTimeout) obj;
-        return this.period == that.period && Objects.equals(this.timeUnit,
-                                                            that.timeUnit);
+        return this.period == that.period && Objects.equals(
+                this.timeUnit,
+                that.timeUnit
+        );
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(period,
-                            timeUnit);
+        return Objects.hash(
+                period,
+                timeUnit
+        );
     }
 
     @Override

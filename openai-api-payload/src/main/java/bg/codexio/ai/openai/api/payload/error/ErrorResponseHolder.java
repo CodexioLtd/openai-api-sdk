@@ -32,8 +32,10 @@ public final class ErrorResponseHolder {
             return false;
         }
         var that = (ErrorResponseHolder) obj;
-        return Objects.equals(this.error,
-                              that.error);
+        return Objects.equals(
+                this.error,
+                that.error
+        );
     }
 
     @Override
