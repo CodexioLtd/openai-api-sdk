@@ -46,13 +46,8 @@ public class AuthenticatorTest {
                 })
         );
 
-        System.out.println(exception);
-
         var firstCause = exception.getCause();
         var secondCause = firstCause.getCause();
-
-        System.out.println(firstCause);
-        System.out.println(secondCause);
 
         assertAll(
                 () -> assertInstanceOf(
