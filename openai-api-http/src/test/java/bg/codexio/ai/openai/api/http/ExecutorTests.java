@@ -295,7 +295,7 @@ public class ExecutorTests {
 
         assertEquals(
                 responseBody,
-                execution.getLines()
+                execution.lines()
                          .blockFirst()
         );
     }
@@ -322,7 +322,7 @@ public class ExecutorTests {
 
         assertEquals(
                 responseDto,
-                execution.getResponse()
+                execution.response()
                          .block()
         );
     }
@@ -354,7 +354,7 @@ public class ExecutorTests {
 
         var exception = assertThrows(
                 HttpCallFailedException.class,
-                () -> execution.getLines()
+                () -> execution.lines()
                                .blockFirst()
         );
 
@@ -394,7 +394,7 @@ public class ExecutorTests {
 
         var exception = assertThrows(
                 OpenAIRespondedNot2xxException.class,
-                () -> execution.getLines()
+                () -> execution.lines()
                                .blockFirst()
         );
 
@@ -423,7 +423,7 @@ public class ExecutorTests {
 
         assertEquals(
                 streamResponseBody,
-                execution.getLines()
+                execution.lines()
                          .reduce((a, b) -> a + b)
                          .block()
         );
@@ -451,7 +451,7 @@ public class ExecutorTests {
 
         assertEquals(
                 streamResponseDto,
-                execution.getResponse()
+                execution.response()
                          .block()
         );
     }

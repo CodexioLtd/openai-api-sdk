@@ -20,12 +20,27 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.mockito.ArgumentMatchers.eq;
 import static org.mockito.Mockito.*;
 
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
+import org.mockito.MockedStatic;
+import org.mockito.stubbing.OngoingStubbing;
+import reactor.core.publisher.Flux;
+import reactor.core.publisher.Mono;
+
+import java.io.File;
+
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.ArgumentMatchers.eq;
+import static org.mockito.Mockito.mockStatic;
+import static org.mockito.Mockito.when;
+
 public class ReactiveDownloadStageTest {
 
     private final SpeechHttpExecutor httpExecutor = TEST_EXECUTOR;
 
     private ReactiveDownloadStage reactiveDownloadStage;
-
 
     @BeforeEach
     public void setUp() {
@@ -42,14 +57,13 @@ public class ReactiveDownloadStageTest {
 
     @Test
     public void testDownloadTo_withImaginaryFolder_shouldUseCorrectMediaTypeAndResponse() {
-        try (var mockData = this.startMocking()) {
+        try (var mockData = startMocking()) {
             var filePath = "var/files/resultFile";
 
             mockData.executorMock()
                     .thenReturn(new File(filePath));
 
-            var result =
-                    this.reactiveDownloadStage.downloadTo(mockData.targetFolder());
+            var result = this.reactiveDownloadStage.downloadTo(mockData.targetFolder());
             assertEquals(
                     filePath.replace(
                             "/",
@@ -63,12 +77,11 @@ public class ReactiveDownloadStageTest {
 
     @Test
     public void testDownloadTo_withErrorWhileDownloading_shouldThrowException() {
-        try (var mockData = this.startMocking()) {
+        try (var mockData = startMocking()) {
             mockData.executorMock()
                     .thenThrow(new RuntimeException("Cannot download"));
 
-            var result =
-                    this.reactiveDownloadStage.downloadTo(mockData.targetFolder());
+            var result = this.reactiveDownloadStage.downloadTo(mockData.targetFolder());
             var exception = assertThrows(
                     RuntimeException.class,
                     () -> result.block()
@@ -104,16 +117,33 @@ public class ReactiveDownloadStageTest {
         );
     }
 
-    record MockData(
-            OngoingStubbing<Object> executorMock,
-            File targetFolder,
-            MockedStatic<DownloadExecutor> utils
-    )
-            implements AutoCloseable {
+    class MockData implements AutoCloseable {
+        private final OngoingStubbing<Object> executorMock;
+        private final File targetFolder;
+        private final MockedStatic<DownloadExecutor> utils;
+
+        public MockData(OngoingStubbing<Object> executorMock, File targetFolder, MockedStatic<DownloadExecutor> utils) {
+            this.executorMock = executorMock;
+            this.targetFolder = targetFolder;
+            this.utils = utils;
+        }
+
+        public OngoingStubbing<Object> executorMock() {
+            return executorMock;
+        }
+
+        public File targetFolder() {
+            return targetFolder;
+        }
+
+        public MockedStatic<DownloadExecutor> utils() {
+            return utils;
+        }
+
         @Override
         public void close() {
-            this.utils()
-                .close();
+            utils().close();
         }
     }
 }
+

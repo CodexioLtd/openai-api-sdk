@@ -1,6 +1,7 @@
 package bg.codexio.ai.openai.api.payload.images.request;
 
 import bg.codexio.ai.openai.api.payload.Streamable;
+import com.fasterxml.jackson.annotation.JsonProperty;
 
 import java.io.File;
 import java.util.Objects;
@@ -39,36 +40,43 @@ public final class ImageVariationRequest
         return false;
     }
 
+    @JsonProperty
     public File image() {
         return image;
     }
 
     @Override
+    @JsonProperty
     public String prompt() {
         return prompt;
     }
 
     @Override
+    @JsonProperty
     public String model() {
         return model;
     }
 
     @Override
+    @JsonProperty
     public Integer n() {
         return n;
     }
 
     @Override
+    @JsonProperty
     public String size() {
         return size;
     }
 
     @Override
+    @JsonProperty
     public String responseFormat() {
         return responseFormat;
     }
 
     @Override
+    @JsonProperty
     public String user() {
         return user;
     }

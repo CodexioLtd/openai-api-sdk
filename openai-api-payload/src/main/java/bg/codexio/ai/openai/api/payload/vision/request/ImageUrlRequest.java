@@ -1,5 +1,7 @@
 package bg.codexio.ai.openai.api.payload.vision.request;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
+
 import java.io.File;
 import java.nio.file.Files;
 import java.util.Base64;
@@ -8,6 +10,10 @@ import java.util.Objects;
 public final class ImageUrlRequest {
     private final String url;
     private final String detail;
+
+    public ImageUrlRequest() {
+        this(null, null);
+    }
 
     public ImageUrlRequest(
             String url,
@@ -57,10 +63,12 @@ public final class ImageUrlRequest {
         );
     }
 
+    @JsonProperty
     public String url() {
         return url;
     }
 
+    @JsonProperty
     public String detail() {
         return detail;
     }

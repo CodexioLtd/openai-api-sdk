@@ -290,7 +290,7 @@ public class AsyncPromiseStageTest {
                                     "java.io.IOException: Error while "
                                             + "downloading.",
                                     errorData.data()
-                                             .getMessage()
+                                            .getMessage()
                             )
                     );
                 }

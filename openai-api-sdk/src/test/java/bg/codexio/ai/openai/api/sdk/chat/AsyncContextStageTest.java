@@ -18,7 +18,7 @@ public class AsyncContextStageTest {
                 CHAT_EXECUTOR,
                 ChatMessageRequest.builder()
                                   .withModel(MODEL_TYPE.name())
-                                  .withTermperature(CREATIVITY.val())
+                                  .withTemperature(CREATIVITY.val())
                                   .withTopP(CREATIVITY.val())
                                   .withFrequencyPenalty(REPETITION_PENALTY.val())
                                   .withPresencePenalty(REPETITION_PENALTY.val())
@@ -52,7 +52,7 @@ public class AsyncContextStageTest {
                 responses[0],
                 CHAT_MESSAGE_RESPONSE.choices()
                                      .get(0)
-                                     .message()
+                        .message()
                                      .content()
         );
     }

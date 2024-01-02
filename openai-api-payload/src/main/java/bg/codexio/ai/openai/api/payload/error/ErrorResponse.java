@@ -1,5 +1,7 @@
 package bg.codexio.ai.openai.api.payload.error;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
+
 import java.util.Objects;
 
 public final class ErrorResponse {
@@ -7,6 +9,11 @@ public final class ErrorResponse {
     private final String type;
     private final String param;
     private final String code;
+
+    public ErrorResponse(
+    ) {
+        this(null, null, null, null);
+    }
 
     public ErrorResponse(
             String message,
@@ -20,18 +27,22 @@ public final class ErrorResponse {
         this.code = code;
     }
 
+    @JsonProperty
     public String message() {
         return message;
     }
 
+    @JsonProperty
     public String type() {
         return type;
     }
 
+    @JsonProperty
     public String param() {
         return param;
     }
 
+    @JsonProperty
     public String code() {
         return code;
     }

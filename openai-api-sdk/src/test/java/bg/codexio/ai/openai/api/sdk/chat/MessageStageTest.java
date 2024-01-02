@@ -18,7 +18,7 @@ public class MessageStageTest {
                 null,
                 ChatMessageRequest.builder()
                                   .withModel(MODEL_TYPE.name())
-                                  .withTermperature(CREATIVITY.val())
+                                  .withTemperature(CREATIVITY.val())
                                   .withTopP(CREATIVITY.val())
                                   .withFrequencyPenalty(REPETITION_PENALTY.val())
                                   .withPresencePenalty(REPETITION_PENALTY.val())
@@ -43,9 +43,20 @@ public class MessageStageTest {
                                 "Test role",
                                 "Test message",
                                 null
-                        ),
+                        ).role(),
                         stage.requestBuilder.messages()
                                             .get(0)
+                                            .role()
+                ),
+                () -> assertEquals(
+                        new ChatMessage(
+                                "Test role",
+                                "Test message",
+                                null
+                        ).role(),
+                        stage.requestBuilder.messages()
+                                            .get(0)
+                                            .role()
                 )
         );
     }

@@ -1,9 +1,16 @@
 package bg.codexio.ai.openai.api.payload.error;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
+
 import java.util.Objects;
 
 public final class ErrorResponseHolder {
     private final ErrorResponse error;
+
+    public ErrorResponseHolder(
+    ) {
+        this(null);
+    }
 
     public ErrorResponseHolder(
             ErrorResponse error
@@ -11,6 +18,7 @@ public final class ErrorResponseHolder {
         this.error = error;
     }
 
+    @JsonProperty
     public ErrorResponse error() {
         return error;
     }

@@ -1,10 +1,16 @@
 package bg.codexio.ai.openai.api.payload.vision.request;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
+
 import java.util.Objects;
 
 public final class ImageUrlMessageRequest
         implements VisionMessage {
     private final ImageUrlRequest imageUrl;
+
+    public ImageUrlMessageRequest() {
+        this(null);
+    }
 
     public ImageUrlMessageRequest(
             ImageUrlRequest imageUrl
@@ -17,6 +23,7 @@ public final class ImageUrlMessageRequest
         return "image_url";
     }
 
+    @JsonProperty
     public ImageUrlRequest imageUrl() {
         return imageUrl;
     }

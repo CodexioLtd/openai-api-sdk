@@ -2,6 +2,7 @@ package bg.codexio.ai.openai.api.payload.chat.request;
 
 import bg.codexio.ai.openai.api.payload.Streamable;
 import bg.codexio.ai.openai.api.payload.chat.ChatMessage;
+import com.fasterxml.jackson.annotation.JsonProperty;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -30,9 +31,24 @@ public final class ChatMessageRequest
     private final ChatTool.ChatToolChoice toolChoice;
     private final String user;
 
-    /**
-     *
-     */
+    public ChatMessageRequest() {
+        this(null,
+             new ArrayList<>(),
+             0.0,
+             null,
+             150,
+             1,
+             0.0,
+             null,
+             null,
+             false,
+             1.0,
+             1.0,
+             new ArrayList<>(),
+             null,
+             null);
+    }
+
     public ChatMessageRequest(
             String model,
             List<ChatMessage> messages,
@@ -87,131 +103,81 @@ public final class ChatMessageRequest
         );
     }
 
+    @JsonProperty
     public String model() {
         return model;
     }
 
+    @JsonProperty
     public List<ChatMessage> messages() {
         return messages;
     }
 
+    @JsonProperty
     public Double frequencyPenalty() {
         return frequencyPenalty;
     }
 
+    @JsonProperty
     public Map<String, Integer> logitBias() {
         return logitBias;
     }
 
+    @JsonProperty
     public Integer maxTokens() {
         return maxTokens;
     }
 
+    @JsonProperty
     public Integer n() {
         return n;
     }
 
+    @JsonProperty
     public Double presencePenalty() {
         return presencePenalty;
     }
 
+    @JsonProperty
     public Integer seed() {
         return seed;
     }
 
+    @JsonProperty
     public String[] stop() {
         return stop;
     }
 
-    @Override
-    public boolean stream() {
-        return stream;
-    }
-
+    @JsonProperty
     public Double temperature() {
         return temperature;
     }
 
+    @JsonProperty
     public Double topP() {
         return topP;
     }
 
+    @JsonProperty
     public List<ChatTool> tools() {
         return tools;
     }
 
+    @JsonProperty
     public ChatTool.ChatToolChoice toolChoice() {
         return toolChoice;
     }
 
+    @JsonProperty
     public String user() {
         return user;
     }
 
     @Override
-    public boolean equals(Object obj) {
-        if (obj == this) {
-            return true;
-        }
-        if (obj == null || obj.getClass() != this.getClass()) {
-            return false;
-        }
-        var that = (ChatMessageRequest) obj;
-        return Objects.equals(this.model,
-                              that.model) && Objects.equals(this.messages,
-                                                            that.messages)
-                && Objects.equals(this.frequencyPenalty,
-                                  that.frequencyPenalty) && Objects.equals(this.logitBias,
-                                                                           that.logitBias)
-                && Objects.equals(this.maxTokens,
-                                  that.maxTokens) && Objects.equals(this.n,
-                                                                    that.n)
-                && Objects.equals(this.presencePenalty,
-                                  that.presencePenalty) && Objects.equals(this.seed,
-                                                                          that.seed) && Objects.equals(this.stop,
-                                                                                                       that.stop)
-                && this.stream == that.stream && Objects.equals(this.temperature,
-                                                                that.temperature) && Objects.equals(this.topP,
-                                                                                                    that.topP)
-                && Objects.equals(this.tools,
-                                  that.tools) && Objects.equals(this.toolChoice,
-                                                                that.toolChoice)
-                && Objects.equals(this.user,
-                                  that.user);
+    @JsonProperty
+    public boolean stream() {
+        return stream;
     }
-
-    @Override
-    public int hashCode() {
-        return Objects.hash(model,
-                            messages,
-                            frequencyPenalty,
-                            logitBias,
-                            maxTokens,
-                            n,
-                            presencePenalty,
-                            seed,
-                            stop,
-                            stream,
-                            temperature,
-                            topP,
-                            tools,
-                            toolChoice,
-                            user);
-    }
-
-    @Override
-    public String toString() {
-        return "ChatMessageRequest[" + "model=" + model + ", " + "messages="
-                + messages + ", " + "frequencyPenalty=" + frequencyPenalty
-                + ", " + "logitBias=" + logitBias + ", " + "maxTokens="
-                + maxTokens + ", " + "n=" + n + ", " + "presencePenalty="
-                + presencePenalty + ", " + "seed=" + seed + ", " + "stop="
-                + stop + ", " + "stream=" + stream + ", " + "temperature="
-                + temperature + ", " + "topP=" + topP + ", " + "tools=" + tools
-                + ", " + "toolChoice=" + toolChoice + ", " + "user=" + user
-                + ']';
-    }
-
 
     public static final class Builder {
         private final String model;
@@ -264,346 +230,346 @@ public final class ChatMessageRequest
             this.user = user;
         }
 
-            public Builder withModel(String model) {
-                return new Builder(
-                        model,
-                        messages,
-                        frequencyPenalty,
-                        logitBias,
-                        maxTokens,
-                        n,
-                        presencePenalty,
-                        seed,
-                        stop,
-                        stream,
-                        temperature,
-                        topP,
-                        tools,
-                        toolChoice,
-                        user
-                );
-            }
+        public Builder withModel(String model) {
+            return new Builder(
+                    model,
+                    messages,
+                    frequencyPenalty,
+                    logitBias,
+                    maxTokens,
+                    n,
+                    presencePenalty,
+                    seed,
+                    stop,
+                    stream,
+                    temperature,
+                    topP,
+                    tools,
+                    toolChoice,
+                    user
+            );
+        }
 
-            public Builder withMessages(List<ChatMessage> messages) {
-                return new Builder(
-                        model,
-                        messages,
-                        frequencyPenalty,
-                        logitBias,
-                        maxTokens,
-                        n,
-                        presencePenalty,
-                        seed,
-                        stop,
-                        stream,
-                        temperature,
-                        topP,
-                        tools,
-                        toolChoice,
-                        user
-                );
-            }
+        public Builder withMessages(List<ChatMessage> messages) {
+            return new Builder(
+                    model,
+                    messages,
+                    frequencyPenalty,
+                    logitBias,
+                    maxTokens,
+                    n,
+                    presencePenalty,
+                    seed,
+                    stop,
+                    stream,
+                    temperature,
+                    topP,
+                    tools,
+                    toolChoice,
+                    user
+            );
+        }
 
-            public Builder addMessage(ChatMessage message) {
-                var messages = new ArrayList<>(Objects.requireNonNullElse(
-                        this.messages,
-                        new ArrayList<>()
-                ));
-                messages.add(message);
+        public Builder addMessage(ChatMessage message) {
+            var messages = new ArrayList<>(Objects.requireNonNullElse(
+                    this.messages,
+                    new ArrayList<>()
+            ));
+            messages.add(message);
 
-                return this.withMessages(messages);
-            }
+            return this.withMessages(messages);
+        }
 
-            public Builder withFrequencyPenalty(Double frequencyPenalty) {
-                return new Builder(
-                        model,
-                        messages,
-                        frequencyPenalty,
-                        logitBias,
-                        maxTokens,
-                        n,
-                        presencePenalty,
-                        seed,
-                        stop,
-                        stream,
-                        temperature,
-                        topP,
-                        tools,
-                        toolChoice,
-                        user
-                );
-            }
+        public Builder withFrequencyPenalty(Double frequencyPenalty) {
+            return new Builder(
+                    model,
+                    messages,
+                    frequencyPenalty,
+                    logitBias,
+                    maxTokens,
+                    n,
+                    presencePenalty,
+                    seed,
+                    stop,
+                    stream,
+                    temperature,
+                    topP,
+                    tools,
+                    toolChoice,
+                    user
+            );
+        }
 
-            public Builder withLogitBias(Map<String, Integer> logitBias) {
-                return new Builder(
-                        model,
-                        messages,
-                        frequencyPenalty,
-                        logitBias,
-                        maxTokens,
-                        n,
-                        presencePenalty,
-                        seed,
-                        stop,
-                        stream,
-                        temperature,
-                        topP,
-                        tools,
-                        toolChoice,
-                        user
-                );
-            }
+        public Builder withLogitBias(Map<String, Integer> logitBias) {
+            return new Builder(
+                    model,
+                    messages,
+                    frequencyPenalty,
+                    logitBias,
+                    maxTokens,
+                    n,
+                    presencePenalty,
+                    seed,
+                    stop,
+                    stream,
+                    temperature,
+                    topP,
+                    tools,
+                    toolChoice,
+                    user
+            );
+        }
 
-            public Builder withMaxTokens(Integer maxTokens) {
-                return new Builder(
-                        model,
-                        messages,
-                        frequencyPenalty,
-                        logitBias,
-                        maxTokens,
-                        n,
-                        presencePenalty,
-                        seed,
-                        stop,
-                        stream,
-                        temperature,
-                        topP,
-                        tools,
-                        toolChoice,
-                        user
-                );
-            }
+        public Builder withMaxTokens(Integer maxTokens) {
+            return new Builder(
+                    model,
+                    messages,
+                    frequencyPenalty,
+                    logitBias,
+                    maxTokens,
+                    n,
+                    presencePenalty,
+                    seed,
+                    stop,
+                    stream,
+                    temperature,
+                    topP,
+                    tools,
+                    toolChoice,
+                    user
+            );
+        }
 
-            public Builder withN(Integer n) {
-                return new Builder(
-                        model,
-                        messages,
-                        frequencyPenalty,
-                        logitBias,
-                        maxTokens,
-                        n,
-                        presencePenalty,
-                        seed,
-                        stop,
-                        stream,
-                        temperature,
-                        topP,
-                        tools,
-                        toolChoice,
-                        user
-                );
-            }
+        public Builder withN(Integer n) {
+            return new Builder(
+                    model,
+                    messages,
+                    frequencyPenalty,
+                    logitBias,
+                    maxTokens,
+                    n,
+                    presencePenalty,
+                    seed,
+                    stop,
+                    stream,
+                    temperature,
+                    topP,
+                    tools,
+                    toolChoice,
+                    user
+            );
+        }
 
-            public Builder withPresencePenalty(Double presencePenalty) {
-                return new Builder(
-                        model,
-                        messages,
-                        frequencyPenalty,
-                        logitBias,
-                        maxTokens,
-                        n,
-                        presencePenalty,
-                        seed,
-                        stop,
-                        stream,
-                        temperature,
-                        topP,
-                        tools,
-                        toolChoice,
-                        user
-                );
-            }
+        public Builder withPresencePenalty(Double presencePenalty) {
+            return new Builder(
+                    model,
+                    messages,
+                    frequencyPenalty,
+                    logitBias,
+                    maxTokens,
+                    n,
+                    presencePenalty,
+                    seed,
+                    stop,
+                    stream,
+                    temperature,
+                    topP,
+                    tools,
+                    toolChoice,
+                    user
+            );
+        }
 
-            public Builder withSeed(Integer seed) {
-                return new Builder(
-                        model,
-                        messages,
-                        frequencyPenalty,
-                        logitBias,
-                        maxTokens,
-                        n,
-                        presencePenalty,
-                        seed,
-                        stop,
-                        stream,
-                        temperature,
-                        topP,
-                        tools,
-                        toolChoice,
-                        user
-                );
-            }
+        public Builder withSeed(Integer seed) {
+            return new Builder(
+                    model,
+                    messages,
+                    frequencyPenalty,
+                    logitBias,
+                    maxTokens,
+                    n,
+                    presencePenalty,
+                    seed,
+                    stop,
+                    stream,
+                    temperature,
+                    topP,
+                    tools,
+                    toolChoice,
+                    user
+            );
+        }
 
-            public Builder withStop(String[] stop) {
-                return new Builder(
-                        model,
-                        messages,
-                        frequencyPenalty,
-                        logitBias,
-                        maxTokens,
-                        n,
-                        presencePenalty,
-                        seed,
-                        stop,
-                        stream,
-                        temperature,
-                        topP,
-                        tools,
-                        toolChoice,
-                        user
-                );
-            }
+        public Builder withStop(String[] stop) {
+            return new Builder(
+                    model,
+                    messages,
+                    frequencyPenalty,
+                    logitBias,
+                    maxTokens,
+                    n,
+                    presencePenalty,
+                    seed,
+                    stop,
+                    stream,
+                    temperature,
+                    topP,
+                    tools,
+                    toolChoice,
+                    user
+            );
+        }
 
-            public Builder shouldStream(boolean stream) {
-                return new Builder(
-                        model,
-                        messages,
-                        frequencyPenalty,
-                        logitBias,
-                        maxTokens,
-                        n,
-                        presencePenalty,
-                        seed,
-                        stop,
-                        stream,
-                        temperature,
-                        topP,
-                        tools,
-                        toolChoice,
-                        user
-                );
-            }
+        public Builder shouldStream(boolean stream) {
+            return new Builder(
+                    model,
+                    messages,
+                    frequencyPenalty,
+                    logitBias,
+                    maxTokens,
+                    n,
+                    presencePenalty,
+                    seed,
+                    stop,
+                    stream,
+                    temperature,
+                    topP,
+                    tools,
+                    toolChoice,
+                    user
+            );
+        }
 
-            public Builder withTermperature(Double temperature) {
-                return new Builder(
-                        model,
-                        messages,
-                        frequencyPenalty,
-                        logitBias,
-                        maxTokens,
-                        n,
-                        presencePenalty,
-                        seed,
-                        stop,
-                        stream,
-                        temperature,
-                        topP,
-                        tools,
-                        toolChoice,
-                        user
-                );
-            }
+        public Builder withTemperature(Double temperature) {
+            return new Builder(
+                    model,
+                    messages,
+                    frequencyPenalty,
+                    logitBias,
+                    maxTokens,
+                    n,
+                    presencePenalty,
+                    seed,
+                    stop,
+                    stream,
+                    temperature,
+                    topP,
+                    tools,
+                    toolChoice,
+                    user
+            );
+        }
 
-            public Builder withTopP(Double topP) {
-                return new Builder(
-                        model,
-                        messages,
-                        frequencyPenalty,
-                        logitBias,
-                        maxTokens,
-                        n,
-                        presencePenalty,
-                        seed,
-                        stop,
-                        stream,
-                        temperature,
-                        topP,
-                        tools,
-                        toolChoice,
-                        user
-                );
-            }
+        public Builder withTopP(Double topP) {
+            return new Builder(
+                    model,
+                    messages,
+                    frequencyPenalty,
+                    logitBias,
+                    maxTokens,
+                    n,
+                    presencePenalty,
+                    seed,
+                    stop,
+                    stream,
+                    temperature,
+                    topP,
+                    tools,
+                    toolChoice,
+                    user
+            );
+        }
 
-            public Builder withTools(List<ChatTool> tools) {
-                return new Builder(
-                        model,
-                        messages,
-                        frequencyPenalty,
-                        logitBias,
-                        maxTokens,
-                        n,
-                        presencePenalty,
-                        seed,
-                        stop,
-                        stream,
-                        temperature,
-                        topP,
-                        tools,
-                        toolChoice,
-                        user
-                );
-            }
+        public Builder withTools(List<ChatTool> tools) {
+            return new Builder(
+                    model,
+                    messages,
+                    frequencyPenalty,
+                    logitBias,
+                    maxTokens,
+                    n,
+                    presencePenalty,
+                    seed,
+                    stop,
+                    stream,
+                    temperature,
+                    topP,
+                    tools,
+                    toolChoice,
+                    user
+            );
+        }
 
-            public Builder addTool(ChatTool chatTool) {
-                var tools = new ArrayList<>(Objects.requireNonNullElse(
-                        this.tools,
-                        new ArrayList<>()
-                ));
-                tools.add(chatTool);
+        public Builder addTool(ChatTool chatTool) {
+            var tools = new ArrayList<>(Objects.requireNonNullElse(
+                    this.tools,
+                    new ArrayList<>()
+            ));
+            tools.add(chatTool);
 
-                return this.withTools(tools);
-            }
+            return this.withTools(tools);
+        }
 
 
-            public Builder withToolChoice(ChatTool.ChatToolChoice toolChoice) {
-                return new Builder(
-                        model,
-                        messages,
-                        frequencyPenalty,
-                        logitBias,
-                        maxTokens,
-                        n,
-                        presencePenalty,
-                        seed,
-                        stop,
-                        stream,
-                        temperature,
-                        topP,
-                        tools,
-                        toolChoice,
-                        user
-                );
-            }
+        public Builder withToolChoice(ChatTool.ChatToolChoice toolChoice) {
+            return new Builder(
+                    model,
+                    messages,
+                    frequencyPenalty,
+                    logitBias,
+                    maxTokens,
+                    n,
+                    presencePenalty,
+                    seed,
+                    stop,
+                    stream,
+                    temperature,
+                    topP,
+                    tools,
+                    toolChoice,
+                    user
+            );
+        }
 
-            public Builder withUser(String user) {
-                return new Builder(
-                        model,
-                        messages,
-                        frequencyPenalty,
-                        logitBias,
-                        maxTokens,
-                        n,
-                        presencePenalty,
-                        seed,
-                        stop,
-                        stream,
-                        temperature,
-                        topP,
-                        tools,
-                        toolChoice,
-                        user
-                );
-            }
+        public Builder withUser(String user) {
+            return new Builder(
+                    model,
+                    messages,
+                    frequencyPenalty,
+                    logitBias,
+                    maxTokens,
+                    n,
+                    presencePenalty,
+                    seed,
+                    stop,
+                    stream,
+                    temperature,
+                    topP,
+                    tools,
+                    toolChoice,
+                    user
+            );
+        }
 
-            public ChatMessageRequest build() {
-                return new ChatMessageRequest(
-                        model,
-                        messages,
-                        frequencyPenalty,
-                        logitBias,
-                        maxTokens,
-                        n,
-                        presencePenalty,
-                        seed,
-                        stop,
-                        stream,
-                        temperature,
-                        topP,
-                        tools,
-                        toolChoice,
-                        user
-                );
-            }
+        public ChatMessageRequest build() {
+            return new ChatMessageRequest(
+                    model,
+                    messages,
+                    frequencyPenalty,
+                    logitBias,
+                    maxTokens,
+                    n,
+                    presencePenalty,
+                    seed,
+                    stop,
+                    stream,
+                    temperature,
+                    topP,
+                    tools,
+                    toolChoice,
+                    user
+            );
+        }
 
         public String model() {
             return model;
@@ -674,47 +640,70 @@ public final class ChatMessageRequest
                 return false;
             }
             var that = (Builder) obj;
-            return Objects.equals(this.model,
-                                  that.model) && Objects.equals(this.messages,
-                                                                that.messages)
-                    && Objects.equals(this.frequencyPenalty,
-                                      that.frequencyPenalty)
-                    && Objects.equals(this.logitBias,
-                                      that.logitBias) && Objects.equals(this.maxTokens,
-                                                                        that.maxTokens) && Objects.equals(this.n,
-                                                                                                          that.n)
-                    && Objects.equals(this.presencePenalty,
-                                      that.presencePenalty)
-                    && Objects.equals(this.seed,
-                                      that.seed) && Objects.equals(this.stop,
-                                                                   that.stop)
-                    && this.stream == that.stream && Objects.equals(this.temperature,
-                                                                    that.temperature)
-                    && Objects.equals(this.topP,
-                                      that.topP) && Objects.equals(this.tools,
-                                                                   that.tools)
-                    && Objects.equals(this.toolChoice,
-                                      that.toolChoice) && Objects.equals(this.user,
-                                                                         that.user);
+            return Objects.equals(
+                    this.model,
+                    that.model
+            ) && Objects.equals(
+                    this.messages,
+                    that.messages
+            ) && Objects.equals(
+                    this.frequencyPenalty,
+                    that.frequencyPenalty
+            ) && Objects.equals(
+                    this.logitBias,
+                    that.logitBias
+            ) && Objects.equals(
+                    this.maxTokens,
+                    that.maxTokens
+            ) && Objects.equals(
+                    this.n,
+                    that.n
+            ) && Objects.equals(
+                    this.presencePenalty,
+                    that.presencePenalty
+            ) && Objects.equals(
+                    this.seed,
+                    that.seed
+            ) && Objects.equals(
+                    this.stop,
+                    that.stop
+            ) && this.stream == that.stream && Objects.equals(
+                    this.temperature,
+                    that.temperature
+            ) && Objects.equals(
+                    this.topP,
+                    that.topP
+            ) && Objects.equals(
+                    this.tools,
+                    that.tools
+            ) && Objects.equals(
+                    this.toolChoice,
+                    that.toolChoice
+            ) && Objects.equals(
+                    this.user,
+                    that.user
+            );
         }
 
         @Override
         public int hashCode() {
-            return Objects.hash(model,
-                                messages,
-                                frequencyPenalty,
-                                logitBias,
-                                maxTokens,
-                                n,
-                                presencePenalty,
-                                seed,
-                                stop,
-                                stream,
-                                temperature,
-                                topP,
-                                tools,
-                                toolChoice,
-                                user);
+            return Objects.hash(
+                    model,
+                    messages,
+                    frequencyPenalty,
+                    logitBias,
+                    maxTokens,
+                    n,
+                    presencePenalty,
+                    seed,
+                    stop,
+                    stream,
+                    temperature,
+                    topP,
+                    tools,
+                    toolChoice,
+                    user
+            );
         }
 
         @Override
@@ -730,5 +719,5 @@ public final class ChatMessageRequest
                     + user + ']';
         }
 
-        }
+    }
 }

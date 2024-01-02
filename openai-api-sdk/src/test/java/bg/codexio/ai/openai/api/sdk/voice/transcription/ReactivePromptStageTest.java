@@ -44,7 +44,7 @@ public class ReactivePromptStageTest {
                 this.reactivePromptStage.requestBuilder.withPrompt(TEST_INPUT)
                                                        .build()
                                                        .toString(),
-                result.getResponse()
+                result.response()
                       .block()
                       .text()
         );
@@ -63,7 +63,7 @@ public class ReactivePromptStageTest {
         assertEquals(
                 this.reactivePromptStage.requestBuilder.build()
                                                        .toString(),
-                result.getResponse()
+                result.response()
                       .block()
                       .text()
         );

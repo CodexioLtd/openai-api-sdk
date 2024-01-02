@@ -1,7 +1,10 @@
 package bg.codexio.ai.openai.api.payload.chat.response;
 
 import bg.codexio.ai.openai.api.payload.Mergeable;
+import com.fasterxml.jackson.annotation.JsonProperty;
 
+import java.util.Arrays;
+import java.util.Collections;
 import java.util.List;
 import java.util.Objects;
 
@@ -18,9 +21,10 @@ public final class ChatMessageResponse
     private final ChatUsageResponse usage;
     private final List<ChatChoiceResponse> choices;
 
-    /**
-     *
-     */
+    public ChatMessageResponse() {
+        this(null, null, 1, null, null, null);
+    }
+
     public ChatMessageResponse(
             String id,
             String object,
@@ -62,8 +66,8 @@ public final class ChatMessageResponse
                 this.model(),
                 thisUsage.merge(otherUsage),
                 Mergeable.join(
-                        this.choices,
-                        other.choices,
+                        this.choices(),
+                        other.choices(),
                         c -> c.delta() != null || c.message() != null,
                         c -> c.delta() != null
                              ? c.delta()
@@ -77,26 +81,32 @@ public final class ChatMessageResponse
         );
     }
 
+    @JsonProperty
     public String id() {
         return id;
     }
 
+    @JsonProperty
     public String object() {
         return object;
     }
 
+    @JsonProperty
     public long created() {
         return created;
     }
 
+    @JsonProperty
     public String model() {
         return model;
     }
 
+    @JsonProperty
     public ChatUsageResponse usage() {
         return usage;
     }
 
+    @JsonProperty
     public List<ChatChoiceResponse> choices() {
         return choices;
     }

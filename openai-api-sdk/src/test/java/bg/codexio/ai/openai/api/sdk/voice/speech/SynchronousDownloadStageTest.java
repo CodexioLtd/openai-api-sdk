@@ -4,6 +4,8 @@ import bg.codexio.ai.openai.api.http.voice.SpeechHttpExecutor;
 import bg.codexio.ai.openai.api.payload.voice.AudioFormat;
 import bg.codexio.ai.openai.api.payload.voice.request.SpeechRequest;
 import bg.codexio.ai.openai.api.payload.voice.response.AudioBinaryResponse;
+import bg.codexio.ai.openai.api.sdk.voice.speech.DownloadExecutor;
+import bg.codexio.ai.openai.api.sdk.voice.speech.SynchronousDownloadStage;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.MockedStatic;
@@ -24,7 +26,6 @@ public class SynchronousDownloadStageTest {
 
     private SynchronousDownloadStage synchronousDownloadStage;
 
-
     @BeforeEach
     public void setUp() {
         this.synchronousDownloadStage = new SynchronousDownloadStage(
@@ -41,13 +42,12 @@ public class SynchronousDownloadStageTest {
     @Test
     public void testDownloadTo_withImaginaryFolder_shouldUseCorrectMediaTypeAndResponse()
             throws IOException {
-        try (var mockData = this.startMocking()) {
+        try (var mockData = startMocking()) {
             var filePath = "var/files/resultFile";
             mockData.executorMock()
                     .thenReturn(new File(filePath));
 
-            var result =
-                    this.synchronousDownloadStage.downloadTo(mockData.targetFolder());
+            var result = this.synchronousDownloadStage.downloadTo(mockData.targetFolder());
             assertEquals(
                     filePath.replace(
                             "/",
@@ -60,7 +60,7 @@ public class SynchronousDownloadStageTest {
 
     @Test
     public void testDownloadTo_withErrorWhileDownloading_shouldThrowException() {
-        try (var mockData = this.startMocking()) {
+        try (var mockData = startMocking()) {
             mockData.executorMock()
                     .thenThrow(new RuntimeException("Cannot download"));
 
@@ -74,7 +74,6 @@ public class SynchronousDownloadStageTest {
             );
         }
     }
-
 
     private MockData startMocking() {
         var targetFolder = new File("imaginaryFolder");
@@ -95,16 +94,32 @@ public class SynchronousDownloadStageTest {
         );
     }
 
-    record MockData(
-            OngoingStubbing<Object> executorMock,
-            File targetFolder,
-            MockedStatic<DownloadExecutor> utils
-    )
-            implements AutoCloseable {
+    static class MockData implements AutoCloseable {
+        private final OngoingStubbing<Object> executorMock;
+        private final File targetFolder;
+        private final MockedStatic<DownloadExecutor> utils;
+
+        public MockData(OngoingStubbing<Object> executorMock, File targetFolder, MockedStatic<DownloadExecutor> utils) {
+            this.executorMock = executorMock;
+            this.targetFolder = targetFolder;
+            this.utils = utils;
+        }
+
+        public OngoingStubbing<Object> executorMock() {
+            return executorMock;
+        }
+
+        public File targetFolder() {
+            return targetFolder;
+        }
+
+        public MockedStatic<DownloadExecutor> utils() {
+            return utils;
+        }
+
         @Override
         public void close() {
-            this.utils()
-                .close();
+            utils().close();
         }
     }
 }

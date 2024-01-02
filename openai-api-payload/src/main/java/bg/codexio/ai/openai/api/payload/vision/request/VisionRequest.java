@@ -1,6 +1,7 @@
 package bg.codexio.ai.openai.api.payload.vision.request;
 
 import bg.codexio.ai.openai.api.payload.Streamable;
+import com.fasterxml.jackson.annotation.JsonProperty;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -16,9 +17,10 @@ public final class VisionRequest
     private final List<MessageContentHolder> messages;
     private final Integer maxTokens;
 
-    /**
-     *
-     */
+    public VisionRequest() {
+        this(null, null, null);
+    }
+
     public VisionRequest(
             String model,
             List<MessageContentHolder> messages,
@@ -41,6 +43,23 @@ public final class VisionRequest
     public boolean stream() {
         return false;
     }
+
+
+    @JsonProperty
+    public String model() {
+        return model;
+    }
+
+    @JsonProperty
+    public List<MessageContentHolder> messages() {
+        return messages;
+    }
+
+    @JsonProperty
+    public Integer maxTokens() {
+        return maxTokens;
+    }
+
 
     public VisionRequest withModel(String model) {
         return new VisionRequest(
@@ -84,18 +103,6 @@ public final class VisionRequest
                 this.messages(),
                 maxTokens
         );
-    }
-
-    public String model() {
-        return model;
-    }
-
-    public List<MessageContentHolder> messages() {
-        return messages;
-    }
-
-    public Integer maxTokens() {
-        return maxTokens;
     }
 
     @Override

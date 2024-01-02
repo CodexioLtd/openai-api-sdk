@@ -1,6 +1,7 @@
 package bg.codexio.ai.openai.api.payload.images.response;
 
 import bg.codexio.ai.openai.api.payload.Mergeable;
+import com.fasterxml.jackson.annotation.JsonProperty;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -10,6 +11,10 @@ public final class ImageDataResponse
         implements Mergeable<ImageDataResponse> {
     private final Long created;
     private final List<ImageResponse> data;
+
+    public ImageDataResponse() {
+        this(null, null);
+    }
 
     public ImageDataResponse(
             Long created,
@@ -53,10 +58,12 @@ public final class ImageDataResponse
         );
     }
 
+    @JsonProperty
     public Long created() {
         return created;
     }
 
+    @JsonProperty
     public List<ImageResponse> data() {
         return data;
     }

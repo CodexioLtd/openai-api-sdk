@@ -1,5 +1,7 @@
 package bg.codexio.ai.openai.api.payload.vision.request;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
+
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
@@ -8,9 +10,19 @@ public final class MessageContentHolder {
     private final List<VisionMessage> content;
 
     public MessageContentHolder(
+    ) {
+        this(null);
+    }
+
+    public MessageContentHolder(
             List<VisionMessage> content
     ) {
         this.content = content;
+    }
+
+    @JsonProperty
+    public List<VisionMessage> content() {
+        return content;
     }
 
     public String getRole() {
@@ -35,10 +47,6 @@ public final class MessageContentHolder {
         );
 
         return new MessageContentHolder(content);
-    }
-
-    public List<VisionMessage> content() {
-        return content;
     }
 
     @Override

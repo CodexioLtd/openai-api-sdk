@@ -1,6 +1,8 @@
 package bg.codexio.ai.openai.api.payload.chat.response;
 
 import bg.codexio.ai.openai.api.payload.Mergeable;
+import com.fasterxml.jackson.annotation.JsonAutoDetect;
+import com.fasterxml.jackson.annotation.JsonProperty;
 
 import java.util.Objects;
 
@@ -9,6 +11,10 @@ public final class ChatUsageResponse
     private final int promptTokens;
     private final int completionTokens;
     private final int totalTokens;
+
+    public ChatUsageResponse() {
+        this(0, 0, 0);
+    }
 
     public ChatUsageResponse(
             int promptTokens,
@@ -37,14 +43,17 @@ public final class ChatUsageResponse
         );
     }
 
+    @JsonProperty
     public int promptTokens() {
         return promptTokens;
     }
 
+    @JsonProperty
     public int completionTokens() {
         return completionTokens;
     }
 
+    @JsonProperty
     public int totalTokens() {
         return totalTokens;
     }

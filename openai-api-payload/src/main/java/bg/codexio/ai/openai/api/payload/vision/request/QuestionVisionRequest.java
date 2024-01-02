@@ -1,10 +1,16 @@
 package bg.codexio.ai.openai.api.payload.vision.request;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
+
 import java.util.Objects;
 
 public final class QuestionVisionRequest
         implements VisionMessage {
     private final String text;
+
+    public QuestionVisionRequest() {
+        this(null);
+    }
 
     public QuestionVisionRequest(String text) {
         this.text = text;
@@ -15,6 +21,7 @@ public final class QuestionVisionRequest
         return "text";
     }
 
+    @JsonProperty
     public String text() {
         return text;
     }

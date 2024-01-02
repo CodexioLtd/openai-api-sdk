@@ -1,6 +1,7 @@
 package bg.codexio.ai.openai.api.payload.images.response;
 
 import bg.codexio.ai.openai.api.payload.Mergeable;
+import com.fasterxml.jackson.annotation.JsonProperty;
 
 import java.util.Objects;
 
@@ -9,6 +10,10 @@ public final class ImageResponse
     private final String b64Json;
     private final String url;
     private final String revisedPrompt;
+
+    public ImageResponse() {
+        this(null, null, null);
+    }
 
     public ImageResponse(
             String b64Json,
@@ -46,14 +51,17 @@ public final class ImageResponse
         );
     }
 
+    @JsonProperty
     public String b64Json() {
         return b64Json;
     }
 
+    @JsonProperty
     public String url() {
         return url;
     }
 
+    @JsonProperty
     public String revisedPrompt() {
         return revisedPrompt;
     }

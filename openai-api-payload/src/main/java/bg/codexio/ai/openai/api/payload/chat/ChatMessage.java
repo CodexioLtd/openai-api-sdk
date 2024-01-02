@@ -1,6 +1,7 @@
 package bg.codexio.ai.openai.api.payload.chat;
 
 import bg.codexio.ai.openai.api.payload.chat.response.ToolCallResponse;
+import com.fasterxml.jackson.annotation.JsonProperty;
 
 import java.util.List;
 import java.util.Objects;
@@ -9,6 +10,10 @@ public final class ChatMessage {
     private final String role;
     private final String content;
     private final List<ToolCallResponse> toolCalls;
+
+    public ChatMessage() {
+        this(null, null, null);
+    }
 
     public ChatMessage(
             String role,
@@ -20,6 +25,7 @@ public final class ChatMessage {
         this.toolCalls = toolCalls;
     }
 
+    @JsonProperty
     public String role() {
         return Objects.requireNonNullElse(
                 this.role,
@@ -27,10 +33,12 @@ public final class ChatMessage {
         );
     }
 
+    @JsonProperty
     public String content() {
         return content;
     }
 
+    @JsonProperty
     public List<ToolCallResponse> toolCalls() {
         return toolCalls;
     }

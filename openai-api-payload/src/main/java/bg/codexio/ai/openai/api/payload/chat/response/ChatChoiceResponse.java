@@ -2,6 +2,7 @@ package bg.codexio.ai.openai.api.payload.chat.response;
 
 import bg.codexio.ai.openai.api.payload.Mergeable;
 import bg.codexio.ai.openai.api.payload.chat.ChatMessage;
+import com.fasterxml.jackson.annotation.JsonProperty;
 
 import java.util.Objects;
 
@@ -11,6 +12,11 @@ public final class ChatChoiceResponse
     private final ChatMessage delta;
     private final String finishReason;
     private final int index;
+
+    public ChatChoiceResponse(
+    ) {
+        this(null, null, null, 1);
+    }
 
     public ChatChoiceResponse(
             ChatMessage message,
@@ -85,18 +91,22 @@ public final class ChatChoiceResponse
         );
     }
 
+    @JsonProperty
     public ChatMessage message() {
         return message;
     }
 
+    @JsonProperty
     public ChatMessage delta() {
         return delta;
     }
 
+    @JsonProperty
     public String finishReason() {
         return finishReason;
     }
 
+    @JsonProperty
     public int index() {
         return index;
     }

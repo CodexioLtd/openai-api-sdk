@@ -1,8 +1,10 @@
 package bg.codexio.ai.openai.api.payload.voice.request;
 
 import bg.codexio.ai.openai.api.payload.Streamable;
+import com.fasterxml.jackson.annotation.JsonProperty;
 
 import java.util.Objects;
+import java.util.stream.Stream;
 
 /**
  * Represents a
@@ -16,9 +18,16 @@ public final class SpeechRequest
     private final String responseFormat;
     private final Double speed;
 
-    /**
-     *
-     */
+    public SpeechRequest() {
+        this(
+                null,
+                null,
+                null,
+                null,
+                null
+        );
+    }
+
     public SpeechRequest(
             String model,
             String input,
@@ -48,22 +57,27 @@ public final class SpeechRequest
         return false;
     }
 
+    @JsonProperty
     public String model() {
         return model;
     }
 
+    @JsonProperty
     public String input() {
         return input;
     }
 
+    @JsonProperty
     public String voice() {
         return voice;
     }
 
+    @JsonProperty
     public String responseFormat() {
         return responseFormat;
     }
 
+    @JsonProperty
     public Double speed() {
         return speed;
     }
@@ -77,23 +91,33 @@ public final class SpeechRequest
             return false;
         }
         var that = (SpeechRequest) obj;
-        return Objects.equals(this.model,
-                              that.model) && Objects.equals(this.input,
-                                                            that.input)
-                && Objects.equals(this.voice,
-                                  that.voice) && Objects.equals(this.responseFormat,
-                                                                that.responseFormat)
-                && Objects.equals(this.speed,
-                                  that.speed);
+        return Objects.equals(
+                this.model,
+                that.model
+        ) && Objects.equals(
+                this.input,
+                that.input
+        ) && Objects.equals(
+                this.voice,
+                that.voice
+        ) && Objects.equals(
+                this.responseFormat,
+                that.responseFormat
+        ) && Objects.equals(
+                this.speed,
+                that.speed
+        );
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(model,
-                            input,
-                            voice,
-                            responseFormat,
-                            speed);
+        return Objects.hash(
+                model,
+                input,
+                voice,
+                responseFormat,
+                speed
+        );
     }
 
     @Override
@@ -125,65 +149,65 @@ public final class SpeechRequest
             this.speed = speed;
         }
 
-            public Builder withModel(String model) {
-                return new Builder(
-                        model,
-                        input,
-                        voice,
-                        responseFormat,
-                        speed
-                );
-            }
+        public Builder withModel(String model) {
+            return new Builder(
+                    model,
+                    input,
+                    voice,
+                    responseFormat,
+                    speed
+            );
+        }
 
-            public Builder withInput(String input) {
-                return new Builder(
-                        model,
-                        input,
-                        voice,
-                        responseFormat,
-                        speed
-                );
-            }
+        public Builder withInput(String input) {
+            return new Builder(
+                    model,
+                    input,
+                    voice,
+                    responseFormat,
+                    speed
+            );
+        }
 
-            public Builder withVoice(String voice) {
-                return new Builder(
-                        model,
-                        input,
-                        voice,
-                        responseFormat,
-                        speed
-                );
-            }
+        public Builder withVoice(String voice) {
+            return new Builder(
+                    model,
+                    input,
+                    voice,
+                    responseFormat,
+                    speed
+            );
+        }
 
-            public Builder withFormat(String responseFormat) {
-                return new Builder(
-                        model,
-                        input,
-                        voice,
-                        responseFormat,
-                        speed
-                );
-            }
+        public Builder withFormat(String responseFormat) {
+            return new Builder(
+                    model,
+                    input,
+                    voice,
+                    responseFormat,
+                    speed
+            );
+        }
 
-            public Builder withSpeed(Double speed) {
-                return new Builder(
-                        model,
-                        input,
-                        voice,
-                        responseFormat,
-                        speed
-                );
-            }
+        public Builder withSpeed(Double speed) {
+            return new Builder(
+                    model,
+                    input,
+                    voice,
+                    responseFormat,
+                    speed
+            );
+        }
 
-            public SpeechRequest build() {
-                return new SpeechRequest(
-                        model,
-                        input,
-                        voice,
-                        responseFormat,
-                        speed
-                );
-            }
+        public SpeechRequest build() {
+            return new SpeechRequest(
+                    model,
+                    input,
+                    voice,
+                    responseFormat,
+                    speed
+            );
+        }
 
         public String model() {
             return model;
@@ -214,23 +238,33 @@ public final class SpeechRequest
                 return false;
             }
             var that = (Builder) obj;
-            return Objects.equals(this.model,
-                                  that.model) && Objects.equals(this.input,
-                                                                that.input)
-                    && Objects.equals(this.voice,
-                                      that.voice) && Objects.equals(this.responseFormat,
-                                                                    that.responseFormat)
-                    && Objects.equals(this.speed,
-                                      that.speed);
+            return Objects.equals(
+                    this.model,
+                    that.model
+            ) && Objects.equals(
+                    this.input,
+                    that.input
+            ) && Objects.equals(
+                    this.voice,
+                    that.voice
+            ) && Objects.equals(
+                    this.responseFormat,
+                    that.responseFormat
+            ) && Objects.equals(
+                    this.speed,
+                    that.speed
+            );
         }
 
         @Override
         public int hashCode() {
-            return Objects.hash(model,
-                                input,
-                                voice,
-                                responseFormat,
-                                speed);
+            return Objects.hash(
+                    model,
+                    input,
+                    voice,
+                    responseFormat,
+                    speed
+            );
         }
 
         @Override
@@ -240,5 +274,5 @@ public final class SpeechRequest
                     + responseFormat + ", " + "speed=" + speed + ']';
         }
 
-        }
+    }
 }

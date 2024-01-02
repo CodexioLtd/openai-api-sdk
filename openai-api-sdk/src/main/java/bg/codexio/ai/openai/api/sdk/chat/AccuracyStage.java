@@ -30,7 +30,7 @@ public class AccuracyStage
     public AccuracyStage withTemperature(Creativity temperature) {
         return new AccuracyStage(
                 this.executor,
-                this.requestBuilder.withTermperature(temperature.val())
+                this.requestBuilder.withTemperature(temperature.val())
         );
     }
 

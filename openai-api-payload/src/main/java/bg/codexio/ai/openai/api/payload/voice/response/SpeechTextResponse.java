@@ -1,6 +1,7 @@
 package bg.codexio.ai.openai.api.payload.voice.response;
 
 import bg.codexio.ai.openai.api.payload.Mergeable;
+import com.fasterxml.jackson.annotation.JsonProperty;
 
 import java.util.Objects;
 
@@ -12,13 +13,19 @@ public final class SpeechTextResponse
         implements Mergeable<SpeechTextResponse> {
     private final String text;
 
-    /**
-     *
-     */
+    public SpeechTextResponse() {
+        this(null);
+    }
+
     public SpeechTextResponse(
             String text
     ) {
         this.text = text;
+    }
+
+    @JsonProperty
+    public String text() {
+        return text;
     }
 
     @Override
@@ -30,10 +37,6 @@ public final class SpeechTextResponse
                 other.text(),
                 ""
         ));
-    }
-
-    public String text() {
-        return text;
     }
 
     @Override

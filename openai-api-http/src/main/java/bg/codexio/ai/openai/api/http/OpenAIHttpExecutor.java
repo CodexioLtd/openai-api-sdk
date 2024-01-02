@@ -83,11 +83,11 @@ public interface OpenAIHttpExecutor<I extends Streamable, O extends Mergeable<O>
             this.response = response;
         }
 
-        public Flux<String> getLines() {
+        public Flux<String> lines() {
             return lines;
         }
 
-        public Mono<O> getResponse() {
+        public Mono<O> response() {
             return response;
         }
     }

@@ -8,6 +8,10 @@ public final class FunctionTool
         implements ChatTool {
     private final ChatFunction function;
 
+    public FunctionTool() {
+        this(null);
+    }
+
     public FunctionTool(
             ChatFunction function
     ) {

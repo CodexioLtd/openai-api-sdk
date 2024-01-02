@@ -1,6 +1,7 @@
 package bg.codexio.ai.openai.api.payload.chat.response;
 
 import bg.codexio.ai.openai.api.payload.Mergeable;
+import com.fasterxml.jackson.annotation.JsonProperty;
 
 import java.util.Objects;
 
@@ -10,6 +11,10 @@ public final class ToolCallResponse
     private final String id;
     private final String type;
     private final FunctionResponse function;
+
+    public ToolCallResponse() {
+        this(null, null, null, null);
+    }
 
     public ToolCallResponse(
             Integer index,
@@ -56,18 +61,22 @@ public final class ToolCallResponse
         );
     }
 
+    @JsonProperty
     public Integer index() {
         return index;
     }
 
+    @JsonProperty
     public String id() {
         return id;
     }
 
+    @JsonProperty
     public String type() {
         return type;
     }
 
+    @JsonProperty
     public FunctionResponse function() {
         return function;
     }

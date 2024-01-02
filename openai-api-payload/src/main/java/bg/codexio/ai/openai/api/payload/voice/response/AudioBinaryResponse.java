@@ -1,6 +1,7 @@
 package bg.codexio.ai.openai.api.payload.voice.response;
 
 import bg.codexio.ai.openai.api.payload.Mergeable;
+import com.fasterxml.jackson.annotation.JsonProperty;
 
 import java.util.Arrays;
 import java.util.Objects;
@@ -13,13 +14,19 @@ public final class AudioBinaryResponse
         implements Mergeable<AudioBinaryResponse> {
     private final byte[] bytes;
 
-    /**
-     *
-     */
+    public AudioBinaryResponse() {
+        this(null);
+    }
+
     public AudioBinaryResponse(
             byte[] bytes
     ) {
         this.bytes = bytes;
+    }
+
+    @JsonProperty
+    public byte[] bytes() {
+        return bytes;
     }
 
     @Override
@@ -48,10 +55,6 @@ public final class AudioBinaryResponse
     @Override
     public int hashCode() {
         return Arrays.hashCode(bytes);
-    }
-
-    public byte[] bytes() {
-        return bytes;
     }
 
     @Override

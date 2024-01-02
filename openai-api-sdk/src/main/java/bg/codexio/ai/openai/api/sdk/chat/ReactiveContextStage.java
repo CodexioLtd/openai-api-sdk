@@ -69,7 +69,7 @@ public class ReactiveContextStage
      */
     public Mono<String> ask(String... questions) {
         return this.askRaw(questions)
-                   .getResponse()
+                   .response()
                    .map(r -> r.choices()
                               .get(0)
                               .message()

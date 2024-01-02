@@ -18,7 +18,7 @@ public class ImmediateContextStageTest {
                 CHAT_EXECUTOR,
                 ChatMessageRequest.builder()
                                   .withModel(MODEL_TYPE.name())
-                                  .withTermperature(CREATIVITY.val())
+                                  .withTemperature(CREATIVITY.val())
                                   .withTopP(CREATIVITY.val())
                                   .withFrequencyPenalty(REPETITION_PENALTY.val())
                                   .withPresencePenalty(REPETITION_PENALTY.val())

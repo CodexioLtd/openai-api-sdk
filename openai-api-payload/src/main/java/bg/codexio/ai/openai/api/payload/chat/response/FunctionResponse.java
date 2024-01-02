@@ -1,6 +1,7 @@
 package bg.codexio.ai.openai.api.payload.chat.response;
 
 import bg.codexio.ai.openai.api.payload.Mergeable;
+import com.fasterxml.jackson.annotation.JsonProperty;
 
 import java.util.Objects;
 
@@ -8,6 +9,11 @@ public final class FunctionResponse
         implements Mergeable<FunctionResponse> {
     private final String name;
     private final String arguments;
+
+    public FunctionResponse(
+    ) {
+        this(null, null);
+    }
 
     public FunctionResponse(
             String name,
@@ -40,10 +46,12 @@ public final class FunctionResponse
         );
     }
 
+    @JsonProperty
     public String name() {
         return name;
     }
 
+    @JsonProperty
     public String arguments() {
         return arguments;
     }

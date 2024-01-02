@@ -40,7 +40,7 @@ public class ReactiveExecutor<R extends ImageRequest>
     public Mono<ImageDataResponse> get() {
         return this.executor.executeReactive(this.builder.specificRequestCreator()
                                                          .apply(this.builder))
-                            .getResponse();
+                            .response();
     }
 
     /**
@@ -52,7 +52,7 @@ public class ReactiveExecutor<R extends ImageRequest>
     public Flux<File> download(File targetFolder) {
         return this.executor.executeReactive(this.builder.specificRequestCreator()
                                                          .apply(this.builder))
-                            .getResponse()
+                            .response()
                             .flatMapMany(response -> Flux.fromIterable(response.data()))
                             .handle((image, sink) -> {
                                 try {
