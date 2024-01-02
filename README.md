@@ -122,7 +122,7 @@ In the next chapters you will see an explanation of all key concepts.
 <dependency>
     <groupId>bg.codexio.ai</groupId>
     <artifactId>openai-api-sdk</artifactId>
-    <version>0.8.0.BETA-JDK17</version>
+    <version>0.8.0.BETA-JDK11</version>
 </dependency>
 ```
 
@@ -680,7 +680,7 @@ public class Main {
                      .subtitles()
                      .reactive() // starts here
                      .guide("This is my graduate speech.")
-                     .getResponse()
+                     .response()
                      .subscribe(response -> System.out.println(response.text()));
     }
 }
