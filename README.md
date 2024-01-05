@@ -122,7 +122,7 @@ In the next chapters you will see an explanation of all key concepts.
 <dependency>
     <groupId>bg.codexio.ai</groupId>
     <artifactId>openai-api-sdk</artifactId>
-    <version>0.8.0.BETA-JDK11</version>
+    <version>0.8.1.BETA-JDK11-SNAPSHOT</version>
 </dependency>
 ```
 
@@ -274,7 +274,7 @@ for different JDKs. See the table below:
 |------------------------------------------------------------------------------------|------------|-----------------------------------------|
 | [master](https://github.com/CodexioLtd/openai-api-sdk/tree/master)                 | 21         | X.Y.Z[.a] (e.g. 0.8.0.BETA)             |
 | [release/jdk-17](https://github.com/CodexioLtd/openai-api-sdk/tree/release/jdk-17) | 17         | X.Y.Z[.a]-JDK17 (e.g. 0.8.0.BETA-JDK17) |
-| [release/jdk-11](https://github.com/CodexioLtd/openai-api-sdk/tree/release/jdk-11) | 11         | X.Y.Z[.a]-JDK11 (e.g. 0.8.0.BETA-JDK11) |
+| [release/jdk-11](https://github.com/CodexioLtd/openai-api-sdk/tree/release/jdk-11) | 11         | X.Y.Z[.a]-JDK11 (e.g. 0.8.1.BETA-JDK11-SNAPSHOT) |
 | [release/jdk-8](https://github.com/CodexioLtd/openai-api-sdk/tree/release/jdk-8)   | 8          | X.Y.Z[.a]-JDK8 (e.g. 0.8.0.BETA-JDK8)   |
 
 ## Available SDKs
