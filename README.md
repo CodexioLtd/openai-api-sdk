@@ -10,7 +10,7 @@
 
 <div align="center">
 
-[![Maven Central](https://img.shields.io/maven-central/v/bg.codexio.ai/openai-api-sdk?versionSuffix=JDK17&color=EE5A9C)](https://central.sonatype.com/artifact/bg.codexio.ai/openai-api-sdk)
+[![Maven Central](https://img.shields.io/maven-central/v/bg.codexio.ai/openai-api-sdk?versionSuffix=JDK11&color=EE5A9C)](https://central.sonatype.com/artifact/bg.codexio.ai/openai-api-sdk)
 [![Build](https://github.com/CodexioLtd/openai-api-sdk/actions/workflows/maven.yml/badge.svg)](https://github.com/CodexioLtd/openai-api-sdk/actions/workflows/maven.yml)
 [![Coverage](https://codecov.io/github/CodexioLtd/openai-api-sdk/graph/badge.svg?token=013OEUIYWI)](https://codecov.io/github/CodexioLtd/openai-api-sdk)
 [![License](https://img.shields.io/github/license/CodexioLtd/openai-api-sdk.svg)](https://github.com/CodexioLtd/openai-api-sdk/blob/master/LICENSE)
