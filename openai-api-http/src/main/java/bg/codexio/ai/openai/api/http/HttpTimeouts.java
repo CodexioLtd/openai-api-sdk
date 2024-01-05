@@ -10,9 +10,6 @@ public final class HttpTimeouts {
     private final HttpTimeout connect;
     private final HttpTimeout read;
 
-    /**
-     *
-     */
     public HttpTimeouts(
             HttpTimeout call,
             HttpTimeout connect,
