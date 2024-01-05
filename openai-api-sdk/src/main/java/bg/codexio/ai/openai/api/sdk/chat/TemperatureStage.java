@@ -34,7 +34,7 @@ public class TemperatureStage
     public MessageStage creativeAs(Creativity creativity) {
         return new MessageStage(
                 this.executor,
-                this.requestBuilder.withTermperature(creativity.val())
+                this.requestBuilder.withTemperature(creativity.val())
         );
     }
 
@@ -50,7 +50,7 @@ public class TemperatureStage
     public MessageStage scaleRepetitionToCreativity(Creativity creativity) {
         return new MessageStage(
                 this.executor,
-                this.requestBuilder.withTermperature(creativity.val())
+                this.requestBuilder.withTemperature(creativity.val())
                                    .withTopP(creativity.val()
                                                      == Creativity.BALANCE_BETWEEN_NOVELTY_AND_PREDICTABILITY.val()
                                              ?

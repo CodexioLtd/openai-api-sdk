@@ -1,6 +1,7 @@
 package bg.codexio.ai.openai.api.payload.voice.response;
 
 import bg.codexio.ai.openai.api.payload.Mergeable;
+import com.fasterxml.jackson.annotation.JsonProperty;
 
 import java.util.Objects;
 
@@ -8,10 +9,25 @@ import java.util.Objects;
  * Represents an
  * <a href="https://platform.openai.com/docs/api-reference/audiot>Audio#response</a>
  */
-public record SpeechTextResponse(
-        String text
-)
+public final class SpeechTextResponse
         implements Mergeable<SpeechTextResponse> {
+    private final String text;
+
+    public SpeechTextResponse() {
+        this(null);
+    }
+
+    public SpeechTextResponse(
+            String text
+    ) {
+        this.text = text;
+    }
+
+    @JsonProperty
+    public String text() {
+        return text;
+    }
+
     @Override
     public SpeechTextResponse merge(SpeechTextResponse other) {
         return new SpeechTextResponse(Objects.requireNonNullElse(
@@ -22,4 +38,30 @@ public record SpeechTextResponse(
                 ""
         ));
     }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (obj == this) {
+            return true;
+        }
+        if (obj == null || obj.getClass() != this.getClass()) {
+            return false;
+        }
+        var that = (SpeechTextResponse) obj;
+        return Objects.equals(
+                this.text,
+                that.text
+        );
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(text);
+    }
+
+    @Override
+    public String toString() {
+        return "SpeechTextResponse[" + "text=" + text + ']';
+    }
+
 }

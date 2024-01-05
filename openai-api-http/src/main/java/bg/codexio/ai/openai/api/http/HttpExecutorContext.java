@@ -2,19 +2,28 @@ package bg.codexio.ai.openai.api.http;
 
 import bg.codexio.ai.openai.api.payload.credentials.ApiCredentials;
 
+import java.util.Objects;
 import java.util.concurrent.TimeUnit;
 
 /**
  * Context object holding authentication
  * and timeout configuration
- *
- * @param credentials
- * @param timeouts
  */
-public record HttpExecutorContext(
-        ApiCredentials credentials,
-        HttpTimeouts timeouts
-) {
+public final class HttpExecutorContext {
+    private final ApiCredentials credentials;
+    private final HttpTimeouts timeouts;
+
+    /**
+     * @param credentials
+     * @param timeouts
+     */
+    public HttpExecutorContext(
+            ApiCredentials credentials,
+            HttpTimeouts timeouts
+    ) {
+        this.credentials = credentials;
+        this.timeouts = timeouts;
+    }
 
     /**
      * Constructing the object with default timeouts.
@@ -96,4 +105,45 @@ public record HttpExecutorContext(
                 )
         );
     }
+
+    public ApiCredentials credentials() {
+        return credentials;
+    }
+
+    public HttpTimeouts timeouts() {
+        return timeouts;
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (obj == this) {
+            return true;
+        }
+        if (obj == null || obj.getClass() != this.getClass()) {
+            return false;
+        }
+        var that = (HttpExecutorContext) obj;
+        return Objects.equals(
+                this.credentials,
+                that.credentials
+        ) && Objects.equals(
+                this.timeouts,
+                that.timeouts
+        );
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(
+                credentials,
+                timeouts
+        );
+    }
+
+    @Override
+    public String toString() {
+        return "HttpExecutorContext[" + "credentials=" + credentials + ", "
+                + "timeouts=" + timeouts + ']';
+    }
+
 }

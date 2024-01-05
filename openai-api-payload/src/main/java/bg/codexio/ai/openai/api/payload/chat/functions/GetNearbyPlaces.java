@@ -30,8 +30,7 @@ public class GetNearbyPlaces
                                         "string",
                                         "description",
                                         "Comma separated geo coordinates such"
-                                                + " as"
-                                                + " 45,6789,12.3456"
+                                                + " as" + " 45,6789,12.3456"
                                 ),
                                 "radius",
                                 Map.of(
@@ -55,13 +54,33 @@ public class GetNearbyPlaces
         );
     }
 
-    public record GetNearbyPlacesFunctionChoice()
+    public static final class GetNearbyPlacesFunctionChoice
             implements FunctionChoice {
+        public GetNearbyPlacesFunctionChoice() {
+        }
+
         @Override
         public String name() {
             return GetNearbyPlaces.FUNCTION.function()
                                            .getName();
         }
+
+        @Override
+        public boolean equals(Object obj) {
+            return obj == this
+                    || obj != null && obj.getClass() == this.getClass();
+        }
+
+        @Override
+        public int hashCode() {
+            return 1;
+        }
+
+        @Override
+        public String toString() {
+            return "GetNearbyPlacesFunctionChoice[]";
+        }
+
     }
 
 }

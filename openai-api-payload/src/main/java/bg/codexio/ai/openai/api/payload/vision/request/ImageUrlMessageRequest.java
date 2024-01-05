@@ -1,11 +1,56 @@
 package bg.codexio.ai.openai.api.payload.vision.request;
 
-public record ImageUrlMessageRequest(
-        ImageUrlRequest imageUrl
-)
+import com.fasterxml.jackson.annotation.JsonProperty;
+
+import java.util.Objects;
+
+public final class ImageUrlMessageRequest
         implements VisionMessage {
+    private final ImageUrlRequest imageUrl;
+
+    public ImageUrlMessageRequest() {
+        this(null);
+    }
+
+    public ImageUrlMessageRequest(
+            ImageUrlRequest imageUrl
+    ) {
+        this.imageUrl = imageUrl;
+    }
+
     @Override
     public String getType() {
         return "image_url";
     }
+
+    @JsonProperty
+    public ImageUrlRequest imageUrl() {
+        return imageUrl;
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (obj == this) {
+            return true;
+        }
+        if (obj == null || obj.getClass() != this.getClass()) {
+            return false;
+        }
+        var that = (ImageUrlMessageRequest) obj;
+        return Objects.equals(
+                this.imageUrl,
+                that.imageUrl
+        );
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(imageUrl);
+    }
+
+    @Override
+    public String toString() {
+        return "ImageUrlMessageRequest[" + "imageUrl=" + imageUrl + ']';
+    }
+
 }

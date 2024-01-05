@@ -5,7 +5,6 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import static bg.codexio.ai.openai.api.sdk.voice.translation.InternalAssertions.TEST_FILE;
-import static org.junit.jupiter.api.Assertions.assertAll;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 public class PreSimplifiedStageTest {

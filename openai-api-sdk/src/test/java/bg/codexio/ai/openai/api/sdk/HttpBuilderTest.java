@@ -32,10 +32,10 @@ public class HttpBuilderTest {
         var nextStage = this.httpBuilder.and();
 
         assertAll(
-                () -> assertNotNull(nextStage.mapper),
+                () -> assertNotNull(nextStage.mapper()),
                 () -> assertEquals(
                         CTX,
-                        nextStage.ctx
+                        nextStage.ctx()
                 )
         );
     }
@@ -48,11 +48,11 @@ public class HttpBuilderTest {
         assertAll(
                 () -> assertEquals(
                         mapper,
-                        nextStage.mapper
+                        nextStage.mapper()
                 ),
                 () -> assertEquals(
                         CTX,
-                        nextStage.ctx
+                        nextStage.ctx()
                 )
         );
     }
@@ -66,7 +66,7 @@ public class HttpBuilderTest {
                                         .and();
 
         assertAll(
-                () -> assertNotNull(nextStage.mapper),
+                () -> assertNotNull(nextStage.mapper()),
                 () -> assertEquals(
                         new HttpExecutorContext(
                                 new ApiCredentials("test-key"),
@@ -85,7 +85,7 @@ public class HttpBuilderTest {
                                         )
                                 )
                         ),
-                        nextStage.ctx
+                        nextStage.ctx()
                 )
         );
     }
@@ -99,7 +99,7 @@ public class HttpBuilderTest {
                                         .and();
 
         assertAll(
-                () -> assertNotNull(nextStage.mapper),
+                () -> assertNotNull(nextStage.mapper()),
                 () -> assertEquals(
                         new HttpExecutorContext(
                                 new ApiCredentials("test-key"),
@@ -118,7 +118,7 @@ public class HttpBuilderTest {
                                         )
                                 )
                         ),
-                        nextStage.ctx
+                        nextStage.ctx()
                 )
         );
     }
@@ -132,7 +132,7 @@ public class HttpBuilderTest {
                                         .and();
 
         assertAll(
-                () -> assertNotNull(nextStage.mapper),
+                () -> assertNotNull(nextStage.mapper()),
                 () -> assertEquals(
                         new HttpExecutorContext(
                                 new ApiCredentials("test-key"),
@@ -151,15 +151,29 @@ public class HttpBuilderTest {
                                         )
                                 )
                         ),
-                        nextStage.ctx
+                        nextStage.ctx()
                 )
         );
     }
 
-    record NextStage(
-            HttpExecutorContext ctx,
-            ObjectMapper mapper
-    ) {
+    static class NextStage {
+        private final HttpExecutorContext ctx;
+        private final ObjectMapper mapper;
 
+        public NextStage(
+                HttpExecutorContext ctx,
+                ObjectMapper mapper
+        ) {
+            this.ctx = ctx;
+            this.mapper = mapper;
+        }
+
+        public HttpExecutorContext ctx() {
+            return ctx;
+        }
+
+        public ObjectMapper mapper() {
+            return mapper;
+        }
     }
 }

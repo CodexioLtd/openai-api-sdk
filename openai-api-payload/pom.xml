@@ -7,7 +7,7 @@
     <parent>
         <groupId>bg.codexio.ai</groupId>
         <artifactId>openai-api</artifactId>
-        <version>0.8.0.BETA-JDK17</version>
+        <version>0.8.0.BETA-JDK11-SNAPSHOT</version>
     </parent>
 
     <artifactId>openai-api-payload</artifactId>
@@ -16,5 +16,13 @@
     <properties>
         <skipDeploy>false</skipDeploy>
     </properties>
+
+    <dependencies>
+        <dependency>
+            <groupId>com.fasterxml.jackson.core</groupId>
+            <artifactId>jackson-databind</artifactId>
+            <version>2.16.0</version>
+        </dependency>
+    </dependencies>
 
 </project>

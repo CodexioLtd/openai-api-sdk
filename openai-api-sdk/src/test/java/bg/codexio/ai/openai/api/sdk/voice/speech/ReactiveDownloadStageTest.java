@@ -17,15 +17,16 @@ import java.io.File;
 import static bg.codexio.ai.openai.api.sdk.voice.speech.InternalAssertions.*;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.eq;
-import static org.mockito.Mockito.*;
+import static org.mockito.Mockito.mockStatic;
+import static org.mockito.Mockito.when;
 
 public class ReactiveDownloadStageTest {
 
     private final SpeechHttpExecutor httpExecutor = TEST_EXECUTOR;
 
     private ReactiveDownloadStage reactiveDownloadStage;
-
 
     @BeforeEach
     public void setUp() {
@@ -42,7 +43,7 @@ public class ReactiveDownloadStageTest {
 
     @Test
     public void testDownloadTo_withImaginaryFolder_shouldUseCorrectMediaTypeAndResponse() {
-        try (var mockData = this.startMocking()) {
+        try (var mockData = startMocking()) {
             var filePath = "var/files/resultFile";
 
             mockData.executorMock()
@@ -63,7 +64,7 @@ public class ReactiveDownloadStageTest {
 
     @Test
     public void testDownloadTo_withErrorWhileDownloading_shouldThrowException() {
-        try (var mockData = this.startMocking()) {
+        try (var mockData = startMocking()) {
             mockData.executorMock()
                     .thenThrow(new RuntimeException("Cannot download"));
 
@@ -104,16 +105,38 @@ public class ReactiveDownloadStageTest {
         );
     }
 
-    record MockData(
-            OngoingStubbing<Object> executorMock,
-            File targetFolder,
-            MockedStatic<DownloadExecutor> utils
-    )
+    class MockData
             implements AutoCloseable {
+        private final OngoingStubbing<Object> executorMock;
+        private final File targetFolder;
+        private final MockedStatic<DownloadExecutor> utils;
+
+        public MockData(
+                OngoingStubbing<Object> executorMock,
+                File targetFolder,
+                MockedStatic<DownloadExecutor> utils
+        ) {
+            this.executorMock = executorMock;
+            this.targetFolder = targetFolder;
+            this.utils = utils;
+        }
+
+        public OngoingStubbing<Object> executorMock() {
+            return executorMock;
+        }
+
+        public File targetFolder() {
+            return targetFolder;
+        }
+
+        public MockedStatic<DownloadExecutor> utils() {
+            return utils;
+        }
+
         @Override
         public void close() {
-            this.utils()
-                .close();
+            utils().close();
         }
     }
 }
+

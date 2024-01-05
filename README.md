@@ -10,7 +10,7 @@
 
 <div align="center">
 
-[![Maven Central](https://img.shields.io/maven-central/v/bg.codexio.ai/openai-api-sdk?versionSuffix=JDK17&color=EE5A9C)](https://central.sonatype.com/artifact/bg.codexio.ai/openai-api-sdk)
+[![Maven Central](https://img.shields.io/maven-central/v/bg.codexio.ai/openai-api-sdk?versionSuffix=JDK11&color=EE5A9C)](https://central.sonatype.com/artifact/bg.codexio.ai/openai-api-sdk)
 [![Build](https://github.com/CodexioLtd/openai-api-sdk/actions/workflows/maven.yml/badge.svg)](https://github.com/CodexioLtd/openai-api-sdk/actions/workflows/maven.yml)
 [![Coverage](https://codecov.io/github/CodexioLtd/openai-api-sdk/graph/badge.svg?token=013OEUIYWI)](https://codecov.io/github/CodexioLtd/openai-api-sdk)
 [![License](https://img.shields.io/github/license/CodexioLtd/openai-api-sdk.svg)](https://github.com/CodexioLtd/openai-api-sdk/blob/master/LICENSE)
@@ -21,7 +21,8 @@
 
 ## Preambule
 
-This library provides a Software Development Kit (SDK) for Java 17<sup>([see others](#supported-java-versions))</sup> compliant runtimes
+This library provides a Software Development Kit (SDK) for Java 11<sup>([see others](#supported-java-versions))</sup>
+compliant runtimes
 to connect to an OpenAI API and execute both synchronous and asynchronous (via callbacks
 or the Reactor Pattern) calls.
 
@@ -117,10 +118,11 @@ In the next chapters you will see an explanation of all key concepts.
 3. Add the library as a dependency in your project
 
 ```xml
+
 <dependency>
     <groupId>bg.codexio.ai</groupId>
     <artifactId>openai-api-sdk</artifactId>
-    <version>0.8.0.BETA-JDK17</version>
+    <version>0.8.0.BETA-JDK11</version>
 </dependency>
 ```
 
@@ -131,14 +133,14 @@ In the next chapters you will see an explanation of all key concepts.
     <summary>
     Click here to see
     </summary>
-    
-    | Artifact              | Description                                                                                       |
-    |-----------------------|---------------------------------------------------------------------------------------------------|
-    | `openai-api-models`   | Contains info only for AI Model namings, such as GPT-4-Preview, DALL-E-2 and so on                |
-    | `openai-api-payload`  | Contains Request/Response DTO models and related information                                      |
-    | `openai-api-http`     | Contains HTTP Clients such as `ChatHttpExecutor`, `CreateImageHttpExecutor`, etc., ...            |
-    | `openai-api-examples` | Usually you do not import this artfiactId, rather you can check the source code for some examples |
-    
+
+  | Artifact              | Description                                                                                       |
+  |-----------------------|---------------------------------------------------------------------------------------------------|
+  | `openai-api-models`   | Contains info only for AI Model namings, such as GPT-4-Preview, DALL-E-2 and so on                |
+  | `openai-api-payload`  | Contains Request/Response DTO models and related information                                      |
+  | `openai-api-http`     | Contains HTTP Clients such as `ChatHttpExecutor`, `CreateImageHttpExecutor`, etc., ...            |
+  | `openai-api-examples` | Usually you do not import this artfiactId, rather you can check the source code for some examples |
+
     </details>
 
 4. Create in your `src/main/resources` folder a file named `openai-credentials.json` with the following content:
@@ -264,7 +266,7 @@ Java, you make every byte worthwhile.
 
 ## Supported Java Versions
 
-The `master` branch builds versions for JDK 21. This is the current Java version and the artifacts built from 
+The `master` branch builds versions for JDK 21. This is the current Java version and the artifacts built from
 `master` does not contain any JDK suffix. However, there are several other branches which build versions
 for different JDKs. See the table below:
 
@@ -274,7 +276,6 @@ for different JDKs. See the table below:
 | [release/jdk-17](https://github.com/CodexioLtd/openai-api-sdk/tree/release/jdk-17) | 17         | X.Y.Z[.a]-JDK17 (e.g. 0.8.0.BETA-JDK17) |
 | [release/jdk-11](https://github.com/CodexioLtd/openai-api-sdk/tree/release/jdk-11) | 11         | X.Y.Z[.a]-JDK11 (e.g. 0.8.0.BETA-JDK11) |
 | [release/jdk-8](https://github.com/CodexioLtd/openai-api-sdk/tree/release/jdk-8)   | 8          | X.Y.Z[.a]-JDK8 (e.g. 0.8.0.BETA-JDK8)   |
-
 
 ## Available SDKs
 
@@ -346,11 +347,15 @@ Credentials are passed to the SDK via instantiating the `openai-api-payload/ApiC
 object, which looks like:
 
 ```java
-public record ApiCredentials(
-        String apiKey,
-        String organization,
-        String baseUrl
-) {}
+public final class ApiCredentials {
+
+    public static final String BASE_URL = "https://api.openai.com/v1";
+    private final String apiKey;
+    private final String organization;
+    private final String baseUrl;
+
+    // constructor and getters here
+}
 ```
 
 Where `organization` and `baseUrl` are not mandatory, it will fall back to no specific
@@ -552,7 +557,7 @@ public class Main {
   callbacks. Most of the APIs support two subscription promises - one for a stringified line of
   the response (not recommended, but gives a lot of control if necessary) and another for
   the whole response. Usually with `async().method().onEachLine(line -> { ... })` and
-  `async().method().thne(response -> { ... })`. 
+  `async().method().thne(response -> { ... })`.
 - `reactive()` - mostly the same as `async()`, but utilizes the `Mono<T>` and `Flux<T>`
   patterns from Project Reactor. **This is only recommended if your codebase is already
   fully reactive, using something like `Reactor Netty`**. Otherwise, the overhead of
@@ -924,13 +929,12 @@ public class GetNearbyPlaces
         );
     }
 
-    public record GetNearbyPlacesFunctionChoice()
+    public static final class GetNearbyPlacesFunctionChoice
             implements FunctionChoice {
-        @Override
-        public String name() {
-            return GetNearbyPlaces.FUNCTION.function()
-                                           .getName();
+        public GetNearbyPlacesFunctionChoice() {
         }
+
+        // constructor and getters here
     }
 }
 ```
