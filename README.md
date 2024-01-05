@@ -135,7 +135,7 @@ In the next chapters you will see an explanation of all key concepts.
     </summary>
 
   | Artifact              | Description                                                                                       |
-  |-----------------------|---------------------------------------------------------------------------------------------------|
+    |-----------------------|---------------------------------------------------------------------------------------------------|
   | `openai-api-models`   | Contains info only for AI Model namings, such as GPT-4-Preview, DALL-E-2 and so on                |
   | `openai-api-payload`  | Contains Request/Response DTO models and related information                                      |
   | `openai-api-http`     | Contains HTTP Clients such as `ChatHttpExecutor`, `CreateImageHttpExecutor`, etc., ...            |

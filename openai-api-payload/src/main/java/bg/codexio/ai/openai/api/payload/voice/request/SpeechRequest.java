@@ -4,7 +4,6 @@ import bg.codexio.ai.openai.api.payload.Streamable;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 import java.util.Objects;
-import java.util.stream.Stream;
 
 /**
  * Represents a
