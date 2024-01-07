@@ -28,11 +28,13 @@ or the Reactor Pattern) calls.
 It is framework-agnostic, which means that it can run in any environment,
 including bare CLI one. But also means, it is **not directly providing** abstractions for
 any managed objects in a certain framework such as CDI, EJB, Spring Beans and so on.
-Of course, due to its native SDK, objects of any kind are easily created.
+Of course, due to its native SDK, objects of any kind are easily created. There are already
+[separate projects](#framework-integrations) with such implementations.
 
 ## Table of Contents
 
 * [Quick Start](#quick-start)
+* [Framework Integrations](#framework-integrations)
 * [Supported Java Version](#supported-java-versions)
 * [Available SDKs](#available-sdks)
     * [List](#list)
@@ -261,6 +263,14 @@ Java, you make every byte worthwhile.
 ```
 
 </details>
+
+## Framework Integrations
+
+Since this is a framework-agnostic SDK, it's not natively integrated to any framework. 
+However, separate projects  provide such implementations. You are very welcomed to 
+create new integrations. The current list is:
+  - <img src="https://spring.io/img/logos/spring-initializr.svg" width="18px" height="18px"/>[Spring Boot Starter OpenAI](https://github.com/CodexioLtd/spring-boot-starter-openai)
+
 
 ## Supported Java Versions
 
