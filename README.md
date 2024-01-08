@@ -21,19 +21,20 @@
 
 ## Preambule
 
-This library provides a Software Development Kit (SDK) for Java 11<sup>([see others](#supported-java-versions))</sup>
-compliant runtimes
+This **community-maintained** library provides a Software Development Kit (SDK) for Java 11<sup>([see others](#supported-java-versions))</sup> compliant runtimes
 to connect to an OpenAI API and execute both synchronous and asynchronous (via callbacks
 or the Reactor Pattern) calls.
 
 It is framework-agnostic, which means that it can run in any environment,
 including bare CLI one. But also means, it is **not directly providing** abstractions for
 any managed objects in a certain framework such as CDI, EJB, Spring Beans and so on.
-Of course, due to its native SDK, objects of any kind are easily created.
+Of course, due to its native SDK, objects of any kind are easily created. There are already
+[separate projects](#framework-integrations) with such implementations.
 
 ## Table of Contents
 
 * [Quick Start](#quick-start)
+* [Framework Integrations](#framework-integrations)
 * [Supported Java Version](#supported-java-versions)
 * [Available SDKs](#available-sdks)
     * [List](#list)
@@ -118,7 +119,6 @@ In the next chapters you will see an explanation of all key concepts.
 3. Add the library as a dependency in your project
 
 ```xml
-
 <dependency>
     <groupId>bg.codexio.ai</groupId>
     <artifactId>openai-api-sdk</artifactId>
@@ -135,7 +135,7 @@ In the next chapters you will see an explanation of all key concepts.
     </summary>
 
   | Artifact              | Description                                                                                       |
-    |-----------------------|---------------------------------------------------------------------------------------------------|
+  |-----------------------|---------------------------------------------------------------------------------------------------|
   | `openai-api-models`   | Contains info only for AI Model namings, such as GPT-4-Preview, DALL-E-2 and so on                |
   | `openai-api-payload`  | Contains Request/Response DTO models and related information                                      |
   | `openai-api-http`     | Contains HTTP Clients such as `ChatHttpExecutor`, `CreateImageHttpExecutor`, etc., ...            |
@@ -264,9 +264,17 @@ Java, you make every byte worthwhile.
 
 </details>
 
+## Framework Integrations
+
+Since this is a framework-agnostic SDK, it's not natively integrated to any framework. 
+However, separate projects  provide such implementations. You are very welcomed to 
+create new integrations. The current list is:
+  - <img src="https://spring.io/img/logos/spring-initializr.svg" width="18px" height="18px"/>[Spring Boot Starter OpenAI](https://github.com/CodexioLtd/spring-boot-starter-openai)
+
+
 ## Supported Java Versions
 
-The `master` branch builds versions for JDK 21. This is the current Java version and the artifacts built from
+The `master` branch builds versions for JDK 21. This is the current Java version and the artifacts built from 
 `master` does not contain any JDK suffix. However, there are several other branches which build versions
 for different JDKs. See the table below:
 
@@ -274,8 +282,9 @@ for different JDKs. See the table below:
 |------------------------------------------------------------------------------------|------------|-----------------------------------------|
 | [master](https://github.com/CodexioLtd/openai-api-sdk/tree/master)                 | 21         | X.Y.Z[.a] (e.g. 0.8.0.BETA)             |
 | [release/jdk-17](https://github.com/CodexioLtd/openai-api-sdk/tree/release/jdk-17) | 17         | X.Y.Z[.a]-JDK17 (e.g. 0.8.0.BETA-JDK17) |
-| [release/jdk-11](https://github.com/CodexioLtd/openai-api-sdk/tree/release/jdk-11) | 11         | X.Y.Z[.a]-JDK11 (e.g. 0.8.1.BETA-JDK11-SNAPSHOT) |
-| [release/jdk-8](https://github.com/CodexioLtd/openai-api-sdk/tree/release/jdk-8)   | 8          | X.Y.Z[.a]-JDK8 (e.g. 0.8.0.BETA-JDK8)   |
+| [release/jdk-11](https://github.com/CodexioLtd/openai-api-sdk/tree/release/jdk-11) | 11         | X.Y.Z[.a]-JDK11 (e.g. 0.8.0.BETA-JDK11) |
+| release/jdk-8 (not yet adapted)                                                    | 8          | X.Y.Z[.a]-JDK8 (e.g. 0.8.0.BETA-JDK8)  |
+
 
 ## Available SDKs
 
