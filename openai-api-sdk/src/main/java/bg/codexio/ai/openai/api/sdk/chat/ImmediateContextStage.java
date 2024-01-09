@@ -38,12 +38,12 @@ public class ImmediateContextStage
      */
     public ChatMessageResponse askRaw(String... questions) {
         return this.executor.execute(this.ask(Arrays.stream(questions)
-                .map(q -> new ChatMessage(
-                        "user",
-                        q,
-                        null
-                ))
-                .collect(Collectors.toCollection(LinkedList::new))).requestBuilder.build());
+                                                 .map(q -> new ChatMessage(
+                                                         "user",
+                                                         q,
+                                                         null
+                                                 ))
+                                                 .collect(Collectors.toCollection(LinkedList::new))).requestBuilder.build());
     }
 
     /**
