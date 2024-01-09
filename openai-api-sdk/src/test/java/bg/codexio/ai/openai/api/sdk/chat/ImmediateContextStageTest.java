@@ -56,4 +56,22 @@ public class ImmediateContextStageTest {
                 response
         );
     }
+
+    @Test
+    public void testAsk_withToolCalls_expectCorrectResponse() {
+        when(immediateContextStage.executor.execute(any())).thenAnswer(answer -> CHAT_MESSAGE_RESPONSE_2);
+
+        var response = immediateContextStage.ask("Test Question");
+
+        assertEquals(
+                CHAT_MESSAGE_RESPONSE_2.choices()
+                        .get(0)
+                        .message()
+                        .toolCalls()
+                        .get(0)
+                        .function()
+                        .arguments(),
+                response
+        );
+    }
 }

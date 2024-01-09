@@ -8,6 +8,7 @@ import bg.codexio.ai.openai.api.sdk.RuntimeExecutor;
 
 import java.util.Arrays;
 import java.util.LinkedList;
+import java.util.Optional;
 import java.util.Queue;
 import java.util.stream.Collectors;
 
@@ -37,12 +38,12 @@ public class ImmediateContextStage
      */
     public ChatMessageResponse askRaw(String... questions) {
         return this.executor.execute(this.ask(Arrays.stream(questions)
-                                                    .map(q -> new ChatMessage(
-                                                            "user",
-                                                            q,
-                                                            null
-                                                    ))
-                                                    .collect(Collectors.toCollection(LinkedList::new))).requestBuilder.build());
+                .map(q -> new ChatMessage(
+                        "user",
+                        q,
+                        null
+                ))
+                .collect(Collectors.toCollection(LinkedList::new))).requestBuilder.build());
     }
 
     /**
@@ -52,11 +53,10 @@ public class ImmediateContextStage
      * @return string with the answer
      */
     public String ask(String... questions) {
-        return this.askRaw(questions)
-                   .choices()
-                   .get(0)
-                   .message()
-                   .content();
+        return Optional
+                .ofNullable(this.getMessage(questions))
+                .map(ChatMessage::content)
+                .orElseGet(() -> this.getMessageFromToolCallResponse(questions));
     }
 
     private ImmediateContextStage ask(Queue<ChatMessage> questions) {
@@ -68,5 +68,20 @@ public class ImmediateContextStage
                 this.executor,
                 this.requestBuilder.addMessage(questions.poll())
         ).ask(questions);
+    }
+
+    private String getMessageFromToolCallResponse(String... questions) {
+        return this.getMessage(questions)
+                .toolCalls()
+                .get(0)
+                .function()
+                .arguments();
+    }
+
+    private ChatMessage getMessage(String... questions) {
+        return this.askRaw(questions)
+                .choices()
+                .get(0)
+                .message();
     }
 }
