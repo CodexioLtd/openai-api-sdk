@@ -6,9 +6,7 @@ import bg.codexio.ai.openai.api.models.v40.GPT4032kModel;
 import bg.codexio.ai.openai.api.payload.chat.ChatMessage;
 import bg.codexio.ai.openai.api.payload.chat.functions.GetNearbyPlaces;
 import bg.codexio.ai.openai.api.payload.chat.request.FunctionTool;
-import bg.codexio.ai.openai.api.payload.chat.response.ChatChoiceResponse;
-import bg.codexio.ai.openai.api.payload.chat.response.ChatMessageResponse;
-import bg.codexio.ai.openai.api.payload.chat.response.ChatUsageResponse;
+import bg.codexio.ai.openai.api.payload.chat.response.*;
 import bg.codexio.ai.openai.api.payload.creativity.Creativity;
 import bg.codexio.ai.openai.api.payload.creativity.RepetitionPenalty;
 
@@ -45,33 +43,64 @@ public class InternalAssertions {
             "test-response-2",
             null
     );
+    static final FunctionResponse FUNCTION_RESPONSE = new FunctionResponse(
+            "test-function",
+            "test-arguments"
+    );
+    static final ToolCallResponse TOOL_CALL_RESPONSE = new ToolCallResponse(
+            1,
+            "test-id",
+            "test-type",
+            InternalAssertions.FUNCTION_RESPONSE
+    );
+    static final ChatMessage CHAT_MESSAGE_WITH_TOOL_CALLS = new ChatMessage(
+            "test-role",
+            null,
+            List.of(InternalAssertions.TOOL_CALL_RESPONSE)
+    );
     static final ChatChoiceResponse CHAT_CHOICE_RESPONSE_1 =
             new ChatChoiceResponse(
-            InternalAssertions.CHAT_MESSAGE_1,
-            InternalAssertions.CHAT_MESSAGE_1,
-            "test-finish-reason",
-            1
-    );
+                    InternalAssertions.CHAT_MESSAGE_1,
+                    InternalAssertions.CHAT_MESSAGE_1,
+                    "test-finish-reason",
+                    1
+            );
     static final ChatChoiceResponse CHAT_CHOICE_RESPONSE_2 =
             new ChatChoiceResponse(
-            InternalAssertions.CHAT_MESSAGE_2,
-            InternalAssertions.CHAT_MESSAGE_2,
-            "test-finish-reason",
-            1
-    );
+                    InternalAssertions.CHAT_MESSAGE_2,
+                    InternalAssertions.CHAT_MESSAGE_2,
+                    "test-finish-reason",
+                    1
+            );
+    static final ChatChoiceResponse CHAT_CHOICE_RESPONSE_3 =
+            new ChatChoiceResponse(
+                    InternalAssertions.CHAT_MESSAGE_WITH_TOOL_CALLS,
+                    InternalAssertions.CHAT_MESSAGE_WITH_TOOL_CALLS,
+                    "test-finish-reason",
+                    1
+            );
     static final ChatMessageResponse CHAT_MESSAGE_RESPONSE =
             new ChatMessageResponse(
-            "test-id",
-            "test-object",
-            0,
-            "test-model",
-            CHAT_USAGE_RESPONSE,
-            List.of(
-                    CHAT_CHOICE_RESPONSE_1,
-                    CHAT_CHOICE_RESPONSE_2
-            )
-    );
-    static ChatMessage CHAT_MESSAGE = new ChatMessage(
+                    "test-id",
+                    "test-object",
+                    0,
+                    "test-model",
+                    CHAT_USAGE_RESPONSE,
+                    List.of(
+                            CHAT_CHOICE_RESPONSE_1,
+                            CHAT_CHOICE_RESPONSE_2
+                    )
+            );
+    static final ChatMessageResponse CHAT_MESSAGE_RESPONSE_2 =
+            new ChatMessageResponse(
+                    "test-id",
+                    "test-object",
+                    0,
+                    "test-model",
+                    CHAT_USAGE_RESPONSE,
+                    List.of(CHAT_CHOICE_RESPONSE_3)
+            );
+    static final ChatMessage CHAT_MESSAGE = new ChatMessage(
             "Test role",
             "Test message",
             null
