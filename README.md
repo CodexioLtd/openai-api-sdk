@@ -122,7 +122,7 @@ In the next chapters you will see an explanation of all key concepts.
 <dependency>
     <groupId>bg.codexio.ai</groupId>
     <artifactId>openai-api-sdk</artifactId>
-    <version>0.8.1.BETA-JDK11-SNAPSHOT</version>
+    <version>0.8.1.BETA-JDK11</version>
 </dependency>
 ```
 
