@@ -635,5 +635,4 @@ public abstract class DefaultOpenAIHttpExecutor<I extends Streamable,
             );
         }
     }
-
 }
