@@ -1,6 +1,8 @@
 package bg.codexio.ai.openai.api.sdk.chat;
 
+import bg.codexio.ai.openai.api.payload.chat.ChatMessage;
 import bg.codexio.ai.openai.api.payload.chat.request.ChatMessageRequest;
+import bg.codexio.ai.openai.api.payload.chat.response.ChatMessageResponse;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -49,11 +51,31 @@ public class ImmediateContextStageTest {
         var response = immediateContextStage.ask("Test Question");
 
         assertEquals(
-                CHAT_MESSAGE_RESPONSE.choices()
-                                     .get(0)
-                                     .message()
+                this.getChatMessage(CHAT_MESSAGE_RESPONSE)
                                      .content(),
                 response
         );
+    }
+
+    @Test
+    public void testAsk_withToolCalls_expectCorrectResponse() {
+        when(immediateContextStage.executor.execute(any())).thenAnswer(answer -> CHAT_MESSAGE_RESPONSE_2);
+
+        var response = immediateContextStage.ask("Test Question");
+
+        assertEquals(
+                this.getChatMessage(CHAT_MESSAGE_RESPONSE_2)
+                        .toolCalls()
+                        .get(0)
+                        .function()
+                        .arguments(),
+                response
+        );
+    }
+
+    private ChatMessage getChatMessage(ChatMessageResponse chatMessageResponse) {
+        return chatMessageResponse.choices()
+                .get(0)
+                .message();
     }
 }

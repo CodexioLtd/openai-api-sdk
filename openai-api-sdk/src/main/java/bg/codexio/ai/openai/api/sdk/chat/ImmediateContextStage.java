@@ -8,6 +8,7 @@ import bg.codexio.ai.openai.api.sdk.RuntimeExecutor;
 
 import java.util.Arrays;
 import java.util.LinkedList;
+import java.util.Objects;
 import java.util.Queue;
 import java.util.stream.Collectors;
 
@@ -52,11 +53,11 @@ public class ImmediateContextStage
      * @return string with the answer
      */
     public String ask(String... questions) {
-        return this.askRaw(questions)
-                   .choices()
-                   .get(0)
-                   .message()
-                   .content();
+        var chatMessage = this.getMessage(questions);
+
+        return Objects.nonNull(chatMessage.content())
+               ? chatMessage.content()
+               : this.getMessageFromToolCallResponse(chatMessage);
     }
 
     private ImmediateContextStage ask(Queue<ChatMessage> questions) {
@@ -68,5 +69,19 @@ public class ImmediateContextStage
                 this.executor,
                 this.requestBuilder.addMessage(questions.poll())
         ).ask(questions);
+    }
+
+    private String getMessageFromToolCallResponse(ChatMessage chatMessage) {
+        return chatMessage.toolCalls()
+                          .get(0)
+                          .function()
+                          .arguments();
+    }
+
+    private ChatMessage getMessage(String... questions) {
+        return this.askRaw(questions)
+                   .choices()
+                   .get(0)
+                   .message();
     }
 }
