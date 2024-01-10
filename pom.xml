@@ -6,7 +6,7 @@
 
     <groupId>bg.codexio.ai</groupId>
     <artifactId>openai-api</artifactId>
-    <version>0.8.1.BETA-JDK11</version>
+    <version>0.8.2.BETA-JDK11-SNAPSHOT</version>
     <packaging>pom</packaging>
 
     <name>Codexio Ltd. OpenAI API</name>
