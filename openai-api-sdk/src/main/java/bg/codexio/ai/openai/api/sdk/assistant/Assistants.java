@@ -11,7 +11,6 @@ import static bg.codexio.ai.openai.api.sdk.Authenticator.autoAuthenticate;
 public class Assistants {
 
     private Assistants() {
-
     }
 
     public static AiModelStage throughHttp(AssistantHttpExecutor httpExecutor) {
