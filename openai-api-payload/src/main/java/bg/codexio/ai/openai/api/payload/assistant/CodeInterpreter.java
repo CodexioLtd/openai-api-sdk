@@ -1,15 +1,9 @@
 package bg.codexio.ai.openai.api.payload.assistant;
 
 public class CodeInterpreter
-        implements AssistantTool {
-    private final String type;
+        extends AssistantToolAbstract {
 
     public CodeInterpreter() {
-        this.type = "code_interpreter";
-    }
-
-    @Override
-    public String getType() {
-        return this.type;
+        super("code_interpreter");
     }
 }

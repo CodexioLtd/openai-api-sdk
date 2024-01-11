@@ -124,7 +124,7 @@ public record AssistantRequest(
             );
         }
 
-        public Builder addFileIds(String fileId) {
+        public Builder addFileId(String fileId) {
             var fileIds = new ArrayList<>(Objects.requireNonNullElse(
                     this.fileIds,
                     new ArrayList<>()
@@ -146,20 +146,36 @@ public record AssistantRequest(
             );
         }
 
-        public Builder addMetadata(
-                String key,
-                String value
-        ) {
-            var metadataMap = new HashMap<>(Objects.requireNonNullElse(
-                    this.metadata,
-                    new HashMap<>()
-            ));
-            metadataMap.put(
-                    key,
-                    value
-            );
+        public Builder addMetadata(String... metadata) {
+            if (metadata.length % 2 != 0) {
+                throw new IllegalArgumentException(
+                        "Metadata needs to contain at " + "least 2 arguments.");
+            }
 
-            return this.withMetadata(metadataMap);
+            var map = Objects.requireNonNullElse(
+                    this.metadata,
+                    new HashMap<String, String>()
+            );
+            for (int i = 0; i < metadata.length - 1; i += 2) {
+                map.put(
+                        metadata[i],
+                        metadata[i + 1]
+                );
+            }
+
+            return this.withMetadata(map);
+        }
+
+        public AssistantRequest build() {
+            return new AssistantRequest(
+                    model,
+                    name,
+                    description,
+                    instructions,
+                    tools,
+                    fileIds,
+                    metadata
+            );
         }
     }
 }

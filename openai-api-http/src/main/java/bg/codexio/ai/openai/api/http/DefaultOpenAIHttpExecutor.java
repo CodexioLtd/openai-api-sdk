@@ -210,6 +210,10 @@ public abstract class DefaultOpenAIHttpExecutor<I extends Streamable,
         }
     }
 
+    public void configureMappingExternally(Consumer<ObjectMapper> mappingConsumer) {
+        mappingConsumer.accept(this.objectMapper);
+    }
+
     /**
      * {@inheritDoc}
      */
