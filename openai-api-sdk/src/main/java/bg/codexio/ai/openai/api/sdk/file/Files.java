@@ -13,17 +13,17 @@ public class Files {
     private Files() {
     }
 
-    public static TargetingStage throughHttp(UploadFileHttpExecutor httpExecutor) {
-        return new TargetingStage(
+    public static FileTargetingStage throughHttp(UploadFileHttpExecutor httpExecutor) {
+        return new FileTargetingStage(
                 httpExecutor,
                 UploadFileRequest.builder()
         );
     }
 
-    public static HttpBuilder<TargetingStage> authenticate(HttpExecutorContext context) {
+    public static HttpBuilder<FileTargetingStage> authenticate(HttpExecutorContext context) {
         return new HttpBuilder<>(
                 context,
-                (httpExecutorContext, objectMapper) -> new TargetingStage(
+                (httpExecutorContext, objectMapper) -> new FileTargetingStage(
                         new UploadFileHttpExecutor(
                                 httpExecutorContext,
                                 objectMapper
@@ -34,11 +34,11 @@ public class Files {
         );
     }
 
-    public static HttpBuilder<TargetingStage> authenticate(SdkAuth auth) {
+    public static HttpBuilder<FileTargetingStage> authenticate(SdkAuth auth) {
         return authenticate(new HttpExecutorContext(auth.credentials()));
     }
 
-    public static HttpBuilder<TargetingStage> defaults() {
+    public static HttpBuilder<FileTargetingStage> defaults() {
         return autoAuthenticate(Files::authenticate);
     }
 }

@@ -6,10 +6,10 @@ import bg.codexio.ai.openai.api.payload.file.response.FileResponse;
 
 import java.io.File;
 
-public class UploadFileStage
+public class FileUploadingStage
         extends FileConfigurationStage {
 
-    protected UploadFileStage(
+    FileUploadingStage(
             UploadFileHttpExecutor executor,
             UploadFileRequest.Builder requestContext
     ) {

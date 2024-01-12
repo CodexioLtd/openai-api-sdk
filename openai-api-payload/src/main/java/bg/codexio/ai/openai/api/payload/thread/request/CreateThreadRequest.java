@@ -1,12 +1,16 @@
 package bg.codexio.ai.openai.api.payload.thread.request;
 
+import bg.codexio.ai.openai.api.payload.MetadataUtils;
 import bg.codexio.ai.openai.api.payload.Streamable;
-import bg.codexio.ai.openai.api.payload.thread.ThreadMessage;
+import bg.codexio.ai.openai.api.payload.message.request.MessageRequest;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Map;
+import java.util.Objects;
 
 public record CreateThreadRequest(
-        List<ThreadMessage> messages,
+        List<MessageRequest> messages,
         Map<String, String> metadata
 )
         implements Streamable {
@@ -23,21 +27,21 @@ public record CreateThreadRequest(
     }
 
     public record Builder(
-            List<ThreadMessage> messages,
+            List<MessageRequest> messages,
             Map<String, String> metadata
     ) {
-        public Builder withMessages(List<ThreadMessage> messages) {
+        public Builder withMessages(List<MessageRequest> messages) {
             return new Builder(
                     messages,
                     metadata
             );
         }
 
-        public Builder addMessage(ThreadMessage message) {
-            var messages = Objects.requireNonNullElse(
+        public Builder addMessage(MessageRequest message) {
+            var messages = new ArrayList<>(Objects.requireNonNullElse(
                     this.messages,
-                    new ArrayList<ThreadMessage>()
-            );
+                    new ArrayList<MessageRequest>()
+            ));
             messages.add(message);
 
             return this.withMessages(messages);
@@ -51,23 +55,11 @@ public record CreateThreadRequest(
         }
 
         public Builder addMetadata(String... metadata) {
-            if (metadata.length % 2 != 0) {
-                throw new IllegalArgumentException(
-                        "Metadata needs to contain at " + "least 2 arguments.");
-            }
-
-            var threadMetadataMap = Objects.requireNonNullElse(
+            var threadMetadata = MetadataUtils.addMetadata(
                     this.metadata,
-                    new HashMap<String, String>()
+                    metadata
             );
-            for (int i = 0; i < metadata.length - 1; i += 2) {
-                threadMetadataMap.put(
-                        metadata[i],
-                        metadata[i + 1]
-                );
-            }
-
-            return this.withMetadata(threadMetadataMap);
+            return this.withMetadata(threadMetadata);
         }
 
         public CreateThreadRequest build() {

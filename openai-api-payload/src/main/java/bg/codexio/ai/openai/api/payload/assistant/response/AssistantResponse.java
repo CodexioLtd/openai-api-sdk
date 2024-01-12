@@ -1,7 +1,7 @@
 package bg.codexio.ai.openai.api.payload.assistant.response;
 
 import bg.codexio.ai.openai.api.payload.Mergeable;
-import bg.codexio.ai.openai.api.payload.assistant.AssistantTool;
+import bg.codexio.ai.openai.api.payload.assistant.tool.AssistantTool;
 
 import java.util.List;
 import java.util.Map;

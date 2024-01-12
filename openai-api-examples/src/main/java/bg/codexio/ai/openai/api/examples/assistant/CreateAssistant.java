@@ -1,8 +1,8 @@
 package bg.codexio.ai.openai.api.examples.assistant;
 
 import bg.codexio.ai.openai.api.examples.file.UploadFile;
-import bg.codexio.ai.openai.api.payload.assistant.CodeInterpreter;
-import bg.codexio.ai.openai.api.payload.assistant.Retrieval;
+import bg.codexio.ai.openai.api.payload.assistant.tool.CodeInterpreter;
+import bg.codexio.ai.openai.api.payload.assistant.tool.Retrieval;
 import bg.codexio.ai.openai.api.sdk.assistant.Assistants;
 
 import java.io.File;
@@ -21,17 +21,21 @@ public class CreateAssistant {
                                           new Retrieval()
                                   )
                                   .called("Codexio")
-                                  .instructToMetadata(
-                                          "You are the best java developer,"
-                                                  + " you are going to "
-                                                  + "participate in new "
-                                                  + "interesting projects.")
-                                  .awareOfToFile("key1",
-                                                 "value1",
-                                                 "key2",
-                                                 "value2"
+                                  .instruct("You are the best java developer,"
+                                                    + " you are going to "
+                                                    + "participate in new "
+                                                    + "interesting projects.")
+
+                                  .meta()
+                                  .awareOf(
+                                          "key1",
+                                          "value1",
+                                          "key2",
+                                          "value2"
                                   )
-                                  .feed(file);
+                                  .file()
+                                  .feed(file)
+                                  .andRespond();
 
         System.out.println(assistant);
     }

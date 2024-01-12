@@ -1,14 +1,14 @@
 package bg.codexio.ai.openai.api.sdk.file;
 
 import bg.codexio.ai.openai.api.http.file.UploadFileHttpExecutor;
+import bg.codexio.ai.openai.api.payload.file.purpose.AssistantPurpose;
+import bg.codexio.ai.openai.api.payload.file.purpose.Purpose;
 import bg.codexio.ai.openai.api.payload.file.request.UploadFileRequest;
-import bg.codexio.ai.openai.api.payload.purpose.AssistantPurpose;
-import bg.codexio.ai.openai.api.payload.purpose.Purpose;
 
-public class TargetingStage
+public class FileTargetingStage
         extends FileConfigurationStage {
 
-    TargetingStage(
+    FileTargetingStage(
             UploadFileHttpExecutor executor,
             UploadFileRequest.Builder requestContext
     ) {
@@ -18,14 +18,14 @@ public class TargetingStage
         );
     }
 
-    public UploadFileStage targeting(Purpose purpose) {
-        return new UploadFileStage(
+    public FileUploadingStage targeting(Purpose purpose) {
+        return new FileUploadingStage(
                 this.executor,
                 this.requestContext.withPurpose(purpose.name())
         );
     }
 
-    public UploadFileStage forAssistants() {
+    public FileUploadingStage forAssistants() {
         return this.targeting(new AssistantPurpose());
     }
 }

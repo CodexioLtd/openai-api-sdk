@@ -1,4 +1,4 @@
-package bg.codexio.ai.openai.api.payload.assistant;
+package bg.codexio.ai.openai.api.payload.assistant.tool;
 
 import com.fasterxml.jackson.annotation.JsonTypeInfo;
 
