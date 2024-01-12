@@ -2,11 +2,10 @@ package bg.codexio.ai.openai.api.sdk.assistant;
 
 import bg.codexio.ai.openai.api.http.assistant.AssistantHttpExecutor;
 import bg.codexio.ai.openai.api.payload.assistant.request.AssistantRequest;
-import bg.codexio.ai.openai.api.payload.assistant.response.AssistantResponse;
 
-public class AssistantMetadataStage
+public class AssistantMetaStage
         extends AssistantInstructionStage {
-    public AssistantMetadataStage(
+    AssistantMetaStage(
             AssistantHttpExecutor httpExecutor,
             AssistantRequest.Builder requestBuilder
     ) {
@@ -16,15 +15,10 @@ public class AssistantMetadataStage
         );
     }
 
-    public AssistantFileStage awareOfToFile(String... metadata) {
-        return new AssistantFileStage(
+    public AdvancedConfigurationStage awareOf(String... metadata) {
+        return new AdvancedConfigurationStage(
                 this.httpExecutor,
                 this.requestBuilder.addMetadata(metadata)
         );
-    }
-
-    public AssistantResponse awareOf(String... metadata) {
-        return this.httpExecutor.execute(this.requestBuilder.addMetadata(metadata)
-                                                            .build());
     }
 }

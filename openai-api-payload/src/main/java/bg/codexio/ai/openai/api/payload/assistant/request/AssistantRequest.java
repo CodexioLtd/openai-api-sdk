@@ -1,9 +1,13 @@
 package bg.codexio.ai.openai.api.payload.assistant.request;
 
+import bg.codexio.ai.openai.api.payload.MetadataUtils;
 import bg.codexio.ai.openai.api.payload.Streamable;
-import bg.codexio.ai.openai.api.payload.assistant.AssistantTool;
+import bg.codexio.ai.openai.api.payload.assistant.tool.AssistantTool;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Map;
+import java.util.Objects;
 
 public record AssistantRequest(
         String model,
@@ -147,23 +151,11 @@ public record AssistantRequest(
         }
 
         public Builder addMetadata(String... metadata) {
-            if (metadata.length % 2 != 0) {
-                throw new IllegalArgumentException(
-                        "Metadata needs to contain at " + "least 2 arguments.");
-            }
-
-            var map = Objects.requireNonNullElse(
+            var assistantMetadata = MetadataUtils.addMetadata(
                     this.metadata,
-                    new HashMap<String, String>()
+                    metadata
             );
-            for (int i = 0; i < metadata.length - 1; i += 2) {
-                map.put(
-                        metadata[i],
-                        metadata[i + 1]
-                );
-            }
-
-            return this.withMetadata(map);
+            return this.withMetadata(assistantMetadata);
         }
 
         public AssistantRequest build() {

@@ -19,4 +19,11 @@ public class CreateThreadStage
     public ThreadResponse empty() {
         return this.httpExecutor.execute(this.requestContext.build());
     }
+
+    public ThreadMetaStage creating() {
+        return new ThreadMetaStage(
+                this.httpExecutor,
+                this.requestContext
+        );
+    }
 }

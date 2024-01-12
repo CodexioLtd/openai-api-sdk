@@ -1,4 +1,4 @@
-package bg.codexio.ai.openai.api.payload.purpose;
+package bg.codexio.ai.openai.api.payload.file.purpose;
 
 public abstract class PurposeAbstract
         implements Purpose {

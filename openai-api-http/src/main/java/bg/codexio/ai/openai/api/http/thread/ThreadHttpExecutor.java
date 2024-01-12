@@ -5,7 +5,6 @@ import bg.codexio.ai.openai.api.http.HttpExecutorContext;
 import bg.codexio.ai.openai.api.payload.thread.request.CreateThreadRequest;
 import bg.codexio.ai.openai.api.payload.thread.response.ThreadResponse;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import okhttp3.MediaType;
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
 import okhttp3.RequestBody;
@@ -17,10 +16,6 @@ public class ThreadHttpExecutor
     private static final Class<ThreadResponse> RESPONSE_TYPE =
             ThreadResponse.class;
     private static final String RESOURCE_URI = "/threads";
-
-    private static final MediaType DEFAULT_MEDIA_TYPE = MediaType.get(
-            "application/json");
-
 
     public ThreadHttpExecutor(
             OkHttpClient client,
@@ -55,15 +50,9 @@ public class ThreadHttpExecutor
     @Override
     @NotNull
     protected Request prepareRequest(CreateThreadRequest request) {
-        this.reinitializeExecutionIdentification();
-
-        var json = this.toJson(request);
-
-        log(
-                "Incoming request to {}{} with body: {}",
-                this.baseUrl,
-                this.resourceUri,
-                json
+        var json = this.performRequestInitialization(
+                request,
+                this.resourceUri
         );
 
         return new Request.Builder().url(this.baseUrl + this.resourceUri)

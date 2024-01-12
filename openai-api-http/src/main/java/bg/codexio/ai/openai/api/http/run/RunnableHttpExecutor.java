@@ -1,0 +1,75 @@
+package bg.codexio.ai.openai.api.http.run;
+
+import bg.codexio.ai.openai.api.http.DefaultOpenAIHttpExecutor;
+import bg.codexio.ai.openai.api.http.HttpExecutorContext;
+import bg.codexio.ai.openai.api.payload.run.request.RunnableRequest;
+import bg.codexio.ai.openai.api.payload.run.response.RunnableResponse;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import okhttp3.OkHttpClient;
+import okhttp3.Request;
+import okhttp3.RequestBody;
+import org.jetbrains.annotations.NotNull;
+
+public class RunnableHttpExecutor
+        extends DefaultOpenAIHttpExecutor<RunnableRequest, RunnableResponse> {
+    private static final Class<RunnableResponse> RESPONSE_TYPE =
+            RunnableResponse.class;
+    private static final String RESOURCE_URI = "/threads/%s/runs";
+
+    public RunnableHttpExecutor(
+            OkHttpClient client,
+            String baseUrl,
+            ObjectMapper objectMapper
+    ) {
+        super(
+                client,
+                baseUrl,
+                objectMapper,
+                RESPONSE_TYPE,
+                RESOURCE_URI,
+                true,
+                RunnableHttpExecutor.class
+        );
+    }
+
+    public RunnableHttpExecutor(
+            HttpExecutorContext context,
+            ObjectMapper objectMapper
+    ) {
+        super(
+                context,
+                objectMapper,
+                RESPONSE_TYPE,
+                RESOURCE_URI,
+                true,
+                RunnableHttpExecutor.class
+        );
+    }
+
+    @Override
+    @NotNull
+    protected Request prepareRequestWithPathVariable(
+            RunnableRequest request,
+            String pathVariable
+    ) {
+        var resourceUriWithPathVariable = String.format(
+                this.resourceUri,
+                pathVariable
+        );
+        var json = this.performRequestInitialization(
+                request,
+                resourceUriWithPathVariable
+        );
+
+        return new Request.Builder().url(this.baseUrl.concat(resourceUriWithPathVariable))
+                                    .post(RequestBody.create(
+                                            json,
+                                            DEFAULT_MEDIA_TYPE
+                                    ))
+                                    .addHeader(
+                                            "OpenAI-Beta",
+                                            "assistants=v1"
+                                    )
+                                    .build();
+    }
+}

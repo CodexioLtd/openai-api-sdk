@@ -5,7 +5,6 @@ import bg.codexio.ai.openai.api.http.HttpExecutorContext;
 import bg.codexio.ai.openai.api.payload.assistant.request.AssistantRequest;
 import bg.codexio.ai.openai.api.payload.assistant.response.AssistantResponse;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import okhttp3.MediaType;
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
 import okhttp3.RequestBody;
@@ -16,9 +15,6 @@ public class AssistantHttpExecutor
     private static final Class<AssistantResponse> RESPONSE_TYPE =
             AssistantResponse.class;
     private static final String RESOURCE_URI = "/assistants";
-
-    private static final MediaType DEFAULT_MEDIA_TYPE = MediaType.get(
-            "application/json");
 
     public AssistantHttpExecutor(
             OkHttpClient client,
@@ -53,15 +49,9 @@ public class AssistantHttpExecutor
     @Override
     @NotNull
     protected Request prepareRequest(AssistantRequest request) {
-        this.reinitializeExecutionIdentification();
-
-        var json = this.toJson(request);
-
-        log(
-                "Incoming request to {}{} with body: {}",
-                this.baseUrl,
-                this.resourceUri,
-                json
+        var json = this.performRequestInitialization(
+                request,
+                this.resourceUri
         );
 
         return new Request.Builder().url(this.baseUrl + this.resourceUri)

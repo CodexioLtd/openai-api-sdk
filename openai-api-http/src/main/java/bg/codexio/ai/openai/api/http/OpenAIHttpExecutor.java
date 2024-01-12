@@ -31,6 +31,11 @@ public interface OpenAIHttpExecutor<I extends Streamable,
      */
     O execute(I request);
 
+    O executeWithPathVariable(
+            I request,
+            String pathVariable
+    );
+
     /**
      * <p>
      * Executes HTTP request asynchronously.

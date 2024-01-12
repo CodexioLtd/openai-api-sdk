@@ -8,7 +8,7 @@ public abstract class FileConfigurationStage {
     protected final UploadFileHttpExecutor executor;
     protected final UploadFileRequest.Builder requestContext;
 
-    protected FileConfigurationStage(
+    FileConfigurationStage(
             UploadFileHttpExecutor executor,
             UploadFileRequest.Builder requestContext
     ) {
