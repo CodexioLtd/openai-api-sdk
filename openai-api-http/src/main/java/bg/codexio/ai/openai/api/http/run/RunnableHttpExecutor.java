@@ -16,6 +16,10 @@ public class RunnableHttpExecutor
             RunnableResponse.class;
     private static final String RESOURCE_URI = "/threads/%s/runs";
 
+    private static final String RETRIEVE_RUN_RESOURCE_URI = "/threads/%s/runs"
+            + "/%s";
+
+
     public RunnableHttpExecutor(
             OkHttpClient client,
             String baseUrl,
@@ -66,6 +70,22 @@ public class RunnableHttpExecutor
                                             json,
                                             DEFAULT_MEDIA_TYPE
                                     ))
+                                    .addHeader(
+                                            "OpenAI-Beta",
+                                            "assistants=v1"
+                                    )
+                                    .build();
+    }
+
+    @Override
+    protected Request prepareRequest(String... pathVariables) {
+        var resourceUriWithPathVariable = String.format(
+                RETRIEVE_RUN_RESOURCE_URI,
+                (Object[]) pathVariables
+        );
+
+        return new Request.Builder().url(this.baseUrl.concat(resourceUriWithPathVariable))
+                                    .get()
                                     .addHeader(
                                             "OpenAI-Beta",
                                             "assistants=v1"

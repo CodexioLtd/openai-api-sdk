@@ -3,7 +3,7 @@ package bg.codexio.ai.openai.api.sdk.message;
 import bg.codexio.ai.openai.api.http.message.MessageHttpExecutor;
 import bg.codexio.ai.openai.api.payload.file.response.FileResponse;
 import bg.codexio.ai.openai.api.payload.message.request.MessageRequest;
-import bg.codexio.ai.openai.api.payload.message.response.MessageResponse;
+import bg.codexio.ai.openai.api.payload.message.response.MessageCreationResponse;
 import bg.codexio.ai.openai.api.sdk.file.FileSimplified;
 
 import java.io.File;
@@ -24,7 +24,7 @@ public class MessageFileState
         );
     }
 
-    public MessageResponse feed(String... fileId) {
+    public MessageCreationResponse feed(String... fileId) {
         return this.httpExecutor.executeWithPathVariable(
                 this.requestBuilder.withFileIds(Arrays.asList(fileId))
                                    .build(),
@@ -32,7 +32,7 @@ public class MessageFileState
         );
     }
 
-    public MessageResponse feed(File file) {
+    public MessageCreationResponse feed(File file) {
         return this.httpExecutor.executeWithPathVariable(
                 this.requestBuilder.addFileIDs(FileSimplified.simply(file))
                                    .build(),
@@ -40,7 +40,7 @@ public class MessageFileState
         );
     }
 
-    public MessageResponse feed(FileResponse fileResponse) {
+    public MessageCreationResponse feed(FileResponse fileResponse) {
         return this.httpExecutor.executeWithPathVariable(
                 this.requestBuilder.addFileIDs(fileResponse.id())
                                    .build(),

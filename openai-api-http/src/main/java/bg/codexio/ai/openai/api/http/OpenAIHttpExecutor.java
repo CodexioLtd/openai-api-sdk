@@ -31,6 +31,8 @@ public interface OpenAIHttpExecutor<I extends Streamable,
      */
     O execute(I request);
 
+    O execute(String... pathVariables);
+
     O executeWithPathVariable(
             I request,
             String pathVariable

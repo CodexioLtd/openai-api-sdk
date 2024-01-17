@@ -3,7 +3,7 @@ package bg.codexio.ai.openai.api.sdk.assistant;
 import bg.codexio.ai.openai.api.http.assistant.AssistantHttpExecutor;
 import bg.codexio.ai.openai.api.payload.assistant.request.AssistantRequest;
 import bg.codexio.ai.openai.api.payload.assistant.tool.AssistantTool;
-import com.fasterxml.jackson.databind.jsontype.NamedType;
+import bg.codexio.ai.openai.api.sdk.ObjectMapperSubtypesRegistrationUtils;
 
 import java.util.Arrays;
 
@@ -20,12 +20,10 @@ public class ToolStage
     }
 
     public AssistantNameStage from(AssistantTool... assistantTool) {
-        for (var tool : assistantTool) {
-            this.httpExecutor.configureMappingExternally(objectMapper -> objectMapper.registerSubtypes(new NamedType(
-                    tool.getClass(),
-                    tool.type()
-            )));
-        }
+        ObjectMapperSubtypesRegistrationUtils.registerAssistantTools(
+                this.httpExecutor,
+                Arrays.asList(assistantTool)
+        );
 
         return new AssistantNameStage(
                 this.httpExecutor,

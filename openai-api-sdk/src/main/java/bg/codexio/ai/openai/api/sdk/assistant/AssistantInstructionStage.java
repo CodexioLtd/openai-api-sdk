@@ -15,8 +15,8 @@ public class AssistantInstructionStage
         );
     }
 
-    public AdvancedConfigurationStage instruct(String instruction) {
-        return new AdvancedConfigurationStage(
+    public AssistantAdvancedConfigurationStage instruct(String instruction) {
+        return new AssistantAdvancedConfigurationStage(
                 this.httpExecutor,
                 this.requestBuilder.withInstructions(instruction)
         );

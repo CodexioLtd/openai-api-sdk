@@ -2,7 +2,7 @@ package bg.codexio.ai.openai.api.sdk.message;
 
 import bg.codexio.ai.openai.api.http.message.MessageHttpExecutor;
 import bg.codexio.ai.openai.api.payload.message.request.MessageRequest;
-import bg.codexio.ai.openai.api.payload.message.response.MessageResponse;
+import bg.codexio.ai.openai.api.payload.message.response.MessageCreationResponse;
 
 public class MessageMetaStage
         extends MessageConfigurationStage {
@@ -19,7 +19,7 @@ public class MessageMetaStage
         );
     }
 
-    public MessageResponse awareOf(String... metadata) {
+    public MessageCreationResponse awareOf(String... metadata) {
         return this.httpExecutor.executeWithPathVariable(
                 this.requestBuilder.addMetadata(metadata)
                                    .build(),
