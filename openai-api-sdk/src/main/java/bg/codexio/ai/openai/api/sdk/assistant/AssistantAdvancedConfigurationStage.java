@@ -4,9 +4,9 @@ import bg.codexio.ai.openai.api.http.assistant.AssistantHttpExecutor;
 import bg.codexio.ai.openai.api.payload.assistant.request.AssistantRequest;
 import bg.codexio.ai.openai.api.payload.assistant.response.AssistantResponse;
 
-public class AdvancedConfigurationStage
+public class AssistantAdvancedConfigurationStage
         extends AssistantConfigurationStage {
-    AdvancedConfigurationStage(
+    AssistantAdvancedConfigurationStage(
             AssistantHttpExecutor httpExecutor,
             AssistantRequest.Builder requestBuilder
     ) {

@@ -15,8 +15,8 @@ public class AssistantMetaStage
         );
     }
 
-    public AdvancedConfigurationStage awareOf(String... metadata) {
-        return new AdvancedConfigurationStage(
+    public AssistantAdvancedConfigurationStage awareOf(String... metadata) {
+        return new AssistantAdvancedConfigurationStage(
                 this.httpExecutor,
                 this.requestBuilder.addMetadata(metadata)
         );

@@ -20,22 +20,22 @@ public class AssistantFileStage
         );
     }
 
-    public AdvancedConfigurationStage feed(String... filedIds) {
-        return new AdvancedConfigurationStage(
+    public AssistantAdvancedConfigurationStage feed(String... filedIds) {
+        return new AssistantAdvancedConfigurationStage(
                 this.httpExecutor,
                 this.requestBuilder.withFileIds(Arrays.asList(filedIds))
         );
     }
 
-    public AdvancedConfigurationStage feed(FileResponse fileResponse) {
-        return new AdvancedConfigurationStage(
+    public AssistantAdvancedConfigurationStage feed(FileResponse fileResponse) {
+        return new AssistantAdvancedConfigurationStage(
                 this.httpExecutor,
                 this.requestBuilder.addFileId(fileResponse.id())
         );
     }
 
-    public AdvancedConfigurationStage feed(File file) {
-        return new AdvancedConfigurationStage(
+    public AssistantAdvancedConfigurationStage feed(File file) {
+        return new AssistantAdvancedConfigurationStage(
                 this.httpExecutor,
                 this.requestBuilder.addFileId(FileSimplified.simply(file))
         );

@@ -6,16 +6,16 @@ import bg.codexio.ai.openai.api.payload.run.request.RunnableRequest;
 public abstract class RunnableConfigurationStage {
 
     protected final RunnableHttpExecutor httpExecutor;
-    protected final RunnableRequest.Builder httpRequest;
+    protected final RunnableRequest.Builder requestBuilder;
     protected final String threadId;
 
     RunnableConfigurationStage(
             RunnableHttpExecutor httpExecutor,
-            RunnableRequest.Builder httpRequest,
+            RunnableRequest.Builder requestBuilder,
             String threadId
     ) {
         this.httpExecutor = httpExecutor;
-        this.httpRequest = httpRequest;
+        this.requestBuilder = requestBuilder;
         this.threadId = threadId;
     }
 }

@@ -13,6 +13,7 @@ public class CreateAssistant {
         var file = new File(UploadFile.class.getClassLoader()
                                             .getResource("fake-file.txt")
                                             .getPath());
+
         var assistant = Assistants.defaults()
                                   .and()
                                   .turboPowered()

@@ -15,8 +15,8 @@ public class AssistantDescriptionStage
         );
     }
 
-    public AdvancedConfigurationStage context(String description) {
-        return new AdvancedConfigurationStage(
+    public AssistantAdvancedConfigurationStage context(String description) {
+        return new AssistantAdvancedConfigurationStage(
                 this.httpExecutor,
                 this.requestBuilder.withDescription(description)
         );

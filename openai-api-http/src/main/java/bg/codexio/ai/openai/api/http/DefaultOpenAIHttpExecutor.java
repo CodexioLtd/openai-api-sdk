@@ -225,6 +225,13 @@ public abstract class DefaultOpenAIHttpExecutor<I extends Streamable,
     }
 
     @Override
+    public O execute(String... pathVariables) {
+        var httpRequest = this.prepareRequest(pathVariables);
+
+        return this.performRequestExecution(httpRequest);
+    }
+
+    @Override
     public O executeWithPathVariable(
             I request,
             String pathVariable
@@ -440,6 +447,17 @@ public abstract class DefaultOpenAIHttpExecutor<I extends Streamable,
                                     .build();
     }
 
+    protected Request prepareRequest(String... pathVariables) {
+        var resourceUriWithPathVariable = String.format(
+                this.resourceUri,
+                (Object[]) pathVariables
+        );
+
+        return new Request.Builder().url(this.baseUrl.concat(resourceUriWithPathVariable))
+                                    .get()
+                                    .build();
+    }
+
     protected O performRequestExecution(Request httpRequest) {
         try (
                 var httpResponse = this.client.newCall(httpRequest)
@@ -450,7 +468,8 @@ public abstract class DefaultOpenAIHttpExecutor<I extends Streamable,
             return this.toResponse(httpResponse);
         } catch (IOException e) {
             throw new HttpCallFailedException(
-                    this.baseUrl + this.resourceUri,
+                    httpRequest.url()
+                               .toString(),
                     e
             );
         }
@@ -490,7 +509,9 @@ public abstract class DefaultOpenAIHttpExecutor<I extends Streamable,
             return this.toResponse(body);
         } catch (IOException e) {
             throw new HttpCallFailedException(
-                    this.baseUrl + this.resourceUri,
+                    response.request()
+                            .url()
+                            .toString(),
                     e
             );
         }
