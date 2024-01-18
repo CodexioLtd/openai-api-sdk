@@ -6,7 +6,7 @@ import bg.codexio.ai.openai.api.payload.thread.response.ThreadResponse;
 
 public class CreateThreadStage
         extends ThreadConfigurationStage {
-    protected CreateThreadStage(
+    CreateThreadStage(
             ThreadHttpExecutor httpExecutor,
             CreateThreadRequest.Builder requestContext
     ) {
@@ -17,13 +17,13 @@ public class CreateThreadStage
     }
 
     public ThreadResponse empty() {
-        return this.httpExecutor.execute(this.requestContext.build());
+        return this.httpExecutor.execute(this.requestBuilder.build());
     }
 
-    public ThreadMetaStage creating() {
-        return new ThreadMetaStage(
+    public ThreadAdvancedConfiguration creating() {
+        return new ThreadAdvancedConfiguration(
                 this.httpExecutor,
-                this.requestContext
+                this.requestBuilder
         );
     }
 }

@@ -1,14 +1,14 @@
 package bg.codexio.ai.openai.api.sdk.message;
 
-import bg.codexio.ai.openai.api.http.message.MessageHttpExecutor;
+import bg.codexio.ai.openai.api.http.DefaultOpenAIHttpExecutor;
+import bg.codexio.ai.openai.api.payload.Mergeable;
 import bg.codexio.ai.openai.api.payload.message.request.MessageRequest;
-import bg.codexio.ai.openai.api.payload.message.response.MessageCreationResponse;
 
-public class MessageMetaStage
-        extends MessageConfigurationStage {
+public class MessageMetaStage<O extends Mergeable<O>>
+        extends MessageConfigurationStage<O> {
 
     MessageMetaStage(
-            MessageHttpExecutor httpExecutor,
+            DefaultOpenAIHttpExecutor<MessageRequest, O> httpExecutor,
             MessageRequest.Builder requestBuilder,
             String threadId
     ) {
@@ -19,10 +19,10 @@ public class MessageMetaStage
         );
     }
 
-    public MessageCreationResponse awareOf(String... metadata) {
-        return this.httpExecutor.executeWithPathVariable(
-                this.requestBuilder.addMetadata(metadata)
-                                   .build(),
+    public MessageAdvancedConfigurationStage<O> awareOf(String... metadata) {
+        return new MessageAdvancedConfigurationStage<>(
+                this.httpExecutor,
+                this.requestBuilder.addMetadata(metadata),
                 this.threadId
         );
     }

@@ -1,16 +1,17 @@
 package bg.codexio.ai.openai.api.sdk.message;
 
-import bg.codexio.ai.openai.api.http.message.MessageHttpExecutor;
+import bg.codexio.ai.openai.api.http.DefaultOpenAIHttpExecutor;
+import bg.codexio.ai.openai.api.payload.Mergeable;
 import bg.codexio.ai.openai.api.payload.message.request.MessageRequest;
 
-public abstract class MessageConfigurationStage {
+public abstract class MessageConfigurationStage<O extends Mergeable<O>> {
 
-    protected final MessageHttpExecutor httpExecutor;
+    protected final DefaultOpenAIHttpExecutor<MessageRequest, O> httpExecutor;
     protected final MessageRequest.Builder requestBuilder;
     protected final String threadId;
 
     MessageConfigurationStage(
-            MessageHttpExecutor httpExecutor,
+            DefaultOpenAIHttpExecutor<MessageRequest, O> httpExecutor,
             MessageRequest.Builder requestBuilder,
             String threadId
     ) {

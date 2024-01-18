@@ -15,13 +15,17 @@ public class CreateThread {
         var emptyThread = Threads.defaults()
                                  .and()
                                  .creating()
-                                 .withMeta(
+                                 .meta()
+                                 .awareOf(
                                          "key1",
                                          "value1",
                                          "key2",
                                          "value2"
                                  )
-                                 .startWithToFile("You're java developer")
+                                 .file()
+                                 .supply(file)
+                                 .message()
+                                 .startWith("You're java developer.")
                                  .feed(file);
 
         System.out.println(emptyThread);

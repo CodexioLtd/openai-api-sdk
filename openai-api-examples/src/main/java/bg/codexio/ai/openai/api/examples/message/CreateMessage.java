@@ -9,7 +9,9 @@ public class CreateMessage {
                                                        .and()
                                                        .empty())
                                       .and()
-                                      .withContent("content");
+                                      .chat()
+                                      .withContent("How are you?")
+                                      .andRespond();
 
         System.out.println(messageResponse);
     }

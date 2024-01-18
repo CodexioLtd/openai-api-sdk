@@ -2,14 +2,15 @@ package bg.codexio.ai.openai.api.http.message;
 
 import bg.codexio.ai.openai.api.http.DefaultOpenAIHttpExecutor;
 import bg.codexio.ai.openai.api.http.HttpExecutorContext;
-import bg.codexio.ai.openai.api.payload.Streamable;
+import bg.codexio.ai.openai.api.payload.message.request.MessageRequest;
 import bg.codexio.ai.openai.api.payload.message.response.ListMessagesResponse;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
 
 public class RetrieveListMessagesHttpExecutor
-        extends DefaultOpenAIHttpExecutor<Streamable, ListMessagesResponse> {
+        extends DefaultOpenAIHttpExecutor<MessageRequest,
+        ListMessagesResponse> {
     private static final Class<ListMessagesResponse> RESPONSE_TYPE =
             ListMessagesResponse.class;
     private static final String RESOURCE_URI = "/threads/%s/messages";

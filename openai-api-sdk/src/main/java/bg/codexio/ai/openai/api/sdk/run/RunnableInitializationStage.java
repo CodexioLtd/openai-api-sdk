@@ -11,8 +11,6 @@ import java.util.function.Function;
 
 public class RunnableInitializationStage
         extends RunnableConfigurationStage {
-
-
     RunnableInitializationStage(
             RunnableHttpExecutor httpExecutor,
             RunnableRequest.Builder requestBuilder,
@@ -25,21 +23,61 @@ public class RunnableInitializationStage
         );
     }
 
-    public RunnableResponse run(AssistantResponse assistantResponse) {
+    public RunnableResponse executeRaw(AssistantResponse assistantResponse) {
         return this.processAssistantResponse(
                 assistantResponse,
-                this::run
+                this::performExecution
         );
+    }
+
+    public RunnableResponse executeRaw(String assistantId) {
+        return this.performExecution(assistantId);
+    }
+
+    public String execute(AssistantResponse assistantResponse) {
+        return this.processAssistantResponse(
+                           assistantResponse,
+                           this::performExecution
+                   )
+                   .id();
     }
 
     // issue with registration the assistant tools implementation to the
     // object mapper, while only assistant id as
     // parameter is used
-    public RunnableResponse run(String assistantId) {
-        return this.httpExecutor.executeWithPathVariable(
-                this.requestBuilder.withAssistantId(assistantId)
-                                   .build(),
-                this.threadId
+    public String execute(String assistantId) {
+        return this.performExecution(assistantId)
+                   .id();
+
+    }
+
+    public RunnableResultStage run(AssistantResponse assistantResponse) {
+        return new RunnableResultStage(
+                this.httpExecutor,
+                this.requestBuilder,
+                this.threadId,
+                this.processAssistantResponse(
+                        assistantResponse,
+                        this::performExecution
+                )
+        );
+    }
+
+    public RunnableResultStage run(String assistantID) {
+        return new RunnableResultStage(
+                this.httpExecutor,
+                this.requestBuilder,
+                this.threadId,
+                this.performExecution(assistantID)
+        );
+    }
+
+    public RunnableResultStage messaging() {
+        return new RunnableResultStage(
+                this.httpExecutor,
+                this.requestBuilder,
+                this.threadId,
+                null
         );
     }
 
@@ -59,52 +97,30 @@ public class RunnableInitializationStage
         );
     }
 
-    public RunnableResponse from(RunnableResponse runnableResponse) {
-        if (!runnableResponse.tools()
-                             .isEmpty()) {
-            ObjectMapperSubtypesRegistrationUtils.registerAssistantTools(
-                    this.httpExecutor,
-                    runnableResponse.tools()
-            );
-            return this.httpExecutor.execute(
-                    runnableResponse.threadId(),
-                    runnableResponse.id()
-            );
-        }
-
-        return this.httpExecutor.execute(
-                runnableResponse.threadId(),
-                runnableResponse.id()
-        );
-    }
-
-    // same issue here
-    public RunnableResponse from(
-            String threadId,
-            String runnableId
-    ) {
-        return this.httpExecutor.execute(
-                threadId,
-                runnableId
-        );
-    }
-
     private <T> T processAssistantResponse(
             AssistantResponse assistantResponse,
-            Function<String, T> operation
+            Function<String, T> function
     ) {
         return Optional.of(assistantResponse)
                        .filter(assistant -> assistant.tools()
                                                      .isEmpty())
                        .map(AssistantResponse::id)
-                       .map(operation)
+                       .map(function)
                        .orElseGet(() -> {
                            ObjectMapperSubtypesRegistrationUtils.registerAssistantTools(
                                    this.httpExecutor,
                                    assistantResponse.tools()
                            );
 
-                           return operation.apply(assistantResponse.id());
+                           return function.apply(assistantResponse.id());
                        });
+    }
+
+    private RunnableResponse performExecution(String assistantId) {
+        return this.httpExecutor.executeWithPathVariable(
+                this.requestBuilder.withAssistantId(assistantId)
+                                   .build(),
+                this.threadId
+        );
     }
 }
