@@ -1,19 +1,20 @@
 package bg.codexio.ai.openai.api.payload.message.content;
 
 import com.fasterxml.jackson.annotation.JsonCreator;
+import com.fasterxml.jackson.annotation.JsonProperty;
 
 public class TextMessageContent
         extends MessageContentAbstract {
 
-    private final TextContent textContent;
+    private final TextContent text;
 
     @JsonCreator
-    public TextMessageContent(TextContent textContent) {
+    public TextMessageContent(@JsonProperty("text") TextContent text) {
         super("text");
-        this.textContent = textContent;
+        this.text = text;
     }
 
-    public TextContent getTextContent() {
-        return textContent;
+    public TextContent getText() {
+        return text;
     }
 }

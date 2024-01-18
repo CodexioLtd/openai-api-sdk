@@ -1,20 +1,22 @@
 package bg.codexio.ai.openai.api.payload.message.response;
 
+import bg.codexio.ai.openai.api.payload.Mergeable;
+
 import java.util.List;
+import java.util.Objects;
 
 public record ListMessagesResponse(
         String object,
-        List<MessageCreationResponse> data,
+        List<MessageResponse> data,
         String firstId,
         String lastId,
         Boolean hasMore
 )
-        implements MessageResponse {
+        implements Mergeable<ListMessagesResponse> {
 
     @Override
-    public ListMessagesResponse merge(MessageResponse other) {
-        if (!other.getClass()
-                  .isAssignableFrom(this.getClass())) {
+    public ListMessagesResponse merge(ListMessagesResponse other) {
+        if (Objects.isNull(other)) {
             return this;
         }
 

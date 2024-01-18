@@ -1,11 +1,13 @@
 package bg.codexio.ai.openai.api.sdk.run;
 
 import bg.codexio.ai.openai.api.http.run.RunnableHttpExecutor;
+import bg.codexio.ai.openai.api.payload.message.MessageResult;
 import bg.codexio.ai.openai.api.payload.run.request.RunnableRequest;
+import bg.codexio.ai.openai.api.sdk.message.Messages;
 
-public class RunnableInstructionStage
+public class RunnableMessageResult
         extends RunnableConfigurationStage {
-    RunnableInstructionStage(
+    RunnableMessageResult(
             RunnableHttpExecutor httpExecutor,
             RunnableRequest.Builder requestBuilder,
             String threadId
@@ -17,11 +19,10 @@ public class RunnableInstructionStage
         );
     }
 
-    public RunnableAdvancedConfigurationStage instruct(String instruction) {
-        return new RunnableAdvancedConfigurationStage(
-                this.httpExecutor,
-                this.requestBuilder.withAdditionalInstructions(instruction),
-                this.threadId
-        );
+    public MessageResult answers() {
+        return Messages.defaults(this.threadId)
+                       .and()
+                       .respond()
+                       .answers();
     }
 }

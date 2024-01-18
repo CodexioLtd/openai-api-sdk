@@ -49,4 +49,23 @@ public class RunnableAdvancedConfigurationStage
                 this.threadId
         );
     }
+
+    public RunnableMessageResult result() {
+        return new RunnableMessageResult(
+                this.httpExecutor,
+                this.requestBuilder,
+                this.threadId
+        );
+    }
+
+    public RunnableResultStage finish() {
+        var run = this.andRespond();
+
+        return new RunnableResultStage(
+                this.httpExecutor,
+                this.requestBuilder,
+                this.threadId,
+                run
+        );
+    }
 }

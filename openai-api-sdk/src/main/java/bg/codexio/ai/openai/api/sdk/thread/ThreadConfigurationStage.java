@@ -6,13 +6,13 @@ import bg.codexio.ai.openai.api.payload.thread.request.CreateThreadRequest;
 public abstract class ThreadConfigurationStage {
 
     protected final ThreadHttpExecutor httpExecutor;
-    protected final CreateThreadRequest.Builder requestContext;
+    protected final CreateThreadRequest.Builder requestBuilder;
 
-    protected ThreadConfigurationStage(
+    ThreadConfigurationStage(
             ThreadHttpExecutor httpExecutor,
-            CreateThreadRequest.Builder requestContext
+            CreateThreadRequest.Builder requestBuilder
     ) {
         this.httpExecutor = httpExecutor;
-        this.requestContext = requestContext;
+        this.requestBuilder = requestBuilder;
     }
 }

@@ -4,7 +4,7 @@ import bg.codexio.ai.openai.api.http.DefaultOpenAIHttpExecutor;
 import bg.codexio.ai.openai.api.http.HttpExecutorContext;
 import bg.codexio.ai.openai.api.http.exception.HttpCallFailedException;
 import bg.codexio.ai.openai.api.payload.message.request.MessageRequest;
-import bg.codexio.ai.openai.api.payload.message.response.MessageCreationResponse;
+import bg.codexio.ai.openai.api.payload.message.response.MessageResponse;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
@@ -15,10 +15,9 @@ import org.jetbrains.annotations.NotNull;
 import java.io.IOException;
 
 public class MessageHttpExecutor
-        extends DefaultOpenAIHttpExecutor<MessageRequest,
-        MessageCreationResponse> {
-    private static final Class<MessageCreationResponse> RESPONSE_TYPE =
-            MessageCreationResponse.class;
+        extends DefaultOpenAIHttpExecutor<MessageRequest, MessageResponse> {
+    private static final Class<MessageResponse> RESPONSE_TYPE =
+            MessageResponse.class;
     private static final String RESOURCE_URI = "/threads/%s/messages";
 
     public MessageHttpExecutor(
@@ -95,7 +94,7 @@ public class MessageHttpExecutor
     }
 
     @Override
-    protected MessageCreationResponse toResponse(Response response)
+    protected MessageResponse toResponse(Response response)
             throws IOException {
         try {
             var body = response.body()
