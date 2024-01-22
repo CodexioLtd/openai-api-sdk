@@ -1,9 +1,10 @@
 package bg.codexio.ai.openai.api.sdk.thread;
 
-import bg.codexio.ai.openai.api.http.thread.ThreadHttpExecutor;
+import bg.codexio.ai.openai.api.http.DefaultOpenAIHttpExecutor;
 import bg.codexio.ai.openai.api.payload.file.response.FileResponse;
 import bg.codexio.ai.openai.api.payload.message.request.MessageRequest;
-import bg.codexio.ai.openai.api.payload.thread.request.CreateThreadRequest;
+import bg.codexio.ai.openai.api.payload.thread.request.ThreadRequest;
+import bg.codexio.ai.openai.api.payload.thread.request.ThreadRequestBuilder;
 import bg.codexio.ai.openai.api.payload.thread.response.ThreadResponse;
 import bg.codexio.ai.openai.api.sdk.file.FileSimplified;
 
@@ -11,14 +12,14 @@ import java.io.File;
 import java.util.Arrays;
 import java.util.Optional;
 
-public class ThreadMessageFileStage
-        extends ThreadConfigurationStage {
+public class ThreadMessageFileStage<R extends ThreadRequest>
+        extends ThreadConfigurationStage<R> {
 
     private final String content;
 
     ThreadMessageFileStage(
-            ThreadHttpExecutor httpExecutor,
-            CreateThreadRequest.Builder requestBuilder,
+            DefaultOpenAIHttpExecutor<R, ThreadResponse> httpExecutor,
+            ThreadRequestBuilder<R> requestBuilder,
             String content
     ) {
         super(
@@ -27,6 +28,7 @@ public class ThreadMessageFileStage
         );
         this.content = content;
     }
+
 
     public ThreadResponse feed(File file) {
         return Optional.ofNullable(content)
@@ -46,63 +48,67 @@ public class ThreadMessageFileStage
                        .orElseGet(() -> this.createWithEmptyContent(fileId));
     }
 
-    public ThreadAdvancedConfiguration supply(File file) {
-        return new ThreadAdvancedConfiguration(
+    public ThreadAdvancedConfigurationStage<R> attach(File file) {
+        return new ThreadAdvancedConfigurationStage<>(
                 this.httpExecutor,
                 this.buildWithoutContent(FileSimplified.simply(file))
         );
     }
 
-    public ThreadAdvancedConfiguration supply(FileResponse fileResponse) {
-        return new ThreadAdvancedConfiguration(
+    public ThreadAdvancedConfigurationStage<R> attach(FileResponse fileResponse) {
+        return new ThreadAdvancedConfigurationStage<>(
                 this.httpExecutor,
                 this.buildWithoutContent(fileResponse.id())
         );
     }
 
-    public ThreadAdvancedConfiguration supply(String... fileId) {
-        return new ThreadAdvancedConfiguration(
+    public ThreadAdvancedConfigurationStage<R> attach(String... fileId) {
+        return new ThreadAdvancedConfigurationStage<>(
                 this.httpExecutor,
                 this.buildWithoutContent(fileId)
         );
     }
 
     private ThreadResponse create(String fileId) {
-        return this.httpExecutor.execute(this.requestBuilder.addMessage(MessageRequest.builder()
-                                                                                      .addFileIDs(fileId)
-                                                                                      .withRole("user")
-                                                                                      .withContent(this.content)
-                                                                                      .build())
-                                                            .build());
+        return this.httpExecutor.execute(this.requestBuilder.specificRequestCreator()
+                                                            .apply(this.requestBuilder.addMessage(MessageRequest.builder()
+                                                                                                                .addFileIDs(fileId)
+                                                                                                                .withRole("user")
+                                                                                                                .withContent(this.content)
+                                                                                                                .build())
+                                                                                      .build()));
     }
 
     public ThreadResponse createWithEmptyContent(String fileId) {
-        return this.httpExecutor.execute(this.buildWithoutContent(fileId)
-                                             .build());
+        return this.httpExecutor.execute(this.requestBuilder.specificRequestCreator()
+                                                            .apply(this.buildWithoutContent(fileId)
+                                                                       .build()));
     }
 
     public ThreadResponse create(String... fileId) {
-        return this.httpExecutor.execute(this.requestBuilder.addMessage(MessageRequest.builder()
-                                                                                      .withFileIds(Arrays.asList(fileId))
-                                                                                      .withRole("user")
-                                                                                      .withContent(this.content)
-                                                                                      .build())
-                                                            .build());
+        return this.httpExecutor.execute(this.requestBuilder.specificRequestCreator()
+                                                            .apply(this.requestBuilder.addMessage(MessageRequest.builder()
+                                                                                                                .withFileIds(Arrays.asList(fileId))
+                                                                                                                .withRole("user")
+                                                                                                                .withContent(this.content)
+                                                                                                                .build())
+                                                                                      .build()));
     }
 
     public ThreadResponse createWithEmptyContent(String... fileId) {
-        return this.httpExecutor.execute(this.buildWithoutContent(fileId)
-                                             .build());
+        return this.httpExecutor.execute(this.requestBuilder.specificRequestCreator()
+                                                            .apply(this.buildWithoutContent(fileId)
+                                                                       .build()));
     }
 
-    public CreateThreadRequest.Builder buildWithoutContent(String fileId) {
+    public ThreadRequestBuilder<R> buildWithoutContent(String fileId) {
         return this.requestBuilder.addMessage(MessageRequest.builder()
                                                             .addFileIDs(fileId)
                                                             .withRole("user")
                                                             .build());
     }
 
-    public CreateThreadRequest.Builder buildWithoutContent(String... fileId) {
+    public ThreadRequestBuilder<R> buildWithoutContent(String... fileId) {
         return this.requestBuilder.addMessage(MessageRequest.builder()
                                                             .withFileIds(Arrays.asList(fileId))
                                                             .withRole("user")

@@ -10,6 +10,7 @@ public class CreateRun {
     public static void main(String[] args) throws InterruptedException {
         var run = Runnables.defaults(Threads.defaults()
                                             .and()
+                                            .creating()
                                             .empty())
                            .and()
                            .deepConfigure(Assistants.defaults()

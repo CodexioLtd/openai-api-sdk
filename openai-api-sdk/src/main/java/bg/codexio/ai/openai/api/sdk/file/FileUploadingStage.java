@@ -20,7 +20,7 @@ public class FileUploadingStage
     }
 
     public FileResponse feedRaw(File file) {
-        return this.executor.execute(this.requestContext.withFile(file)
+        return this.executor.execute(this.requestBuilder.withFile(file)
                                                         .build());
     }
 

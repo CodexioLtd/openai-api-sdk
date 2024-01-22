@@ -5,10 +5,10 @@ import bg.codexio.ai.openai.api.payload.thread.request.ThreadRequest;
 import bg.codexio.ai.openai.api.payload.thread.request.ThreadRequestBuilder;
 import bg.codexio.ai.openai.api.payload.thread.response.ThreadResponse;
 
-public class ThreadMetaStage<R extends ThreadRequest>
+public class ThreadCreationStage<R extends ThreadRequest>
         extends ThreadConfigurationStage<R> {
 
-    ThreadMetaStage(
+    ThreadCreationStage(
             DefaultOpenAIHttpExecutor<R, ThreadResponse> httpExecutor,
             ThreadRequestBuilder<R> requestBuilder
     ) {
@@ -18,10 +18,15 @@ public class ThreadMetaStage<R extends ThreadRequest>
         );
     }
 
-    public ThreadAdvancedConfigurationStage<R> awareOf(String... metadata) {
+    public ThreadResponse empty() {
+        return this.httpExecutor.execute(this.requestBuilder.specificRequestCreator()
+                                                            .apply(this.requestBuilder.build()));
+    }
+
+    public ThreadAdvancedConfigurationStage<R> deepConfigure() {
         return new ThreadAdvancedConfigurationStage<>(
                 this.httpExecutor,
-                this.requestBuilder.addMetadata(metadata)
+                this.requestBuilder
         );
     }
 }

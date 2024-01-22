@@ -30,7 +30,7 @@ public class SynchronousExecutor<R extends ImageRequest>
         );
         this.response =
                 this.executor.execute(this.builder.specificRequestCreator()
-                                                          .apply(this.builder));
+                                                  .apply(this.builder));
     }
 
     /**
