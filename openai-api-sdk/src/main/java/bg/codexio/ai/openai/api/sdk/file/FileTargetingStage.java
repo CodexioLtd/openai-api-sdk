@@ -21,7 +21,7 @@ public class FileTargetingStage
     public FileUploadingStage targeting(Purpose purpose) {
         return new FileUploadingStage(
                 this.executor,
-                this.requestContext.withPurpose(purpose.name())
+                this.requestBuilder.withPurpose(purpose.name())
         );
     }
 

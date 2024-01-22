@@ -225,7 +225,7 @@ public abstract class DefaultOpenAIHttpExecutor<I extends Streamable,
     }
 
     @Override
-    public O execute(String... pathVariables) {
+    public O executeWithPathVariables(String... pathVariables) {
         var httpRequest = this.prepareRequest(pathVariables);
 
         return this.performRequestExecution(httpRequest);

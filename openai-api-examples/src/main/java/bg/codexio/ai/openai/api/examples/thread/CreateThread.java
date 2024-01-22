@@ -15,6 +15,7 @@ public class CreateThread {
         var emptyThread = Threads.defaults()
                                  .and()
                                  .creating()
+                                 .deepConfigure()
                                  .meta()
                                  .awareOf(
                                          "key1",
@@ -23,7 +24,7 @@ public class CreateThread {
                                          "value2"
                                  )
                                  .file()
-                                 .supply(file)
+                                 .attach(file)
                                  .message()
                                  .startWith("You're java developer.")
                                  .feed(file);

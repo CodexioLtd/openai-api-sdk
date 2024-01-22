@@ -25,7 +25,7 @@ public record RunnableResponse(
         String model,
         String instructions,
         List<AssistantTool> tools,
-        List<Integer> fileIds,
+        List<String> fileIds,
         Map<String, String> metadata
 )
         implements Mergeable<RunnableResponse> {

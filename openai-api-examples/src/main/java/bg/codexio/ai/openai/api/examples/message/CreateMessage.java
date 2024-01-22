@@ -7,6 +7,7 @@ public class CreateMessage {
     public static void main(String[] args) {
         var messageResponse = Messages.defaults(Threads.defaults()
                                                        .and()
+                                                       .creating()
                                                        .empty())
                                       .and()
                                       .chat()

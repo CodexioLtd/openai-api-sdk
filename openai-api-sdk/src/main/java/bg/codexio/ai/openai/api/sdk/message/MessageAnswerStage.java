@@ -20,14 +20,14 @@ public class MessageAnswerStage<O extends Mergeable<O>>
     }
 
     public O answersRaw(ThreadResponse threadResponse) {
-        return this.httpExecutor.execute(threadResponse.id());
+        return this.httpExecutor.executeWithPathVariables(threadResponse.id());
     }
 
     public O answersRaw(String threadId) {
-        return this.httpExecutor.execute(threadId);
+        return this.httpExecutor.executeWithPathVariables(threadId);
     }
 
     public O answersRaw() {
-        return this.httpExecutor.execute(this.threadId);
+        return this.httpExecutor.executeWithPathVariables(this.threadId);
     }
 }

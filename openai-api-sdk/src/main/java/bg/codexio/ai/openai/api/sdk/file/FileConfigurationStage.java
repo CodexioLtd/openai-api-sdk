@@ -6,13 +6,13 @@ import bg.codexio.ai.openai.api.payload.file.request.UploadFileRequest;
 public abstract class FileConfigurationStage {
 
     protected final UploadFileHttpExecutor executor;
-    protected final UploadFileRequest.Builder requestContext;
+    protected final UploadFileRequest.Builder requestBuilder;
 
     FileConfigurationStage(
             UploadFileHttpExecutor executor,
-            UploadFileRequest.Builder requestContext
+            UploadFileRequest.Builder requestBuilder
     ) {
         this.executor = executor;
-        this.requestContext = requestContext;
+        this.requestBuilder = requestBuilder;
     }
 }
