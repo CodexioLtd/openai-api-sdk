@@ -6,9 +6,7 @@ import bg.codexio.ai.openai.api.http.exception.UnparseableResponseException;
 import bg.codexio.ai.openai.api.payload.Mergeable;
 import bg.codexio.ai.openai.api.payload.Streamable;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import okhttp3.OkHttpClient;
-import okhttp3.Response;
-import okhttp3.ResponseBody;
+import okhttp3.*;
 import okio.Buffer;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -509,10 +507,18 @@ public class DefaultOpenAIHttpExecutorTest {
             throws IOException {
         var okHttpResponse = mock(Response.class);
         var body = mock(ResponseBody.class);
+        var request = mock(Request.class);
+
         doThrow(new IOException()).when(body)
                                   .string();
         doReturn(body).when(okHttpResponse)
                       .body();
+        doReturn(request).when(okHttpResponse)
+                         .request();
+
+        var requestUrl = HttpUrl.parse("http://base-url/some/resource");
+        doReturn(requestUrl).when(request)
+                            .url();
 
         var exception = assertThrows(
                 HttpCallFailedException.class,
