@@ -17,12 +17,6 @@ import static org.mockito.Mockito.when;
 
 public class InternalAssertions {
 
-    public static final ThreadResponse THREAD_RESPONSE = new ThreadResponse(
-            THREAD_ID,
-            "test_object",
-            0,
-            METADATA_MAP
-    );
     static final CreateThreadHttpExecutor CREATE_THREAD_HTTP_EXECUTOR =
             mock(CreateThreadHttpExecutor.class);
 
@@ -33,6 +27,13 @@ public class InternalAssertions {
             "test_message_content_1", "test_message_content_2"
     };
     static final String THREAD_MESSAGE_CONTENT = "test_message_content_3";
+    public static final ThreadResponse THREAD_RESPONSE = new ThreadResponse(
+            THREAD_ID,
+            "test_object",
+            0,
+            METADATA_MAP
+    );
+
     static final ThreadRequestBuilder<ThreadCreationRequest> THREAD_CREATION_REQUEST_BUILDER = ThreadRequestBuilder.<ThreadCreationRequest>builder()
                                                                                                                    .withSpecificRequestCreator(threadRequestBuilder -> new ThreadCreationRequest(
                                                                                                                            threadRequestBuilder.messages(),
