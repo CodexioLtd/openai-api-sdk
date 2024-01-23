@@ -98,7 +98,7 @@ public class MessageAnswersRetrievalTypeStage {
     }
 
     private List<MessageContent> getMessageContent(List<MessageResponse> data) {
-        return data.get(1)
+        return data.get(0)
                    .content();
     }
 

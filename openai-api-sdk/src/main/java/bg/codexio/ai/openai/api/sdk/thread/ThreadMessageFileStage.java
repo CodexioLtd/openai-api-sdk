@@ -69,23 +69,13 @@ public class ThreadMessageFileStage<R extends ThreadRequest>
         );
     }
 
-    private ThreadResponse create(String fileId) {
-        return this.httpExecutor.execute(this.requestBuilder.specificRequestCreator()
-                                                            .apply(this.requestBuilder.addMessage(MessageRequest.builder()
-                                                                                                                .addFileIDs(fileId)
-                                                                                                                .withRole("user")
-                                                                                                                .withContent(this.content)
-                                                                                                                .build())
-                                                                                      .build()));
-    }
-
-    public ThreadResponse createWithEmptyContent(String fileId) {
+    private ThreadResponse createWithEmptyContent(String fileId) {
         return this.httpExecutor.execute(this.requestBuilder.specificRequestCreator()
                                                             .apply(this.buildWithoutContent(fileId)
                                                                        .build()));
     }
 
-    public ThreadResponse create(String... fileId) {
+    private ThreadResponse create(String... fileId) {
         return this.httpExecutor.execute(this.requestBuilder.specificRequestCreator()
                                                             .apply(this.requestBuilder.addMessage(MessageRequest.builder()
                                                                                                                 .withFileIds(Arrays.asList(fileId))
@@ -95,23 +85,33 @@ public class ThreadMessageFileStage<R extends ThreadRequest>
                                                                                       .build()));
     }
 
-    public ThreadResponse createWithEmptyContent(String... fileId) {
+    private ThreadResponse createWithEmptyContent(String... fileId) {
         return this.httpExecutor.execute(this.requestBuilder.specificRequestCreator()
                                                             .apply(this.buildWithoutContent(fileId)
                                                                        .build()));
     }
 
-    public ThreadRequestBuilder<R> buildWithoutContent(String fileId) {
+    private ThreadRequestBuilder<R> buildWithoutContent(String fileId) {
         return this.requestBuilder.addMessage(MessageRequest.builder()
                                                             .addFileIDs(fileId)
                                                             .withRole("user")
                                                             .build());
     }
 
-    public ThreadRequestBuilder<R> buildWithoutContent(String... fileId) {
+    private ThreadRequestBuilder<R> buildWithoutContent(String... fileId) {
         return this.requestBuilder.addMessage(MessageRequest.builder()
                                                             .withFileIds(Arrays.asList(fileId))
                                                             .withRole("user")
                                                             .build());
+    }
+
+    private ThreadResponse create(String fileId) {
+        return this.httpExecutor.execute(this.requestBuilder.specificRequestCreator()
+                                                            .apply(this.requestBuilder.addMessage(MessageRequest.builder()
+                                                                                                                .addFileIDs(fileId)
+                                                                                                                .withRole("user")
+                                                                                                                .withContent(this.content)
+                                                                                                                .build())
+                                                                                      .build()));
     }
 }

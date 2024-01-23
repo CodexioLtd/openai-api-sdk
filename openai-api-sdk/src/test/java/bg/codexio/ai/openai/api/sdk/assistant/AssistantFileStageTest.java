@@ -11,9 +11,11 @@ import org.junit.jupiter.api.Test;
 
 import java.util.Arrays;
 
+import static bg.codexio.ai.openai.api.sdk.SharedConstantsUtils.FILE;
 import static bg.codexio.ai.openai.api.sdk.assistant.InternalAssertions.*;
 import static bg.codexio.ai.openai.api.sdk.file.FilesTest.TEST_KEY;
-import static bg.codexio.ai.openai.api.sdk.file.InternalAssertions.*;
+import static bg.codexio.ai.openai.api.sdk.file.InternalAssertions.FILE_RESPONSE;
+import static bg.codexio.ai.openai.api.sdk.file.InternalAssertions.FILE_SIMPLIFIED;
 import static org.junit.jupiter.api.Assertions.assertAll;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.ArgumentMatchers.any;
@@ -75,13 +77,14 @@ public class AssistantFileStageTest {
             authUtils.when(() -> Authenticator.autoAuthenticate(any()))
                      .thenReturn(auth);
 
+
             filesSimplified.when(() -> Files.defaults()
                                             .and()
                                             .forAssistants()
-                                            .feed(file))
+                                            .feed(FILE))
                            .thenReturn(FILE_RESPONSE.id());
 
-            var nextStage = this.assistantFileStage.feed(file);
+            var nextStage = this.assistantFileStage.feed(FILE);
 
             this.previousValuesRemainsUnchanged(nextStage);
         }

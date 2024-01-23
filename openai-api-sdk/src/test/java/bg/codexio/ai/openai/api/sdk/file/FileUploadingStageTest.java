@@ -4,6 +4,7 @@ import bg.codexio.ai.openai.api.payload.file.request.UploadFileRequest;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
+import static bg.codexio.ai.openai.api.sdk.SharedConstantsUtils.FILE;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.when;
@@ -26,7 +27,7 @@ public class FileUploadingStageTest {
     void testFeedRaw_expectCorrectResponse() {
         when(this.fileUploadingStage.executor.execute(any())).thenAnswer(response -> InternalAssertions.FILE_RESPONSE);
 
-        var response = this.fileUploadingStage.feedRaw(InternalAssertions.file);
+        var response = this.fileUploadingStage.feedRaw(FILE);
 
         assertEquals(
                 InternalAssertions.FILE_RESPONSE,
@@ -39,7 +40,7 @@ public class FileUploadingStageTest {
     void testFeed_expectCorrectResponse() {
         when(this.fileUploadingStage.executor.execute(any())).thenAnswer(response -> InternalAssertions.FILE_RESPONSE);
 
-        var fileId = this.fileUploadingStage.feed(InternalAssertions.file);
+        var fileId = this.fileUploadingStage.feed(FILE);
 
         assertEquals(
                 InternalAssertions.FILE_RESPONSE.id(),

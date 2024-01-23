@@ -32,18 +32,18 @@ public class MessageFileStage<O extends Mergeable<O>>
         );
     }
 
-    public MessageAdvancedConfigurationStage<O> feed(File file) {
-        return new MessageAdvancedConfigurationStage<>(
-                this.httpExecutor,
-                this.requestBuilder.addFileIDs(FileSimplified.simply(file)),
-                this.threadId
-        );
-    }
-
     public MessageAdvancedConfigurationStage<O> feed(FileResponse fileResponse) {
         return new MessageAdvancedConfigurationStage<>(
                 this.httpExecutor,
                 this.requestBuilder.addFileIDs(fileResponse.id()),
+                this.threadId
+        );
+    }
+
+    public MessageAdvancedConfigurationStage<O> feed(File file) {
+        return new MessageAdvancedConfigurationStage<>(
+                this.httpExecutor,
+                this.requestBuilder.addFileIDs(FileSimplified.simply(file)),
                 this.threadId
         );
     }

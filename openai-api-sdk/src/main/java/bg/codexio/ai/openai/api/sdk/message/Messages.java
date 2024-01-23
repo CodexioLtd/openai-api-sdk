@@ -27,6 +27,17 @@ public class Messages {
         );
     }
 
+    public static MessageContentStage<MessageResponse> throughHttp(
+            MessageHttpExecutor httpExecutor,
+            ThreadResponse threadResponse
+    ) {
+        return new MessageContentStage<>(
+                httpExecutor,
+                MessageRequest.builder(),
+                threadResponse.id()
+        );
+    }
+
     public static MessageAnswerStage<ListMessagesResponse> throughHttp(
             RetrieveListMessagesHttpExecutor httpExecutor,
             String threadId
@@ -35,6 +46,17 @@ public class Messages {
                 httpExecutor,
                 MessageRequest.builder(),
                 threadId
+        );
+    }
+
+    public static MessageAnswerStage<ListMessagesResponse> throughHttp(
+            RetrieveListMessagesHttpExecutor httpExecutor,
+            ThreadResponse threadResponse
+    ) {
+        return new MessageAnswerStage<>(
+                httpExecutor,
+                MessageRequest.builder(),
+                threadResponse.id()
         );
     }
 
