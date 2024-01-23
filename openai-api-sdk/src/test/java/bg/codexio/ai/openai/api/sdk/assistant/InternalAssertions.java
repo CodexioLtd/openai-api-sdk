@@ -8,8 +8,8 @@ import bg.codexio.ai.openai.api.payload.assistant.tool.CodeInterpreter;
 
 import java.util.Arrays;
 import java.util.List;
-import java.util.Map;
 
+import static bg.codexio.ai.openai.api.sdk.SharedConstantsUtils.METADATA_MAP;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.Mockito.mock;
 
@@ -19,7 +19,6 @@ public class InternalAssertions {
 
     static final AssistantHttpExecutor ASSISTANT_HTTP_EXECUTOR =
             mock(AssistantHttpExecutor.class);
-    static final String API_CREDENTIALS = "test-key";
 
     static final ModelType ASSISTANT_MODEL_TYPE = new GPT40Model();
     static final String CODE_INTERPRETER_TYPE = "code_interpreter";
@@ -30,13 +29,6 @@ public class InternalAssertions {
     static final String[] FILE_IDS = new String[]{
             "file_id_test_1", "file_id_test_2"
     };
-    static final String[] METADATA_ARGS = new String[]{
-            "metaKey", "metaValue"
-    };
-    static final Map<String, String> ASSISTANT_METADATA = Map.of(
-            METADATA_ARGS[0],
-            METADATA_ARGS[1]
-    );
 
     public static final AssistantResponse ASSISTANT_RESPONSE =
             new AssistantResponse(
@@ -50,7 +42,7 @@ public class InternalAssertions {
             List.of(new CodeInterpreter()),
             Arrays.stream(FILE_IDS)
                   .toList(),
-            ASSISTANT_METADATA
+            METADATA_MAP
     );
 
     static void modelRemainsUnchanged(

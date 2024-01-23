@@ -37,6 +37,10 @@ public class RunnableResultStage
         return this.sleepThenRefresh(this.run);
     }
 
+    public RunnableResponse waitForCompletionRaw(RunnableResponse run) {
+        return this.sleepThenRefresh(run);
+    }
+
     public RunnableAdvancedConfigurationStage waitForCompletion() {
         return new RunnableAdvancedConfigurationStage(
                 this.httpExecutor,
@@ -44,10 +48,6 @@ public class RunnableResultStage
                 this.sleepThenRefresh(this.run)
                     .threadId()
         );
-    }
-
-    public RunnableResponse waitForCompletionRaw(RunnableResponse run) {
-        return this.sleepThenRefresh(run);
     }
 
     public String waitForCompletion(RunnableResponse run) {

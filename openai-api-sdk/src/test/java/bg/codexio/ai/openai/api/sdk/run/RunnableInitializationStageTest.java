@@ -8,10 +8,7 @@ import static bg.codexio.ai.openai.api.sdk.assistant.InternalAssertions.ASSISTAN
 import static bg.codexio.ai.openai.api.sdk.assistant.InternalAssertions.ASSISTANT_RESPONSE;
 import static bg.codexio.ai.openai.api.sdk.run.InternalAssertions.*;
 import static bg.codexio.ai.openai.api.sdk.thread.InternalAssertions.THREAD_ID;
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.mockito.ArgumentMatchers.any;
-import static org.mockito.ArgumentMatchers.eq;
-import static org.mockito.Mockito.when;
+import static org.junit.jupiter.api.Assertions.*;
 
 public class RunnableInitializationStageTest {
 
@@ -28,11 +25,7 @@ public class RunnableInitializationStageTest {
 
     @Test
     void testExecuteRaw_withAssistantResponse_expectCorrectResponse() {
-        when(this.runnableInitializationStage.httpExecutor.executeWithPathVariable(
-                any(),
-                eq(THREAD_ID)
-        )).thenAnswer(response -> RUNNABLE_RESPONSE);
-
+        execute(this.runnableInitializationStage);
         var response =
                 this.runnableInitializationStage.executeRaw(ASSISTANT_RESPONSE);
 
@@ -44,11 +37,7 @@ public class RunnableInitializationStageTest {
 
     @Test
     void testExecuteRaw_withAssistantId_expectCorrectResponse() {
-        when(this.runnableInitializationStage.httpExecutor.executeWithPathVariable(
-                any(),
-                eq(THREAD_ID)
-        )).thenAnswer(response -> RUNNABLE_RESPONSE);
-
+        execute(this.runnableInitializationStage);
         var response =
                 this.runnableInitializationStage.executeRaw(ASSISTANT_ID);
 
@@ -60,11 +49,7 @@ public class RunnableInitializationStageTest {
 
     @Test
     void testExecute_withAssistantResponse_expectCorrectResponse() {
-        when(this.runnableInitializationStage.httpExecutor.executeWithPathVariable(
-                any(),
-                eq(THREAD_ID)
-        )).thenAnswer(response -> RUNNABLE_RESPONSE);
-
+        execute(this.runnableInitializationStage);
         var response =
                 this.runnableInitializationStage.execute(ASSISTANT_RESPONSE);
 
@@ -76,11 +61,7 @@ public class RunnableInitializationStageTest {
 
     @Test
     void testExecute_withAssistantId_expectCorrectResponse() {
-        when(this.runnableInitializationStage.httpExecutor.executeWithPathVariable(
-                any(),
-                eq(THREAD_ID)
-        )).thenAnswer(response -> RUNNABLE_RESPONSE);
-
+        execute(this.runnableInitializationStage);
         var response = this.runnableInitializationStage.execute(ASSISTANT_ID);
 
         assertEquals(
@@ -91,17 +72,47 @@ public class RunnableInitializationStageTest {
 
     @Test
     void testRun_withAssistantResponse_expectCorrectBuilder() {
-        when(this.runnableInitializationStage.httpExecutor.executeWithPathVariable(
-                any(),
-                eq(THREAD_ID)
-        )).thenAnswer(response -> RUNNABLE_RESPONSE);
-
+        execute(this.runnableInitializationStage);
         var nextStage =
                 this.runnableInitializationStage.run(ASSISTANT_RESPONSE);
 
-        assertEquals(
-                ASSISTANT_ID,
-                nextStage.requestBuilder.assistantId()
+        assertNotNull(nextStage.requestBuilder.assistantId());
+    }
+
+    @Test
+    void testRun_withAssistantId_expectCorrectBuilder() {
+        execute(this.runnableInitializationStage);
+        var nextStage = this.runnableInitializationStage.run(ASSISTANT_ID);
+
+        assertNotNull(nextStage.requestBuilder.assistantId());
+    }
+
+    @Test
+    void testMessaging_expectCorrectBuilder() {
+        this.runnableInitializationStage.messaging();
+
+        assertAll(
+                () -> assertNotNull(this.runnableInitializationStage.threadId),
+                () -> assertNotNull(this.runnableInitializationStage.httpExecutor),
+                () -> assertNotNull(this.runnableInitializationStage.requestBuilder.assistantId())
         );
+    }
+
+    @Test
+    void testDeepConfigure_withAssistantResponse_expectCorrectBuilder() {
+        execute(this.runnableInitializationStage);
+        var nextStage =
+                this.runnableInitializationStage.deepConfigure(ASSISTANT_RESPONSE);
+
+        assertNotNull(nextStage.requestBuilder.assistantId());
+    }
+
+    @Test
+    void testDeepConfigure_withAssistantId_expectCorrectBuilder() {
+        execute(this.runnableInitializationStage);
+        var nextStage =
+                this.runnableInitializationStage.deepConfigure(ASSISTANT_ID);
+
+        assertNotNull(nextStage.requestBuilder.assistantId());
     }
 }

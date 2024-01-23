@@ -8,7 +8,7 @@ public class FileCitationAnnotation
     private final FileCitation fileCitation;
 
     @JsonCreator
-    protected FileCitationAnnotation(
+    public FileCitationAnnotation(
             String text,
             Integer startIndex,
             Integer endIndex,

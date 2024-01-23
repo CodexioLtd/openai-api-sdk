@@ -1,13 +1,15 @@
-package bg.codexio.ai.openai.api.sdk.assistant;
+package bg.codexio.ai.openai.api.sdk.run;
 
 import bg.codexio.ai.openai.api.models.v35.GPT35TurboModel;
 import bg.codexio.ai.openai.api.models.v40.GPT401106Model;
 import bg.codexio.ai.openai.api.models.v40.GPT40Model;
-import bg.codexio.ai.openai.api.payload.assistant.request.AssistantRequest;
+import bg.codexio.ai.openai.api.payload.run.request.RunnableRequest;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-import static bg.codexio.ai.openai.api.sdk.assistant.InternalAssertions.*;
+import static bg.codexio.ai.openai.api.sdk.assistant.InternalAssertions.ASSISTANT_ID;
+import static bg.codexio.ai.openai.api.sdk.run.InternalAssertions.*;
+import static bg.codexio.ai.openai.api.sdk.thread.InternalAssertions.THREAD_ID;
 import static org.junit.jupiter.api.Assertions.assertAll;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
@@ -19,7 +21,9 @@ public class AiModelStageTest {
     void setUp() {
         this.aiModelStage = new AiModelStage(
                 null,
-                AssistantRequest.builder()
+                RunnableRequest.builder()
+                               .withAssistantId(ASSISTANT_ID),
+                THREAD_ID
         );
     }
 
@@ -56,29 +60,18 @@ public class AiModelStageTest {
         );
     }
 
-    public void previousValuesRemainsUnchanged(AssistantConfigurationStage stage) {
+
+    private void previousValuesRemainsUnchanged(RunnableConfigurationStage stage) {
         assertAll(
+                () -> assistantIdRemainsUnchanged(
+                        this.aiModelStage,
+                        stage
+                ),
                 () -> metadataRemainsUnchanged(
                         this.aiModelStage,
                         stage
                 ),
-                () -> nameRemainsUnchanged(
-                        this.aiModelStage,
-                        stage
-                ),
-                () -> instructionsRemainsUnchanged(
-                        this.aiModelStage,
-                        stage
-                ),
-                () -> descriptionRemainsUnchanged(
-                        this.aiModelStage,
-                        stage
-                ),
-                () -> fileIdsRemainsUnchanged(
-                        this.aiModelStage,
-                        stage
-                ),
-                () -> toolsRemainsUnchanged(
+                () -> additionalInstructionsRemainsUnchanged(
                         this.aiModelStage,
                         stage
                 )

@@ -48,5 +48,4 @@ public class MessageAdvancedConfigurationStage<O extends Mergeable<O>>
                 this.threadId
         );
     }
-
 }

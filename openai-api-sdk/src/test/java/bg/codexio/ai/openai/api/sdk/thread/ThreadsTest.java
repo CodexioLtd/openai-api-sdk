@@ -1,4 +1,4 @@
-package bg.codexio.ai.openai.api.sdk.assistant;
+package bg.codexio.ai.openai.api.sdk.thread;
 
 import bg.codexio.ai.openai.api.http.HttpExecutorContext;
 import bg.codexio.ai.openai.api.payload.credentials.ApiCredentials;
@@ -7,26 +7,37 @@ import bg.codexio.ai.openai.api.sdk.auth.FromDeveloper;
 import org.junit.jupiter.api.Test;
 
 import static bg.codexio.ai.openai.api.sdk.SharedConstantsUtils.API_CREDENTIALS;
-import static bg.codexio.ai.openai.api.sdk.assistant.Assistants.*;
-import static bg.codexio.ai.openai.api.sdk.assistant.InternalAssertions.ASSISTANT_HTTP_EXECUTOR;
-import static org.junit.jupiter.api.Assertions.*;
+import static bg.codexio.ai.openai.api.sdk.thread.InternalAssertions.*;
+import static bg.codexio.ai.openai.api.sdk.thread.Threads.*;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.mockStatic;
 
-public class AssistantsTest {
+public class ThreadsTest {
 
     @Test
-    void testThroughHttp_expectExecutor() {
-        var nextStage = throughHttp(ASSISTANT_HTTP_EXECUTOR);
+    public void testThroughHttp_withCreateExecutor_expectCreateExecutor() {
+        var nextStage = throughHttp(CREATE_THREAD_HTTP_EXECUTOR);
 
         assertEquals(
-                ASSISTANT_HTTP_EXECUTOR,
+                CREATE_THREAD_HTTP_EXECUTOR,
                 nextStage.httpExecutor
         );
     }
 
     @Test
-    void testAuthenticate_withCredentials_expectHttpBuilderAndNextStage() {
+    public void testThroughHttp_withEditExecutor_expectEditExecutor() {
+        var nextStage = throughHttp(
+                MODIFY_THREAD_HTTP_EXECUTOR,
+                THREAD_ID
+        );
+
+        assertNotNull(nextStage);
+    }
+
+    @Test
+    public void testAuthenticate_withCredentials_expectNextStage() {
         var ctx = new HttpExecutorContext(new ApiCredentials(API_CREDENTIALS));
         var httpBuilder = authenticate(ctx);
 
@@ -34,14 +45,11 @@ public class AssistantsTest {
 
         var nextStage = httpBuilder.and();
 
-        assertAll(
-                () -> assertNotNull(nextStage.httpExecutor),
-                () -> assertNotNull(nextStage.requestBuilder)
-        );
+        assertNotNull(nextStage);
     }
 
     @Test
-    void testAuthenticate_withAuth_expectHttpBuilderAndNextStage() {
+    public void testAuthenticate_withAuth_expectHttpBuilderAndNextStage() {
         var httpBuilder =
                 authenticate(FromDeveloper.doPass(new ApiCredentials(API_CREDENTIALS)));
 
@@ -49,16 +57,13 @@ public class AssistantsTest {
 
         var nextStage = httpBuilder.and();
 
-        assertAll(
-                () -> assertNotNull(nextStage.httpExecutor),
-                () -> assertNotNull(nextStage.requestBuilder)
-        );
+        assertNotNull(nextStage);
     }
 
     @Test
-    void testDefaults_auto_expectBuilder() {
+    public void testDefaults_expectBuilder() {
         var auth =
-                Assistants.authenticate(FromDeveloper.doPass(new ApiCredentials(API_CREDENTIALS)));
+                authenticate(FromDeveloper.doPass(new ApiCredentials(API_CREDENTIALS)));
         try (var authUtils = mockStatic(Authenticator.class)) {
             authUtils.when(() -> Authenticator.autoAuthenticate(any()))
                      .thenReturn(auth);
@@ -69,10 +74,7 @@ public class AssistantsTest {
 
             var nextStage = httpBuilder.and();
 
-            assertAll(
-                    () -> assertNotNull(nextStage.httpExecutor),
-                    () -> assertNotNull(nextStage.requestBuilder)
-            );
+            assertNotNull(nextStage);
         }
     }
 }
