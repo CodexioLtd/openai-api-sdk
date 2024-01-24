@@ -2,11 +2,9 @@ package bg.codexio.ai.openai.api.sdk.file;
 
 import bg.codexio.ai.openai.api.http.file.UploadFileHttpExecutor;
 import bg.codexio.ai.openai.api.payload.file.response.FileResponse;
-import org.mockito.MockedStatic;
 
 import static bg.codexio.ai.openai.api.sdk.SharedConstantsUtils.FILE;
 import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.mockStatic;
 
 public class InternalAssertions {
 
@@ -21,6 +19,4 @@ public class InternalAssertions {
             FILE.getName(),
             ASSISTANT_PURPOSE_NAME
     );
-    public static MockedStatic<FileSimplified> FILE_SIMPLIFIED =
-            mockStatic(FileSimplified.class);
 }
