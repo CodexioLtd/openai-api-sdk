@@ -4,14 +4,12 @@ import bg.codexio.ai.openai.api.payload.credentials.ApiCredentials;
 import bg.codexio.ai.openai.api.payload.message.request.MessageRequest;
 import bg.codexio.ai.openai.api.payload.message.response.MessageResponse;
 import bg.codexio.ai.openai.api.sdk.Authenticator;
-import bg.codexio.ai.openai.api.sdk.HttpBuilder;
+import bg.codexio.ai.openai.api.sdk.MockedFileSimplifiedUtils;
 import bg.codexio.ai.openai.api.sdk.auth.FromDeveloper;
 import bg.codexio.ai.openai.api.sdk.file.FileSimplified;
-import bg.codexio.ai.openai.api.sdk.file.FileTargetingStage;
 import bg.codexio.ai.openai.api.sdk.file.Files;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import org.mockito.MockedStatic;
 
 import java.util.Arrays;
 
@@ -19,13 +17,11 @@ import static bg.codexio.ai.openai.api.sdk.SharedConstantsUtils.FILE;
 import static bg.codexio.ai.openai.api.sdk.SharedConstantsUtils.FILE_IDS_VAR_ARGS;
 import static bg.codexio.ai.openai.api.sdk.file.FilesTest.TEST_KEY;
 import static bg.codexio.ai.openai.api.sdk.file.InternalAssertions.FILE_RESPONSE;
-import static bg.codexio.ai.openai.api.sdk.file.InternalAssertions.UPLOAD_FILE_HTTP_EXECUTOR;
 import static bg.codexio.ai.openai.api.sdk.message.InternalAssertions.*;
 import static bg.codexio.ai.openai.api.sdk.thread.InternalAssertions.THREAD_ID;
-import static org.junit.jupiter.api.Assertions.*;
-import static org.mockito.ArgumentMatchers.any;
+import static org.junit.jupiter.api.Assertions.assertAll;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.Mockito.mockStatic;
-import static org.mockito.Mockito.when;
 
 public class MessageFileStageTest {
 
@@ -69,13 +65,18 @@ public class MessageFileStageTest {
     void testFeed_withFile_expectCorrectBuilder() {
         var auth =
                 Files.authenticate(FromDeveloper.doPass(new ApiCredentials(TEST_KEY)));
-        try (var authUtils = mockStatic(Authenticator.class)) {
-            authUtils.when(() -> Authenticator.autoAuthenticate(any()))
-                     .thenReturn(auth);
-            when(UPLOAD_FILE_HTTP_EXECUTOR.execute(any())).thenAnswer(response -> FILE_RESPONSE);
+        try (
+                var authUtils = mockStatic(Authenticator.class);
+                var filesSimplified = mockStatic(FileSimplified.class)
+        ) {
+            MockedFileSimplifiedUtils.mockFileSimplified(
+                    authUtils,
+                    auth,
+                    filesSimplified
+            );
             var nextStage = this.messageFileStage.feed(FILE);
 
-            assertNotNull(nextStage);
+            this.previousValuesRemainsUnchanged(nextStage);
         }
     }
 
@@ -94,20 +95,5 @@ public class MessageFileStageTest {
                         nextStage
                 )
         );
-    }
-
-    private void mockFileSimplified(
-            MockedStatic<Authenticator> authUtils,
-            HttpBuilder<FileTargetingStage> auth,
-            MockedStatic<FileSimplified> filesSimplified
-    ) {
-        authUtils.when(() -> Authenticator.autoAuthenticate(any()))
-                 .thenReturn(auth);
-
-        filesSimplified.when(() -> Files.defaults()
-                                        .and()
-                                        .forAssistants()
-                                        .feed(FILE))
-                       .thenReturn(FILE_RESPONSE.id());
     }
 }

@@ -4,7 +4,9 @@ import bg.codexio.ai.openai.api.payload.assistant.request.AssistantRequest;
 import bg.codexio.ai.openai.api.payload.assistant.tool.CodeInterpreter;
 import bg.codexio.ai.openai.api.payload.credentials.ApiCredentials;
 import bg.codexio.ai.openai.api.sdk.Authenticator;
+import bg.codexio.ai.openai.api.sdk.MockedFileSimplifiedUtils;
 import bg.codexio.ai.openai.api.sdk.auth.FromDeveloper;
+import bg.codexio.ai.openai.api.sdk.file.FileSimplified;
 import bg.codexio.ai.openai.api.sdk.file.Files;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -15,10 +17,8 @@ import static bg.codexio.ai.openai.api.sdk.SharedConstantsUtils.FILE;
 import static bg.codexio.ai.openai.api.sdk.assistant.InternalAssertions.*;
 import static bg.codexio.ai.openai.api.sdk.file.FilesTest.TEST_KEY;
 import static bg.codexio.ai.openai.api.sdk.file.InternalAssertions.FILE_RESPONSE;
-import static bg.codexio.ai.openai.api.sdk.file.InternalAssertions.FILE_SIMPLIFIED;
 import static org.junit.jupiter.api.Assertions.assertAll;
 import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.mockStatic;
 
 public class AssistantFileStageTest {
@@ -71,18 +71,13 @@ public class AssistantFileStageTest {
                 Files.authenticate(FromDeveloper.doPass(new ApiCredentials(TEST_KEY)));
         try (
                 var authUtils = mockStatic(Authenticator.class);
-                var filesSimplified = FILE_SIMPLIFIED
+                var filesSimplified = mockStatic(FileSimplified.class)
         ) {
-
-            authUtils.when(() -> Authenticator.autoAuthenticate(any()))
-                     .thenReturn(auth);
-
-
-            filesSimplified.when(() -> Files.defaults()
-                                            .and()
-                                            .forAssistants()
-                                            .feed(FILE))
-                           .thenReturn(FILE_RESPONSE.id());
+            MockedFileSimplifiedUtils.mockFileSimplified(
+                    authUtils,
+                    auth,
+                    filesSimplified
+            );
 
             var nextStage = this.assistantFileStage.feed(FILE);
 
