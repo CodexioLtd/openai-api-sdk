@@ -3,7 +3,7 @@ package bg.codexio.ai.openai.api.sdk.file;
 import bg.codexio.ai.openai.api.http.file.UploadFileHttpExecutor;
 import bg.codexio.ai.openai.api.payload.file.response.FileResponse;
 
-import static bg.codexio.ai.openai.api.sdk.SharedConstantsUtils.FILE;
+import static bg.codexio.ai.openai.api.sdk.CommonTestConstantsUtils.FILE;
 import static org.mockito.Mockito.mock;
 
 public class InternalAssertions {

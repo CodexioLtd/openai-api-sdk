@@ -8,7 +8,7 @@ import bg.codexio.ai.openai.api.payload.thread.request.ThreadRequest;
 import bg.codexio.ai.openai.api.payload.thread.request.ThreadRequestBuilder;
 import bg.codexio.ai.openai.api.payload.thread.response.ThreadResponse;
 
-import static bg.codexio.ai.openai.api.sdk.SharedConstantsUtils.METADATA_MAP;
+import static bg.codexio.ai.openai.api.sdk.CommonTestConstantsUtils.METADATA_MAP;
 import static org.junit.jupiter.api.Assertions.assertAll;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.ArgumentMatchers.any;

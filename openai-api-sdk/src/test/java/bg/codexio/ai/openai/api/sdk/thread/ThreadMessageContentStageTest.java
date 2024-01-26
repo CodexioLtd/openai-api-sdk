@@ -5,7 +5,7 @@ import bg.codexio.ai.openai.api.payload.thread.request.ThreadCreationRequest;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-import static bg.codexio.ai.openai.api.sdk.SharedConstantsUtils.DEFAULT_ROLE;
+import static bg.codexio.ai.openai.api.sdk.CommonTestConstantsUtils.DEFAULT_ROLE;
 import static bg.codexio.ai.openai.api.sdk.thread.InternalAssertions.*;
 import static org.junit.jupiter.api.Assertions.*;
 

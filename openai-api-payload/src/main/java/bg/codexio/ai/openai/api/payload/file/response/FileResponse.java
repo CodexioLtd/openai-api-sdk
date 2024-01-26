@@ -16,6 +16,7 @@ public record FileResponse(
         if (other == null) {
             return this;
         }
+
         return new FileResponse(
                 this.id,
                 this.object,

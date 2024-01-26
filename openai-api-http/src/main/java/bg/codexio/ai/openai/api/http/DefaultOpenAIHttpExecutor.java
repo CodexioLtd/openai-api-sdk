@@ -226,7 +226,7 @@ public abstract class DefaultOpenAIHttpExecutor<I extends Streamable,
 
     @Override
     public O executeWithPathVariables(String... pathVariables) {
-        var httpRequest = this.prepareRequest(pathVariables);
+        var httpRequest = this.prepareRequestWithPathVariables(pathVariables);
 
         return this.performRequestExecution(httpRequest);
     }
@@ -447,7 +447,7 @@ public abstract class DefaultOpenAIHttpExecutor<I extends Streamable,
                                     .build();
     }
 
-    protected Request prepareRequest(String... pathVariables) {
+    protected Request prepareRequestWithPathVariables(String... pathVariables) {
         var resourceUriWithPathVariable = String.format(
                 this.resourceUri,
                 (Object[]) pathVariables

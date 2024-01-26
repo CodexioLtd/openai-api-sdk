@@ -14,13 +14,14 @@ import org.mockito.Mockito;
 import java.util.Collections;
 import java.util.function.Supplier;
 
+import static bg.codexio.ai.openai.api.http.CommonTestConstantsUtils.TEST_BASE_URL;
 import static bg.codexio.ai.openai.api.http.ExecutorTests.createErrorResponse;
 import static bg.codexio.ai.openai.api.http.ExecutorTests.createOkResponse;
 import static org.junit.jupiter.api.Assertions.assertFalse;
 
 public class CreateImageHttpExecutorTest {
 
-    private static final String URL = "http://base-url/images/generations";
+    private static final String URL = TEST_BASE_URL.concat("/images/generations");
     private static final String JSON_NO_STREAM_REQUEST =
             "{\"prompt\":\"test" + "-prompt\",\"model\":\"test-model\",\"n\":1,"
                     + "\"quality\":\"test-quality\","
@@ -205,7 +206,7 @@ public class CreateImageHttpExecutorTest {
     private void initExecutor() {
         this.executor = new CreateImageHttpExecutor(
                 this.client,
-                "http://base-url",
+                TEST_BASE_URL,
                 new ObjectMapper()
         );
     }

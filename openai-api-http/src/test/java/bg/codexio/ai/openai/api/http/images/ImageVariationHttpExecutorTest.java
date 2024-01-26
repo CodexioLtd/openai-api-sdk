@@ -15,13 +15,14 @@ import java.io.File;
 import java.util.Collections;
 import java.util.function.Supplier;
 
+import static bg.codexio.ai.openai.api.http.CommonTestConstantsUtils.TEST_BASE_URL;
 import static bg.codexio.ai.openai.api.http.ExecutorTests.createErrorResponse;
 import static bg.codexio.ai.openai.api.http.ExecutorTests.createOkResponse;
 import static org.junit.jupiter.api.Assertions.assertFalse;
 
 public class ImageVariationHttpExecutorTest {
 
-    private static final String URL = "http://base-url/images/variations";
+    private static final String URL = TEST_BASE_URL.concat("/images/variations");
     private static final String MULTIPART_NO_STREAM_REQUEST =
             "--test-boundary\n"
                     + "Content-Disposition: form-data; name=\"image\"; "
@@ -220,7 +221,7 @@ public class ImageVariationHttpExecutorTest {
     private void initExecutor() {
         this.executor = new ImageVariationHttpExecutor(
                 this.client,
-                "http://base-url",
+                TEST_BASE_URL,
                 new ObjectMapper()
         );
 

@@ -76,4 +76,8 @@ public class UploadFileHttpExecutor
         }
     }
 
+    @Override
+    protected void setMultipartBoundary(String boundary) {
+        super.setMultipartBoundary(boundary);
+    }
 }

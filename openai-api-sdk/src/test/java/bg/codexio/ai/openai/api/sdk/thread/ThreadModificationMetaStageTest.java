@@ -4,8 +4,8 @@ import bg.codexio.ai.openai.api.payload.thread.request.ThreadModificationRequest
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-import static bg.codexio.ai.openai.api.sdk.SharedConstantsUtils.METADATA_MAP;
-import static bg.codexio.ai.openai.api.sdk.SharedConstantsUtils.METADATA_VAR_ARGS;
+import static bg.codexio.ai.openai.api.sdk.CommonTestConstantsUtils.METADATA_MAP;
+import static bg.codexio.ai.openai.api.sdk.CommonTestConstantsUtils.METADATA_VAR_ARGS;
 import static bg.codexio.ai.openai.api.sdk.thread.InternalAssertions.MODIFY_THREAD_HTTP_EXECUTOR;
 import static bg.codexio.ai.openai.api.sdk.thread.InternalAssertions.THREAD_MODIFICATION_REQUEST_THREAD_REQUEST_BUILDER;
 import static org.junit.jupiter.api.Assertions.assertEquals;

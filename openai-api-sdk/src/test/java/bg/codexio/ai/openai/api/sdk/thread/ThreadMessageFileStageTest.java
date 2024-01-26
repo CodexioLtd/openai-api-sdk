@@ -10,8 +10,8 @@ import bg.codexio.ai.openai.api.sdk.file.Files;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-import static bg.codexio.ai.openai.api.sdk.SharedConstantsUtils.FILE;
-import static bg.codexio.ai.openai.api.sdk.SharedConstantsUtils.FILE_IDS_VAR_ARGS;
+import static bg.codexio.ai.openai.api.sdk.CommonTestConstantsUtils.FILE;
+import static bg.codexio.ai.openai.api.sdk.CommonTestConstantsUtils.FILE_IDS_VAR_ARGS;
 import static bg.codexio.ai.openai.api.sdk.file.FilesTest.TEST_KEY;
 import static bg.codexio.ai.openai.api.sdk.file.InternalAssertions.FILE_RESPONSE;
 import static bg.codexio.ai.openai.api.sdk.thread.InternalAssertions.*;

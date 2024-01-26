@@ -78,7 +78,7 @@ public class RunnableHttpExecutor
     }
 
     @Override
-    protected Request prepareRequest(String... pathVariables) {
+    protected Request prepareRequestWithPathVariables(String... pathVariables) {
         var resourceUriWithPathVariable = String.format(
                 RETRIEVE_RUN_RESOURCE_URI,
                 (Object[]) pathVariables

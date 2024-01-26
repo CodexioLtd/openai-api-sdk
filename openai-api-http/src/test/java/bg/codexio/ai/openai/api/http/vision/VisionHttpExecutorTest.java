@@ -12,13 +12,14 @@ import org.mockito.Mockito;
 
 import java.util.function.Supplier;
 
+import static bg.codexio.ai.openai.api.http.CommonTestConstantsUtils.TEST_BASE_URL;
 import static bg.codexio.ai.openai.api.http.ExecutorTests.createErrorResponse;
 import static bg.codexio.ai.openai.api.http.ExecutorTests.createOkResponse;
 import static org.junit.jupiter.api.Assertions.assertFalse;
 
 public class VisionHttpExecutorTest {
 
-    private static final String URL = "http://base-url/chat/completions";
+    private static final String URL = TEST_BASE_URL.concat("/chat/completions");
     private static final String JSON_NO_STREAM_REQUEST =
             "{\"model\":\"test" + "-ai-model\",\"messages\":[]}";
     private static final VisionRequest REQUEST_DTO = VisionRequest.empty()
@@ -190,7 +191,7 @@ public class VisionHttpExecutorTest {
     private void initExecutor() {
         this.executor = new VisionHttpExecutor(
                 this.client,
-                "http://base-url",
+                TEST_BASE_URL,
                 new ObjectMapper()
         );
     }
