@@ -9,7 +9,7 @@ import bg.codexio.ai.openai.api.payload.assistant.tool.CodeInterpreter;
 import java.util.Arrays;
 import java.util.List;
 
-import static bg.codexio.ai.openai.api.sdk.SharedConstantsUtils.METADATA_MAP;
+import static bg.codexio.ai.openai.api.sdk.CommonTestConstantsUtils.METADATA_MAP;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.Mockito.mock;
 

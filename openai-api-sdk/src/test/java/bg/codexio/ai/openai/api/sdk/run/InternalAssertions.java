@@ -14,8 +14,8 @@ import bg.codexio.ai.openai.api.payload.run.response.error.LastError;
 import java.util.Arrays;
 import java.util.List;
 
-import static bg.codexio.ai.openai.api.sdk.SharedConstantsUtils.FILE_IDS_VAR_ARGS;
-import static bg.codexio.ai.openai.api.sdk.SharedConstantsUtils.METADATA_MAP;
+import static bg.codexio.ai.openai.api.sdk.CommonTestConstantsUtils.FILE_IDS_VAR_ARGS;
+import static bg.codexio.ai.openai.api.sdk.CommonTestConstantsUtils.METADATA_MAP;
 import static bg.codexio.ai.openai.api.sdk.assistant.InternalAssertions.ASSISTANT_ID;
 import static bg.codexio.ai.openai.api.sdk.thread.InternalAssertions.THREAD_ID;
 import static org.junit.jupiter.api.Assertions.assertEquals;

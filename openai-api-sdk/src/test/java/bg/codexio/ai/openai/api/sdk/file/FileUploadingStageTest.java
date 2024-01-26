@@ -4,7 +4,7 @@ import bg.codexio.ai.openai.api.payload.file.request.UploadFileRequest;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-import static bg.codexio.ai.openai.api.sdk.SharedConstantsUtils.FILE;
+import static bg.codexio.ai.openai.api.sdk.CommonTestConstantsUtils.FILE;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.when;

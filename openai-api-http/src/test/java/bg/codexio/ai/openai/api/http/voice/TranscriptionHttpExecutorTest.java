@@ -13,13 +13,14 @@ import org.mockito.Mockito;
 import java.io.File;
 import java.util.function.Supplier;
 
+import static bg.codexio.ai.openai.api.http.CommonTestConstantsUtils.TEST_BASE_URL;
 import static bg.codexio.ai.openai.api.http.ExecutorTests.createErrorResponse;
 import static bg.codexio.ai.openai.api.http.ExecutorTests.createOkResponse;
 import static org.junit.jupiter.api.Assertions.assertFalse;
 
 public class TranscriptionHttpExecutorTest {
 
-    private static final String URL = "http://base-url/audio/transcriptions";
+    private static final String URL = TEST_BASE_URL.concat("/audio/transcriptions");
     private static final String MULTIPART_NO_STREAM_REQUEST =
             "--test-boundary\n"
                     + "Content-Disposition: form-data; name=\"file\"; "
@@ -194,7 +195,7 @@ public class TranscriptionHttpExecutorTest {
     private void initExecutor() {
         this.executor = new TranscriptionHttpExecutor(
                 this.client,
-                "http://base-url",
+                TEST_BASE_URL,
                 new ObjectMapper()
         );
 

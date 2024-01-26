@@ -46,7 +46,7 @@ public class RetrieveListMessagesHttpExecutor
     }
 
     @Override
-    protected Request prepareRequest(String... pathVariables) {
+    protected Request prepareRequestWithPathVariables(String... pathVariables) {
         var resourceUriWithPathVariable = String.format(
                 this.resourceUri,
                 (Object[]) pathVariables

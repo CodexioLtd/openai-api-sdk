@@ -4,7 +4,7 @@ import bg.codexio.ai.openai.api.sdk.file.FileSimplified;
 import bg.codexio.ai.openai.api.sdk.file.FileTargetingStage;
 import org.mockito.MockedStatic;
 
-import static bg.codexio.ai.openai.api.sdk.SharedConstantsUtils.FILE;
+import static bg.codexio.ai.openai.api.sdk.CommonTestConstantsUtils.FILE;
 import static bg.codexio.ai.openai.api.sdk.file.InternalAssertions.FILE_RESPONSE;
 import static org.mockito.ArgumentMatchers.any;
 

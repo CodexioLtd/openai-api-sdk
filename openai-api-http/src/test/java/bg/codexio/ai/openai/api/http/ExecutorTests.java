@@ -48,6 +48,39 @@ public class ExecutorTests {
     }
 
     public static <I extends Streamable, O extends Mergeable<O>,
+            E extends DefaultOpenAIHttpExecutor<I, O>> void testExecuteWithPathVariable_noError_shouldParseResponse(
+            OkHttpClient client,
+            String url,
+            String pathVariable,
+            String requestBody,
+            Response okHttpResponse,
+            I requestDto,
+            O responseDto,
+            E executor
+    ) {
+        when(client.newCall(requestEq(
+                String.format(
+                        url,
+                        pathVariable
+                ),
+                requestBody
+        ))).thenReturn(new MockCall(
+                okHttpResponse,
+                false
+        ));
+
+        var response = executor.executeWithPathVariable(
+                requestDto,
+                pathVariable
+        );
+
+        assertEquals(
+                responseDto,
+                response
+        );
+    }
+
+    public static <I extends Streamable, O extends Mergeable<O>,
             E extends DefaultOpenAIHttpExecutor<I, O>> void testExecute_withResponseError_shouldThrowException(
             OkHttpClient client,
             String url,
@@ -491,6 +524,7 @@ public class ExecutorTests {
                            .body()
                            .writeTo(buffer);
                     var str = buffer.readUtf8();
+
                     if (str.replace(
                                    "\r\n",
                                    "\n"

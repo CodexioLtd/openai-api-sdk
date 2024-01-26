@@ -3,7 +3,7 @@ package bg.codexio.ai.openai.api.sdk;
 import java.io.File;
 import java.util.Map;
 
-public class SharedConstantsUtils {
+public class CommonTestConstantsUtils {
 
     public static final String API_CREDENTIALS = "test-key";
     public static final String DEFAULT_ROLE = "user";
@@ -20,6 +20,6 @@ public class SharedConstantsUtils {
             METADATA_VAR_ARGS[1]
     );
 
-    private SharedConstantsUtils() {
+    private CommonTestConstantsUtils() {
     }
 }

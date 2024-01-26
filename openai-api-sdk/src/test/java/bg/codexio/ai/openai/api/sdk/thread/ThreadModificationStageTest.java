@@ -7,8 +7,8 @@ import bg.codexio.ai.openai.api.sdk.auth.FromDeveloper;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-import static bg.codexio.ai.openai.api.sdk.SharedConstantsUtils.API_CREDENTIALS;
-import static bg.codexio.ai.openai.api.sdk.SharedConstantsUtils.METADATA_MAP;
+import static bg.codexio.ai.openai.api.sdk.CommonTestConstantsUtils.API_CREDENTIALS;
+import static bg.codexio.ai.openai.api.sdk.CommonTestConstantsUtils.METADATA_MAP;
 import static bg.codexio.ai.openai.api.sdk.message.Messages.authenticate;
 import static bg.codexio.ai.openai.api.sdk.thread.InternalAssertions.*;
 import static org.junit.jupiter.api.Assertions.*;

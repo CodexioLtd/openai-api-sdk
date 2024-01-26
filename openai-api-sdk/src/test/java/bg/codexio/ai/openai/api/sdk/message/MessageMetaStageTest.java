@@ -5,8 +5,8 @@ import bg.codexio.ai.openai.api.payload.message.response.MessageResponse;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-import static bg.codexio.ai.openai.api.sdk.SharedConstantsUtils.METADATA_MAP;
-import static bg.codexio.ai.openai.api.sdk.SharedConstantsUtils.METADATA_VAR_ARGS;
+import static bg.codexio.ai.openai.api.sdk.CommonTestConstantsUtils.METADATA_MAP;
+import static bg.codexio.ai.openai.api.sdk.CommonTestConstantsUtils.METADATA_VAR_ARGS;
 import static bg.codexio.ai.openai.api.sdk.message.InternalAssertions.*;
 import static bg.codexio.ai.openai.api.sdk.thread.InternalAssertions.THREAD_ID;
 import static org.junit.jupiter.api.Assertions.assertAll;

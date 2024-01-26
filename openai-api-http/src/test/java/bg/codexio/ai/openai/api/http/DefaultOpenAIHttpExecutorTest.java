@@ -22,6 +22,7 @@ import java.io.IOException;
 import java.util.UUID;
 import java.util.function.Supplier;
 
+import static bg.codexio.ai.openai.api.http.CommonTestConstantsUtils.TEST_BASE_URL;
 import static bg.codexio.ai.openai.api.http.ExecutorTests.createErrorResponse;
 import static bg.codexio.ai.openai.api.http.ExecutorTests.createOkResponse;
 import static bg.codexio.ai.openai.api.payload.environment.AvailableEnvironmentVariables.OPENAI_LOGGING_ENABLED;
@@ -32,7 +33,18 @@ import static org.mockito.Mockito.*;
 
 public class DefaultOpenAIHttpExecutorTest {
 
-    private static final String URL = "http://base-url/some/resource";
+    public static final String RESOURCE_URI = "/some/resource";
+    public static final String RESOURCE_URI_WITH_PATH_VARIABLE =
+            "/some/%s" + "/resource";
+    private static final String URL = TEST_BASE_URL.concat(RESOURCE_URI);
+    private static final Supplier<Response> BASE_JSON_RESPONSE =
+            () -> createOkResponse(
+            URL,
+            "{\"id\":1,\"name\":\"test\"}".getBytes(),
+            "application/json"
+            );
+    private static final String URL_WITH_PATH_VARIABLE =
+            TEST_BASE_URL.concat(RESOURCE_URI_WITH_PATH_VARIABLE);
     private static final String JSON_NO_STREAM_REQUEST =
             "{\"name\":\"test\"," + "\"stream\":false}";
     private static final String JSON_WITH_STREAM_REQUEST =
@@ -57,12 +69,15 @@ public class DefaultOpenAIHttpExecutorTest {
             "{\"id\":1," + "\"name\":\"test\"}";
     private static final String STREAM_RESPONSE_BODY =
             "{\"id\":1," + "\"name\":\"test\"}{\"id\":2,\"name\":\"more\"}";
-    private static final Supplier<Response> BASE_JSON_RESPONSE =
-            () -> createOkResponse(
-            URL,
-            "{\"id\":1,\"name\":\"test\"}".getBytes(),
+    private static final Supplier<Response> BASE_JSON_RESPONSE_WITH_PATH_VARIABLE = () -> createOkResponse(
+            String.format(
+                    URL_WITH_PATH_VARIABLE,
+                    PATH_VARIABLE
+            ),
+            OK_RESPONSE_BODY.getBytes(),
             "application/json"
     );
+    private static final String PATH_VARIABLE = "var";
     private static final Supplier<Response> STREAM_JSON_RESPONSE =
             () -> createOkResponse(
             URL,
@@ -92,7 +107,7 @@ public class DefaultOpenAIHttpExecutorTest {
         this.client = Mockito.mock(OkHttpClient.class);
         doReturn(this.logEvent).when(this.logger)
                                .atLevel(any(Level.class));
-        initExecutor(true);
+        this.initExecutor(true);
     }
 
     @Test
@@ -102,6 +117,21 @@ public class DefaultOpenAIHttpExecutorTest {
                 URL,
                 JSON_NO_STREAM_REQUEST,
                 BASE_JSON_RESPONSE.get(),
+                REQUEST_DTO,
+                OK_RESPONSE_DTO,
+                this.executor
+        );
+    }
+
+    @Test
+    public void testExecuteWithPathVariable_noError_shouldParseResponse() {
+        this.initExecutorWithPathVariableResourceUri(false);
+        ExecutorTests.testExecuteWithPathVariable_noError_shouldParseResponse(
+                this.client,
+                URL_WITH_PATH_VARIABLE,
+                PATH_VARIABLE,
+                JSON_NO_STREAM_REQUEST,
+                BASE_JSON_RESPONSE_WITH_PATH_VARIABLE.get(),
                 REQUEST_DTO,
                 OK_RESPONSE_DTO,
                 this.executor
@@ -516,7 +546,7 @@ public class DefaultOpenAIHttpExecutorTest {
         doReturn(request).when(okHttpResponse)
                          .request();
 
-        var requestUrl = HttpUrl.parse("http://base-url/some/resource");
+        var requestUrl = HttpUrl.parse(URL);
         doReturn(requestUrl).when(request)
                             .url();
 
@@ -526,7 +556,7 @@ public class DefaultOpenAIHttpExecutorTest {
         );
 
         assertEquals(
-                "HTTP call to http://base-url/some/resource failed.",
+                "HTTP call to " + URL + " failed.",
                 exception.getMessage()
         );
     }
@@ -545,7 +575,7 @@ public class DefaultOpenAIHttpExecutorTest {
         var enhancedExecutor = new DefaultOpenAIHttpExecutor<MockFormData,
                 MockResponse>(
                 this.client,
-                "http://base-url",
+                TEST_BASE_URL,
                 new ObjectMapper(),
                 MockResponse.class,
                 "/some/resource",
@@ -633,17 +663,33 @@ public class DefaultOpenAIHttpExecutorTest {
     }
 
     private void initExecutor(boolean streamable) {
+        this.performExecutorInitialization(
+                streamable,
+                RESOURCE_URI
+        );
+    }
+
+    private void initExecutorWithPathVariableResourceUri(boolean streamable) {
+        this.performExecutorInitialization(
+                streamable,
+                RESOURCE_URI_WITH_PATH_VARIABLE
+        );
+    }
+
+    private void performExecutorInitialization(
+            boolean streamable,
+            String resourceUri
+    ) {
         this.executor = new DefaultOpenAIHttpExecutor<>(
                 this.client,
-                "http://base-url",
+                TEST_BASE_URL,
                 new ObjectMapper(),
                 MockResponse.class,
-                "/some/resource",
+                resourceUri,
                 streamable,
                 this.logger
         ) {};
     }
-
 
     record MockRequest(
             String name,
