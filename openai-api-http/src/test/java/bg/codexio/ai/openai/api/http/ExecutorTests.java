@@ -81,6 +81,38 @@ public class ExecutorTests {
     }
 
     public static <I extends Streamable, O extends Mergeable<O>,
+            E extends DefaultOpenAIHttpExecutor<I, O>> void testExecuteWithPathVariable_withResponseError_shouldThrowException(
+            OkHttpClient client,
+            String url,
+            String pathVariable,
+            String requestBody,
+            Response okHttpResponse,
+            I requestDto,
+            E executor
+    ) {
+        when(client.newCall(requestEq(
+                String.format(
+                        url,
+                        pathVariable
+                ),
+                requestBody
+        ))).thenReturn(new MockCall(
+                okHttpResponse,
+                false
+        ));
+
+        var exception = assertThrows(
+                OpenAIRespondedNot2xxException.class,
+                () -> executor.executeWithPathVariable(
+                        requestDto,
+                        pathVariable
+                )
+        );
+
+        assertMessageAndStatus(exception);
+    }
+
+    public static <I extends Streamable, O extends Mergeable<O>,
             E extends DefaultOpenAIHttpExecutor<I, O>> void testExecute_withResponseError_shouldThrowException(
             OkHttpClient client,
             String url,
@@ -110,7 +142,6 @@ public class ExecutorTests {
             OkHttpClient client,
             String url,
             String requestBody,
-            Response okHttpResponse,
             I requestDto,
             E executor
     ) {
