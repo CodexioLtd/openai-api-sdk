@@ -36,6 +36,7 @@ public class DefaultOpenAIHttpExecutorTest {
     public static final String RESOURCE_URI = "/some/resource";
     public static final String RESOURCE_URI_WITH_PATH_VARIABLE =
             "/some/%s" + "/resource";
+    private static final String PATH_VARIABLE = "var";
     private static final String URL = TEST_BASE_URL.concat(RESOURCE_URI);
     private static final Supplier<Response> BASE_JSON_RESPONSE =
             () -> createOkResponse(
@@ -77,7 +78,6 @@ public class DefaultOpenAIHttpExecutorTest {
             OK_RESPONSE_BODY.getBytes(),
             "application/json"
     );
-    private static final String PATH_VARIABLE = "var";
     private static final Supplier<Response> STREAM_JSON_RESPONSE =
             () -> createOkResponse(
             URL,
@@ -90,6 +90,14 @@ public class DefaultOpenAIHttpExecutorTest {
     private static final Supplier<Response> ERROR_JSON_RESPONSE =
             () -> createErrorResponse(
             URL,
+            "{\"error\":{\"message\":\"Test Error\"}}".getBytes(),
+            "application/json"
+    );
+    private static final Supplier<Response> ERROR_JSON_RESPONSE_WITH_PATH_VARIABLE = () -> createErrorResponse(
+            String.format(
+                    URL_WITH_PATH_VARIABLE,
+                    PATH_VARIABLE
+            ),
             "{\"error\":{\"message\":\"Test Error\"}}".getBytes(),
             "application/json"
     );
@@ -139,6 +147,20 @@ public class DefaultOpenAIHttpExecutorTest {
     }
 
     @Test
+    public void testExecuteWithPathVariable_withResponseError_shouldThrowException() {
+        this.initExecutorWithPathVariableResourceUri(false);
+        ExecutorTests.testExecuteWithPathVariable_withResponseError_shouldThrowException(
+                this.client,
+                URL_WITH_PATH_VARIABLE,
+                PATH_VARIABLE,
+                JSON_NO_STREAM_REQUEST,
+                ERROR_JSON_RESPONSE_WITH_PATH_VARIABLE.get(),
+                REQUEST_DTO,
+                this.executor
+        );
+    }
+
+    @Test
     public void testExecute_withResponseError_shouldThrowException() {
         ExecutorTests.testExecute_withResponseError_shouldThrowException(
                 this.client,
@@ -156,7 +178,6 @@ public class DefaultOpenAIHttpExecutorTest {
                 this.client,
                 URL,
                 JSON_NO_STREAM_REQUEST,
-                ERROR_JSON_RESPONSE.get(),
                 REQUEST_DTO,
                 this.executor
         );

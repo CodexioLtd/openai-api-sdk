@@ -9,6 +9,7 @@ import java.util.HashMap;
 import java.util.function.Supplier;
 
 import static bg.codexio.ai.openai.api.http.CommonTestConstantsUtils.TEST_BASE_URL;
+import static bg.codexio.ai.openai.api.http.ExecutorTests.createErrorResponse;
 import static bg.codexio.ai.openai.api.http.ExecutorTests.createOkResponse;
 
 public class RunnableHttpExecutorTestConstants {
@@ -39,6 +40,15 @@ public class RunnableHttpExecutorTestConstants {
                     RUN_TEST_PATH_VARIABLE
             ),
             RUN_TEST_JSON_RESPONSE_BODY.getBytes(),
+            "application/json"
+    );
+    public static final Supplier<Response> RUN_ERROR_JSON_RESPONSE =
+            () -> createErrorResponse(
+            String.format(
+                    CREATE_RUN_TEST_URL,
+                    RUN_TEST_PATH_VARIABLE
+            ),
+            "{\"error\":{\"message\":\"Test Error\"}}".getBytes(),
             "application/json"
     );
 
