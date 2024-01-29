@@ -7,7 +7,7 @@ import bg.codexio.ai.openai.api.sdk.thread.Threads;
 
 public class CreateRun {
 
-    public static void main(String[] args) throws InterruptedException {
+    public static void main(String[] args) {
         var run = Runnables.defaults(Threads.defaults()
                                             .and()
                                             .creating()

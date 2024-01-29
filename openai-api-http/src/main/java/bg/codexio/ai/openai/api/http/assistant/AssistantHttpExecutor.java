@@ -12,6 +12,7 @@ import org.jetbrains.annotations.NotNull;
 
 public class AssistantHttpExecutor
         extends DefaultOpenAIHttpExecutor<AssistantRequest, AssistantResponse> {
+
     private static final Class<AssistantResponse> RESPONSE_TYPE =
             AssistantResponse.class;
     private static final String RESOURCE_URI = "/assistants";

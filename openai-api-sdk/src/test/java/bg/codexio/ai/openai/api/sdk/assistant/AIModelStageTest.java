@@ -11,13 +11,13 @@ import static bg.codexio.ai.openai.api.sdk.assistant.InternalAssertions.*;
 import static org.junit.jupiter.api.Assertions.assertAll;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
-public class AiModelStageTest {
+public class AIModelStageTest {
 
-    private AiModelStage aiModelStage;
+    private AIModelStage aiModelStage;
 
     @BeforeEach
     void setUp() {
-        this.aiModelStage = new AiModelStage(
+        this.aiModelStage = new AIModelStage(
                 null,
                 AssistantRequest.builder()
         );

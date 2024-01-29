@@ -7,10 +7,10 @@ import bg.codexio.ai.openai.api.models.v40.GPT401106Model;
 import bg.codexio.ai.openai.api.models.v40.GPT40Model;
 import bg.codexio.ai.openai.api.payload.run.request.RunnableRequest;
 
-public class AiModelStage
+public class AIModelStage
         extends RunnableConfigurationStage {
 
-    AiModelStage(
+    AIModelStage(
             RunnableHttpExecutor httpExecutor,
             RunnableRequest.Builder requestBuilder,
             String threadId

@@ -12,6 +12,7 @@ import org.jetbrains.annotations.NotNull;
 
 public class RunnableHttpExecutor
         extends DefaultOpenAIHttpExecutor<RunnableRequest, RunnableResponse> {
+
     private static final Class<RunnableResponse> RESPONSE_TYPE =
             RunnableResponse.class;
     private static final String RESOURCE_URI = "/threads/%s/runs";

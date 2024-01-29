@@ -7,9 +7,9 @@ import bg.codexio.ai.openai.api.models.v40.GPT401106Model;
 import bg.codexio.ai.openai.api.models.v40.GPT40Model;
 import bg.codexio.ai.openai.api.payload.assistant.request.AssistantRequest;
 
-public class AiModelStage
+public class AIModelStage
         extends AssistantConfigurationStage {
-    AiModelStage(
+    AIModelStage(
             AssistantHttpExecutor httpExecutor,
             AssistantRequest.Builder requestBuilder
     ) {

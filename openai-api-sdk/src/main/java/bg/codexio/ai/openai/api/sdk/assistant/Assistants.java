@@ -13,17 +13,17 @@ public class Assistants {
     private Assistants() {
     }
 
-    public static AiModelStage throughHttp(AssistantHttpExecutor httpExecutor) {
-        return new AiModelStage(
+    public static AIModelStage throughHttp(AssistantHttpExecutor httpExecutor) {
+        return new AIModelStage(
                 httpExecutor,
                 AssistantRequest.builder()
         );
     }
 
-    public static HttpBuilder<AiModelStage> authenticate(HttpExecutorContext context) {
+    public static HttpBuilder<AIModelStage> authenticate(HttpExecutorContext context) {
         return new HttpBuilder<>(
                 context,
-                (httpExecutorContext, objectMapper) -> new AiModelStage(
+                (httpExecutorContext, objectMapper) -> new AIModelStage(
                         new AssistantHttpExecutor(
                                 httpExecutorContext,
                                 objectMapper
@@ -34,11 +34,11 @@ public class Assistants {
         );
     }
 
-    public static HttpBuilder<AiModelStage> authenticate(SdkAuth auth) {
+    public static HttpBuilder<AIModelStage> authenticate(SdkAuth auth) {
         return authenticate(new HttpExecutorContext(auth.credentials()));
     }
 
-    public static HttpBuilder<AiModelStage> defaults() {
+    public static HttpBuilder<AIModelStage> defaults() {
         return autoAuthenticate(Assistants::authenticate);
     }
 }

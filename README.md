@@ -106,6 +106,13 @@ Of course, due to its native SDK, objects of any kind are easily created. There 
     * [Additional Prompting](#additional-prompting)
 * [Translation API SDK](#translation-api-sdk)
     * [Example](#example)
+* [Assistants API SDK](#assistant-api-sdk)
+    * [Create assistant](#create-assistant)
+    * [Upload file](#upload-file)
+    * [Create thread](#create-thread)
+    * [Create message](#create-message)
+    * [Create run](#create-run)
+    * [Usage](#usage)
 * [Contributing](#contributing)
 * [License](#license)
 
@@ -2610,6 +2617,260 @@ API. In other words, an example use case can be:
 
 ... or you can just ask the `Chat` SDK to translate the English to German :)
 
+## Assistant API SDK
+
+Assistants API gives you the opportunity of building your own AI assistants.
+The functionality offered by the assistant provides users with the opportunity to engage in a conversation within an
+already established context. This context involves two participants: the user and the assistant created by the user.
+One assistant can have instructions, different models and tools in order to respond to user queries. However, the
+assistants API doesn't rely only on itself.
+In order to achieve the functionality of an AI assistant, there are various APIs, such as Threads, Messages, Runs and
+Files, which are working together, to provide the available functionality that one assistant can have.
+
+### Create assistant
+
+At first, assistant needs to be created. It, can have its custom instructions, model, tools, metadata and file. The
+following code is showing how this can be done:
+
+```java
+public class CreateAssistant {
+
+    public static void main(String[] args) {
+        var file = new File(CreateAssistant.class.getClassLoader()
+                                                 .getResource("fake-file.txt")
+                                                 .getPath());
+
+        var assistant = Assistants.defaults()
+                                  .and()
+                                  .turboPowered()
+                                  .from(
+                                          new CodeInterpreter(),
+                                          new Retrieval()
+                                  )
+                                  .called("Codexio")
+                                  .instruct("You are the best java developer," + " you are going to "
+                                                    + "participate in new " + "interesting projects.")
+
+                                  .meta()
+                                  .awareOf(
+                                          "key1",
+                                          "value1",
+                                          "key2",
+                                          "value2"
+                                  )
+                                  .file()
+                                  .feed(file)
+                                  .andRespond();
+
+        System.out.println(assistant);
+    }
+}
+```
+
+### Upload file
+
+In order to upload a file, we are using the Files API to upload it and then using the returned file id we can easily
+attach it to the assistant.
+Creating a file is looking like this:
+
+```java
+public class UploadFile {
+    public static void main(String[] args) {
+        var file = new File(UploadFile.class.getClassLoader()
+                                            .getResource("fake-file.txt")
+                                            .getPath());
+        var fileId = Files.defaults()
+                          .and()
+                          .targeting(new AssistantPurpose())
+                          .feedRaw(file);
+
+        System.out.println(fileResponse);
+    }
+}
+```
+
+### Create thread
+
+Since the assistant is created and user wants to start a conversation the Threads API comes in use. Threads represents a
+conversation session between user and his assistant. A thread can be created using either the empty() method,
+which generates a thread without additional information, or it can be configured to include files and metadata.
+Messages can be added to the thread, during creation, which will be processed by the Messages API.
+The following code is showing the extended way of thread creation:
+
+```java
+public class CreateThread {
+
+    public static void main(String[] args) {
+        var file = new File(CreateThread.class.getClassLoader()
+                                              .getResource("fake-file.txt")
+                                              .getPath());
+
+        var thread = Threads.defaults()
+                            .and()
+                            .creating()
+                            .deepConfigure()
+                            .meta()
+                            .awareOf(
+                                    "key1",
+                                    "value1",
+                                    "key2",
+                                    "value2"
+                            )
+                            .file()
+                            .attach(file)
+                            .message()
+                            .startWith("You're java developer.")
+                            .feed(file);
+
+        System.out.println(thread);
+    }
+}
+```
+
+And here is the simplified one:
+
+```java
+public class CreateEmptyThread {
+
+    public static void main(String[] args) {
+        var thread = Threads.defaults()
+                            .and()
+                            .creating()
+                            .empty();
+
+        System.out.println(thread);
+    }
+}
+```
+
+### Create message
+
+After the thread is created, messages can be added. A message can be added during the thread creation process as
+demonstrated in the previous example.
+Alternatively, Messages API can be used to add messages to existing thread.
+If the second approach is the preferred one , the message creation is looking like this :
+
+```java
+public class CreateMessage {
+
+    public static void main(String[] args) {
+        var messageResponse = Messages.defaults(Threads.defaults()
+                                                       .and()
+                                                       .creating()
+                                                       .empty())
+                                      .and()
+                                      .chat()
+                                      .withContent("How are you?")
+                                      .andRespond();
+
+        System.out.println(messageResponse);
+    }
+}
+```
+
+The thread can be supplied using the thread response object or only the thread id. One message can have not only
+content,
+but its own metadata and file.
+
+### Create run
+
+Since we already have assistant, files, threads, messages there is one final step to conclude the conversation
+between the user and the assistant - using the Runs API. It executes the assistant on the thread to trigger
+responses. Similar to messages, runs rely on the id of already created thread, and it also requires the id of the
+created assistant. Run use the model and tools configured by the assistant, but they can be overridden, during the run
+creation process.
+Run creation is looking like this :
+
+```java
+public class CreateRun {
+
+    public static void main(String[] args) {
+        var run = Runnables.defaults(Threads.defaults()
+                                            .and()
+                                            .creating()
+                                            .empty())
+                           .and()
+                           .deepConfigure(Assistants.defaults()
+                                                    .and()
+                                                    .poweredByGPT40()
+                                                    .from(new CodeInterpreter())
+                                                    .called("Cody")
+                                                    .instruct("Be intuitive")
+                                                    .andRespond())
+                           .andRespond();
+
+        System.out.println(run);
+    }
+}
+```
+
+### Usage
+
+In order to achieve give the user better experience, all the functionality provided by the aforementioned APIs the
+assistant usage is simplified trough single method chain, where everything that can be added/configured, when each
+component is created individually, can also be done directly from one place.
+Chained it looks like this :
+
+```java
+public class AssistantAsk {
+
+    public static void main(String[] args) {
+        var file = new File(AssistantAsk.class.getClassLoader()
+                                              .getResource("fake-file.txt")
+                                              .getPath());
+
+        var answer = Threads.defaults()
+                            .and()
+                            .creating()
+                            .deepConfigure()
+                            .message()
+                            .startWith("You are developer at Codexio.")
+                            .attach(file)
+                            .chat()
+                            .withContent("Your language of choice is Java.")
+                            .meta()
+                            .awareOf(
+                                    "key",
+                                    "value"
+                            )
+                            .assistant()
+                            .assist(Assistants.defaults()
+                                              .and()
+                                              .poweredByGPT40()
+                                              .from(new CodeInterpreter())
+                                              .called("Cody")
+                                              .instruct("Please focus on " + "explaining" + " the " + "topics as "
+                                                                + "senior " + "developer.")
+                                              .andRespond())
+                            .instruction()
+                            .instruct("It would be better to show me some " + "DevOps skills.")
+                            .finish()
+                            .waitForCompletion()
+                            .result()
+                            .answers();
+
+        System.out.println(answer);
+    }
+}
+```
+
+Which outputs:
+
+```text
+MessageResult[message=The file contains the single word "test" and no other data. With respect to showcasing some DevOps
+skills, we could talk about various aspects. Given we have Python in our environment, one critical aspect could be 
+Infrastructure as Code(IaC). And in Python, we can use libraries like Ansible, Terraform, and more, for IaC. Also,
+Python is extensively used for automation scripts in build, testing, and deployment.
+If we had a more complex file, we could have used Python to parse and manipulate data, demonstrating a scenario of data
+processing, a common need in DevOps. Another example could be analyzing logs to spot errors or patterns.
+Given this context, please let me know what specific aspects you're interested in so I can provide a more tailored
+explanation. Would you like more information on IaC, Continuous Integration/Continuous Deployment (CI/CD) processes,
+monitoring, logging, or something else?, fileId=null]
+```
+
+The uploaded file `fake-file.txt` is only used for testing scenarios, and it contains only the word `test`. The response
+given from the for now is returned by MessageResult object, which contains information about the content of the message
+and id of a generated file, if the assistant has created one.
 ## Contributing
 
 This project is in its very early stage and contributors are very welcomed. If you feel that something has to be
