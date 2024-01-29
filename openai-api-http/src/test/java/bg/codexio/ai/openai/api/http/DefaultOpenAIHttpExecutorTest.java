@@ -132,6 +132,29 @@ public class DefaultOpenAIHttpExecutorTest {
     }
 
     @Test
+    public void testExecute_withResponseError_shouldThrowException() {
+        ExecutorTests.testExecute_withResponseError_shouldThrowException(
+                this.client,
+                URL,
+                JSON_NO_STREAM_REQUEST,
+                ERROR_JSON_RESPONSE.get(),
+                REQUEST_DTO,
+                this.executor
+        );
+    }
+
+    @Test
+    public void testExecute_withCallError_shouldThrowException() {
+        ExecutorTests.testExecute_withCallError_shouldThrowException(
+                this.client,
+                URL,
+                JSON_NO_STREAM_REQUEST,
+                REQUEST_DTO,
+                this.executor
+        );
+    }
+
+    @Test
     public void testExecuteWithPathVariable_noError_shouldParseResponse() {
         this.initExecutorWithPathVariableResourceUri(false);
         ExecutorTests.testExecuteWithPathVariable_noError_shouldParseResponse(
@@ -161,25 +184,27 @@ public class DefaultOpenAIHttpExecutorTest {
     }
 
     @Test
-    public void testExecute_withResponseError_shouldThrowException() {
-        ExecutorTests.testExecute_withResponseError_shouldThrowException(
+    public void testExecuteWithPathVariables_shouldParseResponse() {
+        this.initExecutorWithPathVariableResourceUri(false);
+        ExecutorTests.testExecuteWithPathVariables_noError_shouldParseResponse(
                 this.client,
-                URL,
-                JSON_NO_STREAM_REQUEST,
-                ERROR_JSON_RESPONSE.get(),
-                REQUEST_DTO,
-                this.executor
+                URL_WITH_PATH_VARIABLE,
+                BASE_JSON_RESPONSE_WITH_PATH_VARIABLE.get(),
+                OK_RESPONSE_DTO,
+                this.executor,
+                PATH_VARIABLE
         );
     }
 
     @Test
-    public void testExecute_withCallError_shouldThrowException() {
-        ExecutorTests.testExecute_withCallError_shouldThrowException(
+    public void testExecuteWithPathVariables_withResponseError_shouldThrowException() {
+        this.initExecutorWithPathVariableResourceUri(false);
+        ExecutorTests.testExecuteWithPathVariables_withResponseError_shouldThrowException(
                 this.client,
-                URL,
-                JSON_NO_STREAM_REQUEST,
-                REQUEST_DTO,
-                this.executor
+                URL_WITH_PATH_VARIABLE,
+                ERROR_JSON_RESPONSE_WITH_PATH_VARIABLE.get(),
+                this.executor,
+                PATH_VARIABLE
         );
     }
 

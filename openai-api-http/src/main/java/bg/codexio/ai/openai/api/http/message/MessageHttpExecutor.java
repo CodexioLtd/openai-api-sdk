@@ -2,17 +2,13 @@ package bg.codexio.ai.openai.api.http.message;
 
 import bg.codexio.ai.openai.api.http.DefaultOpenAIHttpExecutor;
 import bg.codexio.ai.openai.api.http.HttpExecutorContext;
-import bg.codexio.ai.openai.api.http.exception.HttpCallFailedException;
 import bg.codexio.ai.openai.api.payload.message.request.MessageRequest;
 import bg.codexio.ai.openai.api.payload.message.response.MessageResponse;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
 import okhttp3.RequestBody;
-import okhttp3.Response;
 import org.jetbrains.annotations.NotNull;
-
-import java.io.IOException;
 
 public class MessageHttpExecutor
         extends DefaultOpenAIHttpExecutor<MessageRequest, MessageResponse> {
@@ -75,41 +71,5 @@ public class MessageHttpExecutor
                                             "assistants=v1"
                                     )
                                     .build();
-    }
-
-    @Override
-    protected Request prepareRequestWithPathVariables(String... pathVariables) {
-        var resourceUriWithPathVariable = String.format(
-                this.resourceUri,
-                (Object[]) pathVariables
-        );
-
-        return new Request.Builder().url(this.baseUrl.concat(resourceUriWithPathVariable))
-                                    .get()
-                                    .addHeader(
-                                            "OpenAI-Beta",
-                                            "assistants=v1"
-                                    )
-                                    .build();
-    }
-
-    @Override
-    protected MessageResponse toResponse(Response response)
-            throws IOException {
-        try {
-            var body = response.body()
-                               .string();
-            log(
-                    "Received raw response: {}",
-                    body
-            );
-
-            return this.toResponse(body);
-        } catch (IOException e) {
-            throw new HttpCallFailedException(
-                    this.baseUrl + this.resourceUri,
-                    e
-            );
-        }
     }
 }

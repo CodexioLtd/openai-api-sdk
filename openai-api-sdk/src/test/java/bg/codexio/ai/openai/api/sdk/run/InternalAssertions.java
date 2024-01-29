@@ -113,8 +113,8 @@ public class InternalAssertions {
 
     static void executeWithPathVariables(RunnableConfigurationStage runnableConfigurationStage) {
         when(runnableConfigurationStage.httpExecutor.executeWithPathVariables(
-                RUNNABLE_RESPONSE.threadId(),
-                RUNNABLE_RESPONSE.id()
+                any(),
+                any()
         )).thenAnswer(result -> RUNNABLE_RESPONSE_WITH_COMPLETED_STATUS);
     }
 

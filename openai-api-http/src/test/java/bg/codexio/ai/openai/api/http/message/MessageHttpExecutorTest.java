@@ -1,4 +1,4 @@
-package bg.codexio.ai.openai.api.http.thread;
+package bg.codexio.ai.openai.api.http.message;
 
 import bg.codexio.ai.openai.api.http.ExecutorTests;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -7,14 +7,14 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import static bg.codexio.ai.openai.api.http.CommonTestConstantsUtils.TEST_BASE_URL;
-import static bg.codexio.ai.openai.api.http.thread.ThreadHttpExecutorTestConstants.*;
+import static bg.codexio.ai.openai.api.http.message.MessageHttpExecutorTestConstants.*;
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.mockito.Mockito.mock;
 
-public class ModifyThreadHttpExecutorTest {
+public class MessageHttpExecutorTest {
 
     private OkHttpClient client;
-    private ModifyThreadHttpExecutor executor;
+    private MessageHttpExecutor executor;
 
     @BeforeEach
     void setUp() {
@@ -23,39 +23,39 @@ public class ModifyThreadHttpExecutorTest {
     }
 
     @Test
-    void testExecute_expectResponse() {
+    void testExecuteWithPathVariable_expectResponse() {
         ExecutorTests.testExecuteWithPathVariable_noError_shouldParseResponse(
                 this.client,
-                MODIFICATION_THREAD_URL,
-                THREAD_MODIFICATION_TEST_PATH_VARIABLE,
-                THREAD_MODIFICATION_JSON_BODY_TEST_REQUEST,
-                THREAD_MODIFICATION_BASE_JSON_RESPONSE.get(),
-                THREAD_MODIFICATION_TEST_REQUEST,
-                THREAD_MODIFICATION_TEST_RESPONSE,
+                MESSAGE_TEST_URL,
+                MESSAGE_TEST_PATH_VARIABLE,
+                MESSAGE_JSON_REQUEST_TEST_BODY,
+                BASE_MESSAGE_TEST_JSON_RESPONSE.get(),
+                MESSAGE_TEST_REQUEST,
+                MESSAGE_TEST_RESPONSE,
                 this.executor
         );
     }
 
     @Test
-    void testExecute_withError_expectOpenAIRespondedNot2xxException() {
+    void testExecuteWithPathVariable_withError_expectOpenAIRespondedNot2xxException() {
         ExecutorTests.testExecuteWithPathVariable_withResponseError_shouldThrowException(
                 this.client,
-                MODIFICATION_THREAD_URL,
-                THREAD_MODIFICATION_TEST_PATH_VARIABLE,
-                THREAD_MODIFICATION_JSON_BODY_TEST_REQUEST,
-                THREAD_MODIFICATION_ERROR_JSON_RESPONSE.get(),
-                THREAD_MODIFICATION_TEST_REQUEST,
+                MESSAGE_TEST_URL,
+                MESSAGE_TEST_PATH_VARIABLE,
+                MESSAGE_JSON_REQUEST_TEST_BODY,
+                MESSAGE_ERROR_JSON_RESPONSE.get(),
+                MESSAGE_TEST_REQUEST,
                 this.executor
         );
     }
 
     @Test
     public void testCanStream_expectFalse() {
-        assertFalse(this.executor.canStream(THREAD_MODIFICATION_TEST_REQUEST));
+        assertFalse(this.executor.canStream(MESSAGE_TEST_REQUEST));
     }
 
     private void initExecutor() {
-        this.executor = new ModifyThreadHttpExecutor(
+        this.executor = new MessageHttpExecutor(
                 this.client,
                 TEST_BASE_URL,
                 new ObjectMapper()
