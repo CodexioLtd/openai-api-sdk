@@ -11,9 +11,6 @@ import bg.codexio.ai.openai.api.sdk.run.constant.RunnableStatusConstants;
 import java.util.Objects;
 import java.util.Optional;
 
-// change the methods to go back to the configuration stage or make some
-// methods to finish here,
-// other to go the conf stage
 public class RunnableResultStage
         extends RunnableConfigurationStage {
 
