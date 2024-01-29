@@ -1,6 +1,5 @@
 package bg.codexio.ai.openai.api.examples.assistant;
 
-import bg.codexio.ai.openai.api.examples.file.UploadFile;
 import bg.codexio.ai.openai.api.payload.assistant.tool.CodeInterpreter;
 import bg.codexio.ai.openai.api.sdk.assistant.Assistants;
 import bg.codexio.ai.openai.api.sdk.thread.Threads;
@@ -10,7 +9,7 @@ import java.io.File;
 public class AssistantAsk {
 
     public static void main(String[] args) {
-        var file = new File(UploadFile.class.getClassLoader()
+        var file = new File(AssistantAsk.class.getClassLoader()
                                             .getResource("fake-file.txt")
                                             .getPath());
 

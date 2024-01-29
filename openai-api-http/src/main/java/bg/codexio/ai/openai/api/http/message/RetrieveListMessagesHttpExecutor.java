@@ -11,6 +11,7 @@ import okhttp3.Request;
 public class RetrieveListMessagesHttpExecutor
         extends DefaultOpenAIHttpExecutor<MessageRequest,
         ListMessagesResponse> {
+
     private static final Class<ListMessagesResponse> RESPONSE_TYPE =
             ListMessagesResponse.class;
     private static final String RESOURCE_URI = "/threads/%s/messages";

@@ -27,8 +27,8 @@ public class RunnableAdvancedConfigurationStage
         );
     }
 
-    public AiModelStage aiModel() {
-        return new AiModelStage(
+    public AIModelStage aiModel() {
+        return new AIModelStage(
                 this.httpExecutor,
                 this.requestBuilder,
                 this.threadId

@@ -1,6 +1,5 @@
 package bg.codexio.ai.openai.api.examples.thread;
 
-import bg.codexio.ai.openai.api.examples.file.UploadFile;
 import bg.codexio.ai.openai.api.sdk.thread.Threads;
 
 import java.io.File;
@@ -8,11 +7,11 @@ import java.io.File;
 public class CreateThread {
 
     public static void main(String[] args) {
-        var file = new File(UploadFile.class.getClassLoader()
+        var file = new File(CreateThread.class.getClassLoader()
                                             .getResource("fake-file.txt")
                                             .getPath());
 
-        var emptyThread = Threads.defaults()
+        var thread = Threads.defaults()
                                  .and()
                                  .creating()
                                  .deepConfigure()
@@ -29,6 +28,6 @@ public class CreateThread {
                                  .startWith("You're java developer.")
                                  .feed(file);
 
-        System.out.println(emptyThread);
+        System.out.println(thread);
     }
 }

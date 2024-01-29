@@ -13,6 +13,7 @@ import org.jetbrains.annotations.NotNull;
 public class ModifyThreadHttpExecutor
         extends DefaultOpenAIHttpExecutor<ThreadModificationRequest,
         ThreadResponse> {
+
     private static final Class<ThreadResponse> RESPONSE_TYPE =
             ThreadResponse.class;
     private static final String RESOURCE_URI = "/threads/%s";

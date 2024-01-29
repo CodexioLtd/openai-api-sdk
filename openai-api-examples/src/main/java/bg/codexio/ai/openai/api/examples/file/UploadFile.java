@@ -11,11 +11,11 @@ public class UploadFile {
         var file = new File(UploadFile.class.getClassLoader()
                                             .getResource("fake-file.txt")
                                             .getPath());
-        var fileResponse = Files.defaults()
+        var fileId = Files.defaults()
                                 .and()
                                 .targeting(new AssistantPurpose())
-                                .feedRaw(file);
+                          .feed(file);
 
-        System.out.println(fileResponse);
+        System.out.println(fileId);
     }
 }

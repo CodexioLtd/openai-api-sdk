@@ -12,6 +12,7 @@ import org.jetbrains.annotations.NotNull;
 
 public class MessageHttpExecutor
         extends DefaultOpenAIHttpExecutor<MessageRequest, MessageResponse> {
+
     private static final Class<MessageResponse> RESPONSE_TYPE =
             MessageResponse.class;
     private static final String RESOURCE_URI = "/threads/%s/messages";
