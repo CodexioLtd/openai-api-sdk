@@ -16,7 +16,12 @@ public class RunnableHttpExecutorTestConstants {
 
     public static final String CREATE_RUN_TEST_URL = TEST_BASE_URL.concat(
             "/threads/%s/runs");
+    public static final String RETRIEVE_RUN_TEST_URL = TEST_BASE_URL.concat(
+            "/threads/%s/runs/%s");
     public static final String RUN_TEST_PATH_VARIABLE = "var";
+    public static final String[] RUN_TEST_PATH_VARIABLES = new String[]{
+            "var1", "var2"
+    };
     public static final String RUN_TEST_JSON_REQUEST_BODY =
             "{\"assistant_id" + "\":\"assistant_test_id\"}";
     public static final RunnableRequest RUN_TEST_REQUEST = new RunnableRequest(
@@ -33,7 +38,7 @@ public class RunnableHttpExecutorTestConstants {
                     + "  \"cancelled_at\": 0,\n" + "  \"failed_at\": 0,\n"
                     + "  \"completed_at\": 0,\n" + "  \"tools\": [],\n"
                     + "  \"file_ids\": [],\n" + "  \"metadata\": {}\n" + "}";
-    public static final Supplier<Response> BASE_RUN_TEST_JSON_RESPONSE =
+    public static final Supplier<Response> BASE_RUN_JSON_TEST_RESPONSE =
             () -> createOkResponse(
             String.format(
                     CREATE_RUN_TEST_URL,

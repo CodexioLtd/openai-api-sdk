@@ -29,7 +29,7 @@ public class RunnableHttpExecutorTest {
                 CREATE_RUN_TEST_URL,
                 RUN_TEST_PATH_VARIABLE,
                 RUN_TEST_JSON_REQUEST_BODY,
-                BASE_RUN_TEST_JSON_RESPONSE.get(),
+                BASE_RUN_JSON_TEST_RESPONSE.get(),
                 RUN_TEST_REQUEST,
                 RUN_TEST_RESPONSE,
                 this.executor
@@ -46,6 +46,29 @@ public class RunnableHttpExecutorTest {
                 RUN_ERROR_JSON_RESPONSE.get(),
                 RUN_TEST_REQUEST,
                 this.executor
+        );
+    }
+
+    @Test
+    void testExecuteWithPathVariables_expectResponse() {
+        ExecutorTests.testExecuteWithPathVariables_noError_shouldParseResponse(
+                this.client,
+                RETRIEVE_RUN_TEST_URL,
+                BASE_RUN_JSON_TEST_RESPONSE.get(),
+                RUN_TEST_RESPONSE,
+                this.executor,
+                RUN_TEST_PATH_VARIABLES
+        );
+    }
+
+    @Test
+    void testExecuteWithPathVariables_withError_expectOpenAIRespondedNot2xxException() {
+        ExecutorTests.testExecuteWithPathVariables_withResponseError_shouldThrowException(
+                this.client,
+                RETRIEVE_RUN_TEST_URL,
+                RUN_ERROR_JSON_RESPONSE.get(),
+                this.executor,
+                RUN_TEST_PATH_VARIABLES
         );
     }
 

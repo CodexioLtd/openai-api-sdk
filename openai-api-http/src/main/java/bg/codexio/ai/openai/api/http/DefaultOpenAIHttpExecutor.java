@@ -439,7 +439,7 @@ public abstract class DefaultOpenAIHttpExecutor<I extends Streamable,
                 this.resourceUri
         );
 
-        return new Request.Builder().url(this.baseUrl + this.resourceUri)
+        return new Request.Builder().url(this.baseUrl.concat(this.resourceUri))
                                     .post(RequestBody.create(
                                             json,
                                             DEFAULT_MEDIA_TYPE

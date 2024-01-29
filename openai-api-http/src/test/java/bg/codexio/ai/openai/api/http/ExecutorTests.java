@@ -13,6 +13,7 @@ import org.jetbrains.annotations.NotNull;
 import org.mockito.stubbing.Answer;
 
 import java.io.IOException;
+import java.util.Objects;
 import java.util.function.Consumer;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -107,6 +108,55 @@ public class ExecutorTests {
                         requestDto,
                         pathVariable
                 )
+        );
+
+        assertMessageAndStatus(exception);
+    }
+
+    public static <I extends Streamable, O extends Mergeable<O>,
+            E extends DefaultOpenAIHttpExecutor<I, O>> void testExecuteWithPathVariables_noError_shouldParseResponse(
+            OkHttpClient client,
+            String url,
+            Response okHttpResponse,
+            O responseDto,
+            E executor,
+            String... pathVariables
+    ) {
+        when(client.newCall(requestEq(String.format(
+                url,
+                (Object[]) pathVariables
+        )))).thenReturn(new MockCall(
+                okHttpResponse,
+                false
+        ));
+
+        var response = executor.executeWithPathVariables(pathVariables);
+
+        assertEquals(
+                responseDto,
+                response
+        );
+    }
+
+    public static <I extends Streamable, O extends Mergeable<O>,
+            E extends DefaultOpenAIHttpExecutor<I, O>> void testExecuteWithPathVariables_withResponseError_shouldThrowException(
+            OkHttpClient client,
+            String url,
+            Response okHttpResponse,
+            E executor,
+            String... pathVariables
+    ) {
+        when(client.newCall(requestEq(String.format(
+                url,
+                (Object[]) pathVariables
+        )))).thenReturn(new MockCall(
+                okHttpResponse,
+                false
+        ));
+
+        var exception = assertThrows(
+                OpenAIRespondedNot2xxException.class,
+                () -> executor.executeWithPathVariables(pathVariables)
         );
 
         assertMessageAndStatus(exception);
@@ -546,6 +596,10 @@ public class ExecutorTests {
                         .toString()
                         .equals(url)) {
                 return false;
+            }
+
+            if (Objects.isNull(body) || body.length == 0) {
+                return true;
             }
 
             for (var b : body) {

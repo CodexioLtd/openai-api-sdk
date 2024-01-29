@@ -34,11 +34,10 @@ public class ThreadHttpExecutorTestConstants {
     public static final String THREAD_JSON_BODY_TEST_RESPONSE =
             "{\"id\": \"thread_test_id\",\n" + "\"object\": null,\n"
                     + "  \"created_at\": 0,\n" + "  \"metadata\": {}\n" + "}\n";
-    public static final Supplier<Response> THREAD_CREATION_BASE_JSON_RESPONSE =
-            () -> createOkResponse(
+    public static final Supplier<Response> THREAD_CREATION_BASE_JSON_RESPONSE = () -> createOkResponse(
             CREATE_THREAD_URL,
             THREAD_JSON_BODY_TEST_RESPONSE.getBytes(),
-            "multipart/form-data"
+            "application/json"
     );
     public static final Supplier<Response> THREAD_ERROR_JSON_RESPONSE =
             () -> createErrorResponse(
@@ -71,11 +70,14 @@ public class ThreadHttpExecutorTestConstants {
     public static final Supplier<Response> THREAD_MODIFICATION_BASE_JSON_RESPONSE = () -> createOkResponse(
             MODIFICATION_THREAD_URL,
             THREAD_MODIFICATION_JSON_BODY_TEST_RESPONSE.getBytes(),
-            "multipart/form-data"
+            "application/json"
     );
     public static final Supplier<Response> THREAD_MODIFICATION_ERROR_JSON_RESPONSE = () -> createErrorResponse(
             MODIFICATION_THREAD_URL,
             "{\"error\":{\"message\":\"Test Error\"}}".getBytes(),
             "application/json"
     );
+
+    private ThreadHttpExecutorTestConstants() {
+    }
 }

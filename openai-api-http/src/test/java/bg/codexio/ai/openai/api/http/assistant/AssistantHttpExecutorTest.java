@@ -1,4 +1,4 @@
-package bg.codexio.ai.openai.api.http.thread;
+package bg.codexio.ai.openai.api.http.assistant;
 
 import bg.codexio.ai.openai.api.http.ExecutorTests;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -7,14 +7,14 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import static bg.codexio.ai.openai.api.http.CommonTestConstantsUtils.TEST_BASE_URL;
-import static bg.codexio.ai.openai.api.http.thread.ThreadHttpExecutorTestConstants.*;
+import static bg.codexio.ai.openai.api.http.assistant.AssistantHttpExecutorTestConstants.*;
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.mockito.Mockito.mock;
 
-public class CreateThreadHttpExecutorTest {
+public class AssistantHttpExecutorTest {
 
     private OkHttpClient client;
-    private CreateThreadHttpExecutor executor;
+    private AssistantHttpExecutor executor;
 
     @BeforeEach
     void setUp() {
@@ -26,11 +26,11 @@ public class CreateThreadHttpExecutorTest {
     void testExecute_expectResponse() {
         ExecutorTests.testExecute_noError_shouldParseResponse(
                 this.client,
-                CREATE_THREAD_URL,
-                THREAD_CREATION_JSON_BODY_TEST_REQUEST,
-                THREAD_CREATION_BASE_JSON_RESPONSE.get(),
-                THREAD_CREATION_TEST_REQUEST,
-                THREAD_TEST_RESPONSE,
+                ASSISTANT_TEST_URL,
+                ASSISTANT_JSON_TEST_BODY_REQUEST,
+                ASSISTANT_BASE_JSON_RESPONSE.get(),
+                ASSISTANT_TEST_REQUEST,
+                ASSISTANT_TEST_RESPONSE,
                 this.executor
         );
     }
@@ -39,21 +39,21 @@ public class CreateThreadHttpExecutorTest {
     void testExecute_withError_expectOpenAIRespondedNot2xxException() {
         ExecutorTests.testExecute_withResponseError_shouldThrowException(
                 this.client,
-                CREATE_THREAD_URL,
-                THREAD_CREATION_JSON_BODY_TEST_REQUEST,
-                THREAD_ERROR_JSON_RESPONSE.get(),
-                THREAD_CREATION_TEST_REQUEST,
+                ASSISTANT_TEST_URL,
+                ASSISTANT_JSON_TEST_BODY_REQUEST,
+                ASSISTANT_ERROR_JSON_RESPONSE.get(),
+                ASSISTANT_TEST_REQUEST,
                 this.executor
         );
     }
 
     @Test
     public void testCanStream_expectFalse() {
-        assertFalse(this.executor.canStream(THREAD_CREATION_TEST_REQUEST));
+        assertFalse(this.executor.canStream(ASSISTANT_TEST_REQUEST));
     }
 
     private void initExecutor() {
-        this.executor = new CreateThreadHttpExecutor(
+        this.executor = new AssistantHttpExecutor(
                 this.client,
                 TEST_BASE_URL,
                 new ObjectMapper()
