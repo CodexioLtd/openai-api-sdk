@@ -5,6 +5,7 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import static bg.codexio.ai.openai.api.sdk.CommonTestConstantsUtils.FILE;
+import static bg.codexio.ai.openai.api.sdk.file.InternalAssertions.UPLOAD_FILE_HTTP_EXECUTOR;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.when;
@@ -17,7 +18,7 @@ public class FileUploadingStageTest {
     @BeforeEach
     public void setUp() {
         this.fileUploadingStage = new FileUploadingStage(
-                InternalAssertions.UPLOAD_FILE_HTTP_EXECUTOR,
+                UPLOAD_FILE_HTTP_EXECUTOR,
                 UploadFileRequest.builder()
                                  .withPurpose(InternalAssertions.ASSISTANT_PURPOSE_NAME)
         );
@@ -25,7 +26,7 @@ public class FileUploadingStageTest {
 
     @Test
     void testFeedRaw_expectCorrectResponse() {
-        when(this.fileUploadingStage.executor.execute(any())).thenAnswer(response -> InternalAssertions.FILE_RESPONSE);
+        when(UPLOAD_FILE_HTTP_EXECUTOR.execute(any())).thenAnswer(response -> InternalAssertions.FILE_RESPONSE);
 
         var response = this.fileUploadingStage.feedRaw(FILE);
 
@@ -38,7 +39,7 @@ public class FileUploadingStageTest {
 
     @Test
     void testFeed_expectCorrectResponse() {
-        when(this.fileUploadingStage.executor.execute(any())).thenAnswer(response -> InternalAssertions.FILE_RESPONSE);
+        when(UPLOAD_FILE_HTTP_EXECUTOR.execute(any())).thenAnswer(response -> InternalAssertions.FILE_RESPONSE);
 
         var fileId = this.fileUploadingStage.feed(FILE);
 

@@ -14,6 +14,7 @@ public class UploadFile {
                                             .getPath());
         var fileId = Files.defaults()
                           .and()
+                          .upload()
                           .targeting(new AssistantPurpose())
                           .feed(file);
 
