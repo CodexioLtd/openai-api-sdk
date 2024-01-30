@@ -11,9 +11,11 @@ import static bg.codexio.ai.openai.api.http.CommonTestConstantsUtils.TEST_BASE_U
 import static bg.codexio.ai.openai.api.http.ExecutorTests.createErrorResponse;
 import static bg.codexio.ai.openai.api.http.ExecutorTests.createOkResponse;
 
-public class UploadFileHttpExecutorTestConstants {
+public class FileHttpExecutorTestConstants {
 
     public static final String UPLOAD_FILE_URL = TEST_BASE_URL.concat("/files");
+    public static final String RETRIEVE_FILE_CONTENT_URL =
+            TEST_BASE_URL.concat("/files/%s/content");
     public static final UploadFileRequest UPLOAD_FILE_REQUEST_TEST =
             new UploadFileRequest(
             new File(UploadFileHttpExecutorTest.class.getClassLoader()
@@ -57,6 +59,6 @@ public class UploadFileHttpExecutorTestConstants {
             "application/json"
     );
 
-    private UploadFileHttpExecutorTestConstants() {
+    private FileHttpExecutorTestConstants() {
     }
 }

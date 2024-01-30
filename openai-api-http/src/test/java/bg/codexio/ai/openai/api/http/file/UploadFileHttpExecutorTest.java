@@ -7,7 +7,7 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import static bg.codexio.ai.openai.api.http.CommonTestConstantsUtils.TEST_BASE_URL;
-import static bg.codexio.ai.openai.api.http.file.UploadFileHttpExecutorTestConstants.*;
+import static bg.codexio.ai.openai.api.http.file.FileHttpExecutorTestConstants.*;
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.mockito.Mockito.mock;
 
