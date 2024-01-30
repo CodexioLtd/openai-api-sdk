@@ -9,6 +9,7 @@ import bg.codexio.ai.openai.api.sdk.run.Runnables;
 
 public class MessageAssistantStage<O extends Mergeable<O>>
         extends MessageConfigurationStage<O> {
+
     MessageAssistantStage(
             DefaultOpenAIHttpExecutor<MessageRequest, O> httpExecutor,
             MessageRequest.Builder requestBuilder,

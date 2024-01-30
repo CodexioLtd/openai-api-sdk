@@ -13,6 +13,7 @@ import bg.codexio.ai.openai.api.sdk.auth.SdkAuth;
 import static bg.codexio.ai.openai.api.sdk.Authenticator.autoAuthenticate;
 
 public class Messages {
+
     private Messages() {
     }
 

@@ -9,6 +9,7 @@ import bg.codexio.ai.openai.api.payload.assistant.request.AssistantRequest;
 
 public class AIModelStage
         extends AssistantConfigurationStage {
+
     AIModelStage(
             AssistantHttpExecutor httpExecutor,
             AssistantRequest.Builder requestBuilder

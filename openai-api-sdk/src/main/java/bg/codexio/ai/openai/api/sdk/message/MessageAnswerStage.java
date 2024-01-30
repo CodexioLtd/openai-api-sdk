@@ -7,6 +7,7 @@ import bg.codexio.ai.openai.api.payload.thread.response.ThreadResponse;
 
 public class MessageAnswerStage<O extends Mergeable<O>>
         extends MessageConfigurationStage<O> {
+
     MessageAnswerStage(
             DefaultOpenAIHttpExecutor<MessageRequest, O> httpExecutor,
             MessageRequest.Builder requestBuilder,

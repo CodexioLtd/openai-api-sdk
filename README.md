@@ -2866,12 +2866,12 @@ If we had a more complex file, we could have used Python to parse and manipulate
 processing, a common need in DevOps. Another example could be analyzing logs to spot errors or patterns.
 Given this context, please let me know what specific aspects you're interested in so I can provide a more tailored
 explanation. Would you like more information on IaC, Continuous Integration/Continuous Deployment (CI/CD) processes,
-monitoring, logging, or something else?, fileId=null]
+monitoring, logging, or something else?, imageFileId=null]
 ```
 
 The uploaded file `fake-file.txt` is only used for testing scenarios, and it contains only the word `test`. The response
-given from the for now is returned by MessageResult object, which contains information about the content of the message
-and id of a generated file, if the assistant has created one.
+given from the for now is returned by MessageResult object, which contains information about the content of the text
+message and id of a generated image file, if the assistant has created one.
 
 ## Contributing
 

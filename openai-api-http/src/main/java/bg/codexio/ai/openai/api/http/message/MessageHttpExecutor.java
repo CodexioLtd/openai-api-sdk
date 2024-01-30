@@ -10,6 +10,9 @@ import okhttp3.Request;
 import okhttp3.RequestBody;
 import org.jetbrains.annotations.NotNull;
 
+import static bg.codexio.ai.openai.api.http.CommonConstantsUtils.ASSISTANTS_HEADER_NAME;
+import static bg.codexio.ai.openai.api.http.CommonConstantsUtils.ASSISTANTS_HEADER_VALUE;
+
 public class MessageHttpExecutor
         extends DefaultOpenAIHttpExecutor<MessageRequest, MessageResponse> {
 
@@ -68,8 +71,8 @@ public class MessageHttpExecutor
                                             DEFAULT_MEDIA_TYPE
                                     ))
                                     .addHeader(
-                                            "OpenAI-Beta",
-                                            "assistants=v1"
+                                            ASSISTANTS_HEADER_NAME,
+                                            ASSISTANTS_HEADER_VALUE
                                     )
                                     .build();
     }

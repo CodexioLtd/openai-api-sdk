@@ -6,6 +6,7 @@ import bg.codexio.ai.openai.api.payload.message.request.MessageRequest;
 
 public class MessageAdvancedConfigurationStage<O extends Mergeable<O>>
         extends MessageConfigurationStage<O> {
+
     MessageAdvancedConfigurationStage(
             DefaultOpenAIHttpExecutor<MessageRequest, O> httpExecutor,
             MessageRequest.Builder requestBuilder,
@@ -35,7 +36,7 @@ public class MessageAdvancedConfigurationStage<O extends Mergeable<O>>
     }
 
     public MessageAssistantStage<O> assistant() {
-        return new MessageAssistantStage<O>(
+        return new MessageAssistantStage<>(
                 this.httpExecutor,
                 this.requestBuilder,
                 this.threadId

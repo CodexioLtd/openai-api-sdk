@@ -40,7 +40,6 @@ public abstract class DefaultOpenAIHttpExecutor<I extends Streamable,
         O extends Mergeable<O>>
         implements OpenAIHttpExecutor<I, O> {
 
-
     /**
      * Default for the Content-Type header
      */

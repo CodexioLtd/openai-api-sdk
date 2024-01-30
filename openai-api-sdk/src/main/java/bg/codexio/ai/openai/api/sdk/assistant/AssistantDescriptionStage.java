@@ -5,6 +5,7 @@ import bg.codexio.ai.openai.api.payload.assistant.request.AssistantRequest;
 
 public class AssistantDescriptionStage
         extends AssistantConfigurationStage {
+
     AssistantDescriptionStage(
             AssistantHttpExecutor httpExecutor,
             AssistantRequest.Builder requestBuilder

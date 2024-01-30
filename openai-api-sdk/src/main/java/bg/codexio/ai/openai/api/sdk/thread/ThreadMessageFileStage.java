@@ -29,7 +29,6 @@ public class ThreadMessageFileStage<R extends ThreadRequest>
         this.content = content;
     }
 
-
     public ThreadResponse feed(File file) {
         return Optional.ofNullable(content)
                        .map(c -> this.create(FileSimplified.simply(file)))

@@ -10,8 +10,8 @@ public class AssistantAsk {
 
     public static void main(String[] args) {
         var file = new File(AssistantAsk.class.getClassLoader()
-                                            .getResource("fake-file.txt")
-                                            .getPath());
+                                              .getResource("fake-file.txt")
+                                              .getPath());
 
         var answer = Threads.defaults()
                             .and()
@@ -23,8 +23,10 @@ public class AssistantAsk {
                             .chat()
                             .withContent("Your language of choice is Java.")
                             .meta()
-                            .awareOf("key",
-                                     "value")
+                            .awareOf(
+                                    "key",
+                                    "value"
+                            )
                             .assistant()
                             .assist(Assistants.defaults()
                                               .and()

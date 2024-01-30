@@ -5,6 +5,7 @@ import bg.codexio.ai.openai.api.payload.run.request.RunnableRequest;
 
 public class RunnableInstructionStage
         extends RunnableConfigurationStage {
+
     RunnableInstructionStage(
             RunnableHttpExecutor httpExecutor,
             RunnableRequest.Builder requestBuilder,

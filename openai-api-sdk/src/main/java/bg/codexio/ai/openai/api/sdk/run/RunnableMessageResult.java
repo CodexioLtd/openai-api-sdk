@@ -7,6 +7,7 @@ import bg.codexio.ai.openai.api.sdk.message.Messages;
 
 public class RunnableMessageResult
         extends RunnableConfigurationStage {
+
     RunnableMessageResult(
             RunnableHttpExecutor httpExecutor,
             RunnableRequest.Builder requestBuilder,

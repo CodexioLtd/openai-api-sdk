@@ -10,6 +10,7 @@ import java.util.Arrays;
 
 public class AssistantFileStage
         extends AssistantConfigurationStage {
+
     AssistantFileStage(
             AssistantHttpExecutor httpExecutor,
             AssistantRequest.Builder requestBuilder

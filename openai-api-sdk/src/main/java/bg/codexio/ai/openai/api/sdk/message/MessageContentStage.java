@@ -6,6 +6,7 @@ import bg.codexio.ai.openai.api.payload.message.request.MessageRequest;
 
 public class MessageContentStage<O extends Mergeable<O>>
         extends MessageConfigurationStage<O> {
+
     MessageContentStage(
             DefaultOpenAIHttpExecutor<MessageRequest, O> httpExecutor,
             MessageRequest.Builder requestBuilder,

@@ -2,7 +2,7 @@ package bg.codexio.ai.openai.api.payload.message;
 
 public record MessageResult(
         String message,
-        String fileId
+        String imageFileId
 ) {
     public static MessageResult empty() {
         return new MessageResult(
@@ -29,7 +29,7 @@ public record MessageResult(
             );
         }
 
-        public Builder withFileId(String fileId) {
+        public Builder withImageFileId(String fileId) {
             return new Builder(
                     message,
                     fileId

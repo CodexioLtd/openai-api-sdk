@@ -62,7 +62,7 @@ public class UploadFileHttpExecutor
                 request
         );
 
-        return new Request.Builder().url(this.baseUrl + this.resourceUri)
+        return new Request.Builder().url(this.baseUrl.concat(this.resourceUri))
                                     .post(this.toFormData(request))
                                     .build();
     }
