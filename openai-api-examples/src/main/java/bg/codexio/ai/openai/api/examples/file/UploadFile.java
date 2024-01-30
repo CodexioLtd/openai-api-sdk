@@ -12,8 +12,8 @@ public class UploadFile {
                                             .getResource("fake-file.txt")
                                             .getPath());
         var fileId = Files.defaults()
-                                .and()
-                                .targeting(new AssistantPurpose())
+                          .and()
+                          .targeting(new AssistantPurpose())
                           .feed(file);
 
         System.out.println(fileId);
