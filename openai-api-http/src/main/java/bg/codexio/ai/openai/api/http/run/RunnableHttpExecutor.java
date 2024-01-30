@@ -10,6 +10,9 @@ import okhttp3.Request;
 import okhttp3.RequestBody;
 import org.jetbrains.annotations.NotNull;
 
+import static bg.codexio.ai.openai.api.http.CommonConstantsUtils.ASSISTANTS_HEADER_NAME;
+import static bg.codexio.ai.openai.api.http.CommonConstantsUtils.ASSISTANTS_HEADER_VALUE;
+
 public class RunnableHttpExecutor
         extends DefaultOpenAIHttpExecutor<RunnableRequest, RunnableResponse> {
 
@@ -17,9 +20,8 @@ public class RunnableHttpExecutor
             RunnableResponse.class;
     private static final String RESOURCE_URI = "/threads/%s/runs";
 
-    private static final String RETRIEVE_RUN_RESOURCE_URI = "/threads/%s/runs"
-            + "/%s";
-
+    private static final String RETRIEVE_RUN_RESOURCE_URI =
+            "/threads/%s/runs" + "/%s";
 
     public RunnableHttpExecutor(
             OkHttpClient client,
@@ -72,8 +74,8 @@ public class RunnableHttpExecutor
                                             DEFAULT_MEDIA_TYPE
                                     ))
                                     .addHeader(
-                                            "OpenAI-Beta",
-                                            "assistants=v1"
+                                            ASSISTANTS_HEADER_NAME,
+                                            ASSISTANTS_HEADER_VALUE
                                     )
                                     .build();
     }
@@ -88,8 +90,8 @@ public class RunnableHttpExecutor
         return new Request.Builder().url(this.baseUrl.concat(resourceUriWithPathVariable))
                                     .get()
                                     .addHeader(
-                                            "OpenAI-Beta",
-                                            "assistants=v1"
+                                            ASSISTANTS_HEADER_NAME,
+                                            ASSISTANTS_HEADER_VALUE
                                     )
                                     .build();
     }

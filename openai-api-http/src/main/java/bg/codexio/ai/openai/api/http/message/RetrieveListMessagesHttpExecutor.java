@@ -8,6 +8,9 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
 
+import static bg.codexio.ai.openai.api.http.CommonConstantsUtils.ASSISTANTS_HEADER_NAME;
+import static bg.codexio.ai.openai.api.http.CommonConstantsUtils.ASSISTANTS_HEADER_VALUE;
+
 public class RetrieveListMessagesHttpExecutor
         extends DefaultOpenAIHttpExecutor<MessageRequest,
         ListMessagesResponse> {
@@ -56,8 +59,8 @@ public class RetrieveListMessagesHttpExecutor
         return new Request.Builder().url(this.baseUrl.concat(resourceUriWithPathVariable))
                                     .get()
                                     .addHeader(
-                                            "OpenAI-Beta",
-                                            "assistants=v1"
+                                            ASSISTANTS_HEADER_NAME,
+                                            ASSISTANTS_HEADER_VALUE
                                     )
                                     .build();
     }

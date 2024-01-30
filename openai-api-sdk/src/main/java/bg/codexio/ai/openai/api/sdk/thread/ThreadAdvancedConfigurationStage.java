@@ -10,6 +10,7 @@ import bg.codexio.ai.openai.api.sdk.message.Messages;
 
 public class ThreadAdvancedConfigurationStage<R extends ThreadRequest>
         extends ThreadConfigurationStage<R> {
+
     ThreadAdvancedConfigurationStage(
             DefaultOpenAIHttpExecutor<R, ThreadResponse> httpExecutor,
             ThreadRequestBuilder<R> requestBuilder

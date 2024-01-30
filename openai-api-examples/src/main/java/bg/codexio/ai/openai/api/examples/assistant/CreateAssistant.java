@@ -10,8 +10,8 @@ public class CreateAssistant {
 
     public static void main(String[] args) {
         var file = new File(CreateAssistant.class.getClassLoader()
-                                            .getResource("fake-file.txt")
-                                            .getPath());
+                                                 .getResource("fake-file.txt")
+                                                 .getPath());
 
         var assistant = Assistants.defaults()
                                   .and()

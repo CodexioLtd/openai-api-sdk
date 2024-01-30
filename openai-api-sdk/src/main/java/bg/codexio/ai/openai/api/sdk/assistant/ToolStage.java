@@ -9,6 +9,7 @@ import java.util.Arrays;
 
 public class ToolStage
         extends AssistantConfigurationStage {
+
     ToolStage(
             AssistantHttpExecutor httpExecutor,
             AssistantRequest.Builder requestBuilder

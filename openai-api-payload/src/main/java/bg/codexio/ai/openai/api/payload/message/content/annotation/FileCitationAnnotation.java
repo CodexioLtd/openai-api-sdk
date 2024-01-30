@@ -1,6 +1,7 @@
 package bg.codexio.ai.openai.api.payload.message.content.annotation;
 
 import com.fasterxml.jackson.annotation.JsonCreator;
+import com.fasterxml.jackson.annotation.JsonProperty;
 
 public class FileCitationAnnotation
         extends AnnotationAbstract {
@@ -9,10 +10,10 @@ public class FileCitationAnnotation
 
     @JsonCreator
     public FileCitationAnnotation(
-            String text,
-            Integer startIndex,
-            Integer endIndex,
-            FileCitation fileCitation
+            @JsonProperty("text") String text,
+            @JsonProperty("start_index") Integer startIndex,
+            @JsonProperty("end_index") Integer endIndex,
+            @JsonProperty("file_citation") FileCitation fileCitation
     ) {
         super(
                 "file_citation",

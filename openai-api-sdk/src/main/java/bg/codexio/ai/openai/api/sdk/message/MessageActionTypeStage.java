@@ -5,7 +5,6 @@ import bg.codexio.ai.openai.api.http.message.RetrieveListMessagesHttpExecutor;
 import bg.codexio.ai.openai.api.payload.message.request.MessageRequest;
 import bg.codexio.ai.openai.api.payload.message.response.MessageResponse;
 
-
 public class MessageActionTypeStage {
 
     private final MessageHttpExecutor messageHttpExecutor;

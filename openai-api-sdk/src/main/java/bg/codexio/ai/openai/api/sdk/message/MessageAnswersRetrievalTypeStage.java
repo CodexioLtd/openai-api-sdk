@@ -91,7 +91,7 @@ public class MessageAnswersRetrievalTypeStage {
             result = result.withMessage(text.getText()
                                             .value());
         } else if (content instanceof ImageFileContent image) {
-            result = result.withMessage(image.getFileId());
+            result = result.withImageFileId(image.getFileId());
         }
 
         return result;

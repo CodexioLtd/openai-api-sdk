@@ -8,9 +8,10 @@ import bg.codexio.ai.openai.api.payload.thread.response.ThreadResponse;
 
 import java.util.Arrays;
 
+import static bg.codexio.ai.openai.api.sdk.thread.constant.ThreadDefaultValuesConstants.MESSAGE_SENDER_ROLE;
+
 public class ThreadMessageContentStage<R extends ThreadRequest>
         extends ThreadConfigurationStage<R> {
-
 
     ThreadMessageContentStage(
             DefaultOpenAIHttpExecutor<R, ThreadResponse> httpExecutor,
@@ -28,7 +29,7 @@ public class ThreadMessageContentStage<R extends ThreadRequest>
                 this.requestBuilder.withMessages(Arrays.stream(content)
                                                        .map(message -> MessageRequest.builder()
                                                                                      .withContent(message)
-                                                                                     .withRole("user")
+                                                                                     .withRole(MESSAGE_SENDER_ROLE)
                                                                                      .build())
                                                        .toList())
         );

@@ -11,6 +11,7 @@ import java.util.function.Function;
 
 public class RunnableInitializationStage
         extends RunnableConfigurationStage {
+
     RunnableInitializationStage(
             RunnableHttpExecutor httpExecutor,
             RunnableRequest.Builder requestBuilder,
