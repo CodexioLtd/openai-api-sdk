@@ -7,6 +7,7 @@ import bg.codexio.ai.openai.api.sdk.file.Files;
 import java.io.File;
 
 public class UploadFile {
+
     public static void main(String[] args) {
         var file = new File(UploadFile.class.getClassLoader()
                                             .getResource("fake-file.txt")
