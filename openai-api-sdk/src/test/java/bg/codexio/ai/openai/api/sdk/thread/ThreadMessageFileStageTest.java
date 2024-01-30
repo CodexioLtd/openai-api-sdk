@@ -10,9 +10,7 @@ import bg.codexio.ai.openai.api.sdk.file.Files;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-import static bg.codexio.ai.openai.api.sdk.CommonTestConstantsUtils.FILE;
-import static bg.codexio.ai.openai.api.sdk.CommonTestConstantsUtils.FILE_IDS_VAR_ARGS;
-import static bg.codexio.ai.openai.api.sdk.file.FilesTest.TEST_KEY;
+import static bg.codexio.ai.openai.api.sdk.CommonTestConstantsUtils.*;
 import static bg.codexio.ai.openai.api.sdk.file.InternalAssertions.FILE_RESPONSE;
 import static bg.codexio.ai.openai.api.sdk.thread.InternalAssertions.*;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
@@ -33,8 +31,7 @@ public class ThreadMessageFileStageTest {
 
     @Test
     void testFeed_withFile_expectCorrectResponse() {
-        var auth =
-                Files.authenticate(FromDeveloper.doPass(new ApiCredentials(TEST_KEY)));
+        var auth = Files.authenticate(FromDeveloper.doPass(new ApiCredentials(API_CREDENTIALS)));
         try (
                 var authUtils = mockStatic(Authenticator.class);
                 var filesSimplified = mockStatic(FileSimplified.class)
@@ -70,8 +67,7 @@ public class ThreadMessageFileStageTest {
 
     @Test
     void testAttach_withFile_expectCorrectBuilder() {
-        var auth =
-                Files.authenticate(FromDeveloper.doPass(new ApiCredentials(TEST_KEY)));
+        var auth = Files.authenticate(FromDeveloper.doPass(new ApiCredentials(API_CREDENTIALS)));
         try (
                 var authUtils = mockStatic(Authenticator.class);
                 var filesSimplified = mockStatic(FileSimplified.class)

@@ -9,6 +9,7 @@ public class FileSimplified {
     public static String simply(File file) {
         return Files.defaults()
                     .and()
+                    .upload()
                     .forAssistants()
                     .feed(file);
     }
@@ -16,6 +17,7 @@ public class FileSimplified {
     public static FileResponse simplyRaw(File file) {
         return Files.defaults()
                     .and()
+                    .upload()
                     .forAssistants()
                     .feedRaw(file);
     }

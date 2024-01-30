@@ -6,18 +6,19 @@ import bg.codexio.ai.openai.api.payload.file.response.FileResponse;
 
 import java.io.File;
 
-public class FileUploadingStage
-        extends FileConfigurationStage {
+public class FileUploadingStage {
 
-    FileUploadingStage(
+    private final UploadFileHttpExecutor executor;
+    private final UploadFileRequest.Builder requestBuilder;
+
+    public FileUploadingStage(
             UploadFileHttpExecutor executor,
             UploadFileRequest.Builder requestContext
     ) {
-        super(
-                executor,
-                requestContext
-        );
+        this.executor = executor;
+        this.requestBuilder = requestContext;
     }
+
 
     public FileResponse feedRaw(File file) {
         return this.executor.execute(this.requestBuilder.withFile(file)

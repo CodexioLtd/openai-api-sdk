@@ -13,9 +13,9 @@ import org.junit.jupiter.api.Test;
 
 import java.util.Arrays;
 
+import static bg.codexio.ai.openai.api.sdk.CommonTestConstantsUtils.API_CREDENTIALS;
 import static bg.codexio.ai.openai.api.sdk.CommonTestConstantsUtils.FILE;
 import static bg.codexio.ai.openai.api.sdk.assistant.InternalAssertions.*;
-import static bg.codexio.ai.openai.api.sdk.file.FilesTest.TEST_KEY;
 import static bg.codexio.ai.openai.api.sdk.file.InternalAssertions.FILE_RESPONSE;
 import static org.junit.jupiter.api.Assertions.assertAll;
 import static org.junit.jupiter.api.Assertions.assertEquals;
@@ -67,8 +67,7 @@ public class AssistantFileStageTest {
 
     @Test
     void testFeed_withFile_expectCorrectBuilder() {
-        var auth =
-                Files.authenticate(FromDeveloper.doPass(new ApiCredentials(TEST_KEY)));
+        var auth = Files.authenticate(FromDeveloper.doPass(new ApiCredentials(API_CREDENTIALS)));
         try (
                 var authUtils = mockStatic(Authenticator.class);
                 var filesSimplified = mockStatic(FileSimplified.class)
