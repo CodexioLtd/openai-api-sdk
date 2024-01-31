@@ -4,7 +4,10 @@ import bg.codexio.ai.openai.api.payload.file.response.FileResponse;
 
 import java.io.File;
 
-public class FileSimplified {
+public final class FileSimplified {
+
+    private FileSimplified() {
+    }
 
     public static String simply(File file) {
         return Files.defaults()

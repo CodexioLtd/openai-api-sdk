@@ -8,7 +8,10 @@ import com.fasterxml.jackson.databind.jsontype.NamedType;
 
 import java.util.List;
 
-public class ObjectMapperSubtypesRegistrationUtils {
+public final class ObjectMapperSubtypesRegistrationUtils {
+
+    private ObjectMapperSubtypesRegistrationUtils() {
+    }
 
     public static <I extends Streamable, O extends Mergeable<O>> void registerAssistantTools(
             DefaultOpenAIHttpExecutor<I, O> executor,
