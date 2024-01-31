@@ -54,9 +54,4 @@ public class RetrieveFileContentHttpExecutor
         return new FileContentResponse(response.body()
                                                .bytes());
     }
-
-    @Override
-    protected FileContentResponse toResponse(String response) {
-        return new FileContentResponse(response.getBytes());
-    }
 }

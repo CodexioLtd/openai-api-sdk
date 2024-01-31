@@ -36,11 +36,8 @@ public class ThreadMessageFileStageTest {
 
     @Test
     void testFeed_withFileAndEmptyContent_expectCorrectResponse() {
-        this.performFeedWithFile(new ThreadMessageFileStage<>(
-                CREATE_THREAD_HTTP_EXECUTOR,
-                THREAD_CREATION_REQUEST_BUILDER,
-                null
-        ));
+        this.initializeStageWithEmptyContent();
+        this.performFeedWithFile(this.threadMessageFileStage);
     }
 
     @Test
@@ -50,11 +47,8 @@ public class ThreadMessageFileStageTest {
 
     @Test
     void testFeed_withFileResponseAndEmptyContent_expectCorrectResponse() {
-        this.performFeedWithFileResponse(new ThreadMessageFileStage<>(
-                CREATE_THREAD_HTTP_EXECUTOR,
-                THREAD_CREATION_REQUEST_BUILDER,
-                null
-        ));
+        this.initializeStageWithEmptyContent();
+        this.performFeedWithFileResponse(this.threadMessageFileStage);
     }
 
     @Test
@@ -127,5 +121,13 @@ public class ThreadMessageFileStageTest {
         var response = this.threadMessageFileStage.feed(FILE_RESPONSE);
 
         assertNotNull(response);
+    }
+
+    private void initializeStageWithEmptyContent() {
+        this.threadMessageFileStage = new ThreadMessageFileStage<>(
+                CREATE_THREAD_HTTP_EXECUTOR,
+                THREAD_CREATION_REQUEST_BUILDER,
+                null
+        );
     }
 }
