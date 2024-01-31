@@ -11,7 +11,7 @@ public class MessageActionTypeStage {
     private final RetrieveListMessagesHttpExecutor listMessagesHttpExecutor;
     private final String threadId;
 
-    MessageActionTypeStage(
+    public MessageActionTypeStage(
             MessageHttpExecutor messageHttpExecutor,
             RetrieveListMessagesHttpExecutor listMessagesHttpExecutor,
             String threadId

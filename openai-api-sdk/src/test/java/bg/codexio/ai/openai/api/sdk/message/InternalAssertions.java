@@ -3,6 +3,7 @@ package bg.codexio.ai.openai.api.sdk.message;
 import bg.codexio.ai.openai.api.http.message.MessageHttpExecutor;
 import bg.codexio.ai.openai.api.http.message.RetrieveListMessagesHttpExecutor;
 import bg.codexio.ai.openai.api.payload.Mergeable;
+import bg.codexio.ai.openai.api.payload.message.content.ImageFileContent;
 import bg.codexio.ai.openai.api.payload.message.content.TextContent;
 import bg.codexio.ai.openai.api.payload.message.content.TextMessageContent;
 import bg.codexio.ai.openai.api.payload.message.content.annotation.FileCitation;
@@ -25,11 +26,12 @@ import static org.mockito.Mockito.when;
 
 public class InternalAssertions {
 
-    static final MessageHttpExecutor MESSAGE_HTTP_EXECUTOR =
+    public static final MessageHttpExecutor MESSAGE_HTTP_EXECUTOR =
             mock(MessageHttpExecutor.class);
-    static final RetrieveListMessagesHttpExecutor RETRIEVE_LIST_MESSAGES_HTTP_EXECUTOR = mock(RetrieveListMessagesHttpExecutor.class);
+    public static final RetrieveListMessagesHttpExecutor RETRIEVE_LIST_MESSAGES_HTTP_EXECUTOR = mock(RetrieveListMessagesHttpExecutor.class);
     static final String MESSAGE_CONTENT = "test_message_content";
-    static final MessageResponse MESSAGE_RESPONSE = new MessageResponse(
+    static final MessageResponse MESSAGE_RESPONSE_WITH_TEXT_CONTENT =
+            new MessageResponse(
             "message_test_id",
             "message_test_object",
             0,
@@ -53,10 +55,31 @@ public class InternalAssertions {
                   .toList(),
             METADATA_MAP
     );
-    static final ListMessagesResponse LIST_MESSAGE_RESPONSE =
+    public static final ListMessagesResponse LIST_MESSAGE_RESPONSE_WITH_TEXT_CONTENT =
             new ListMessagesResponse(
             "list_message_object",
-            List.of(MESSAGE_RESPONSE),
+            List.of(MESSAGE_RESPONSE_WITH_TEXT_CONTENT),
+            "list_message_test_first_id",
+            "list_message_test_second_id",
+            false
+    );
+    static final MessageResponse MESSAGE_RESPONSE_WITH_IMAGE_CONTENT =
+            new MessageResponse(
+            "message_test_id",
+            "message_test_object",
+            0,
+            THREAD_ID,
+            "message_test_role",
+            List.of(new ImageFileContent("test_file_id")),
+            ASSISTANT_ID,
+            RUNNABLE_ID,
+            Arrays.stream(FILE_IDS_VAR_ARGS)
+                  .toList(),
+            METADATA_MAP
+    );
+    public static final ListMessagesResponse LIST_MESSAGE_RESPONSE_WITH_IMAGE_CONTENT = new ListMessagesResponse(
+            "list_message_object",
+            List.of(MESSAGE_RESPONSE_WITH_IMAGE_CONTENT),
             "list_message_test_first_id",
             "list_message_test_second_id",
             false
@@ -106,14 +129,17 @@ public class InternalAssertions {
         when(messageConfigurationStage.httpExecutor.executeWithPathVariable(
                 any(),
                 any()
-        )).thenAnswer(res -> MESSAGE_RESPONSE);
+        )).thenAnswer(res -> MESSAGE_RESPONSE_WITH_TEXT_CONTENT);
     }
 
-    static void executeWithPathVariables(RetrieveListMessagesHttpExecutor listMessagesHttpExecutor) {
-        when(listMessagesHttpExecutor.executeWithPathVariables(any())).thenAnswer(res -> LIST_MESSAGE_RESPONSE);
+    static void executeWithPathVariables(
+            RetrieveListMessagesHttpExecutor listMessagesHttpExecutor,
+            ListMessagesResponse response
+    ) {
+        when(listMessagesHttpExecutor.executeWithPathVariables(any())).thenAnswer(res -> response);
     }
 
     static void executeWithPathVariables(MessageConfigurationStage<ListMessagesResponse> messageConfigurationStage) {
-        when(messageConfigurationStage.httpExecutor.executeWithPathVariables(any())).thenAnswer(res -> LIST_MESSAGE_RESPONSE);
+        when(messageConfigurationStage.httpExecutor.executeWithPathVariables(any())).thenAnswer(res -> LIST_MESSAGE_RESPONSE_WITH_TEXT_CONTENT);
     }
 }

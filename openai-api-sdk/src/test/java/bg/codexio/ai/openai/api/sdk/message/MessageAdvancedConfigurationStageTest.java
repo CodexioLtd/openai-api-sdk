@@ -49,7 +49,7 @@ public class MessageAdvancedConfigurationStageTest {
         var response = this.messageAdvancedConfigurationStage.andRespond();
 
         assertEquals(
-                MESSAGE_RESPONSE,
+                MESSAGE_RESPONSE_WITH_TEXT_CONTENT,
                 response
         );
     }
