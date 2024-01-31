@@ -22,6 +22,17 @@ public class MessageAnswersRetrievalTypeStageTest {
     }
 
     @Test
+    void testAnswersRaw_expectCorrectResponse() {
+        executeWithPathVariables(
+                RETRIEVE_LIST_MESSAGES_HTTP_EXECUTOR,
+                LIST_MESSAGE_RESPONSE
+        );
+        var response = this.messageAnswersRetrievalTypeStage.answersRaw();
+
+        assertNotNull(response);
+    }
+
+    @Test
     void testAnswersRaw_withTextContentResponse_expectCorrectResponse() {
         executeWithPathVariables(
                 RETRIEVE_LIST_MESSAGES_HTTP_EXECUTOR,
@@ -33,10 +44,21 @@ public class MessageAnswersRetrievalTypeStageTest {
     }
 
     @Test
-    void testAnswersRaw_withThreadIdAndWithTextContentResponse_expectCorrectResponse() {
+    void testAnswersRaw_withImageContentResponse_expectCorrectResponse() {
         executeWithPathVariables(
                 RETRIEVE_LIST_MESSAGES_HTTP_EXECUTOR,
-                LIST_MESSAGE_RESPONSE_WITH_TEXT_CONTENT
+                LIST_MESSAGE_RESPONSE_WITH_IMAGE_CONTENT
+        );
+        var response = this.messageAnswersRetrievalTypeStage.answersRaw();
+
+        assertNotNull(response);
+    }
+
+    @Test
+    void testAnswersRaw_withThreadId_expectCorrectResponse() {
+        executeWithPathVariables(
+                RETRIEVE_LIST_MESSAGES_HTTP_EXECUTOR,
+                LIST_MESSAGE_RESPONSE
         );
         var response =
                 this.messageAnswersRetrievalTypeStage.answersRaw(THREAD_ID);
@@ -45,24 +67,12 @@ public class MessageAnswersRetrievalTypeStageTest {
     }
 
     @Test
-    void testAnswersRaw_withThreadResponseAndWithTextContentResponse_expectCorrectResponse() {
+    void testAnswersRaw_withThreadIdAndWithTextContentResponse_expectCorrectResponse() {
         executeWithPathVariables(
                 RETRIEVE_LIST_MESSAGES_HTTP_EXECUTOR,
                 LIST_MESSAGE_RESPONSE_WITH_TEXT_CONTENT
         );
-        var response =
-                this.messageAnswersRetrievalTypeStage.answersRaw(THREAD_RESPONSE);
-
-        assertNotNull(response);
-    }
-
-    @Test
-    void testAnswersRaw_withResponseWithImageContentResponse_expectCorrectResponse() {
-        executeWithPathVariables(
-                RETRIEVE_LIST_MESSAGES_HTTP_EXECUTOR,
-                LIST_MESSAGE_RESPONSE_WITH_IMAGE_CONTENT
-        );
-        var response = this.messageAnswersRetrievalTypeStage.answersRaw();
+        var response = this.messageAnswersRetrievalTypeStage.answersRaw(THREAD_ID);
 
         assertNotNull(response);
     }
@@ -80,6 +90,29 @@ public class MessageAnswersRetrievalTypeStageTest {
     }
 
     @Test
+    void testAnswersRaw_withThreadResponse_expectCorrectResponse() {
+        executeWithPathVariables(
+                RETRIEVE_LIST_MESSAGES_HTTP_EXECUTOR,
+                LIST_MESSAGE_RESPONSE
+        );
+        var response =
+                this.messageAnswersRetrievalTypeStage.answersRaw(THREAD_RESPONSE);
+
+        assertNotNull(response);
+    }
+
+    @Test
+    void testAnswersRaw_withThreadResponseAndWithTextContentResponse_expectCorrectResponse() {
+        executeWithPathVariables(
+                RETRIEVE_LIST_MESSAGES_HTTP_EXECUTOR,
+                LIST_MESSAGE_RESPONSE_WITH_TEXT_CONTENT
+        );
+        var response = this.messageAnswersRetrievalTypeStage.answersRaw(THREAD_RESPONSE);
+
+        assertNotNull(response);
+    }
+
+    @Test
     void testAnswersRaw_withThreadResponseAndWithImageContentResponse_expectCorrectResponse() {
         executeWithPathVariables(
                 RETRIEVE_LIST_MESSAGES_HTTP_EXECUTOR,
@@ -92,34 +125,22 @@ public class MessageAnswersRetrievalTypeStageTest {
     }
 
     @Test
-    void testAnswers_withTextContentResponse_expectCorrectResponse() {
+    void testAnswers_expectCorrectResponse() {
         executeWithPathVariables(
                 RETRIEVE_LIST_MESSAGES_HTTP_EXECUTOR,
-                LIST_MESSAGE_RESPONSE_WITH_TEXT_CONTENT
+                LIST_MESSAGE_RESPONSE
         );
         var nextStage = this.messageAnswersRetrievalTypeStage.answers();
         assertNotNull(nextStage);
     }
 
     @Test
-    void testAnswers_withThreadIdAndWithTextContentResponse_expectCorrectResponse() {
+    void testAnswers_withTextContentResponse_expectCorrectResponse() {
         executeWithPathVariables(
                 RETRIEVE_LIST_MESSAGES_HTTP_EXECUTOR,
                 LIST_MESSAGE_RESPONSE_WITH_TEXT_CONTENT
         );
-        var nextStage =
-                this.messageAnswersRetrievalTypeStage.answers(THREAD_ID);
-        assertNotNull(nextStage);
-    }
-
-    @Test
-    void testAnswers_withThreadResponseAndWithTextContentResponse_expectCorrectResponse() {
-        executeWithPathVariables(
-                RETRIEVE_LIST_MESSAGES_HTTP_EXECUTOR,
-                LIST_MESSAGE_RESPONSE_WITH_TEXT_CONTENT
-        );
-        var nextStage =
-                this.messageAnswersRetrievalTypeStage.answers(THREAD_RESPONSE);
+        var nextStage = this.messageAnswersRetrievalTypeStage.answers();
         assertNotNull(nextStage);
     }
 
@@ -134,6 +155,27 @@ public class MessageAnswersRetrievalTypeStageTest {
     }
 
     @Test
+    void testAnswers_withThreadId_expectCorrectResponse() {
+        executeWithPathVariables(
+                RETRIEVE_LIST_MESSAGES_HTTP_EXECUTOR,
+                LIST_MESSAGE_RESPONSE
+        );
+        var nextStage =
+                this.messageAnswersRetrievalTypeStage.answers(THREAD_ID);
+        assertNotNull(nextStage);
+    }
+
+    @Test
+    void testAnswers_withThreadIdAndWithTextContentResponse_expectCorrectResponse() {
+        executeWithPathVariables(
+                RETRIEVE_LIST_MESSAGES_HTTP_EXECUTOR,
+                LIST_MESSAGE_RESPONSE_WITH_TEXT_CONTENT
+        );
+        var nextStage = this.messageAnswersRetrievalTypeStage.answers(THREAD_ID);
+        assertNotNull(nextStage);
+    }
+
+    @Test
     void testAnswers_withThreadIdAndWithImageContentResponse_expectCorrectResponse() {
         executeWithPathVariables(
                 RETRIEVE_LIST_MESSAGES_HTTP_EXECUTOR,
@@ -141,6 +183,27 @@ public class MessageAnswersRetrievalTypeStageTest {
         );
         var nextStage =
                 this.messageAnswersRetrievalTypeStage.answers(THREAD_ID);
+        assertNotNull(nextStage);
+    }
+
+    @Test
+    void testAnswers_withThreadResponse_expectCorrectResponse() {
+        executeWithPathVariables(
+                RETRIEVE_LIST_MESSAGES_HTTP_EXECUTOR,
+                LIST_MESSAGE_RESPONSE
+        );
+        var nextStage =
+                this.messageAnswersRetrievalTypeStage.answers(THREAD_RESPONSE);
+        assertNotNull(nextStage);
+    }
+
+    @Test
+    void testAnswers_withThreadResponseAndWithTextContentResponse_expectCorrectResponse() {
+        executeWithPathVariables(
+                RETRIEVE_LIST_MESSAGES_HTTP_EXECUTOR,
+                LIST_MESSAGE_RESPONSE_WITH_TEXT_CONTENT
+        );
+        var nextStage = this.messageAnswersRetrievalTypeStage.answers(THREAD_RESPONSE);
         assertNotNull(nextStage);
     }
 
