@@ -60,6 +60,15 @@ public class ThreadMessageFileStageTest {
     }
 
     @Test
+    void testFeed_withFileIdVarArgsAndEmptyContent_expectCorrectResponse() {
+        this.initializeStageWithEmptyContent();
+        execute(this.threadMessageFileStage);
+        var response = this.threadMessageFileStage.feed(FILE_IDS_VAR_ARGS);
+
+        assertNotNull(response);
+    }
+
+    @Test
     void testAttach_withFile_expectCorrectBuilder() {
         var auth =
                 Files.authenticate(FromDeveloper.doPass(new ApiCredentials(API_CREDENTIALS)));

@@ -131,7 +131,7 @@ public class Messages {
     public static HttpBuilder<MessageActionTypeStage> defaults(ThreadResponse thread) {
         return autoAuthenticate(auth -> authenticate(
                 auth,
-                thread.id()
+                thread
         ));
     }
 }
