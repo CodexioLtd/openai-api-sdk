@@ -153,7 +153,7 @@ public class MessagesTest {
     public void testDefaults_withThreadResponse_expectBuilder() {
         var auth = authenticate(
                 FromDeveloper.doPass(new ApiCredentials(API_CREDENTIALS)),
-                THREAD_ID
+                THREAD_RESPONSE
         );
         try (var authUtils = mockStatic(Authenticator.class)) {
             authUtils.when(() -> Authenticator.autoAuthenticate(any()))

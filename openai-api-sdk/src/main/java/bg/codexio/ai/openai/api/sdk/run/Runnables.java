@@ -102,7 +102,7 @@ public class Runnables {
     public static HttpBuilder<RunnableInitializationStage> defaults(ThreadResponse thread) {
         return autoAuthenticate(auth -> authenticate(
                 auth,
-                thread.id()
+                thread
         ));
     }
 }

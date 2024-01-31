@@ -1,6 +1,7 @@
 package bg.codexio.ai.openai.api.sdk.run;
 
 import bg.codexio.ai.openai.api.payload.run.request.RunnableRequest;
+import bg.codexio.ai.openai.api.sdk.ThreadOperationUtils;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -8,6 +9,8 @@ import static bg.codexio.ai.openai.api.sdk.assistant.InternalAssertions.ASSISTAN
 import static bg.codexio.ai.openai.api.sdk.run.InternalAssertions.*;
 import static bg.codexio.ai.openai.api.sdk.thread.InternalAssertions.THREAD_ID;
 import static org.junit.jupiter.api.Assertions.*;
+import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.Mockito.mockStatic;
 
 public class RunnableResultStageTest {
 
@@ -33,6 +36,20 @@ public class RunnableResultStageTest {
                 RUNNABLE_COMPLETED_STATUS,
                 response.status()
         );
+    }
+
+    @Test
+    void testWaitForCompletionRaw_withInterrupt_expectRuntimeException() {
+        executeWithPathVariables(this.runnableResultStage);
+        try (var t = mockStatic(ThreadOperationUtils.class)) {
+            t.when(() -> ThreadOperationUtils.sleep(any()))
+             .thenThrow(InterruptedException.class);
+
+            assertThrows(
+                    RuntimeException.class,
+                    () -> this.runnableResultStage.waitForCompletionRaw()
+            );
+        }
     }
 
     @Test

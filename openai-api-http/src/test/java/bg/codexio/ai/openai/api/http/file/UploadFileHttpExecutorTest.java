@@ -57,16 +57,17 @@ public class UploadFileHttpExecutorTest {
         try (var filesMocked = mockStatic(Files.class)) {
             filesMocked.when(() -> Files.probeContentType(any()))
                        .thenThrow(IOException.class);
+
+            ExecutorTests.testExecute_noError_shouldParseResponse(
+                    this.client,
+                    UPLOAD_FILE_URL,
+                    UPLOAD_MULTIPART_FILE_REQUEST_BODY_TEST,
+                    BASE_JSON_RESPONSE.get(),
+                    UPLOAD_FILE_REQUEST_TEST,
+                    FILE_RESPONSE_TEST,
+                    this.executor
+            );
         }
-        ExecutorTests.testExecute_noError_shouldParseResponse(
-                this.client,
-                UPLOAD_FILE_URL,
-                UPLOAD_FILE_REQUEST_BODY_TEST,
-                BASE_JSON_RESPONSE.get(),
-                UPLOAD_FILE_REQUEST_TEST,
-                FILE_RESPONSE_TEST,
-                this.executor
-        );
     }
 
     @Test

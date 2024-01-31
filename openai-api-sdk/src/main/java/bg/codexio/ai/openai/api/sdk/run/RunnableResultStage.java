@@ -4,6 +4,7 @@ import bg.codexio.ai.openai.api.http.run.RunnableHttpExecutor;
 import bg.codexio.ai.openai.api.payload.run.request.RunnableRequest;
 import bg.codexio.ai.openai.api.payload.run.response.RunnableResponse;
 import bg.codexio.ai.openai.api.sdk.ObjectMapperSubtypesRegistrationUtils;
+import bg.codexio.ai.openai.api.sdk.ThreadOperationUtils;
 import bg.codexio.ai.openai.api.sdk.run.constant.RunnableDefaultValuesConstants;
 import bg.codexio.ai.openai.api.sdk.run.constant.RunnableEnvironmentVariableNameConstants;
 import bg.codexio.ai.openai.api.sdk.run.constant.RunnableStatusConstants;
@@ -98,7 +99,7 @@ public class RunnableResultStage
                 RunnableStatusConstants.COMPLETED
         )) {
             try {
-                Thread.sleep(this.getCompletionSleepDuration());
+                ThreadOperationUtils.sleep(this.getCompletionSleepDuration());
             } catch (InterruptedException e) {
                 throw new RuntimeException(e);
             }

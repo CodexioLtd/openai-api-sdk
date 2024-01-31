@@ -22,6 +22,15 @@ public class FileHttpExecutorTestConstants {
                                                      .getPath()),
             "assistants-test"
     );
+    public static final String UPLOAD_MULTIPART_FILE_REQUEST_BODY_TEST =
+            "--test-boundary\n"
+                    + "Content-Disposition: form-data; name=\"file\"; "
+                    + "filename=\"fake-file.txt\"\n"
+                    + "Content-Type: multipart/form-data\n" + "\n" + "test\n"
+                    + "\n" + "--test-boundary\n"
+                    + "Content-Disposition: form-data; name=\"purpose\"\n"
+                    + "\n" + "assistants-test\n" + "--test-boundary--";
+
     public static final String UPLOAD_FILE_REQUEST_BODY_TEST =
             "--test-boundary\n"
                     + "Content-Disposition: form-data; name=\"file\"; "
