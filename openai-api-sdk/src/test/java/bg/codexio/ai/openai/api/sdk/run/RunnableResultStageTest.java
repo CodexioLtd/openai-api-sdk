@@ -88,6 +88,15 @@ public class RunnableResultStageTest {
     }
 
     @Test
+    void testFrom_withRunnableResponseAndEmptyTools_expectCorrectResponse() {
+        executeWithPathVariables(this.runnableResultStage);
+        var response =
+                this.runnableResultStage.from(RUNNABLE_RESPONSE_WITH_EMPTY_TOOLS);
+
+        assertNotNull(response);
+    }
+
+    @Test
     void testFrom_withThreadIdAndRunnableId_expectCorrectResponse() {
         executeWithPathVariables(this.runnableResultStage);
         var response = this.runnableResultStage.from(

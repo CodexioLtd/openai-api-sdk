@@ -44,7 +44,7 @@ public class AssistantAdvancedConfigurationTest {
 
     @Test
     public void testDescription_expectCorrectBuilder() {
-        var nextStage = this.assistantAdvancedConfigurationStage.meta();
+        var nextStage = this.assistantAdvancedConfigurationStage.description();
 
         this.previousValuesRemainsUnchanged(nextStage);
     }

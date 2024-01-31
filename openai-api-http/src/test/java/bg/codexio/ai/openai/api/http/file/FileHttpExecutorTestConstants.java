@@ -1,6 +1,7 @@
 package bg.codexio.ai.openai.api.http.file;
 
 import bg.codexio.ai.openai.api.payload.file.request.UploadFileRequest;
+import bg.codexio.ai.openai.api.payload.file.response.FileContentResponse;
 import bg.codexio.ai.openai.api.payload.file.response.FileResponse;
 import okhttp3.Response;
 
@@ -14,8 +15,6 @@ import static bg.codexio.ai.openai.api.http.ExecutorTests.createOkResponse;
 public class FileHttpExecutorTestConstants {
 
     public static final String UPLOAD_FILE_URL = TEST_BASE_URL.concat("/files");
-    public static final String RETRIEVE_FILE_CONTENT_URL =
-            TEST_BASE_URL.concat("/files/%s/content");
     public static final UploadFileRequest UPLOAD_FILE_REQUEST_TEST =
             new UploadFileRequest(
             new File(UploadFileHttpExecutorTest.class.getClassLoader()
@@ -45,7 +44,6 @@ public class FileHttpExecutorTestConstants {
                     + "  \"bytes\": 0,\n" + "  \"created_at\": 0,\n"
                     + "  \"filename\": \"fake-file.txt\",\n"
                     + "  \"purpose\": \"assistants-test\"\n" + "}";
-
     public static final Supplier<Response> BASE_JSON_RESPONSE =
             () -> createOkResponse(
             UPLOAD_FILE_URL,
@@ -55,6 +53,31 @@ public class FileHttpExecutorTestConstants {
     public static final Supplier<Response> ERROR_JSON_RESPONSE =
             () -> createErrorResponse(
             UPLOAD_FILE_URL,
+            "{\"error\":{\"message\":\"Test Error\"}}".getBytes(),
+            "application/json"
+    );
+    public static final String RETRIEVE_FILE_CONTENT_URL =
+            TEST_BASE_URL.concat("/files/%s/content");
+    public static final String[] RETRIEVE_FILE_PATH_VARIABLE = new String[]{
+            "var"
+    };
+    public static final FileContentResponse FILE_CONTENT_TEST_RESPONSE =
+            new FileContentResponse(new byte[]{
+            1, 2, 3
+    });
+    public static final Supplier<Response> RETRIEVE_FILE_CONTENT_JSON_RESPONSE = () -> createOkResponse(
+            String.format(
+                    RETRIEVE_FILE_CONTENT_URL,
+                    (Object[]) RETRIEVE_FILE_PATH_VARIABLE
+            ),
+            new byte[]{1, 2, 3},
+            "multipart/form-data"
+    );
+    public static final Supplier<Response> RETRIEVE_FILE_CONTENT_ERROR_JSON_RESPONSE = () -> createErrorResponse(
+            String.format(
+                    RETRIEVE_FILE_CONTENT_URL,
+                    (Object[]) RETRIEVE_FILE_PATH_VARIABLE
+            ),
             "{\"error\":{\"message\":\"Test Error\"}}".getBytes(),
             "application/json"
     );

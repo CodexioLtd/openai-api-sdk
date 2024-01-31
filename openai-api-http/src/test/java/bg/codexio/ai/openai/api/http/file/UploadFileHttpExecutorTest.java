@@ -6,10 +6,15 @@ import okhttp3.OkHttpClient;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
+import java.io.IOException;
+import java.nio.file.Files;
+
 import static bg.codexio.ai.openai.api.http.CommonTestConstantsUtils.TEST_BASE_URL;
 import static bg.codexio.ai.openai.api.http.file.FileHttpExecutorTestConstants.*;
 import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.mockStatic;
 
 public class UploadFileHttpExecutorTest {
 
@@ -48,7 +53,24 @@ public class UploadFileHttpExecutorTest {
     }
 
     @Test
-    public void testCanStream_expectFalse() {
+    void testExecute_withIOException_expectCorrectResponse() {
+        try (var filesMocked = mockStatic(Files.class)) {
+            filesMocked.when(() -> Files.probeContentType(any()))
+                       .thenThrow(IOException.class);
+        }
+        ExecutorTests.testExecute_noError_shouldParseResponse(
+                this.client,
+                UPLOAD_FILE_URL,
+                UPLOAD_FILE_REQUEST_BODY_TEST,
+                BASE_JSON_RESPONSE.get(),
+                UPLOAD_FILE_REQUEST_TEST,
+                FILE_RESPONSE_TEST,
+                this.executor
+        );
+    }
+
+    @Test
+    void testCanStream_expectFalse() {
         assertFalse(this.executor.canStream(UPLOAD_FILE_REQUEST_TEST));
     }
 

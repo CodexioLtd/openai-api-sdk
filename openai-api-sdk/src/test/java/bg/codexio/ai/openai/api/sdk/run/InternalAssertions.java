@@ -11,6 +11,7 @@ import bg.codexio.ai.openai.api.payload.run.response.action.SubmitToolOutput;
 import bg.codexio.ai.openai.api.payload.run.response.action.ToolCall;
 import bg.codexio.ai.openai.api.payload.run.response.error.LastError;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
@@ -32,7 +33,6 @@ public class InternalAssertions {
     static final String RUNNABLE_COMPLETED_STATUS = "completed";
     static final ModelType RUNNABLE_MODEL_TYPE = new GPT40Model();
     static final String RUNNABLE_ADDITIONAL_INSTRUCTIONS = "test_instructions";
-
     static final RunnableResponse RUNNABLE_RESPONSE = new RunnableResponse(
             RUNNABLE_ID,
             "test_object",
@@ -67,7 +67,41 @@ public class InternalAssertions {
                   .toList(),
             METADATA_MAP
     );
-
+    static final RunnableResponse RUNNABLE_RESPONSE_WITH_EMPTY_TOOLS =
+            new RunnableResponse(
+            RUNNABLE_ID,
+            "test_object",
+            0,
+            THREAD_ID,
+            ASSISTANT_ID,
+            "test_status",
+            new RequiredAction(
+                    "submit_tool_outputs",
+                    new SubmitToolOutput(List.of(new ToolCall(
+                            "test_tool_call_id",
+                            "test_tool_call_type",
+                            new Function(
+                                    "test_function_name",
+                                    "test_function_arguments"
+                            )
+                    )))
+            ),
+            new LastError(
+                    "error_test_code",
+                    "error_test_message"
+            ),
+            0,
+            0,
+            0,
+            0,
+            0,
+            RUNNABLE_MODEL_TYPE.name(),
+            RUNNABLE_ADDITIONAL_INSTRUCTIONS,
+            new ArrayList<>(),
+            Arrays.stream(FILE_IDS_VAR_ARGS)
+                  .toList(),
+            METADATA_MAP
+    );
     static final RunnableResponse RUNNABLE_RESPONSE_WITH_COMPLETED_STATUS =
             new RunnableResponse(
             RUNNABLE_ID,

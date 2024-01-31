@@ -19,6 +19,8 @@ public class CommonTestConstantsUtils {
             METADATA_VAR_ARGS[0],
             METADATA_VAR_ARGS[1]
     );
+    public static final String MESSAGE_CONTENT_TEST_VALUE =
+            "test_message_value";
 
     private CommonTestConstantsUtils() {
     }

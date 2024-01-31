@@ -31,30 +31,30 @@ public class ThreadMessageFileStageTest {
 
     @Test
     void testFeed_withFile_expectCorrectResponse() {
-        var auth = Files.authenticate(FromDeveloper.doPass(new ApiCredentials(API_CREDENTIALS)));
-        try (
-                var authUtils = mockStatic(Authenticator.class);
-                var filesSimplified = mockStatic(FileSimplified.class)
-        ) {
-            MockedFileSimplifiedUtils.mockFileSimplified(
-                    authUtils,
-                    auth,
-                    filesSimplified
-            );
+        this.performFeedWithFile(this.threadMessageFileStage);
+    }
 
-            execute(this.threadMessageFileStage);
-            var response = this.threadMessageFileStage.feed(FILE);
-
-            assertNotNull(response);
-        }
+    @Test
+    void testFeed_withFileAndEmptyContent_expectCorrectResponse() {
+        this.performFeedWithFile(new ThreadMessageFileStage<>(
+                CREATE_THREAD_HTTP_EXECUTOR,
+                THREAD_CREATION_REQUEST_BUILDER,
+                null
+        ));
     }
 
     @Test
     void testFeed_withFileResponse_expectCorrectResponse() {
-        execute(this.threadMessageFileStage);
-        var response = this.threadMessageFileStage.feed(FILE_RESPONSE);
+        this.performFeedWithFileResponse(this.threadMessageFileStage);
+    }
 
-        assertNotNull(response);
+    @Test
+    void testFeed_withFileResponseAndEmptyContent_expectCorrectResponse() {
+        this.performFeedWithFileResponse(new ThreadMessageFileStage<>(
+                CREATE_THREAD_HTTP_EXECUTOR,
+                THREAD_CREATION_REQUEST_BUILDER,
+                null
+        ));
     }
 
     @Test
@@ -67,7 +67,8 @@ public class ThreadMessageFileStageTest {
 
     @Test
     void testAttach_withFile_expectCorrectBuilder() {
-        var auth = Files.authenticate(FromDeveloper.doPass(new ApiCredentials(API_CREDENTIALS)));
+        var auth =
+                Files.authenticate(FromDeveloper.doPass(new ApiCredentials(API_CREDENTIALS)));
         try (
                 var authUtils = mockStatic(Authenticator.class);
                 var filesSimplified = mockStatic(FileSimplified.class)
@@ -97,6 +98,33 @@ public class ThreadMessageFileStageTest {
     void testAttach_withFileIdVarArgs_expectCorrectResponse() {
         execute(this.threadMessageFileStage);
         var response = this.threadMessageFileStage.attach(FILE_IDS_VAR_ARGS);
+
+        assertNotNull(response);
+    }
+
+    private void performFeedWithFile(ThreadConfigurationStage<ThreadCreationRequest> threadConfigurationStage) {
+        var auth =
+                Files.authenticate(FromDeveloper.doPass(new ApiCredentials(API_CREDENTIALS)));
+        try (
+                var authUtils = mockStatic(Authenticator.class);
+                var filesSimplified = mockStatic(FileSimplified.class)
+        ) {
+            MockedFileSimplifiedUtils.mockFileSimplified(
+                    authUtils,
+                    auth,
+                    filesSimplified
+            );
+
+            execute(threadConfigurationStage);
+            var response = this.threadMessageFileStage.feed(FILE);
+
+            assertNotNull(response);
+        }
+    }
+
+    private void performFeedWithFileResponse(ThreadConfigurationStage<ThreadCreationRequest> threadConfigurationStage) {
+        execute(threadConfigurationStage);
+        var response = this.threadMessageFileStage.feed(FILE_RESPONSE);
 
         assertNotNull(response);
     }
