@@ -69,18 +69,20 @@ public class MessageAnswersRetrievalTypeStage {
                        .filter(this::hasNonEmptyData)
                        .map(this::getMessageContent)
                        .filter(this::hasNonEmptyData)
-                       .flatMap(this::getMessageResult)
+                       .map(this::getMessageResult)
                        .orElseGet(MessageResult::empty);
     }
 
-    private Optional<MessageResult> getMessageResult(List<MessageContent> content) {
-        return content.stream()
-                      .map(c -> this.getMessageResultData(
-                              c,
-                              MessageResult.builder()
-                      ))
-                      .map(MessageResult.Builder::build)
-                      .findFirst();
+    private MessageResult getMessageResult(List<MessageContent> content) {
+        var result = MessageResult.builder();
+        for (var c : content) {
+            result = this.getMessageResultData(
+                    c,
+                    result
+            );
+        }
+
+        return result.build();
     }
 
     private MessageResult.Builder getMessageResultData(
