@@ -33,6 +33,13 @@ public class FileActionTypeStageTest {
     }
 
     @Test
+    void testDownload_withFileResult_expectCorrectBuilder() {
+        var nextStage = this.fileActionTypeStage.download(FILE_RESULT);
+
+        assertNotNull(nextStage);
+    }
+
+    @Test
     void testDownload_withFileResponse_expectCorrectBuilder() {
         var nextStage = this.fileActionTypeStage.download(FILE_RESPONSE);
 

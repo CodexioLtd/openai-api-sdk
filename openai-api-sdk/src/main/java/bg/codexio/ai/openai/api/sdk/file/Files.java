@@ -23,15 +23,14 @@ public class Files {
         );
     }
 
-    public static FileDownloadingStage<FileContentResponse> throughHttp(
+    public static FileDownloadingNameTypeStage<FileContentResponse> throughHttp(
             RetrieveFileContentHttpExecutor httpExecutor,
             String fileId
     ) {
-        return new FileDownloadingStage<>(
+        return new FileDownloadingNameTypeStage<>(
                 httpExecutor,
                 UploadFileRequest.builder(),
-                fileId,
-                null
+                fileId
         );
     }
 

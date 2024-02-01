@@ -30,23 +30,21 @@ public class FileDownloadingStageTest {
 
     @Test
     void testToFolder_expectCorrectResponse() throws IOException {
-        var targetFolder = new File("folder");
         var response = new FileContentResponse(new byte[]{1, 2, 3});
 
         when(this.fileDownloadingStage.executor.executeWithPathVariables(any())).thenReturn(response);
 
         try (var downloadUtils = mockStatic(DownloadExecutor.class)) {
-            var filePath = "var/files/result";
             downloadUtils.when(() -> DownloadExecutor.downloadTo(
                                  any(),
                                  any(),
                                  any()
                          ))
-                         .thenReturn(new File(filePath));
+                         .thenReturn(new File(FILE_TEST_PATH));
 
-            var result = this.fileDownloadingStage.toFolder(targetFolder);
+            var result = this.fileDownloadingStage.toFolder(TARGET_TEST_FOLDER);
             assertEquals(
-                    filePath.replace(
+                    FILE_TEST_PATH.replace(
                             "/",
                             File.separator
                     ),
