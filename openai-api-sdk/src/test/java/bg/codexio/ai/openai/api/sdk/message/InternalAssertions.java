@@ -3,6 +3,7 @@ package bg.codexio.ai.openai.api.sdk.message;
 import bg.codexio.ai.openai.api.http.message.MessageHttpExecutor;
 import bg.codexio.ai.openai.api.http.message.RetrieveListMessagesHttpExecutor;
 import bg.codexio.ai.openai.api.payload.Mergeable;
+import bg.codexio.ai.openai.api.payload.message.MessageResult;
 import bg.codexio.ai.openai.api.payload.message.content.ImageFileContent;
 import bg.codexio.ai.openai.api.payload.message.content.TextContent;
 import bg.codexio.ai.openai.api.payload.message.content.TextMessageContent;
@@ -118,6 +119,18 @@ public class InternalAssertions {
             "list_message_test_first_id",
             "list_message_test_second_id",
             false
+    );
+    static MessageResult MESSAGE_TEST_RESULT = new MessageResult(
+            "test_message_value",
+            "test_file_id"
+    );
+    static MessageResult MESSAGE_TEST_RESULT_WITHOUT_TEXT = new MessageResult(
+            null,
+            "test_file_id"
+    );
+    static MessageResult MESSAGE_TEST_RESULT_WITHOUT_IMAGE = new MessageResult(
+            "test_message_value",
+            null
     );
 
     static <O extends Mergeable<O>> void roleRemainsUnchanged(

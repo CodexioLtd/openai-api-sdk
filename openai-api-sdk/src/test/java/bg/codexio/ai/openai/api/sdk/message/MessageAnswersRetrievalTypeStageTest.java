@@ -6,6 +6,7 @@ import org.junit.jupiter.api.Test;
 import static bg.codexio.ai.openai.api.sdk.message.InternalAssertions.*;
 import static bg.codexio.ai.openai.api.sdk.thread.InternalAssertions.THREAD_ID;
 import static bg.codexio.ai.openai.api.sdk.thread.InternalAssertions.THREAD_RESPONSE;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 
 public class MessageAnswersRetrievalTypeStageTest {
@@ -130,8 +131,12 @@ public class MessageAnswersRetrievalTypeStageTest {
                 RETRIEVE_LIST_MESSAGES_HTTP_EXECUTOR,
                 LIST_MESSAGE_RESPONSE
         );
-        var nextStage = this.messageAnswersRetrievalTypeStage.answers();
-        assertNotNull(nextStage);
+        var result = this.messageAnswersRetrievalTypeStage.answers();
+
+        assertEquals(
+                MESSAGE_TEST_RESULT,
+                result
+        );
     }
 
     @Test
@@ -140,8 +145,12 @@ public class MessageAnswersRetrievalTypeStageTest {
                 RETRIEVE_LIST_MESSAGES_HTTP_EXECUTOR,
                 LIST_MESSAGE_RESPONSE_WITH_TEXT_CONTENT
         );
-        var nextStage = this.messageAnswersRetrievalTypeStage.answers();
-        assertNotNull(nextStage);
+        var result = this.messageAnswersRetrievalTypeStage.answers();
+
+        assertEquals(
+                MESSAGE_TEST_RESULT_WITHOUT_IMAGE,
+                result
+        );
     }
 
     @Test
@@ -150,8 +159,12 @@ public class MessageAnswersRetrievalTypeStageTest {
                 RETRIEVE_LIST_MESSAGES_HTTP_EXECUTOR,
                 LIST_MESSAGE_RESPONSE_WITH_IMAGE_CONTENT
         );
-        var nextStage = this.messageAnswersRetrievalTypeStage.answers();
-        assertNotNull(nextStage);
+        var result = this.messageAnswersRetrievalTypeStage.answers();
+
+        assertEquals(
+                MESSAGE_TEST_RESULT_WITHOUT_TEXT,
+                result
+        );
     }
 
     @Test
@@ -160,9 +173,13 @@ public class MessageAnswersRetrievalTypeStageTest {
                 RETRIEVE_LIST_MESSAGES_HTTP_EXECUTOR,
                 LIST_MESSAGE_RESPONSE
         );
-        var nextStage =
+        var result =
                 this.messageAnswersRetrievalTypeStage.answers(THREAD_ID);
-        assertNotNull(nextStage);
+
+        assertEquals(
+                MESSAGE_TEST_RESULT,
+                result
+        );
     }
 
     @Test
@@ -171,8 +188,12 @@ public class MessageAnswersRetrievalTypeStageTest {
                 RETRIEVE_LIST_MESSAGES_HTTP_EXECUTOR,
                 LIST_MESSAGE_RESPONSE_WITH_TEXT_CONTENT
         );
-        var nextStage = this.messageAnswersRetrievalTypeStage.answers(THREAD_ID);
-        assertNotNull(nextStage);
+        var result = this.messageAnswersRetrievalTypeStage.answers(THREAD_ID);
+
+        assertEquals(
+                MESSAGE_TEST_RESULT_WITHOUT_IMAGE,
+                result
+        );
     }
 
     @Test
@@ -181,9 +202,12 @@ public class MessageAnswersRetrievalTypeStageTest {
                 RETRIEVE_LIST_MESSAGES_HTTP_EXECUTOR,
                 LIST_MESSAGE_RESPONSE_WITH_IMAGE_CONTENT
         );
-        var nextStage =
+        var result =
                 this.messageAnswersRetrievalTypeStage.answers(THREAD_ID);
-        assertNotNull(nextStage);
+        assertEquals(
+                MESSAGE_TEST_RESULT_WITHOUT_TEXT,
+                result
+        );
     }
 
     @Test
@@ -192,9 +216,13 @@ public class MessageAnswersRetrievalTypeStageTest {
                 RETRIEVE_LIST_MESSAGES_HTTP_EXECUTOR,
                 LIST_MESSAGE_RESPONSE
         );
-        var nextStage =
+        var result =
                 this.messageAnswersRetrievalTypeStage.answers(THREAD_RESPONSE);
-        assertNotNull(nextStage);
+
+        assertEquals(
+                MESSAGE_TEST_RESULT,
+                result
+        );
     }
 
     @Test
@@ -203,8 +231,13 @@ public class MessageAnswersRetrievalTypeStageTest {
                 RETRIEVE_LIST_MESSAGES_HTTP_EXECUTOR,
                 LIST_MESSAGE_RESPONSE_WITH_TEXT_CONTENT
         );
-        var nextStage = this.messageAnswersRetrievalTypeStage.answers(THREAD_RESPONSE);
-        assertNotNull(nextStage);
+        var result =
+                this.messageAnswersRetrievalTypeStage.answers(THREAD_RESPONSE);
+
+        assertEquals(
+                MESSAGE_TEST_RESULT_WITHOUT_IMAGE,
+                result
+        );
     }
 
     @Test
@@ -213,8 +246,12 @@ public class MessageAnswersRetrievalTypeStageTest {
                 RETRIEVE_LIST_MESSAGES_HTTP_EXECUTOR,
                 LIST_MESSAGE_RESPONSE_WITH_IMAGE_CONTENT
         );
-        var nextStage =
+        var result =
                 this.messageAnswersRetrievalTypeStage.answers(THREAD_RESPONSE);
-        assertNotNull(nextStage);
+
+        assertEquals(
+                MESSAGE_TEST_RESULT_WITHOUT_TEXT,
+                result
+        );
     }
 }
