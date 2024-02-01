@@ -34,6 +34,15 @@ public class FileActionTypeStage {
         );
     }
 
+    public FileDownloadingStage<FileContentResponse> download(FileResult fileResult) {
+        return new FileDownloadingStage<>(
+                this.retrieveFileContentHttpExecutor,
+                UploadFileRequest.builder(),
+                fileResult.id(),
+                fileResult.fileName()
+        );
+    }
+
     public FileDownloadingStage<FileContentResponse> download(FileResponse fileResponse) {
         return new FileDownloadingStage<>(
                 this.retrieveFileContentHttpExecutor,

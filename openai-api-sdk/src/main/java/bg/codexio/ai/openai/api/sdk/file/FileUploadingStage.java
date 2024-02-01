@@ -19,7 +19,6 @@ public class FileUploadingStage {
         this.requestBuilder = requestContext;
     }
 
-
     public FileResponse feedRaw(File file) {
         return this.executor.execute(this.requestBuilder.withFile(file)
                                                         .build());
