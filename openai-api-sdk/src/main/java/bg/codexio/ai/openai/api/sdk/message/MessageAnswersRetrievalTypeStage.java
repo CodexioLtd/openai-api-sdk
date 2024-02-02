@@ -11,7 +11,6 @@ import bg.codexio.ai.openai.api.payload.message.response.ListMessagesResponse;
 import bg.codexio.ai.openai.api.payload.message.response.MessageResponse;
 import bg.codexio.ai.openai.api.payload.thread.response.ThreadResponse;
 import bg.codexio.ai.openai.api.sdk.file.FileResult;
-import bg.codexio.ai.openai.api.sdk.message.result.MessageResult;
 
 import java.util.List;
 import java.util.Objects;
