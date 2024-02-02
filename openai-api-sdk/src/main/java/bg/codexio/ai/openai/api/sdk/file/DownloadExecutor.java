@@ -6,6 +6,7 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.util.UUID;
 
 import static bg.codexio.ai.openai.api.sdk.file.DownloadExecutor.Streams.outputStream;
 
@@ -22,8 +23,11 @@ public class DownloadExecutor {
             targetFolder.mkdirs();
         }
 
+        var uniqueFileName = UUID.randomUUID()
+                                 .toString()
+                                 .split("-")[0].concat(fileName);
         var targetFile = new File(targetFolder.getAbsolutePath()
-                                              .concat("/".concat(fileName)));
+                                              .concat("/".concat(uniqueFileName)));
 
         try (var os = outputStream(targetFile)) {
             os.write(result.bytes());

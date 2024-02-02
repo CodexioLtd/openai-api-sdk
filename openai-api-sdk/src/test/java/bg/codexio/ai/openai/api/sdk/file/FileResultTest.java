@@ -21,6 +21,16 @@ import static org.mockito.Mockito.*;
 public class FileResultTest {
 
     @Test
+    void testBuild_expectCorrectResult() {
+        var result = FILE_RESULT_BUILDER.build();
+
+        assertEquals(
+                FILE_RESULT,
+                result
+        );
+    }
+
+    @Test
     void testDownload_expectCorrectResponse() throws IOException {
         try (
                 var downloadUtils = mockStatic(DownloadExecutor.class);

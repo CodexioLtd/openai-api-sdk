@@ -19,6 +19,9 @@ public class InternalAssertions {
     static final String ASSISTANT_PURPOSE_NAME = "assistants";
     static final String FILE_TEST_ID = "test_id";
     static final String FILE_TEST_NAME = "test_name";
+    static final FileResult.Builder FILE_RESULT_BUILDER = FileResult.builder()
+                                                                    .withId(FILE_TEST_ID)
+                                                                    .withFileName(FILE_TEST_NAME);
     static final FileResult FILE_RESULT = new FileResult(
             FILE_TEST_ID,
             FILE_TEST_NAME

@@ -12,6 +12,40 @@ public record FileResult(
         String fileName
 ) {
 
+    public static Builder builder() {
+        return new Builder(
+                null,
+                null
+        );
+    }
+
+    public record Builder(
+            String id,
+            String fileName
+    ) {
+
+        public Builder withId(String id) {
+            return new Builder(
+                    id,
+                    fileName
+            );
+        }
+
+        public Builder withFileName(String fileName) {
+            return new Builder(
+                    id,
+                    fileName
+            );
+        }
+
+        public FileResult build() {
+            return new FileResult(
+                    id,
+                    fileName
+            );
+        }
+    }
+
     public File download(File targetFolder) throws IOException {
         return Files.defaults()
                     .and()

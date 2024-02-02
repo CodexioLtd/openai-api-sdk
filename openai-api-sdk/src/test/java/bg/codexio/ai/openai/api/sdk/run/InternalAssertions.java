@@ -31,6 +31,7 @@ public class InternalAssertions {
     static final RunnableHttpExecutor RUNNABLE_HTTP_EXECUTOR =
             mock(RunnableHttpExecutor.class);
     static final String RUNNABLE_COMPLETED_STATUS = "completed";
+    static final String IN_PROGRESS_STATUS = "in_progress";
     static final ModelType RUNNABLE_MODEL_TYPE = new GPT40Model();
     static final String RUNNABLE_ADDITIONAL_INSTRUCTIONS = "test_instructions";
     static final RunnableResponse RUNNABLE_RESPONSE = new RunnableResponse(
@@ -39,7 +40,7 @@ public class InternalAssertions {
             0,
             THREAD_ID,
             ASSISTANT_ID,
-            "test_status",
+            IN_PROGRESS_STATUS,
             new RequiredAction(
                     "submit_tool_outputs",
                     new SubmitToolOutput(List.of(new ToolCall(
@@ -149,7 +150,15 @@ public class InternalAssertions {
         when(runnableConfigurationStage.httpExecutor.executeWithPathVariables(
                 any(),
                 any()
-        )).thenAnswer(result -> RUNNABLE_RESPONSE_WITH_COMPLETED_STATUS);
+        )).thenAnswer(result -> RUNNABLE_RESPONSE);
+    }
+
+    static void executeWithPathVariablesWithCompletedStatus(RunnableConfigurationStage runnableConfigurationStage) {
+        when(runnableConfigurationStage.httpExecutor.executeWithPathVariables(
+                any(),
+                any()
+        )).thenAnswer(res -> RUNNABLE_RESPONSE_WITH_COMPLETED_STATUS);
+
     }
 
     static void assistantIdRemainsUnchanged(
