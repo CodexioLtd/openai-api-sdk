@@ -94,9 +94,12 @@ public class RunnableResultStage
     }
 
     private RunnableResponse sleepThenRefresh(RunnableResponse run) {
-        while (!Objects.equals(
+        while (Objects.equals(
                 run.status(),
-                RunnableStatusConstants.COMPLETED
+                RunnableStatusConstants.QUEUED
+        ) || Objects.equals(
+                run.status(),
+                RunnableStatusConstants.IN_PROGRESS
         )) {
             try {
                 ThreadOperationUtils.sleep(this.getCompletionSleepDuration());

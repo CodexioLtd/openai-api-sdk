@@ -23,7 +23,7 @@ public class RunnableResultStageTest {
                 RunnableRequest.builder()
                                .withAssistantId(ASSISTANT_ID),
                 THREAD_ID,
-                RUNNABLE_RESPONSE
+                RUNNABLE_RESPONSE_WITH_COMPLETED_STATUS
         );
     }
 
@@ -47,7 +47,7 @@ public class RunnableResultStageTest {
 
             assertThrows(
                     RuntimeException.class,
-                    () -> this.runnableResultStage.waitForCompletionRaw()
+                    () -> this.runnableResultStage.waitForCompletionRaw(RUNNABLE_RESPONSE)
             );
         }
     }
@@ -55,8 +55,7 @@ public class RunnableResultStageTest {
     @Test
     void testWaitForCompletionRaw_withRunnableResponse_expectCorrectResponse() {
         executeWithPathVariables(this.runnableResultStage);
-        var response =
-                this.runnableResultStage.waitForCompletionRaw(RUNNABLE_RESPONSE);
+        var response = this.runnableResultStage.waitForCompletionRaw(RUNNABLE_RESPONSE_WITH_COMPLETED_STATUS);
 
         assertEquals(
                 RUNNABLE_COMPLETED_STATUS,
@@ -66,7 +65,7 @@ public class RunnableResultStageTest {
 
     @Test
     void testWaitForCompletion_expectCorrectBuilder() {
-        executeWithPathVariables(this.runnableResultStage);
+        executeWithPathVariablesWithCompletedStatus(this.runnableResultStage);
         var response = this.runnableResultStage.waitForCompletion();
 
         assertAll(
@@ -78,7 +77,7 @@ public class RunnableResultStageTest {
 
     @Test
     void testWaitForCompletion_withRunnableResponse_expectCorrectThreadId() {
-        executeWithPathVariables(this.runnableResultStage);
+        executeWithPathVariablesWithCompletedStatus(this.runnableResultStage);
         var response =
                 this.runnableResultStage.waitForCompletion(RUNNABLE_RESPONSE);
 

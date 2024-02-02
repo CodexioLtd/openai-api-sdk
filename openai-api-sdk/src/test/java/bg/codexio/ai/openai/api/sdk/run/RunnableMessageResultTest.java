@@ -1,14 +1,13 @@
 package bg.codexio.ai.openai.api.sdk.run;
 
-import bg.codexio.ai.openai.api.payload.message.MessageResult;
 import bg.codexio.ai.openai.api.payload.run.request.RunnableRequest;
 import bg.codexio.ai.openai.api.sdk.HttpBuilder;
 import bg.codexio.ai.openai.api.sdk.message.MessageActionTypeStage;
 import bg.codexio.ai.openai.api.sdk.message.Messages;
+import bg.codexio.ai.openai.api.sdk.message.result.MessageResult;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-import static bg.codexio.ai.openai.api.sdk.CommonTestConstantsUtils.MESSAGE_CONTENT_TEST_VALUE;
 import static bg.codexio.ai.openai.api.sdk.message.InternalAssertions.LIST_MESSAGE_RESPONSE_WITH_TEXT_CONTENT;
 import static bg.codexio.ai.openai.api.sdk.message.InternalAssertions.RETRIEVE_LIST_MESSAGES_HTTP_EXECUTOR;
 import static bg.codexio.ai.openai.api.sdk.run.InternalAssertions.RUNNABLE_HTTP_EXECUTOR;
@@ -33,7 +32,8 @@ public class RunnableMessageResultTest {
     @Test
     void testAnswers_expectCorrectResponse() {
         var messageResult = new MessageResult(
-                MESSAGE_CONTENT_TEST_VALUE,
+                "test_quote_test_message_value",
+                null,
                 null
         );
         try (var mockedMessage = mockStatic(Messages.class)) {

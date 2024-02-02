@@ -11,6 +11,7 @@ import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.net.URISyntaxException;
+import java.util.UUID;
 import java.util.stream.Stream;
 
 import static bg.codexio.ai.openai.api.sdk.file.InternalAssertions.FILE_TEST_NAME;
@@ -40,19 +41,24 @@ public class DownloadExecutorTest {
             boolean exists,
             int mkdirsCallTimes
     ) throws IOException {
+        var uuidMock = mock(UUID.class);
         var targetFolder = mock(File.class);
         var fileUrl = "/target/folder/";
         var fileContentBytes = new byte[]{1, 2, 3};
 
+        when(uuidMock.toString()).thenReturn("random-test-uuid");
         when(targetFolder.getAbsolutePath()).thenReturn(fileUrl);
         when(targetFolder.exists()).thenReturn(exists);
 
         var mockStream = mock(FileOutputStream.class);
-        var expectedFileName = fileUrl.concat(FILE_TEST_NAME);
+        var expectedFileName = fileUrl.concat("random".concat(FILE_TEST_NAME));
 
         try (
+                var uuidUtils = mockStatic(UUID.class);
                 var streamUtils = mockStatic(DownloadExecutor.Streams.class)
         ) {
+            uuidUtils.when(UUID::randomUUID)
+                     .thenReturn(uuidMock);
             streamUtils.when(() -> DownloadExecutor.Streams.outputStream(any()))
                        .thenReturn(mockStream);
 
