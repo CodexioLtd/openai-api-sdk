@@ -2,8 +2,8 @@ package bg.codexio.ai.openai.api.sdk.run;
 
 import bg.codexio.ai.openai.api.http.run.RunnableHttpExecutor;
 import bg.codexio.ai.openai.api.payload.run.request.RunnableRequest;
+import bg.codexio.ai.openai.api.sdk.message.MessageResult;
 import bg.codexio.ai.openai.api.sdk.message.Messages;
-import bg.codexio.ai.openai.api.sdk.message.result.MessageResult;
 
 public class RunnableMessageResult
         extends RunnableConfigurationStage {

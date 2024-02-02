@@ -6,7 +6,6 @@ import bg.codexio.ai.openai.api.payload.credentials.ApiCredentials;
 import bg.codexio.ai.openai.api.sdk.auth.FromDeveloper;
 import bg.codexio.ai.openai.api.sdk.auth.SdkAuth;
 import bg.codexio.ai.openai.api.sdk.file.FileResult;
-import bg.codexio.ai.openai.api.sdk.message.result.MessageResult;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 

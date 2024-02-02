@@ -13,7 +13,6 @@ import bg.codexio.ai.openai.api.payload.message.content.annotation.FilePathAnnot
 import bg.codexio.ai.openai.api.payload.message.response.ListMessagesResponse;
 import bg.codexio.ai.openai.api.payload.message.response.MessageResponse;
 import bg.codexio.ai.openai.api.sdk.file.FileResult;
-import bg.codexio.ai.openai.api.sdk.message.result.MessageResult;
 
 import java.util.Arrays;
 import java.util.List;
@@ -34,23 +33,8 @@ public class InternalAssertions {
             mock(MessageHttpExecutor.class);
     public static final RetrieveListMessagesHttpExecutor RETRIEVE_LIST_MESSAGES_HTTP_EXECUTOR = mock(RetrieveListMessagesHttpExecutor.class);
     static final String MESSAGE_CONTENT = "test_message_content";
-    public static final ListMessagesResponse LIST_MESSAGE_RESPONSE_WITH_IMAGE_CONTENT = new ListMessagesResponse(
-            "list_message_value",
-            List.of(MESSAGE_RESPONSE_WITH_IMAGE_CONTENT),
-            "list_message_test_first_id",
-            "list_message_test_second_id",
-            false
-    );
     static final String MESSAGE_RESULT_CONTENT_VALUE =
             "test_message_test_quote";
-    public static final ListMessagesResponse LIST_MESSAGE_RESPONSE =
-            new ListMessagesResponse(
-            "list_message_object",
-            List.of(MESSAGE_RESPONSE),
-            "list_message_test_first_id",
-            "list_message_test_second_id",
-            false
-    );
     static final MessageResponse MESSAGE_RESPONSE = new MessageResponse(
             "message_test_id",
             "message_test_object",
@@ -85,6 +69,14 @@ public class InternalAssertions {
             Arrays.stream(FILE_IDS_VAR_ARGS)
                   .toList(),
             METADATA_MAP
+    );
+    public static final ListMessagesResponse LIST_MESSAGE_RESPONSE =
+            new ListMessagesResponse(
+            "list_message_object",
+            List.of(MESSAGE_RESPONSE),
+            "list_message_test_first_id",
+            "list_message_test_second_id",
+            false
     );
     static final MessageResponse MESSAGE_RESPONSE_WITH_TEXT_CONTENT =
             new MessageResponse(
@@ -124,6 +116,13 @@ public class InternalAssertions {
             Arrays.stream(FILE_IDS_VAR_ARGS)
                   .toList(),
             METADATA_MAP
+    );
+    public static final ListMessagesResponse LIST_MESSAGE_RESPONSE_WITH_IMAGE_CONTENT = new ListMessagesResponse(
+            "list_message_value",
+            List.of(MESSAGE_RESPONSE_WITH_IMAGE_CONTENT),
+            "list_message_test_first_id",
+            "list_message_test_second_id",
+            false
     );
     public static final ListMessagesResponse LIST_MESSAGE_RESPONSE_WITH_TEXT_CONTENT = new ListMessagesResponse(
             "list_message_object",

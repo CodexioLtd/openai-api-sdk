@@ -1,4 +1,4 @@
-package bg.codexio.ai.openai.api.sdk.message.result;
+package bg.codexio.ai.openai.api.sdk.message;
 
 import bg.codexio.ai.openai.api.http.HttpExecutorContext;
 import bg.codexio.ai.openai.api.http.file.RetrieveFileContentHttpExecutor;

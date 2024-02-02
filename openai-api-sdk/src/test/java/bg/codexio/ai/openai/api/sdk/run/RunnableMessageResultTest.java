@@ -3,8 +3,8 @@ package bg.codexio.ai.openai.api.sdk.run;
 import bg.codexio.ai.openai.api.payload.run.request.RunnableRequest;
 import bg.codexio.ai.openai.api.sdk.HttpBuilder;
 import bg.codexio.ai.openai.api.sdk.message.MessageActionTypeStage;
+import bg.codexio.ai.openai.api.sdk.message.MessageResult;
 import bg.codexio.ai.openai.api.sdk.message.Messages;
-import bg.codexio.ai.openai.api.sdk.message.result.MessageResult;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
