@@ -106,6 +106,13 @@ Of course, due to its native SDK, objects of any kind are easily created. There 
     * [Additional Prompting](#additional-prompting)
 * [Translation API SDK](#translation-api-sdk)
     * [Example](#example)
+* [Assistants API SDK](#assistant-api-sdk)
+    * [Create assistant](#create-assistant)
+    * [Upload file](#upload-file)
+    * [Create thread](#create-thread)
+    * [Create message](#create-message)
+    * [Create run](#create-run)
+    * [Usage](#usage)
 * [Contributing](#contributing)
 * [License](#license)
 
@@ -122,7 +129,7 @@ In the next chapters you will see an explanation of all key concepts.
 <dependency>
     <groupId>bg.codexio.ai</groupId>
     <artifactId>openai-api-sdk</artifactId>
-    <version>0.8.1.BETA-JDK17</version>
+    <version>0.9.0.BETA-JDK17</version>
 </dependency>
 ```
 
@@ -266,15 +273,15 @@ Java, you make every byte worthwhile.
 
 ## Framework Integrations
 
-Since this is a framework-agnostic SDK, it's not natively integrated to any framework. 
-However, separate projects  provide such implementations. You are very welcomed to 
+Since this is a framework-agnostic SDK, it's not natively integrated to any framework.
+However, separate projects provide such implementations. You are very welcomed to
 create new integrations. The current list is:
-  - <img src="https://spring.io/img/logos/spring-initializr.svg" width="18px" height="18px"/>[Spring Boot Starter OpenAI](https://github.com/CodexioLtd/spring-boot-starter-openai)
 
+- <img src="https://spring.io/img/logos/spring-initializr.svg" width="18px" height="18px"/>[Spring Boot Starter OpenAI](https://github.com/CodexioLtd/spring-boot-starter-openai)
 
 ## Supported Java Versions
 
-The `master` branch builds versions for JDK 21. This is the current Java version and the artifacts built from 
+The `master` branch builds versions for JDK 21. This is the current Java version and the artifacts built from
 `master` does not contain any JDK suffix. However, there are several other branches which build versions
 for different JDKs. See the table below:
 
@@ -283,8 +290,7 @@ for different JDKs. See the table below:
 | [master](https://github.com/CodexioLtd/openai-api-sdk/tree/master)                 | 21         | X.Y.Z[.a] (e.g. 0.8.0.BETA)             |
 | [release/jdk-17](https://github.com/CodexioLtd/openai-api-sdk/tree/release/jdk-17) | 17         | X.Y.Z[.a]-JDK17 (e.g. 0.8.0.BETA-JDK17) |
 | [release/jdk-11](https://github.com/CodexioLtd/openai-api-sdk/tree/release/jdk-11) | 11         | X.Y.Z[.a]-JDK11 (e.g. 0.8.0.BETA-JDK11) |
-| release/jdk-8 (not yet adapted)                                                    | 8          | X.Y.Z[.a]-JDK8 (e.g. 0.8.0.BETA-JDK8)  |
-
+| release/jdk-8 (not yet adapted)                                                    | 8          | X.Y.Z[.a]-JDK8 (e.g. 0.8.0.BETA-JDK8)   |
 
 ## Available SDKs
 
@@ -2606,6 +2612,285 @@ API. In other words, an example use case can be:
 - **[Transcription]** Generate Deutsch transcription from English audio
 
 ... or you can just ask the `Chat` SDK to translate the English to German :)
+
+## Assistant API SDK
+
+Assistants API gives you the opportunity of building your own AI assistants.
+The functionality offered by the assistant provides users with the opportunity to engage in a conversation within an
+already established context. This context involves two participants: the user and the assistant created by the user.
+One assistant can have instructions, different models and tools in order to respond to user queries. However, the
+assistants API doesn't rely only on itself.
+In order to achieve the functionality of an AI assistant, there are various APIs, such as Threads, Messages, Runs and
+Files, which are working together, to provide the available functionality that one assistant can have.
+
+### Create assistant
+
+At first, assistant needs to be created. It, can have its custom instructions, model, tools, metadata and file. The
+following code is showing how this can be done:
+
+```java
+public class CreateAssistant {
+
+    public static void main(String[] args) {
+        var file = new File(CreateAssistant.class.getClassLoader()
+                                                 .getResource("fake-file.txt")
+                                                 .getPath());
+
+        var assistant = Assistants.defaults()
+                                  .and()
+                                  .turboPowered()
+                                  .from(
+                                          new CodeInterpreter(),
+                                          new Retrieval()
+                                  )
+                                  .called("Codexio")
+                                  .instruct("You are the best java developer," + " you are going to "
+                                                    + "participate in new " + "interesting projects.")
+
+                                  .meta()
+                                  .awareOf(
+                                          "key1",
+                                          "value1",
+                                          "key2",
+                                          "value2"
+                                  )
+                                  .file()
+                                  .feed(file)
+                                  .andRespond();
+
+        System.out.println(assistant);
+    }
+}
+```
+
+### Upload file
+
+In order to upload a file, we are using the Files API to upload it and then using the returned file id we can easily
+attach it to the assistant.
+Creating a file looks like this:
+
+```java
+public class UploadFile {
+
+    public static void main(String[] args) {
+        var file = new File(UploadFile.class.getClassLoader()
+                                            .getResource("fake-file.txt")
+                                            .getPath());
+        var fileId = Files.defaults()
+                          .and()
+                          .targeting(new AssistantPurpose())
+                          .feedRaw(file);
+
+        System.out.println(fileResponse);
+    }
+}
+```
+
+### Create thread
+
+Since the assistant is created and user wants to start a conversation the Threads API comes in use. Threads represents a
+conversation session between user and his assistant. A thread can be created using either the `empty()` method,
+which generates a thread without additional information, or it can be configured to include files and metadata.
+Messages can be added to the thread, during creation, which will be processed by the Messages API.
+The following code is showing the extended way of thread creation:
+
+```java
+public class CreateThread {
+
+    public static void main(String[] args) {
+        var file = new File(CreateThread.class.getClassLoader()
+                                              .getResource("fake-file.txt")
+                                              .getPath());
+
+        var thread = Threads.defaults()
+                            .and()
+                            .creating()
+                            .deepConfigure()
+                            .meta()
+                            .awareOf(
+                                    "key1",
+                                    "value1",
+                                    "key2",
+                                    "value2"
+                            )
+                            .file()
+                            .attach(file)
+                            .message()
+                            .startWith("You're java developer.")
+                            .feed(file);
+
+        System.out.println(thread);
+    }
+}
+```
+
+And here is the simplified one:
+
+```java
+public class CreateEmptyThread {
+
+    public static void main(String[] args) {
+        var thread = Threads.defaults()
+                            .and()
+                            .creating()
+                            .empty();
+
+        System.out.println(thread);
+    }
+}
+```
+
+### Create message
+
+After the thread is created, messages can be added. A message can be added during the thread creation process as
+demonstrated in the previous example.
+Alternatively, Messages API can be used to add messages to existing thread.
+If the second approach is the preferred one , the message creation looks like this :
+
+```java
+public class CreateMessage {
+
+    public static void main(String[] args) {
+        var messageResponse = Messages.defaults(Threads.defaults()
+                                                       .and()
+                                                       .creating()
+                                                       .empty())
+                                      .and()
+                                      .chat()
+                                      .withContent("How are you?")
+                                      .andRespond();
+
+        System.out.println(messageResponse);
+    }
+}
+```
+
+The thread can be supplied using the thread response object or only the thread id. One message can have not only
+content,
+but its own metadata and file.
+
+### Create run
+
+Since we already have assistant, files, threads, messages there is one final step to conclude the conversation
+between the user and the assistant - using the Runs API. It executes the assistant on the thread to trigger
+responses. Similar to messages, runs rely on the id of already created thread, and it also requires the id of the
+created assistant. Run use the model and tools configured by the assistant, but they can be overridden, during the run
+creation process.
+Run creation looks like this :
+
+```java
+public class CreateRun {
+
+    public static void main(String[] args) {
+        var run = Runnables.defaults(Threads.defaults()
+                                            .and()
+                                            .creating()
+                                            .empty())
+                           .and()
+                           .deepConfigure(Assistants.defaults()
+                                                    .and()
+                                                    .poweredByGPT40()
+                                                    .from(new CodeInterpreter())
+                                                    .called("Cody")
+                                                    .instruct("Be intuitive")
+                                                    .andRespond())
+                           .andRespond();
+
+        System.out.println(run);
+    }
+}
+```
+
+### Usage
+
+In order to achieve give the user better experience, all the functionality provided by the aforementioned APIs the
+assistant usage is simplified trough single method chain, where everything that can be added/configured, when each
+component is created individually, can also be done directly from one place.
+Chained it looks like this :
+
+```java
+public class AssistantAsk {
+
+    public static void main(String[] args) {
+        var file = new File(AssistantAsk.class.getClassLoader()
+                                              .getResource("fake-file.txt")
+                                              .getPath());
+        var fileDownloadLocation = new File(AssistantAsk.class.getClassLoader()
+                                                              .getResource("")
+                                                              .getPath() + "generated-files");
+
+        var answer = Threads.defaults()
+                            .and()
+                            .creating()
+                            .deepConfigure()
+                            .message()
+                            .startWith("You are developer at Codexio.")
+                            .attach(file)
+                            .chat()
+                            .withContent("Your language of choice is Java.")
+                            .meta()
+                            .awareOf(
+                                    "key",
+                                    "value"
+                            )
+                            .assistant()
+                            .assist(Assistants.defaults()
+                                              .and()
+                                              .poweredByGPT40()
+                                              .from(new CodeInterpreter())
+                                              .called("Cody")
+                                              .instruct("Please focus on " + "explaining" + " the " + "topics as "
+                                                                + "senior " + "developer.")
+                                              .andRespond())
+                            .instruction()
+                            .instruct("It would be better to show me some " + "DevOps skills.")
+                            .finish()
+                            .waitForCompletion()
+                            .result()
+                            .answers()
+                            .download(fileDownloadLocation);
+
+        System.out.println(answer);
+    }
+}
+```
+
+Which outputs:
+
+```text
+I have created a text file called "SeniorDeveloperTopics.txt" containing information about key topics related to software development. 
+```
+
+The uploaded file `fake-file.txt` is only used for testing scenarios, and it contains only the word `test`. The response
+given from the assistant for now is returned by the MessageResult object, which contains information about the content
+of the text message, information about the generated file by the assistants if there is any and id of generated image
+if there is a generated image. For now downloading the generated files is supported by using the download method
+provided
+by the MessageResult, which only expects location of the folder, where the file can be downloaded to. In our case the
+assistant has generated one simple file and this file was immediately saved to the desired location.
+The file content looks like this :
+
+```text
+1. Code Review Process:
+
+As a senior developer, one of your responsibilities would be reviewing code written by other developers. Code reviews are a systematic examination of software source code, intended to find bugs and ensure the code conforms to coding guidelines. Code reviews not only improve the quality of a software project but also facilitate knowledge sharing among team members. 
+
+2. Test-Driven Development (TDD):
+
+Test-Driven Development is a software development technique where unit tests are written before the actual code. The software  is then iteratively developed to pass those tests. This is an effective way to ensure code quality and that the system as a whole is working correctly. 
+
+3. Refactoring:
+
+Refactoring is a disciplined technique for restructuring an existing body of code, altering its internal structure without changing its external behavior. Its heart is a series of small behavior preserving transformations. Each transformation (called a 'refactoring') does little, but a sequence of transformations can produce a significant restructuring.
+
+4. Design Patterns:
+
+Design Patterns represent the best practices used by experienced object-oriented software developers. They are solutions to general problems that software developers faced during software development. These solutions are obtained by trial and error by numerous software developers over quite a substantial period.
+
+5. Continuous Integration / Continuous Deployment (CI/CD):
+
+Continuous Integration and Deployment is a coding philosophy and set of practices that drive development teams to implement small changes and check in code to version control repositories frequently. Because most modern applications require developing code in different platforms and tools, the team needs a mechanism to integrate and validate its changes.
+```
 
 ## Contributing
 

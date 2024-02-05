@@ -12,13 +12,14 @@ import org.mockito.Mockito;
 
 import java.util.function.Supplier;
 
+import static bg.codexio.ai.openai.api.http.CommonTestConstantsUtils.TEST_BASE_URL;
 import static bg.codexio.ai.openai.api.http.ExecutorTests.createErrorResponse;
 import static bg.codexio.ai.openai.api.http.ExecutorTests.createOkResponse;
 import static org.junit.jupiter.api.Assertions.assertFalse;
 
 public class SpeechHttpExecutorTest {
 
-    private static final String URL = "http://base-url/audio/speech";
+    private static final String URL = TEST_BASE_URL.concat("/audio/speech");
     private static final String JSON_NO_STREAM_REQUEST =
             "{\"model\":\"test" + "-ai-model\"}";
     private static final SpeechRequest REQUEST_DTO = SpeechRequest.builder()
@@ -186,7 +187,7 @@ public class SpeechHttpExecutorTest {
     private void initExecutor() {
         this.executor = new SpeechHttpExecutor(
                 this.client,
-                "http://base-url",
+                TEST_BASE_URL,
                 new ObjectMapper()
         );
     }

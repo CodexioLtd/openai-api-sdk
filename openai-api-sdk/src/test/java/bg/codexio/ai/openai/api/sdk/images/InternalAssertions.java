@@ -28,6 +28,7 @@ public class InternalAssertions {
             mock(EditImageHttpExecutor.class);
     static final ImageVariationHttpExecutor IMAGE_VARIATION_HTTP_EXECUTOR =
             mock(ImageVariationHttpExecutor.class);
+
     static final Function<ImageRequestBuilder<CreateImageRequest>,
             CreateImageRequest> CREATE_IMAGE_REQUEST_FUNCTION =
             x -> new CreateImageRequest(

@@ -13,6 +13,7 @@ import org.jetbrains.annotations.NotNull;
 import org.mockito.stubbing.Answer;
 
 import java.io.IOException;
+import java.util.Objects;
 import java.util.function.Consumer;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -48,6 +49,120 @@ public class ExecutorTests {
     }
 
     public static <I extends Streamable, O extends Mergeable<O>,
+            E extends DefaultOpenAIHttpExecutor<I, O>> void testExecuteWithPathVariable_noError_shouldParseResponse(
+            OkHttpClient client,
+            String url,
+            String pathVariable,
+            String requestBody,
+            Response okHttpResponse,
+            I requestDto,
+            O responseDto,
+            E executor
+    ) {
+        when(client.newCall(requestEq(
+                String.format(
+                        url,
+                        pathVariable
+                ),
+                requestBody
+        ))).thenReturn(new MockCall(
+                okHttpResponse,
+                false
+        ));
+
+        var response = executor.executeWithPathVariable(
+                requestDto,
+                pathVariable
+        );
+
+        assertEquals(
+                responseDto,
+                response
+        );
+    }
+
+    public static <I extends Streamable, O extends Mergeable<O>,
+            E extends DefaultOpenAIHttpExecutor<I, O>> void testExecuteWithPathVariable_withResponseError_shouldThrowException(
+            OkHttpClient client,
+            String url,
+            String pathVariable,
+            String requestBody,
+            Response okHttpResponse,
+            I requestDto,
+            E executor
+    ) {
+        when(client.newCall(requestEq(
+                String.format(
+                        url,
+                        pathVariable
+                ),
+                requestBody
+        ))).thenReturn(new MockCall(
+                okHttpResponse,
+                false
+        ));
+
+        var exception = assertThrows(
+                OpenAIRespondedNot2xxException.class,
+                () -> executor.executeWithPathVariable(
+                        requestDto,
+                        pathVariable
+                )
+        );
+
+        assertMessageAndStatus(exception);
+    }
+
+    public static <I extends Streamable, O extends Mergeable<O>,
+            E extends DefaultOpenAIHttpExecutor<I, O>> void testExecuteWithPathVariables_noError_shouldParseResponse(
+            OkHttpClient client,
+            String url,
+            Response okHttpResponse,
+            O responseDto,
+            E executor,
+            String... pathVariables
+    ) {
+        when(client.newCall(requestEq(String.format(
+                url,
+                (Object[]) pathVariables
+        )))).thenReturn(new MockCall(
+                okHttpResponse,
+                false
+        ));
+
+        var response = executor.executeWithPathVariables(pathVariables);
+
+        assertEquals(
+                responseDto,
+                response
+        );
+    }
+
+    public static <I extends Streamable, O extends Mergeable<O>,
+            E extends DefaultOpenAIHttpExecutor<I, O>> void testExecuteWithPathVariables_withResponseError_shouldThrowException(
+            OkHttpClient client,
+            String url,
+            Response okHttpResponse,
+            E executor,
+            String... pathVariables
+    ) {
+        when(client.newCall(requestEq(String.format(
+                url,
+                (Object[]) pathVariables
+        )))).thenReturn(new MockCall(
+                okHttpResponse,
+                false
+        ));
+
+        var exception = assertThrows(
+                OpenAIRespondedNot2xxException.class,
+                () -> executor.executeWithPathVariables(pathVariables)
+        );
+
+        assertMessageAndStatus(exception);
+    }
+
+    public static <I extends Streamable, O extends Mergeable<O>,
             E extends DefaultOpenAIHttpExecutor<I, O>> void testExecute_withResponseError_shouldThrowException(
             OkHttpClient client,
             String url,
@@ -77,7 +192,6 @@ public class ExecutorTests {
             OkHttpClient client,
             String url,
             String requestBody,
-            Response okHttpResponse,
             I requestDto,
             E executor
     ) {
@@ -484,6 +598,10 @@ public class ExecutorTests {
                 return false;
             }
 
+            if (Objects.isNull(body) || body.length == 0) {
+                return true;
+            }
+
             for (var b : body) {
                 try (var buffer = new Buffer()) {
                     request.newBuilder()
@@ -491,6 +609,7 @@ public class ExecutorTests {
                            .body()
                            .writeTo(buffer);
                     var str = buffer.readUtf8();
+
                     if (str.replace(
                                    "\r\n",
                                    "\n"

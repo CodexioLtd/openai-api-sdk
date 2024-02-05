@@ -40,11 +40,10 @@ public abstract class DefaultOpenAIHttpExecutor<I extends Streamable,
         O extends Mergeable<O>>
         implements OpenAIHttpExecutor<I, O> {
 
-
     /**
      * Default for the Content-Type header
      */
-    private static final MediaType DEFAULT_MEDIA_TYPE = MediaType.get(
+    protected static final MediaType DEFAULT_MEDIA_TYPE = MediaType.get(
             "application/json");
 
     /**
@@ -210,31 +209,44 @@ public abstract class DefaultOpenAIHttpExecutor<I extends Streamable,
         }
     }
 
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    public O execute(I request) {
-        var httpRequest = prepareRequest(request);
-
-        try (
-                var httpResponse = this.client.newCall(httpRequest)
-                                              .execute()
-        ) {
-            this.throwOnError(httpResponse);
-
-            return this.toResponse(httpResponse);
-        } catch (IOException e) {
-            throw new HttpCallFailedException(
-                    this.baseUrl + this.resourceUri,
-                    e
-            );
-        }
+    public void configureMappingExternally(Consumer<ObjectMapper> mappingConsumer) {
+        mappingConsumer.accept(this.objectMapper);
     }
 
     /**
      * {@inheritDoc}
      */
+    @Override
+    public O execute(I request) {
+        var httpRequest = this.prepareRequest(request);
+
+        return this.performRequestExecution(httpRequest);
+    }
+
+    @Override
+    public O executeWithPathVariables(String... pathVariables) {
+        var httpRequest = this.prepareRequestWithPathVariables(pathVariables);
+
+        return this.performRequestExecution(httpRequest);
+    }
+
+    @Override
+    public O executeWithPathVariable(
+            I request,
+            String pathVariable
+    ) {
+        var httpRequest = this.prepareRequestWithPathVariable(
+                request,
+                pathVariable
+        );
+
+        return this.performRequestExecution(httpRequest);
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
     public void executeAsync(
             I request,
             Consumer<String> callBack,
@@ -303,6 +315,7 @@ public abstract class DefaultOpenAIHttpExecutor<I extends Streamable,
     /**
      * {@inheritDoc}
      */
+    @Override
     public ReactiveExecution<O> executeReactive(I request) {
         var lines =
                 Flux.<String>create(sink -> this.client.newCall(prepareRequest(request))
@@ -420,18 +433,62 @@ public abstract class DefaultOpenAIHttpExecutor<I extends Streamable,
 
     @NotNull
     protected Request prepareRequest(I request) {
-        this.reinitializeExecutionIdentification();
-
-        var json = this.toJson(request);
-
-        log(
-                "Incoming request to {}{} with body: {}",
-                this.baseUrl,
-                this.resourceUri,
-                json
+        var json = this.performRequestInitialization(
+                request,
+                this.resourceUri
         );
 
-        return new Request.Builder().url(this.baseUrl + this.resourceUri)
+        return new Request.Builder().url(this.baseUrl.concat(this.resourceUri))
+                                    .post(RequestBody.create(
+                                            json,
+                                            DEFAULT_MEDIA_TYPE
+                                    ))
+                                    .build();
+    }
+
+    protected Request prepareRequestWithPathVariables(String... pathVariables) {
+        var resourceUriWithPathVariable = String.format(
+                this.resourceUri,
+                (Object[]) pathVariables
+        );
+
+        return new Request.Builder().url(this.baseUrl.concat(resourceUriWithPathVariable))
+                                    .get()
+                                    .build();
+    }
+
+    protected O performRequestExecution(Request httpRequest) {
+        try (
+                var httpResponse = this.client.newCall(httpRequest)
+                                              .execute()
+        ) {
+            this.throwOnError(httpResponse);
+
+            return this.toResponse(httpResponse);
+        } catch (IOException e) {
+            throw new HttpCallFailedException(
+                    httpRequest.url()
+                               .toString(),
+                    e
+            );
+        }
+    }
+
+    @NotNull
+    protected Request prepareRequestWithPathVariable(
+            I request,
+            String pathVariable
+    ) {
+        var resourceUriWithPathVariable = String.format(
+                this.resourceUri,
+                pathVariable
+        );
+        var json = this.performRequestInitialization(
+                request,
+                resourceUriWithPathVariable
+        );
+
+        return new Request.Builder().url(this.baseUrl.concat(resourceUriWithPathVariable))
                                     .post(RequestBody.create(
                                             json,
                                             DEFAULT_MEDIA_TYPE
@@ -451,7 +508,9 @@ public abstract class DefaultOpenAIHttpExecutor<I extends Streamable,
             return this.toResponse(body);
         } catch (IOException e) {
             throw new HttpCallFailedException(
-                    this.baseUrl + this.resourceUri,
+                    response.request()
+                            .url()
+                            .toString(),
                     e
             );
         }
@@ -495,6 +554,24 @@ public abstract class DefaultOpenAIHttpExecutor<I extends Streamable,
                     e
             );
         }
+    }
+
+    protected String performRequestInitialization(
+            I request,
+            String resourceUri
+    ) {
+        reinitializeExecutionIdentification();
+
+        var json = this.toJson(request);
+
+        log(
+                "Incoming request to {}{} with body: {}",
+                this.baseUrl,
+                resourceUri,
+                json
+        );
+
+        return json;
     }
 
     protected void log(
@@ -625,7 +702,7 @@ public abstract class DefaultOpenAIHttpExecutor<I extends Streamable,
                            .toLowerCase();
     }
 
-    private void throwOnError(Response httpResponse) throws IOException {
+    protected void throwOnError(Response httpResponse) throws IOException {
         if (httpResponse.code() >= 300) {
             var errorHolder = this.toError(httpResponse.body()
                                                        .string());
@@ -635,5 +712,4 @@ public abstract class DefaultOpenAIHttpExecutor<I extends Streamable,
             );
         }
     }
-
 }
