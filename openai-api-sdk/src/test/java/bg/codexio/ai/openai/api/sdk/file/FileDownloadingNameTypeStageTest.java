@@ -22,9 +22,8 @@ public class FileDownloadingNameTypeStageTest {
     }
 
     @Test
-    void testWithName_expectCorrectBuilder() {
-        var nextStage =
-                this.fileDownloadingNameTypeStage.withName(FILE_TEST_NAME);
+    void testAs_expectCorrectBuilder() {
+        var nextStage = this.fileDownloadingNameTypeStage.as(FILE_TEST_NAME);
 
         assertNotNull(nextStage);
     }

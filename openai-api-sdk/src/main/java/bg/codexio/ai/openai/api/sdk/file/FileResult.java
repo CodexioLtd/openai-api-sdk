@@ -81,7 +81,7 @@ public record FileResult(
                             httpExecutor,
                             this.id
                     )
-                    .withName(this.fileName)
+                    .as(this.fileName)
                     .toFolder(targetFolder);
     }
 }

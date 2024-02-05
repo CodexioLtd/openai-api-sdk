@@ -7,6 +7,7 @@ import bg.codexio.ai.openai.api.sdk.file.FileResult;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.Objects;
 
 public record MessageResult(
         String message,
@@ -34,8 +35,10 @@ public record MessageResult(
     }
 
     public String download(File targetFolder) throws IOException {
-        this.fileResult.build()
-                       .download(targetFolder);
+        if (Objects.nonNull(this.fileResult)) {
+            this.fileResult.build()
+                           .download(targetFolder);
+        }
 
         return this.message;
     }
@@ -44,11 +47,13 @@ public record MessageResult(
             File targetFolder,
             SdkAuth auth
     ) throws IOException {
-        this.fileResult.build()
-                       .download(
-                               targetFolder,
-                               auth
-                       );
+        if (Objects.nonNull(this.fileResult)) {
+            this.fileResult.build()
+                           .download(
+                                   targetFolder,
+                                   auth
+                           );
+        }
 
         return this.message;
     }
@@ -57,11 +62,13 @@ public record MessageResult(
             File targetFolder,
             HttpExecutorContext context
     ) throws IOException {
-        this.fileResult.build()
-                       .download(
-                               targetFolder,
-                               context
-                       );
+        if (Objects.nonNull(this.fileResult)) {
+            this.fileResult.build()
+                           .download(
+                                   targetFolder,
+                                   context
+                           );
+        }
 
         return this.message;
     }
@@ -70,11 +77,13 @@ public record MessageResult(
             File targetFolder,
             RetrieveFileContentHttpExecutor httpExecutor
     ) throws IOException {
-        this.fileResult.build()
-                       .download(
-                               targetFolder,
-                               httpExecutor
-                       );
+        if (Objects.nonNull(this.fileResult)) {
+            this.fileResult.build()
+                           .download(
+                                   targetFolder,
+                                   httpExecutor
+                           );
+        }
 
         return this.message;
     }

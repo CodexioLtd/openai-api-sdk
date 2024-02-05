@@ -144,7 +144,7 @@ In the next chapters you will see an explanation of all key concepts.
     </summary>
 
   | Artifact              | Description                                                                                       |
-        |-----------------------|---------------------------------------------------------------------------------------------------|
+    |-----------------------|---------------------------------------------------------------------------------------------------|
   | `openai-api-models`   | Contains info only for AI Model namings, such as GPT-4-Preview, DALL-E-2 and so on                |
   | `openai-api-payload`  | Contains Request/Response DTO models and related information                                      |
   | `openai-api-http`     | Contains HTTP Clients such as `ChatHttpExecutor`, `CreateImageHttpExecutor`, etc., ...            |
@@ -2672,7 +2672,7 @@ public class CreateAssistant {
 
 In order to upload a file, we are using the Files API to upload it and then using the returned file id we can easily
 attach it to the assistant.
-Creating a file is looking like this:
+Creating a file looks like this:
 
 ```java
 public class UploadFile {
@@ -2694,7 +2694,7 @@ public class UploadFile {
 ### Create thread
 
 Since the assistant is created and user wants to start a conversation the Threads API comes in use. Threads represents a
-conversation session between user and his assistant. A thread can be created using either the empty() method,
+conversation session between user and his assistant. A thread can be created using either the `empty()` method,
 which generates a thread without additional information, or it can be configured to include files and metadata.
 Messages can be added to the thread, during creation, which will be processed by the Messages API.
 The following code is showing the extended way of thread creation:
@@ -2750,7 +2750,7 @@ public class CreateEmptyThread {
 After the thread is created, messages can be added. A message can be added during the thread creation process as
 demonstrated in the previous example.
 Alternatively, Messages API can be used to add messages to existing thread.
-If the second approach is the preferred one , the message creation is looking like this :
+If the second approach is the preferred one , the message creation looks like this :
 
 ```java
 public class CreateMessage {
@@ -2781,7 +2781,7 @@ between the user and the assistant - using the Runs API. It executes the assista
 responses. Similar to messages, runs rely on the id of already created thread, and it also requires the id of the
 created assistant. Run use the model and tools configured by the assistant, but they can be overridden, during the run
 creation process.
-Run creation is looking like this :
+Run creation looks like this :
 
 ```java
 public class CreateRun {
@@ -2820,6 +2820,9 @@ public class AssistantAsk {
         var file = new File(AssistantAsk.class.getClassLoader()
                                               .getResource("fake-file.txt")
                                               .getPath());
+        var fileDownloadLocation = new File(AssistantAsk.class.getClassLoader()
+                                                              .getResource("")
+                                                              .getPath() + "generated-files");
 
         var answer = Threads.defaults()
                             .and()
@@ -2849,7 +2852,8 @@ public class AssistantAsk {
                             .finish()
                             .waitForCompletion()
                             .result()
-                            .answers();
+                            .answers()
+                            .download(fileDownloadLocation);
 
         System.out.println(answer);
     }
@@ -2859,20 +2863,39 @@ public class AssistantAsk {
 Which outputs:
 
 ```text
-MessageResult[message=The file contains the single word "test" and no other data. With respect to showcasing some DevOps
-skills, we could talk about various aspects. Given we have Python in our environment, one critical aspect could be 
-Infrastructure as Code(IaC). And in Python, we can use libraries like Ansible, Terraform, and more, for IaC. Also,
-Python is extensively used for automation scripts in build, testing, and deployment.
-If we had a more complex file, we could have used Python to parse and manipulate data, demonstrating a scenario of data
-processing, a common need in DevOps. Another example could be analyzing logs to spot errors or patterns.
-Given this context, please let me know what specific aspects you're interested in so I can provide a more tailored
-explanation. Would you like more information on IaC, Continuous Integration/Continuous Deployment (CI/CD) processes,
-monitoring, logging, or something else?, imageFileId=null]
+I have created a text file called "SeniorDeveloperTopics.txt" containing information about key topics related to software development. 
 ```
 
 The uploaded file `fake-file.txt` is only used for testing scenarios, and it contains only the word `test`. The response
-given from the for now is returned by MessageResult object, which contains information about the content of the text
-message and id of a generated image file, if the assistant has created one.
+given from the assistant for now is returned by the MessageResult object, which contains information about the content
+of the text message, information about the generated file by the assistants if there is any and id of generated image
+if there is a generated image. For now downloading the generated files is supported by using the download method
+provided
+by the MessageResult, which only expects location of the folder, where the file can be downloaded to. In our case the
+assistant has generated one simple file and this file was immediately saved to the desired location.
+The file content looks like this :
+
+```text
+1. Code Review Process:
+
+As a senior developer, one of your responsibilities would be reviewing code written by other developers. Code reviews are a systematic examination of software source code, intended to find bugs and ensure the code conforms to coding guidelines. Code reviews not only improve the quality of a software project but also facilitate knowledge sharing among team members. 
+
+2. Test-Driven Development (TDD):
+
+Test-Driven Development is a software development technique where unit tests are written before the actual code. The software  is then iteratively developed to pass those tests. This is an effective way to ensure code quality and that the system as a whole is working correctly. 
+
+3. Refactoring:
+
+Refactoring is a disciplined technique for restructuring an existing body of code, altering its internal structure without changing its external behavior. Its heart is a series of small behavior preserving transformations. Each transformation (called a 'refactoring') does little, but a sequence of transformations can produce a significant restructuring.
+
+4. Design Patterns:
+
+Design Patterns represent the best practices used by experienced object-oriented software developers. They are solutions to general problems that software developers faced during software development. These solutions are obtained by trial and error by numerous software developers over quite a substantial period.
+
+5. Continuous Integration / Continuous Deployment (CI/CD):
+
+Continuous Integration and Deployment is a coding philosophy and set of practices that drive development teams to implement small changes and check in code to version control repositories frequently. Because most modern applications require developing code in different platforms and tools, the team needs a mechanism to integrate and validate its changes.
+```
 
 ## Contributing
 

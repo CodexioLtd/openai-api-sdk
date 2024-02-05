@@ -5,13 +5,18 @@ import bg.codexio.ai.openai.api.sdk.assistant.Assistants;
 import bg.codexio.ai.openai.api.sdk.thread.Threads;
 
 import java.io.File;
+import java.io.IOException;
 
 public class AssistantAsk {
 
-    public static void main(String[] args) {
+    public static void main(String[] args) throws IOException {
         var file = new File(AssistantAsk.class.getClassLoader()
                                               .getResource("fake-file.txt")
                                               .getPath());
+        var fileDownloadLocation = new File(AssistantAsk.class.getClassLoader()
+                                                              .getResource("")
+                                                              .getPath()
+                                                    + "generated-files");
 
         var answer = Threads.defaults()
                             .and()
@@ -46,7 +51,8 @@ public class AssistantAsk {
                             .finish()
                             .waitForCompletion()
                             .result()
-                            .answers();
+                            .answers()
+                            .download(fileDownloadLocation);
 
         System.out.println(answer);
     }
