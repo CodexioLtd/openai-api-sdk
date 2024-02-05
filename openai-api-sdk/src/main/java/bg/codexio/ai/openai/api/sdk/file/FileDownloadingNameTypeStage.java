@@ -21,7 +21,7 @@ public class FileDownloadingNameTypeStage<O extends Mergeable<O>>
         this.fileId = fileId;
     }
 
-    public FileDownloadingStage<O> withName(String fileName) {
+    public FileDownloadingStage<O> as(String fileName) {
         return new FileDownloadingStage<>(
                 this.executor,
                 this.requestBuilder,

@@ -15,7 +15,7 @@ public class DownloadFile {
         var downloadedFile = Files.defaults()
                                   .and()
                                   .download("file-zR7aSAvw1xFBjqLIGKnRpT1q")
-                                  .withName("file.py")
+                                  .as("file.py")
                                   .toFolder(file);
 
         System.out.println(downloadedFile.getAbsoluteFile()

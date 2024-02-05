@@ -22,19 +22,18 @@ import static org.mockito.Mockito.when;
 public class MessageResultTest {
 
     private MessageResult messageResult;
-    private FileResult.Builder fileResultBuilder;
     private FileResult fileResult;
 
     @BeforeEach
     void setUp() {
-        this.fileResultBuilder = mock(FileResult.Builder.class);
+        var fileResultBuilder = mock(FileResult.Builder.class);
         this.messageResult = new MessageResult(
                 MESSAGE_RESULT_CONTENT_VALUE,
-                this.fileResultBuilder,
+                fileResultBuilder,
                 null
         );
         this.fileResult = mock(FileResult.class);
-        when(this.fileResultBuilder.build()).thenReturn(this.fileResult);
+        when(fileResultBuilder.build()).thenReturn(this.fileResult);
     }
 
     @Test
@@ -68,11 +67,41 @@ public class MessageResultTest {
     }
 
     @Test
+    void testDownload_withEmptyFileResult_expectCorrectResponse()
+            throws IOException {
+        this.messageResult = new MessageResult(
+                MESSAGE_RESULT_CONTENT_VALUE,
+                null,
+                null
+        );
+        var result = this.messageResult.download(FILE);
+
+        isMessageResultNotChanged(result);
+    }
+
+    @Test
     void testDownload_withAuth_expectCorrectResponse() throws IOException {
         when(this.fileResult.download(
                 any(),
                 (SdkAuth) any()
         )).thenAnswer(res -> FILE);
+
+        var result = this.messageResult.download(
+                FILE,
+                FromDeveloper.doPass(new ApiCredentials(API_CREDENTIALS))
+        );
+
+        isMessageResultNotChanged(result);
+    }
+
+    @Test
+    void testDownload_withAuthAndEmptyFileResult_expectCorrectResponse()
+            throws IOException {
+        this.messageResult = new MessageResult(
+                MESSAGE_RESULT_CONTENT_VALUE,
+                null,
+                null
+        );
 
         var result = this.messageResult.download(
                 FILE,
@@ -99,12 +128,46 @@ public class MessageResultTest {
     }
 
     @Test
+    void testDownload_withHttpExecutorContextAndEmptyFileResult_expectCorrectResponse()
+            throws IOException {
+        this.messageResult = new MessageResult(
+                MESSAGE_RESULT_CONTENT_VALUE,
+                null,
+                null
+        );
+
+        var result = this.messageResult.download(
+                FILE,
+                new HttpExecutorContext(new ApiCredentials(API_CREDENTIALS))
+        );
+
+        isMessageResultNotChanged(result);
+    }
+
+    @Test
     void testDownload_withRetrieveExecutor_expectCorrectResponse()
             throws IOException {
         when(this.fileResult.download(
                 any(),
                 (RetrieveFileContentHttpExecutor) any()
         )).thenAnswer(res -> FILE);
+
+        var result = this.messageResult.download(
+                FILE,
+                mock(RetrieveFileContentHttpExecutor.class)
+        );
+
+        isMessageResultNotChanged(result);
+    }
+
+    @Test
+    void testDownload_withRetrieveExecutorAndEmptyFileResult_expectCorrectResponse()
+            throws IOException {
+        this.messageResult = new MessageResult(
+                MESSAGE_RESULT_CONTENT_VALUE,
+                null,
+                null
+        );
 
         var result = this.messageResult.download(
                 FILE,
