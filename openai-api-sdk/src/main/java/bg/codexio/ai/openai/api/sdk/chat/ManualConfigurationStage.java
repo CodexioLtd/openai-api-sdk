@@ -55,6 +55,13 @@ public class ManualConfigurationStage
         );
     }
 
+    public LogprobsStage logprobs() {
+        return new LogprobsStage(
+                this.executor,
+                this.requestBuilder
+        );
+    }
+
     /**
      * After things are configured, go ahead.
      *
