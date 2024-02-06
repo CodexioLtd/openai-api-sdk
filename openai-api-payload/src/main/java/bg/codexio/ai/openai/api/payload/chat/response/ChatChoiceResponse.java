@@ -9,7 +9,8 @@ public record ChatChoiceResponse(
         ChatMessage message,
         ChatMessage delta,
         String finishReason,
-        int index
+        int index,
+        Logprobs logprobs
 )
         implements Mergeable<ChatChoiceResponse> {
 
@@ -18,7 +19,8 @@ public record ChatChoiceResponse(
                 null,
                 null,
                 null,
-                0
+                0,
+                null
         );
     }
 
@@ -70,7 +72,18 @@ public record ChatChoiceResponse(
                 Math.max(
                         this.index(),
                         other.index()
-                )
+                ),
+                new Logprobs(Mergeable.join(
+                        this.logprobs()
+                            .content(),
+                        other.logprobs.content(),
+                        c -> c.logprob() != null,
+                        Content::logprob,
+                        Content::empty,
+                        Content::merge,
+                        c -> c.logprob() != null
+                ))
+
         );
     }
 }
