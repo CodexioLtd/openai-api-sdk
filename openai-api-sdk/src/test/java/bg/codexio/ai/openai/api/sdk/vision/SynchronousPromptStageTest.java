@@ -38,7 +38,8 @@ public class SynchronousPromptStageTest {
                         ),
                         null,
                         null,
-                        0
+                        0,
+                        null
                 ))
         );
     }

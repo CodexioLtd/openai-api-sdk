@@ -44,7 +44,8 @@ public class ReactivePromptStageTest {
                         ),
                         null,
                         null,
-                        0
+                        0,
+                        null
                 ))
         );
     }

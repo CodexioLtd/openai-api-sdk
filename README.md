@@ -53,6 +53,7 @@ Of course, due to its native SDK, objects of any kind are easily created. There 
     * [AI Behavior](#ai-behavior)
     * [Manual Configuration](#manual-configuration)
         * [Tokens Configuration](#tokens-configuration)
+        * [Log probabilities Configuration](#log-probabilities-configuration)
         * [Tools Configuration](#tools-configuration)
 * [Images API SDK](#images-api-sdk)
     * [Creating Images](#creating-images)
@@ -144,7 +145,7 @@ In the next chapters you will see an explanation of all key concepts.
     </summary>
 
   | Artifact              | Description                                                                                       |
-    |-----------------------|---------------------------------------------------------------------------------------------------|
+  |-----------------------|---------------------------------------------------------------------------------------------------|
   | `openai-api-models`   | Contains info only for AI Model namings, such as GPT-4-Preview, DALL-E-2 and so on                |
   | `openai-api-payload`  | Contains Request/Response DTO models and related information                                      |
   | `openai-api-http`     | Contains HTTP Clients such as `ChatHttpExecutor`, `CreateImageHttpExecutor`, etc., ...            |
@@ -811,7 +812,7 @@ public class Main {
 ### Manual Configuration
 
 The `deepConfigure()` method gives you a possibility to adjust not only the `accuracy`,
-but also the `tokens` and the `tools`.
+but also the `tokens`,`log probabilities` and the `tools`.
 
 #### Tokens Configuration
 
@@ -840,6 +841,58 @@ public class Main {
             .choices(2)
             .and()
             .done();
+    }
+}
+```
+
+#### Log probabilities Configuration
+
+You can configure your AI to whether to return the log probabilities of each output token or not.
+Here is how:
+
+```java
+public class ChatAskWithEnabledLogprobabilites {
+
+    public static void main(String[] args) {
+        var chatResponse = Chat.defaults()
+                               .and()
+                               .poweredByGPT40()
+                               .deepConfigure()
+                               .logprobs()
+                               .enable()
+                               .and()
+                               .done()
+                               .andRespond()
+                               .immediate()
+                               .askRaw("Which is the highest mountain in " + "Bulgaria?");
+
+        System.out.println(chatResponse);
+    }
+}
+```
+
+Also, you can configure the number of tokens to return at each token position.This value needs
+to be an integer between 0 and 5.Please note that, when you set the desired number, `withTop(topLogprobs)` will
+automatically enable the log probability for you, eliminating the need to call the `enable()`.
+Here is how:
+
+```java
+public class ChatAskWithTopLogprobabilites {
+
+    public static void main(String[] args) {
+        var chatResponse = Chat.defaults()
+                               .and()
+                               .poweredByGPT40()
+                               .deepConfigure()
+                               .logprobs()
+                               .withTop(2)
+                               .and()
+                               .done()
+                               .andRespond()
+                               .immediate()
+                               .askRaw("Which is the highest mountain in " + "Bulgaria?");
+
+        System.out.println(chatResponse);
     }
 }
 ```
