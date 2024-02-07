@@ -812,7 +812,7 @@ public class Main {
 ### Manual Configuration
 
 The `deepConfigure()` method gives you a possibility to adjust not only the `accuracy`,
-but also the `tokens`,`log probabilities` and the `tools`.
+but also the `tokens`, `log probabilities` and the `tools`.
 
 #### Tokens Configuration
 

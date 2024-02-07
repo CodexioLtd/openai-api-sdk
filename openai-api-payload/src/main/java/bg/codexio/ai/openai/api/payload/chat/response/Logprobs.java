@@ -9,6 +9,7 @@ public record Logprobs(
         List<Content> content
 )
         implements Mergeable<Logprobs> {
+
     @Override
     public Logprobs merge(Logprobs other) {
         return new Logprobs(Objects.requireNonNullElse(
