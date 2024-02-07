@@ -25,10 +25,10 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 public class ChatHttpExecutorTest {
 
     private static final String URL = TEST_BASE_URL.concat("/chat/completions");
-    private static final String JSON_NO_STREAM_REQUEST =
-            "{\"model\":\"test" + "-ai-model\",\"stream\":false}";
-    private static final String JSON_WITH_STREAM_REQUEST =
-            "{\"model\":\"test" + "-ai-model\",\"stream\":true}";
+    private static final String JSON_NO_STREAM_REQUEST = "{\"model\":\"test"
+            + "-ai-model\",\"logprobs\":false,\"stream\":false}";
+    private static final String JSON_WITH_STREAM_REQUEST = "{\"model\":\"test"
+            + "-ai-model\",\"logprobs\":false,\"stream\":true}";
     private static final ChatMessageRequest REQUEST_DTO =
             ChatMessageRequest.builder()
                                                                             .withModel("test-ai-model")
