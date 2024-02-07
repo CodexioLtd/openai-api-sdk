@@ -21,14 +21,14 @@ public class ManualConfigurationStageTest {
 
     @Test
     public void testAccuracy_expectCorrectBuilder() {
-        AccuracyStage stage = this.manualConfigurationStage.accuracy();
+        var stage = this.manualConfigurationStage.accuracy();
 
         this.previousValuesRemainUnchanged(stage);
     }
 
     @Test
     public void testToken_expectCorrectBuilder() {
-        TokenStage stage = this.manualConfigurationStage.tokens();
+        var stage = this.manualConfigurationStage.tokens();
 
         this.previousValuesRemainUnchanged(stage);
     }
@@ -36,7 +36,14 @@ public class ManualConfigurationStageTest {
 
     @Test
     public void testTools_expectCorrectBuilder() {
-        ToolStage stage = this.manualConfigurationStage.tools();
+        var stage = this.manualConfigurationStage.tools();
+
+        this.previousValuesRemainUnchanged(stage);
+    }
+
+    @Test
+    public void testLogprobs_expectCorrectBuilder() {
+        var stage = this.manualConfigurationStage.logprobs();
 
         this.previousValuesRemainUnchanged(stage);
     }

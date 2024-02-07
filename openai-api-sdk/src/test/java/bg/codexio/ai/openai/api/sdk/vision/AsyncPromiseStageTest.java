@@ -56,7 +56,8 @@ public class AsyncPromiseStageTest {
                         ),
                         null,
                         null,
-                        0
+                        0,
+                        null
                 ))
         );
     }

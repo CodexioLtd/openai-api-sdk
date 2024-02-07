@@ -55,6 +55,11 @@ public class ManualConfigurationStage
         );
     }
 
+    /**
+     * Configures logprobs and top_logprobs
+     *
+     * @return {@link LogprobsStage}
+     */
     public LogprobsStage logprobs() {
         return new LogprobsStage(
                 this.executor,

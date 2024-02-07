@@ -63,21 +63,24 @@ public class InternalAssertions {
                     InternalAssertions.CHAT_MESSAGE_1,
                     InternalAssertions.CHAT_MESSAGE_1,
                     "test-finish-reason",
-                    1
+                    1,
+                    null
             );
     static final ChatChoiceResponse CHAT_CHOICE_RESPONSE_2 =
             new ChatChoiceResponse(
                     InternalAssertions.CHAT_MESSAGE_2,
                     InternalAssertions.CHAT_MESSAGE_2,
                     "test-finish-reason",
-                    1
+                    1,
+                    null
             );
     static final ChatChoiceResponse CHAT_CHOICE_RESPONSE_3 =
             new ChatChoiceResponse(
                     InternalAssertions.CHAT_MESSAGE_WITH_TOOL_CALLS,
                     InternalAssertions.CHAT_MESSAGE_WITH_TOOL_CALLS,
                     "test-finish-reason",
-                    1
+                    1,
+                    null
             );
     static final ChatMessageResponse CHAT_MESSAGE_RESPONSE =
             new ChatMessageResponse(
