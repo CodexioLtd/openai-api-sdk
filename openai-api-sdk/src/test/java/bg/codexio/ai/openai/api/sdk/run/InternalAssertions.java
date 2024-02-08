@@ -15,8 +15,8 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
-import static bg.codexio.ai.openai.api.sdk.CommonTestConstantsUtils.FILE_IDS_VAR_ARGS;
-import static bg.codexio.ai.openai.api.sdk.CommonTestConstantsUtils.METADATA_MAP;
+import static bg.codexio.ai.openai.api.sdk.CommonTestAssertions.FILE_IDS_VAR_ARGS;
+import static bg.codexio.ai.openai.api.sdk.CommonTestAssertions.METADATA_MAP;
 import static bg.codexio.ai.openai.api.sdk.assistant.InternalAssertions.ASSISTANT_ID;
 import static bg.codexio.ai.openai.api.sdk.thread.InternalAssertions.THREAD_ID;
 import static org.junit.jupiter.api.Assertions.assertEquals;

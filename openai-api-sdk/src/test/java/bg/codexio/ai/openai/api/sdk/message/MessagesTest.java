@@ -6,7 +6,7 @@ import bg.codexio.ai.openai.api.sdk.Authenticator;
 import bg.codexio.ai.openai.api.sdk.auth.FromDeveloper;
 import org.junit.jupiter.api.Test;
 
-import static bg.codexio.ai.openai.api.sdk.CommonTestConstantsUtils.API_CREDENTIALS;
+import static bg.codexio.ai.openai.api.sdk.CommonTestAssertions.API_CREDENTIALS;
 import static bg.codexio.ai.openai.api.sdk.message.InternalAssertions.MESSAGE_HTTP_EXECUTOR;
 import static bg.codexio.ai.openai.api.sdk.message.InternalAssertions.RETRIEVE_LIST_MESSAGES_HTTP_EXECUTOR;
 import static bg.codexio.ai.openai.api.sdk.message.Messages.*;

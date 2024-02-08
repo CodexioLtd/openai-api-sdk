@@ -5,7 +5,9 @@ import bg.codexio.ai.openai.api.payload.file.response.FileContentResponse;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-import static bg.codexio.ai.openai.api.sdk.file.InternalAssertions.*;
+import static bg.codexio.ai.openai.api.sdk.CommonTestAssertions.RETRIEVE_FILE_CONTENT_HTTP_EXECUTOR;
+import static bg.codexio.ai.openai.api.sdk.file.InternalAssertions.FILE_TEST_ID;
+import static bg.codexio.ai.openai.api.sdk.file.InternalAssertions.FILE_TEST_NAME;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 
 public class FileDownloadingNameTypeStageTest {

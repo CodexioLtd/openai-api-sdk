@@ -6,7 +6,7 @@ import bg.codexio.ai.openai.api.sdk.Authenticator;
 import bg.codexio.ai.openai.api.sdk.auth.FromDeveloper;
 import org.junit.jupiter.api.Test;
 
-import static bg.codexio.ai.openai.api.sdk.CommonTestConstantsUtils.API_CREDENTIALS;
+import static bg.codexio.ai.openai.api.sdk.CommonTestAssertions.*;
 import static bg.codexio.ai.openai.api.sdk.file.Files.*;
 import static bg.codexio.ai.openai.api.sdk.file.InternalAssertions.FILE_RESPONSE;
 import static bg.codexio.ai.openai.api.sdk.file.InternalAssertions.FILE_TEST_ID;
@@ -19,11 +19,10 @@ public class FilesTest {
 
     @Test
     public void testThroughHttp_withUploadExecutor_expectExecutor() {
-        var nextStage =
-                throughHttp(InternalAssertions.UPLOAD_FILE_HTTP_EXECUTOR);
+        var nextStage = throughHttp(UPLOAD_FILE_HTTP_EXECUTOR);
 
         assertEquals(
-                InternalAssertions.UPLOAD_FILE_HTTP_EXECUTOR,
+                UPLOAD_FILE_HTTP_EXECUTOR,
                 nextStage.executor
         );
     }
@@ -31,12 +30,12 @@ public class FilesTest {
     @Test
     public void testThroughHttp_withRetrieveExecutorAndFileId_expectExecutor() {
         var nextStage = throughHttp(
-                InternalAssertions.RETRIEVE_FILE_CONTENT_HTTP_EXECUTOR,
+                RETRIEVE_FILE_CONTENT_HTTP_EXECUTOR,
                 FILE_TEST_ID
         );
 
         assertEquals(
-                InternalAssertions.RETRIEVE_FILE_CONTENT_HTTP_EXECUTOR,
+                RETRIEVE_FILE_CONTENT_HTTP_EXECUTOR,
                 nextStage.executor
         );
     }
@@ -44,12 +43,12 @@ public class FilesTest {
     @Test
     public void testThroughHttp_withRetrieveExecutorAndFileResponse_expectExecutor() {
         var nextStage = throughHttp(
-                InternalAssertions.RETRIEVE_FILE_CONTENT_HTTP_EXECUTOR,
+                RETRIEVE_FILE_CONTENT_HTTP_EXECUTOR,
                 FILE_RESPONSE
         );
 
         assertEquals(
-                InternalAssertions.RETRIEVE_FILE_CONTENT_HTTP_EXECUTOR,
+                RETRIEVE_FILE_CONTENT_HTTP_EXECUTOR,
                 nextStage.executor
         );
     }

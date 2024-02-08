@@ -2,8 +2,6 @@ package bg.codexio.ai.openai.api.sdk.file;
 
 import bg.codexio.ai.openai.api.http.HttpExecutorContext;
 import bg.codexio.ai.openai.api.payload.credentials.ApiCredentials;
-import bg.codexio.ai.openai.api.payload.file.request.UploadFileRequest;
-import bg.codexio.ai.openai.api.sdk.HttpBuilder;
 import bg.codexio.ai.openai.api.sdk.auth.FromDeveloper;
 import bg.codexio.ai.openai.api.sdk.auth.SdkAuth;
 import org.junit.jupiter.api.Test;
@@ -12,11 +10,11 @@ import org.mockito.MockedStatic;
 import java.io.File;
 import java.io.IOException;
 
-import static bg.codexio.ai.openai.api.sdk.CommonTestConstantsUtils.API_CREDENTIALS;
+import static bg.codexio.ai.openai.api.sdk.CommonTestAssertions.*;
 import static bg.codexio.ai.openai.api.sdk.file.InternalAssertions.*;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.ArgumentMatchers.any;
-import static org.mockito.Mockito.*;
+import static org.mockito.Mockito.mockStatic;
 
 public class FileResultTest {
 
@@ -37,15 +35,10 @@ public class FileResultTest {
                 var mockedFile = mockStatic(Files.class)
         ) {
             executeFileContentResponse();
-            HttpBuilder<FileActionTypeStage> httpBuilderMock =
-                    mock(HttpBuilder.class);
-            mockedFile.when(Files::defaults)
-                      .thenReturn(httpBuilderMock);
-            mockedFile.when(httpBuilderMock::and)
-                      .thenReturn(new FileActionTypeStage(
-                              UPLOAD_FILE_HTTP_EXECUTOR,
-                              RETRIEVE_FILE_CONTENT_HTTP_EXECUTOR
-                      ));
+            mockFilesToActionTypeStage(
+                    mockedFile,
+                    Files::defaults
+            );
 
             this.downloadMockedExecution(downloadUtils);
             var result = FILE_RESULT.download(TARGET_TEST_FOLDER);
@@ -60,15 +53,10 @@ public class FileResultTest {
                 var mockedFile = mockStatic(Files.class)
         ) {
             executeFileContentResponse();
-            HttpBuilder<FileActionTypeStage> httpBuilderMock =
-                    mock(HttpBuilder.class);
-            mockedFile.when(() -> Files.authenticate((SdkAuth) any()))
-                      .thenReturn(httpBuilderMock);
-            mockedFile.when(httpBuilderMock::and)
-                      .thenReturn(new FileActionTypeStage(
-                              UPLOAD_FILE_HTTP_EXECUTOR,
-                              RETRIEVE_FILE_CONTENT_HTTP_EXECUTOR
-                      ));
+            mockFilesToActionTypeStage(
+                    mockedFile,
+                    () -> Files.authenticate((SdkAuth) any())
+            );
 
             this.downloadMockedExecution(downloadUtils);
             var result = FILE_RESULT.download(
@@ -88,15 +76,10 @@ public class FileResultTest {
                 var mockedFile = mockStatic(Files.class)
         ) {
             executeFileContentResponse();
-            HttpBuilder<FileActionTypeStage> httpBuilderMock =
-                    mock(HttpBuilder.class);
-            mockedFile.when(() -> Files.authenticate((HttpExecutorContext) any()))
-                      .thenReturn(httpBuilderMock);
-            mockedFile.when(httpBuilderMock::and)
-                      .thenReturn(new FileActionTypeStage(
-                              UPLOAD_FILE_HTTP_EXECUTOR,
-                              RETRIEVE_FILE_CONTENT_HTTP_EXECUTOR
-                      ));
+            mockFilesToActionTypeStage(
+                    mockedFile,
+                    () -> Files.authenticate((HttpExecutorContext) any())
+            );
 
             this.downloadMockedExecution(downloadUtils);
             var result = FILE_RESULT.download(
@@ -115,15 +98,7 @@ public class FileResultTest {
                 var mockedFile = mockStatic(Files.class)
         ) {
             executeFileContentResponse();
-            mockedFile.when(() -> Files.throughHttp(
-                              any(),
-                              eq(FILE_TEST_ID)
-                      ))
-                      .thenReturn(new FileDownloadingNameTypeStage<>(
-                              RETRIEVE_FILE_CONTENT_HTTP_EXECUTOR,
-                              UploadFileRequest.builder(),
-                              FILE_TEST_ID
-                      ));
+            mockFilesToDownloadingNameTypeStage(mockedFile);
             this.downloadMockedExecution(downloadUtils);
 
             var result = FILE_RESULT.download(

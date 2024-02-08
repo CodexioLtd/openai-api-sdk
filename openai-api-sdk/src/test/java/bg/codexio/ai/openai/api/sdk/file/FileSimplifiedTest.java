@@ -5,8 +5,8 @@ import bg.codexio.ai.openai.api.sdk.HttpBuilder;
 import org.junit.jupiter.api.Test;
 import org.mockito.MockedStatic;
 
-import static bg.codexio.ai.openai.api.sdk.CommonTestConstantsUtils.FILE;
-import static bg.codexio.ai.openai.api.sdk.file.InternalAssertions.*;
+import static bg.codexio.ai.openai.api.sdk.CommonTestAssertions.*;
+import static bg.codexio.ai.openai.api.sdk.file.InternalAssertions.FILE_RESPONSE;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.mockito.ArgumentMatchers.any;
