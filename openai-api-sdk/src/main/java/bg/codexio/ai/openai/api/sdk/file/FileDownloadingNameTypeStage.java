@@ -9,7 +9,7 @@ public class FileDownloadingNameTypeStage<O extends Mergeable<O>>
 
     private final String fileId;
 
-    FileDownloadingNameTypeStage(
+    public FileDownloadingNameTypeStage(
             DefaultOpenAIHttpExecutor<UploadFileRequest, O> executor,
             UploadFileRequest.Builder requestBuilder,
             String fileId

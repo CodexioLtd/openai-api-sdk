@@ -3,6 +3,8 @@ package bg.codexio.ai.openai.api.sdk.file;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
+import static bg.codexio.ai.openai.api.sdk.CommonTestAssertions.RETRIEVE_FILE_CONTENT_HTTP_EXECUTOR;
+import static bg.codexio.ai.openai.api.sdk.CommonTestAssertions.UPLOAD_FILE_HTTP_EXECUTOR;
 import static bg.codexio.ai.openai.api.sdk.file.InternalAssertions.*;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 

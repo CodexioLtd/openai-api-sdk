@@ -13,8 +13,8 @@ import org.junit.jupiter.api.Test;
 
 import java.util.Arrays;
 
-import static bg.codexio.ai.openai.api.sdk.CommonTestConstantsUtils.API_CREDENTIALS;
-import static bg.codexio.ai.openai.api.sdk.CommonTestConstantsUtils.FILE;
+import static bg.codexio.ai.openai.api.sdk.CommonTestAssertions.API_CREDENTIALS;
+import static bg.codexio.ai.openai.api.sdk.CommonTestAssertions.FILE;
 import static bg.codexio.ai.openai.api.sdk.assistant.InternalAssertions.*;
 import static bg.codexio.ai.openai.api.sdk.file.InternalAssertions.FILE_RESPONSE;
 import static org.junit.jupiter.api.Assertions.assertAll;

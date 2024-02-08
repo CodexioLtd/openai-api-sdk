@@ -6,12 +6,11 @@ import bg.codexio.ai.openai.api.payload.file.response.FileResponse;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-import static bg.codexio.ai.openai.api.sdk.file.InternalAssertions.UPLOAD_FILE_HTTP_EXECUTOR;
+import static bg.codexio.ai.openai.api.sdk.CommonTestAssertions.UPLOAD_FILE_HTTP_EXECUTOR;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 
 public class FileTargetingStageTest {
 
-    public static final String ASSISTANT_PURPOSE_NAME = "assistants";
     private FileTargetingStage<FileResponse> fileTargetingStage;
 
     @BeforeEach
