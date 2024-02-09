@@ -33,6 +33,10 @@ public record MessageResult(
         );
     }
 
+    public FileResult file() {
+        return this.fileResult.build();
+    }
+
     public String download(File targetFolder) throws IOException {
         if (Objects.nonNull(this.fileResult)) {
             this.fileResult.build()
@@ -50,10 +54,6 @@ public record MessageResult(
                 this.message,
                 EMPTY
         );
-    }
-
-    public FileResult file() {
-        return this.fileResult.build();
     }
 
     public String download(
