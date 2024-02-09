@@ -1,8 +1,11 @@
 package bg.codexio.ai.openai.api.sdk.message;
 
+import bg.codexio.ai.openai.api.http.HttpExecutorContext;
+import bg.codexio.ai.openai.api.http.file.RetrieveFileContentHttpExecutor;
 import bg.codexio.ai.openai.api.http.message.MessageHttpExecutor;
 import bg.codexio.ai.openai.api.http.message.RetrieveListMessagesHttpExecutor;
 import bg.codexio.ai.openai.api.payload.Mergeable;
+import bg.codexio.ai.openai.api.payload.credentials.ApiCredentials;
 import bg.codexio.ai.openai.api.payload.message.content.ImageFileContent;
 import bg.codexio.ai.openai.api.payload.message.content.TextContent;
 import bg.codexio.ai.openai.api.payload.message.content.TextMessageContent;
@@ -12,14 +15,17 @@ import bg.codexio.ai.openai.api.payload.message.content.annotation.FilePath;
 import bg.codexio.ai.openai.api.payload.message.content.annotation.FilePathAnnotation;
 import bg.codexio.ai.openai.api.payload.message.response.ListMessagesResponse;
 import bg.codexio.ai.openai.api.payload.message.response.MessageResponse;
+import bg.codexio.ai.openai.api.sdk.auth.FromDeveloper;
+import bg.codexio.ai.openai.api.sdk.auth.SdkAuth;
 import bg.codexio.ai.openai.api.sdk.file.FileResult;
 
+import java.io.IOException;
 import java.util.Arrays;
 import java.util.List;
 
-import static bg.codexio.ai.openai.api.sdk.CommonTestAssertions.FILE_IDS_VAR_ARGS;
-import static bg.codexio.ai.openai.api.sdk.CommonTestAssertions.METADATA_MAP;
+import static bg.codexio.ai.openai.api.sdk.CommonTestAssertions.*;
 import static bg.codexio.ai.openai.api.sdk.assistant.InternalAssertions.ASSISTANT_ID;
+import static bg.codexio.ai.openai.api.sdk.message.constant.MessageConstants.CREATED_IMAGE_FILE_MESSAGE;
 import static bg.codexio.ai.openai.api.sdk.run.InternalAssertions.RUNNABLE_ID;
 import static bg.codexio.ai.openai.api.sdk.thread.InternalAssertions.THREAD_ID;
 import static org.junit.jupiter.api.Assertions.assertEquals;
@@ -135,10 +141,11 @@ public class InternalAssertions {
             "file_path_test_id",
             "test.txt"
     );
-    static MessageResult MESSAGE_TEST_RESULT = new MessageResult(MESSAGE_RESULT_CONTENT_VALUE,
-                                                                 FileResult.builder()
-                                                                           .withId("file_path_test_id")
-                                                                           .withFileName("test.txt"),
+    static MessageResult MESSAGE_TEST_RESULT = new MessageResult(
+            MESSAGE_RESULT_CONTENT_VALUE,
+            FileResult.builder()
+                      .withId("file_path_test_id")
+                      .withFileName("test.txt"),
             "test_file_id"
     );
     static MessageResult MESSAGE_TEST_RESULT_WITHOUT_TEXT = new MessageResult(
@@ -210,9 +217,64 @@ public class InternalAssertions {
         when(messageConfigurationStage.httpExecutor.executeWithPathVariables(any())).thenAnswer(res -> LIST_MESSAGE_RESPONSE_WITH_TEXT_CONTENT);
     }
 
+    static void mockFileResultDownloadWithAuth(FileResult fileResult)
+            throws IOException {
+        when(fileResult.download(
+                any(),
+                (SdkAuth) any()
+        )).thenAnswer(res -> FILE);
+    }
+
+    static String executeDownloadInMessageResultWithAuth(MessageResult messageResult)
+            throws IOException {
+        return messageResult.download(
+                FILE,
+                FromDeveloper.doPass(new ApiCredentials(API_CREDENTIALS))
+        );
+    }
+
+    static void mockFileResultDownloadWithHttpExecutor(FileResult fileResult)
+            throws IOException {
+        when(fileResult.download(
+                any(),
+                (HttpExecutorContext) any()
+        )).thenAnswer(res -> FILE);
+    }
+
+    static String executeDownloadInMessageResultWithHttpExecutor(MessageResult messageResult)
+            throws IOException {
+        return messageResult.download(
+                FILE,
+                new HttpExecutorContext(new ApiCredentials(API_CREDENTIALS))
+        );
+    }
+
+    static void mockFileResultDownloadWithRetrieveExecutor(FileResult fileResult)
+            throws IOException {
+        when(fileResult.download(
+                any(),
+                (RetrieveFileContentHttpExecutor) any()
+        )).thenAnswer(res -> FILE);
+    }
+
+    static String executeDownloadInMessageResultWithRetrieveExecutor(MessageResult messageResult)
+            throws IOException {
+        return messageResult.download(
+                FILE,
+                mock(RetrieveFileContentHttpExecutor.class)
+        );
+    }
+
     static void isMessageResultNotChanged(String result) {
         assertEquals(
                 MESSAGE_TEST_RESULT.message(),
+                result
+        );
+    }
+
+    static void isDefaultMessageForCreatedImageReturned(String result) {
+        assertEquals(
+                CREATED_IMAGE_FILE_MESSAGE,
                 result
         );
     }

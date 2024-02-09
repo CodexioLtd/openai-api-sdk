@@ -12,7 +12,6 @@ import java.io.File;
 import java.util.Map;
 
 import static org.mockito.ArgumentMatchers.any;
-import static org.mockito.ArgumentMatchers.eq;
 import static org.mockito.Mockito.mock;
 
 public class CommonTestAssertions {
@@ -57,7 +56,7 @@ public class CommonTestAssertions {
     public static void mockFilesToDownloadingNameTypeStage(MockedStatic<Files> mockedFile) {
         mockedFile.when(() -> Files.throughHttp(
                           any(),
-                          eq(FILE_TEST_ID)
+                          (String) any()
                   ))
                   .thenReturn(new FileDownloadingNameTypeStage<>(
                           RETRIEVE_FILE_CONTENT_HTTP_EXECUTOR,
