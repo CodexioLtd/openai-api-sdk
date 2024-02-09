@@ -1,9 +1,6 @@
 package bg.codexio.ai.openai.api.sdk.message;
 
 import bg.codexio.ai.openai.api.http.HttpExecutorContext;
-import bg.codexio.ai.openai.api.http.file.RetrieveFileContentHttpExecutor;
-import bg.codexio.ai.openai.api.payload.credentials.ApiCredentials;
-import bg.codexio.ai.openai.api.sdk.auth.FromDeveloper;
 import bg.codexio.ai.openai.api.sdk.auth.SdkAuth;
 import bg.codexio.ai.openai.api.sdk.file.DownloadExecutor;
 import bg.codexio.ai.openai.api.sdk.file.FileResult;
@@ -84,6 +81,15 @@ public class MessageResultTest {
     }
 
     @Test
+    void testDownload_withMessageOnly_expectCorrectResponse()
+            throws IOException {
+        this.initializeMessageResultWithMessageOnly();
+        var result = this.messageResult.download(FILE);
+
+        isMessageResultNotChanged(result);
+    }
+
+    @Test
     void testDownload_withEmptyFileResult_expectCorrectResponse()
             throws IOException {
         this.initializeMessageResultWithImageFileId();
@@ -125,27 +131,10 @@ public class MessageResultTest {
     }
 
     @Test
-    void testDownload_withMessageOnly_expectCorrectResponse()
-            throws IOException {
-        this.initializeMessageResultWithMessageOnly();
-        var result = this.messageResult.download(FILE);
-
-        isMessageResultNotChanged(result);
-    }
-
-    @Test
     void testDownload_withAuth_expectCorrectResponse() throws IOException {
         this.initializeDefaultMessageResult();
-        when(this.fileResult.download(
-                any(),
-                (SdkAuth) any()
-        )).thenAnswer(res -> FILE);
-
-        var result = this.messageResult.download(
-                FILE,
-                FromDeveloper.doPass(new ApiCredentials(API_CREDENTIALS))
-        );
-
+        mockFileResultDownloadWithAuth(this.fileResult);
+        var result = executeDownloadInMessageResultWithAuth(this.messageResult);
         isMessageResultNotChanged(result);
     }
 
@@ -153,21 +142,8 @@ public class MessageResultTest {
     void testDownload_withAuthAndEmptyMessage_expectCorrectResponse()
             throws IOException {
         this.initializeMessageResultWithoutMessage();
-        this.messageResult = new MessageResult(
-                null,
-                this.fileResultBuilder,
-                null
-        );
-        when(this.fileResult.download(
-                any(),
-                (SdkAuth) any()
-        )).thenAnswer(res -> FILE);
-
-        var result = this.messageResult.download(
-                FILE,
-                FromDeveloper.doPass(new ApiCredentials(API_CREDENTIALS))
-        );
-
+        mockFileResultDownloadWithAuth(this.fileResult);
+        var result = executeDownloadInMessageResultWithAuth(this.messageResult);
         assertEquals(
                 EMPTY,
                 result
@@ -178,12 +154,7 @@ public class MessageResultTest {
     void testDownload_withAuthAndMessageOnly_expectCorrectResponse()
             throws IOException {
         this.initializeMessageResultWithMessageOnly();
-
-        var result = this.messageResult.download(
-                FILE,
-                FromDeveloper.doPass(new ApiCredentials(API_CREDENTIALS))
-        );
-
+        var result = executeDownloadInMessageResultWithAuth(this.messageResult);
         isMessageResultNotChanged(result);
     }
 
@@ -200,11 +171,8 @@ public class MessageResultTest {
                     mockedFile,
                     () -> Files.authenticate((SdkAuth) any())
             );
-            var result = this.messageResult.download(
-                    FILE,
-                    FromDeveloper.doPass(new ApiCredentials(API_CREDENTIALS))
-            );
-
+            var result =
+                    executeDownloadInMessageResultWithAuth(this.messageResult);
             isMessageResultNotChanged(result);
         }
     }
@@ -222,15 +190,9 @@ public class MessageResultTest {
                     mockedFile,
                     () -> Files.authenticate((SdkAuth) any())
             );
-            var result = this.messageResult.download(
-                    FILE,
-                    FromDeveloper.doPass(new ApiCredentials(API_CREDENTIALS))
-            );
-
-            assertEquals(
-                    CREATED_IMAGE_FILE_MESSAGE,
-                    result
-            );
+            var result =
+                    executeDownloadInMessageResultWithAuth(this.messageResult);
+            isDefaultMessageForCreatedImageReturned(result);
         }
     }
 
@@ -238,16 +200,9 @@ public class MessageResultTest {
     void testDownload_withHttpExecutorContext_expectCorrectResponse()
             throws IOException {
         this.initializeDefaultMessageResult();
-        when(this.fileResult.download(
-                any(),
-                (HttpExecutorContext) any()
-        )).thenAnswer(res -> FILE);
-
-        var result = this.messageResult.download(
-                FILE,
-                new HttpExecutorContext(new ApiCredentials(API_CREDENTIALS))
-        );
-
+        mockFileResultDownloadWithHttpExecutor(this.fileResult);
+        var result =
+                executeDownloadInMessageResultWithRetrieveExecutor(this.messageResult);
         isMessageResultNotChanged(result);
     }
 
@@ -255,16 +210,9 @@ public class MessageResultTest {
     void testDownload_withHttpExecutorContextAndEmptyMessage_expectCorrectResponse()
             throws IOException {
         this.initializeDefaultMessageResult();
-        when(this.fileResult.download(
-                any(),
-                (HttpExecutorContext) any()
-        )).thenAnswer(res -> FILE);
-
-        var result = this.messageResult.download(
-                FILE,
-                new HttpExecutorContext(new ApiCredentials(API_CREDENTIALS))
-        );
-
+        mockFileResultDownloadWithHttpExecutor(this.fileResult);
+        var result =
+                executeDownloadInMessageResultWithRetrieveExecutor(this.messageResult);
         isMessageResultNotChanged(result);
     }
 
@@ -272,10 +220,8 @@ public class MessageResultTest {
     void testDownload_withHttpExecutorContextWithMessageOnly_expectCorrectResponse()
             throws IOException {
         this.initializeMessageResultWithMessageOnly();
-        var result = this.messageResult.download(
-                FILE,
-                new HttpExecutorContext(new ApiCredentials(API_CREDENTIALS))
-        );
+        var result =
+                executeDownloadInMessageResultWithRetrieveExecutor(this.messageResult);
 
         isMessageResultNotChanged(result);
     }
@@ -292,10 +238,8 @@ public class MessageResultTest {
                     mockedFile,
                     () -> Files.authenticate((HttpExecutorContext) any())
             );
-            var result = this.messageResult.download(
-                    FILE,
-                    new HttpExecutorContext(new ApiCredentials(API_CREDENTIALS))
-            );
+            var result =
+                    executeDownloadInMessageResultWithHttpExecutor(this.messageResult);
 
             isMessageResultNotChanged(result);
         }
@@ -313,15 +257,10 @@ public class MessageResultTest {
                     mockedFile,
                     () -> Files.authenticate((HttpExecutorContext) any())
             );
-            var result = this.messageResult.download(
-                    FILE,
-                    new HttpExecutorContext(new ApiCredentials(API_CREDENTIALS))
-            );
+            var result =
+                    executeDownloadInMessageResultWithHttpExecutor(this.messageResult);
 
-            assertEquals(
-                    CREATED_IMAGE_FILE_MESSAGE,
-                    result
-            );
+            isDefaultMessageForCreatedImageReturned(result);
         }
     }
 
@@ -330,15 +269,9 @@ public class MessageResultTest {
     void testDownload_withRetrieveExecutor_expectCorrectResponse()
             throws IOException {
         this.initializeDefaultMessageResult();
-        when(this.fileResult.download(
-                any(),
-                (RetrieveFileContentHttpExecutor) any()
-        )).thenAnswer(res -> FILE);
-
-        var result = this.messageResult.download(
-                FILE,
-                mock(RetrieveFileContentHttpExecutor.class)
-        );
+        mockFileResultDownloadWithRetrieveExecutor(this.fileResult);
+        var result =
+                executeDownloadInMessageResultWithRetrieveExecutor(this.messageResult);
 
         isMessageResultNotChanged(result);
     }
@@ -347,15 +280,9 @@ public class MessageResultTest {
     void testDownload_withRetrieveExecutorAndEmptyMessage_expectCorrectResponse()
             throws IOException {
         this.initializeMessageResultWithoutMessage();
-        when(this.fileResult.download(
-                any(),
-                (RetrieveFileContentHttpExecutor) any()
-        )).thenAnswer(res -> FILE);
-
-        var result = this.messageResult.download(
-                FILE,
-                mock(RetrieveFileContentHttpExecutor.class)
-        );
+        mockFileResultDownloadWithRetrieveExecutor(this.fileResult);
+        var result =
+                executeDownloadInMessageResultWithRetrieveExecutor(this.messageResult);
 
         assertEquals(
                 EMPTY,
@@ -367,38 +294,40 @@ public class MessageResultTest {
     void testDownload_withRetrieveExecutorAndMessageOnly_expectCorrectResponse()
             throws IOException {
         this.initializeMessageResultWithMessageOnly();
-        this.messageResult = new MessageResult(
-                MESSAGE_RESULT_CONTENT_VALUE,
-                null,
-                null
-        );
-
-        var result = this.messageResult.download(
-                FILE,
-                mock(RetrieveFileContentHttpExecutor.class)
-        );
-
+        var result =
+                executeDownloadInMessageResultWithRetrieveExecutor(this.messageResult);
         isMessageResultNotChanged(result);
     }
 
-    //    @Test
-    //    void
-    //    testDownload_withRetrieveExecutorAndEmptyFileResult_expectCorrectResponse()
-    //            throws IOException {
-    //        this.initializeMessageResultWithImageFileId();
-    //        try (
-    //                var mockedFile = mockStatic(Files.class);
-    //                var downloadExecutor = mockStatic(DownloadExecutor.class)
-    //        ) {
-    //            mockFilesToDownloadingNameTypeStage(mockedFile);
-    //            var result = this.messageResult.download(
-    //                    FILE,
-    //                    mock(RetrieveFileContentHttpExecutor.class)
-    //            );
-    //
-    //            isMessageResultNotChanged(result);
-    //        }
-    //    }
+    @Test
+    void testDownload_withRetrieveExecutorAndEmptyFileResult_expectCorrectResponse()
+            throws IOException {
+        this.initializeMessageResultWithImageFileId();
+        try (
+                var mockedFile = mockStatic(Files.class);
+                var downloadExecutor = mockStatic(DownloadExecutor.class)
+        ) {
+            mockFilesToDownloadingNameTypeStage(mockedFile);
+            var result =
+                    executeDownloadInMessageResultWithRetrieveExecutor(this.messageResult);
+            isMessageResultNotChanged(result);
+        }
+    }
+
+    @Test
+    void testDownload_withRetrieveExecutorAndEmptyFileResultAndEmptyMessage_expectCorrectResponse()
+            throws IOException {
+        this.initializeMessageResultWithImageFileIdAndEmptyMessage();
+        try (
+                var mockedFile = mockStatic(Files.class);
+                var downloadExecutor = mockStatic(DownloadExecutor.class)
+        ) {
+            mockFilesToDownloadingNameTypeStage(mockedFile);
+            var result =
+                    executeDownloadInMessageResultWithRetrieveExecutor(this.messageResult);
+            isDefaultMessageForCreatedImageReturned(result);
+        }
+    }
 
     private void initializeDefaultMessageResult() {
         this.messageResult = new MessageResult(
