@@ -1,4 +1,4 @@
-package bg.codexio.ai.openai.api.sdk.file;
+package bg.codexio.ai.openai.api.sdk.file.upload;
 
 import bg.codexio.ai.openai.api.http.file.UploadFileHttpExecutor;
 import bg.codexio.ai.openai.api.payload.file.request.UploadFileRequest;

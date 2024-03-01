@@ -5,6 +5,9 @@ import bg.codexio.ai.openai.api.http.file.UploadFileHttpExecutor;
 import bg.codexio.ai.openai.api.payload.file.request.UploadFileRequest;
 import bg.codexio.ai.openai.api.payload.file.response.FileContentResponse;
 import bg.codexio.ai.openai.api.payload.file.response.FileResponse;
+import bg.codexio.ai.openai.api.sdk.file.download.FileDownloadingNameTypeStage;
+import bg.codexio.ai.openai.api.sdk.file.download.FileDownloadingStage;
+import bg.codexio.ai.openai.api.sdk.file.upload.FileTargetingStage;
 
 public class FileActionTypeStage {
 

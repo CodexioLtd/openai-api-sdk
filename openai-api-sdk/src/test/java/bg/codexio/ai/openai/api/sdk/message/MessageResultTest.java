@@ -2,9 +2,9 @@ package bg.codexio.ai.openai.api.sdk.message;
 
 import bg.codexio.ai.openai.api.http.HttpExecutorContext;
 import bg.codexio.ai.openai.api.sdk.auth.SdkAuth;
-import bg.codexio.ai.openai.api.sdk.file.DownloadExecutor;
 import bg.codexio.ai.openai.api.sdk.file.FileResult;
 import bg.codexio.ai.openai.api.sdk.file.Files;
+import bg.codexio.ai.openai.api.sdk.file.download.DownloadExecutor;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 

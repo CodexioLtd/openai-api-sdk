@@ -1,4 +1,4 @@
-package bg.codexio.ai.openai.api.sdk.file;
+package bg.codexio.ai.openai.api.sdk.file.download;
 
 import bg.codexio.ai.openai.api.payload.file.response.FileContentResponse;
 
@@ -8,7 +8,7 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.util.UUID;
 
-import static bg.codexio.ai.openai.api.sdk.file.DownloadExecutor.Streams.outputStream;
+import static bg.codexio.ai.openai.api.sdk.file.download.DownloadExecutor.Streams.outputStream;
 
 public class DownloadExecutor {
     private DownloadExecutor() {

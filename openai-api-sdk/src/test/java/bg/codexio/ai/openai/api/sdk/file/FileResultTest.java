@@ -4,6 +4,7 @@ import bg.codexio.ai.openai.api.http.HttpExecutorContext;
 import bg.codexio.ai.openai.api.payload.credentials.ApiCredentials;
 import bg.codexio.ai.openai.api.sdk.auth.FromDeveloper;
 import bg.codexio.ai.openai.api.sdk.auth.SdkAuth;
+import bg.codexio.ai.openai.api.sdk.file.download.DownloadExecutor;
 import org.junit.jupiter.api.Test;
 import org.mockito.MockedStatic;
 

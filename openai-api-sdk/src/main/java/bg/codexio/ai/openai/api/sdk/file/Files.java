@@ -8,6 +8,9 @@ import bg.codexio.ai.openai.api.payload.file.response.FileContentResponse;
 import bg.codexio.ai.openai.api.payload.file.response.FileResponse;
 import bg.codexio.ai.openai.api.sdk.HttpBuilder;
 import bg.codexio.ai.openai.api.sdk.auth.SdkAuth;
+import bg.codexio.ai.openai.api.sdk.file.download.FileDownloadingNameTypeStage;
+import bg.codexio.ai.openai.api.sdk.file.download.FileDownloadingStage;
+import bg.codexio.ai.openai.api.sdk.file.upload.FileTargetingStage;
 
 import static bg.codexio.ai.openai.api.sdk.Authenticator.autoAuthenticate;
 

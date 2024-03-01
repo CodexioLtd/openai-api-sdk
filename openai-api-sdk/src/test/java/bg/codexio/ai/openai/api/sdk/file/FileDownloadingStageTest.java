@@ -2,6 +2,8 @@ package bg.codexio.ai.openai.api.sdk.file;
 
 import bg.codexio.ai.openai.api.payload.file.request.UploadFileRequest;
 import bg.codexio.ai.openai.api.payload.file.response.FileContentResponse;
+import bg.codexio.ai.openai.api.sdk.file.download.DownloadExecutor;
+import bg.codexio.ai.openai.api.sdk.file.download.FileDownloadingStage;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 

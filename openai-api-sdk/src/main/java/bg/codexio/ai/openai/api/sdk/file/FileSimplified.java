@@ -14,6 +14,7 @@ public final class FileSimplified {
                     .and()
                     .upload()
                     .forAssistants()
+                    .immediate()
                     .feed(file);
     }
 
@@ -22,6 +23,7 @@ public final class FileSimplified {
                     .and()
                     .upload()
                     .forAssistants()
+                    .immediate()
                     .feedRaw(file);
     }
 }

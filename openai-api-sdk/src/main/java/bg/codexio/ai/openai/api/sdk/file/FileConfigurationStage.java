@@ -7,9 +7,10 @@ import bg.codexio.ai.openai.api.payload.file.request.UploadFileRequest;
 public abstract class FileConfigurationStage<O extends Mergeable<O>> {
 
     protected final DefaultOpenAIHttpExecutor<UploadFileRequest, O> executor;
+
     protected final UploadFileRequest.Builder requestBuilder;
 
-    FileConfigurationStage(
+    public FileConfigurationStage(
             DefaultOpenAIHttpExecutor<UploadFileRequest, O> executor,
             UploadFileRequest.Builder requestBuilder
     ) {

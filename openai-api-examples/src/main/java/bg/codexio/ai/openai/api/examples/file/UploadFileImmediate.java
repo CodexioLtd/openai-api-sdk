@@ -6,16 +6,17 @@ import bg.codexio.ai.openai.api.sdk.file.Files;
 
 import java.io.File;
 
-public class UploadFile {
+public class UploadFileImmediate {
 
     public static void main(String[] args) {
-        var file = new File(UploadFile.class.getClassLoader()
-                                            .getResource("fake-file.txt")
-                                            .getPath());
+        var file = new File(UploadFileImmediate.class.getClassLoader()
+                                                     .getResource("fake-file.txt")
+                                                     .getPath());
         var fileId = Files.defaults()
                           .and()
                           .upload()
                           .targeting(new AssistantPurpose())
+                          .immediate()
                           .feed(file);
 
         System.out.println(fileId);

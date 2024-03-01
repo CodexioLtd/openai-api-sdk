@@ -1,6 +1,7 @@
 package bg.codexio.ai.openai.api.sdk.file;
 
 import bg.codexio.ai.openai.api.payload.file.response.FileContentResponse;
+import bg.codexio.ai.openai.api.sdk.file.download.DownloadExecutor;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;

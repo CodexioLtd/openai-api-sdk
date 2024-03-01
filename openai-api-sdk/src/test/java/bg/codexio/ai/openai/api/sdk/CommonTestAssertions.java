@@ -4,8 +4,8 @@ import bg.codexio.ai.openai.api.http.file.RetrieveFileContentHttpExecutor;
 import bg.codexio.ai.openai.api.http.file.UploadFileHttpExecutor;
 import bg.codexio.ai.openai.api.payload.file.request.UploadFileRequest;
 import bg.codexio.ai.openai.api.sdk.file.FileActionTypeStage;
-import bg.codexio.ai.openai.api.sdk.file.FileDownloadingNameTypeStage;
 import bg.codexio.ai.openai.api.sdk.file.Files;
+import bg.codexio.ai.openai.api.sdk.file.download.FileDownloadingNameTypeStage;
 import org.mockito.MockedStatic;
 
 import java.io.File;
