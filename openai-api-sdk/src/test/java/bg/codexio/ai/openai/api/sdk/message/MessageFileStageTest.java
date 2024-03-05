@@ -6,8 +6,8 @@ import bg.codexio.ai.openai.api.payload.message.response.MessageResponse;
 import bg.codexio.ai.openai.api.sdk.Authenticator;
 import bg.codexio.ai.openai.api.sdk.MockedFileSimplifiedUtils;
 import bg.codexio.ai.openai.api.sdk.auth.FromDeveloper;
-import bg.codexio.ai.openai.api.sdk.file.FileSimplified;
 import bg.codexio.ai.openai.api.sdk.file.Files;
+import bg.codexio.ai.openai.api.sdk.file.upload.FileUploadSimplified;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -64,7 +64,7 @@ public class MessageFileStageTest {
         var auth = Files.authenticate(FromDeveloper.doPass(new ApiCredentials(API_CREDENTIALS)));
         try (
                 var authUtils = mockStatic(Authenticator.class);
-                var filesSimplified = mockStatic(FileSimplified.class)
+                var filesSimplified = mockStatic(FileUploadSimplified.class)
         ) {
             MockedFileSimplifiedUtils.mockFileSimplified(
                     authUtils,

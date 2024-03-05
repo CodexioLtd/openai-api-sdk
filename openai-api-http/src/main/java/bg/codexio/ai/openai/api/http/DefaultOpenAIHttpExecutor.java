@@ -312,6 +312,48 @@ public abstract class DefaultOpenAIHttpExecutor<I extends Streamable,
                    });
     }
 
+    public void executeAsyncWithPathVariables(
+            Consumer<String> callBack,
+            Consumer<O> finalizer,
+            String... pathVariables
+    ) {
+        var httpRequest = this.prepareRequestWithPathVariables(pathVariables);
+
+        this.client.newCall(httpRequest)
+                   .enqueue(new Callback() {
+                       @Override
+                       public void onFailure(
+                               @NotNull Call call,
+                               @NotNull IOException e
+                       ) {
+                           throw new HttpCallFailedException(
+                                   baseUrl + resourceUri,
+                                   e
+                           );
+                       }
+
+                       @Override
+                       public void onResponse(
+                               @NotNull Call call,
+                               @NotNull Response response
+                       ) throws IOException {
+                           var content = new StringBuilder();
+                           try (var httpResponseBody = response.body()) {
+                               throwOnError(response);
+
+                               var reader =
+                                       new BufferedReader(new InputStreamReader(httpResponseBody.byteStream()));
+                               var line = (String) null;
+                               while ((line = reader.readLine()) != null) {
+                                   callBack.accept(line);
+                                   content.append(line);
+                               }
+                           }
+                           finalizer.accept(toResponse(content.toString()));
+                       }
+                   });
+    }
+
     /**
      * {@inheritDoc}
      */
@@ -384,6 +426,62 @@ public abstract class DefaultOpenAIHttpExecutor<I extends Streamable,
                     response
             );
         }
+
+        var response = lines.collectList()
+                            .map(line -> String.join(
+                                    "",
+                                    line
+                            ))
+                            .map(this::toResponse);
+
+        return new ReactiveExecution<>(
+                lines,
+                response
+        );
+    }
+
+    public ReactiveExecution<O> executeReactiveWithPathVariables(String... pathVariables) {
+        var lines =
+                Flux.<String>create(sink -> this.client.newCall(this.prepareRequestWithPathVariables(pathVariables))
+                                                           .enqueue(new Callback() {
+                                                               @Override
+                                                               public void onFailure(
+                                                                       @NotNull Call call,
+                                                                       @NotNull IOException e
+                                                               ) {
+                                                                   throw new HttpCallFailedException(
+                                                                           baseUrl
+                                                                                   + resourceUri,
+                                                                           e
+                                                                   );
+                                                               }
+
+                                                               @Override
+                                                               public void onResponse(
+                                                                       @NotNull Call call,
+                                                                       @NotNull Response response
+                                                               ) throws
+                                                                 IOException {
+                                                                   try (var httpResponseBody = response.body()) {
+                                                                       try {
+                                                                           throwOnError(response);
+                                                                       } catch (Throwable throwable) {
+                                                                           sink.error(throwable);
+                                                                           return;
+                                                                       }
+
+                                                                       var reader = new BufferedReader(new InputStreamReader(httpResponseBody.byteStream()));
+                                                                       var line = (String) null;
+                                                                       while ((line = reader.readLine())
+                                                                               != null) {
+                                                                           sink.next(line);
+                                                                       }
+                                                                   } finally {
+                                                                       sink.complete();
+                                                                   }
+                                                               }
+                                                           }))
+                        .share();
 
         var response = lines.collectList()
                             .map(line -> String.join(

@@ -24,7 +24,7 @@ public final class DownloadExecutor {
     private DownloadExecutor() {
     }
 
-    static final class FromResponse {
+    public static final class FromResponse {
 
         private FromResponse() {
         }

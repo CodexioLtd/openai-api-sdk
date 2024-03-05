@@ -1,7 +1,6 @@
 package bg.codexio.ai.openai.api.sdk.file;
 
 import bg.codexio.ai.openai.api.payload.file.request.UploadFileRequest;
-import bg.codexio.ai.openai.api.sdk.file.upload.FileUploadingStage;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 

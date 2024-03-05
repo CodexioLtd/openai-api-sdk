@@ -3,7 +3,7 @@ package bg.codexio.ai.openai.api.sdk.assistant;
 import bg.codexio.ai.openai.api.http.assistant.AssistantHttpExecutor;
 import bg.codexio.ai.openai.api.payload.assistant.request.AssistantRequest;
 import bg.codexio.ai.openai.api.payload.file.response.FileResponse;
-import bg.codexio.ai.openai.api.sdk.file.FileSimplified;
+import bg.codexio.ai.openai.api.sdk.file.upload.FileUploadSimplified;
 
 import java.io.File;
 import java.util.Arrays;
@@ -38,7 +38,7 @@ public class AssistantFileStage
     public AssistantAdvancedConfigurationStage feed(File file) {
         return new AssistantAdvancedConfigurationStage(
                 this.httpExecutor,
-                this.requestBuilder.addFileId(FileSimplified.simply(file))
+                this.requestBuilder.addFileId(FileUploadSimplified.simply(file))
         );
     }
 }

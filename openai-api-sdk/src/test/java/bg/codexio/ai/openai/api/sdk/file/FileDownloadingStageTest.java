@@ -3,7 +3,6 @@ package bg.codexio.ai.openai.api.sdk.file;
 import bg.codexio.ai.openai.api.payload.file.request.UploadFileRequest;
 import bg.codexio.ai.openai.api.payload.file.response.FileContentResponse;
 import bg.codexio.ai.openai.api.sdk.file.download.DownloadExecutor;
-import bg.codexio.ai.openai.api.sdk.file.download.FileDownloadingStage;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -12,18 +11,17 @@ import java.io.IOException;
 
 import static bg.codexio.ai.openai.api.sdk.CommonTestAssertions.RETRIEVE_FILE_CONTENT_HTTP_EXECUTOR;
 import static bg.codexio.ai.openai.api.sdk.file.InternalAssertions.*;
-import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.mockStatic;
 import static org.mockito.Mockito.when;
 
 public class FileDownloadingStageTest {
 
-    private FileDownloadingStage<FileContentResponse> fileDownloadingStage;
+    private FileDownloadingStage fileDownloadingStage;
 
     @BeforeEach
     void setUp() {
-        this.fileDownloadingStage = new FileDownloadingStage<>(
+        this.fileDownloadingStage = new FileDownloadingStage(
                 RETRIEVE_FILE_CONTENT_HTTP_EXECUTOR,
                 UploadFileRequest.builder(),
                 FILE_TEST_ID,

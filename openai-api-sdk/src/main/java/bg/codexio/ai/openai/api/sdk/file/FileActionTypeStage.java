@@ -3,10 +3,10 @@ package bg.codexio.ai.openai.api.sdk.file;
 import bg.codexio.ai.openai.api.http.file.RetrieveFileContentHttpExecutor;
 import bg.codexio.ai.openai.api.http.file.UploadFileHttpExecutor;
 import bg.codexio.ai.openai.api.payload.file.request.UploadFileRequest;
-import bg.codexio.ai.openai.api.payload.file.response.FileContentResponse;
 import bg.codexio.ai.openai.api.payload.file.response.FileResponse;
+import bg.codexio.ai.openai.api.sdk.file.download.FileDownloadingMeta;
 import bg.codexio.ai.openai.api.sdk.file.download.FileDownloadingNameTypeStage;
-import bg.codexio.ai.openai.api.sdk.file.download.FileDownloadingStage;
+import bg.codexio.ai.openai.api.sdk.file.download.FileDownloadingRuntimeSelectionStage;
 import bg.codexio.ai.openai.api.sdk.file.upload.FileTargetingStage;
 
 public class FileActionTypeStage {
@@ -22,36 +22,39 @@ public class FileActionTypeStage {
         this.retrieveFileContentHttpExecutor = retrieveFileContentHttpExecutor;
     }
 
-    public FileTargetingStage<FileResponse> upload() {
-        return new FileTargetingStage<>(
+    public FileTargetingStage upload() {
+        return new FileTargetingStage(
                 this.uploadFileHttpExecutor,
                 UploadFileRequest.builder()
         );
     }
 
-    public FileDownloadingNameTypeStage<FileContentResponse> download(String fileId) {
-        return new FileDownloadingNameTypeStage<>(
+    public FileDownloadingNameTypeStage download(String fileId) {
+        return new FileDownloadingNameTypeStage(
                 this.retrieveFileContentHttpExecutor,
                 UploadFileRequest.builder(),
-                fileId
+                FileDownloadingMeta.builder()
+                                   .withFileId(fileId)
         );
     }
 
-    public FileDownloadingStage<FileContentResponse> download(FileResult fileResult) {
-        return new FileDownloadingStage<>(
+    public FileDownloadingRuntimeSelectionStage download(FileResult fileResult) {
+        return new FileDownloadingRuntimeSelectionStage(
                 this.retrieveFileContentHttpExecutor,
                 UploadFileRequest.builder(),
-                fileResult.id(),
-                fileResult.fileName()
+                FileDownloadingMeta.builder()
+                                   .withFileId(fileResult.id())
+                                   .withFileName(fileResult.fileName())
         );
     }
 
-    public FileDownloadingStage<FileContentResponse> download(FileResponse fileResponse) {
-        return new FileDownloadingStage<>(
+    public FileDownloadingRuntimeSelectionStage download(FileResponse fileResponse) {
+        return new FileDownloadingRuntimeSelectionStage(
                 this.retrieveFileContentHttpExecutor,
                 UploadFileRequest.builder(),
-                fileResponse.id(),
-                fileResponse.filename()
+                FileDownloadingMeta.builder()
+                                   .withFileId(fileResponse.id())
+                                   .withFileName(fileResponse.filename())
         );
     }
 }

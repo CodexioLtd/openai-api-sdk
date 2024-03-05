@@ -1,21 +1,21 @@
 package bg.codexio.ai.openai.api.sdk.file.upload;
 
-import bg.codexio.ai.openai.api.http.DefaultOpenAIHttpExecutor;
 import bg.codexio.ai.openai.api.http.OpenAIHttpExecutor.ReactiveExecution;
-import bg.codexio.ai.openai.api.payload.Mergeable;
+import bg.codexio.ai.openai.api.http.file.UploadFileHttpExecutor;
 import bg.codexio.ai.openai.api.payload.file.request.UploadFileRequest;
+import bg.codexio.ai.openai.api.payload.file.response.FileResponse;
 import bg.codexio.ai.openai.api.sdk.RuntimeExecutor;
-import bg.codexio.ai.openai.api.sdk.file.FileConfigurationStage;
 
 import java.io.File;
 
 
-public class FileUploadingReactiveContextStage<O extends Mergeable<O>>
-        extends FileConfigurationStage<O>
+public class FileUploadingReactiveContextStage
+        extends FileUploadingConfigurationStage
         implements RuntimeExecutor {
 
+
     FileUploadingReactiveContextStage(
-            DefaultOpenAIHttpExecutor<UploadFileRequest, O> executor,
+            UploadFileHttpExecutor executor,
             UploadFileRequest.Builder requestBuilder
     ) {
         super(
@@ -24,7 +24,7 @@ public class FileUploadingReactiveContextStage<O extends Mergeable<O>>
         );
     }
 
-    public ReactiveExecution<O> feed(File file) {
+    public ReactiveExecution<FileResponse> feed(File file) {
         return this.executor.executeReactive(this.requestBuilder.withFile(file)
                                                                 .build());
     }

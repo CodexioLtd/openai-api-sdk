@@ -1,7 +1,7 @@
 package bg.codexio.ai.openai.api.sdk;
 
 import bg.codexio.ai.openai.api.sdk.file.FileActionTypeStage;
-import bg.codexio.ai.openai.api.sdk.file.FileSimplified;
+import bg.codexio.ai.openai.api.sdk.file.upload.FileUploadSimplified;
 import org.mockito.MockedStatic;
 
 import static bg.codexio.ai.openai.api.sdk.CommonTestAssertions.FILE;
@@ -12,12 +12,12 @@ public class MockedFileSimplifiedUtils {
     public static void mockFileSimplified(
             MockedStatic<Authenticator> authUtils,
             HttpBuilder<FileActionTypeStage> auth,
-            MockedStatic<FileSimplified> filesSimplified
+            MockedStatic<FileUploadSimplified> filesSimplified
     ) {
         authUtils.when(() -> Authenticator.autoAuthenticate(any()))
                  .thenReturn(auth);
 
-        filesSimplified.when(() -> FileSimplified.simply(FILE))
+        filesSimplified.when(() -> FileUploadSimplified.simply(FILE))
                        .thenReturn(FILE_RESPONSE.id());
     }
 }

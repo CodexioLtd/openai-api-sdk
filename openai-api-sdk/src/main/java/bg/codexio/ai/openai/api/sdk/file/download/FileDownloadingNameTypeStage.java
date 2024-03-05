@@ -1,33 +1,28 @@
 package bg.codexio.ai.openai.api.sdk.file.download;
 
-import bg.codexio.ai.openai.api.http.DefaultOpenAIHttpExecutor;
-import bg.codexio.ai.openai.api.payload.Mergeable;
+import bg.codexio.ai.openai.api.http.file.RetrieveFileContentHttpExecutor;
 import bg.codexio.ai.openai.api.payload.file.request.UploadFileRequest;
-import bg.codexio.ai.openai.api.sdk.file.FileConfigurationStage;
 
-public class FileDownloadingNameTypeStage<O extends Mergeable<O>>
-        extends FileConfigurationStage<O> {
-
-    private final String fileId;
+public class FileDownloadingNameTypeStage
+        extends FileDownloadingConfigurationStage {
 
     public FileDownloadingNameTypeStage(
-            DefaultOpenAIHttpExecutor<UploadFileRequest, O> executor,
+            RetrieveFileContentHttpExecutor executor,
             UploadFileRequest.Builder requestBuilder,
-            String fileId
+            FileDownloadingMeta.Builder fileDownloadingMeta
     ) {
         super(
                 executor,
-                requestBuilder
+                requestBuilder,
+                fileDownloadingMeta
         );
-        this.fileId = fileId;
     }
 
-    public FileDownloadingStage<O> as(String fileName) {
-        return new FileDownloadingStage<>(
+    public FileDownloadingRuntimeSelectionStage as(String fileName) {
+        return new FileDownloadingRuntimeSelectionStage(
                 this.executor,
                 this.requestBuilder,
-                this.fileId,
-                fileName
+                this.fileDownloadingMeta.withFileName(fileName)
         );
     }
 }

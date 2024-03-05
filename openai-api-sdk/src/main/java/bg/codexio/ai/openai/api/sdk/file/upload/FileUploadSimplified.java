@@ -1,12 +1,13 @@
-package bg.codexio.ai.openai.api.sdk.file;
+package bg.codexio.ai.openai.api.sdk.file.upload;
 
 import bg.codexio.ai.openai.api.payload.file.response.FileResponse;
+import bg.codexio.ai.openai.api.sdk.file.Files;
 
 import java.io.File;
 
-public final class FileSimplified {
+public final class FileUploadSimplified {
 
-    private FileSimplified() {
+    private FileUploadSimplified() {
     }
 
     public static String simply(File file) {

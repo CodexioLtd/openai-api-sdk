@@ -1,37 +1,50 @@
 package bg.codexio.ai.openai.api.sdk.file.download;
 
-import bg.codexio.ai.openai.api.http.DefaultOpenAIHttpExecutor;
-import bg.codexio.ai.openai.api.payload.Mergeable;
+import bg.codexio.ai.openai.api.http.file.RetrieveFileContentHttpExecutor;
 import bg.codexio.ai.openai.api.payload.file.request.UploadFileRequest;
-import bg.codexio.ai.openai.api.sdk.RuntimeExecutor;
 import bg.codexio.ai.openai.api.sdk.RuntimeSelectionStage;
-import bg.codexio.ai.openai.api.sdk.file.FileConfigurationStage;
 
-public class FileDownloadingRuntimeSelectionStage<O extends Mergeable<O>>
-        extends FileConfigurationStage<O>
+public class FileDownloadingRuntimeSelectionStage
+        extends FileDownloadingConfigurationStage
         implements RuntimeSelectionStage {
-    FileDownloadingRuntimeSelectionStage(
-            DefaultOpenAIHttpExecutor<UploadFileRequest, O> executor,
-            UploadFileRequest.Builder requestBuilder
+
+
+    public FileDownloadingRuntimeSelectionStage(
+            RetrieveFileContentHttpExecutor executor,
+            UploadFileRequest.Builder requestBuilder,
+            FileDownloadingMeta.Builder fileDownloadingMeta
     ) {
         super(
                 executor,
-                requestBuilder
+                requestBuilder,
+                fileDownloadingMeta
         );
     }
 
     @Override
-    public RuntimeExecutor immediate() {
-        return null;
+    public FileDownloadingImmediateContextStage immediate() {
+        return new FileDownloadingImmediateContextStage(
+                this.executor,
+                this.requestBuilder,
+                this.fileDownloadingMeta
+        );
     }
 
     @Override
-    public RuntimeExecutor async() {
-        return null;
+    public FileDownloadingAsyncContextStage async() {
+        return new FileDownloadingAsyncContextStage(
+                this.executor,
+                this.requestBuilder,
+                this.fileDownloadingMeta
+        );
     }
 
     @Override
-    public RuntimeExecutor reactive() {
-        return null;
+    public FileDownloadingReactiveContextStage reactive() {
+        return new FileDownloadingReactiveContextStage(
+                this.executor,
+                this.requestBuilder,
+                this.fileDownloadingMeta
+        );
     }
 }

@@ -4,7 +4,7 @@ import bg.codexio.ai.openai.api.http.DefaultOpenAIHttpExecutor;
 import bg.codexio.ai.openai.api.payload.Mergeable;
 import bg.codexio.ai.openai.api.payload.file.response.FileResponse;
 import bg.codexio.ai.openai.api.payload.message.request.MessageRequest;
-import bg.codexio.ai.openai.api.sdk.file.FileSimplified;
+import bg.codexio.ai.openai.api.sdk.file.upload.FileUploadSimplified;
 
 import java.io.File;
 import java.util.Arrays;
@@ -43,7 +43,7 @@ public class MessageFileStage<O extends Mergeable<O>>
     public MessageAdvancedConfigurationStage<O> feed(File file) {
         return new MessageAdvancedConfigurationStage<>(
                 this.httpExecutor,
-                this.requestBuilder.addFileIDs(FileSimplified.simply(file)),
+                this.requestBuilder.addFileIDs(FileUploadSimplified.simply(file)),
                 this.threadId
         );
     }

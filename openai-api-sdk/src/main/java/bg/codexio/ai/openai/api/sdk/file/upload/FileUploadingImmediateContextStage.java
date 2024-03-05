@@ -8,18 +8,17 @@ import bg.codexio.ai.openai.api.sdk.RuntimeExecutor;
 import java.io.File;
 
 public class FileUploadingImmediateContextStage
+        extends FileUploadingConfigurationStage
         implements RuntimeExecutor {
-
-    private final UploadFileHttpExecutor executor;
-
-    private final UploadFileRequest.Builder requestBuilder;
 
     FileUploadingImmediateContextStage(
             UploadFileHttpExecutor executor,
             UploadFileRequest.Builder requestBuilder
     ) {
-        this.executor = executor;
-        this.requestBuilder = requestBuilder;
+        super(
+                executor,
+                requestBuilder
+        );
     }
 
     public FileResponse feedRaw(File file) {
@@ -31,5 +30,4 @@ public class FileUploadingImmediateContextStage
         return this.feedRaw(file)
                    .id();
     }
-
 }

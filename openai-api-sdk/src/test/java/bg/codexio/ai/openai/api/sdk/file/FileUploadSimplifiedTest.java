@@ -2,6 +2,7 @@ package bg.codexio.ai.openai.api.sdk.file;
 
 import bg.codexio.ai.openai.api.payload.file.purpose.AssistantPurpose;
 import bg.codexio.ai.openai.api.sdk.HttpBuilder;
+import bg.codexio.ai.openai.api.sdk.file.upload.FileUploadSimplified;
 import org.junit.jupiter.api.Test;
 import org.mockito.MockedStatic;
 
@@ -12,13 +13,13 @@ import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.*;
 
-public class FileSimplifiedTest {
+public class FileUploadSimplifiedTest {
 
     @Test
     void testSimply_expectCorrectResponse() {
         try (var mockedFile = mockStatic(Files.class)) {
             this.initializeToTargetingStage(mockedFile);
-            var id = FileSimplified.simply(FILE);
+            var id = FileUploadSimplified.simply(FILE);
             assertNotNull(id);
         }
     }
@@ -27,7 +28,7 @@ public class FileSimplifiedTest {
     void testSimplyRaw_expectCorrectResponse() {
         try (var mockedFile = mockStatic(Files.class)) {
             this.initializeToTargetingStage(mockedFile);
-            var response = FileSimplified.simplyRaw(FILE);
+            var response = FileUploadSimplified.simplyRaw(FILE);
             assertEquals(
                     new AssistantPurpose().name(),
                     response.purpose()

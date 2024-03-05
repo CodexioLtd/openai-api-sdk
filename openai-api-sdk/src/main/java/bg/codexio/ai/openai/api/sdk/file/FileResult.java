@@ -50,6 +50,7 @@ public record FileResult(
         return Files.defaults()
                     .and()
                     .download(this)
+                    .immediate()
                     .toFolder(targetFolder);
     }
 
@@ -60,6 +61,7 @@ public record FileResult(
         return Files.authenticate(auth)
                     .and()
                     .download(this)
+                    .immediate()
                     .toFolder(targetFolder);
     }
 
@@ -70,6 +72,7 @@ public record FileResult(
         return Files.authenticate(context)
                     .and()
                     .download(this)
+                    .immediate()
                     .toFolder(targetFolder);
     }
 
@@ -82,6 +85,7 @@ public record FileResult(
                             this.id
                     )
                     .as(this.fileName)
+                    .immediate()
                     .toFolder(targetFolder);
     }
 }

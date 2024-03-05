@@ -1,19 +1,18 @@
 package bg.codexio.ai.openai.api.sdk.file.upload;
 
-import bg.codexio.ai.openai.api.http.DefaultOpenAIHttpExecutor;
-import bg.codexio.ai.openai.api.payload.Mergeable;
+import bg.codexio.ai.openai.api.http.file.UploadFileHttpExecutor;
 import bg.codexio.ai.openai.api.payload.file.request.UploadFileRequest;
-import bg.codexio.ai.openai.api.sdk.file.FileConfigurationStage;
+import bg.codexio.ai.openai.api.payload.file.response.FileResponse;
 
 import java.util.function.Consumer;
 
-public class FileUploadingAsyncPromise<O extends Mergeable<O>>
-        extends FileConfigurationStage<O> {
+public class FileUploadingAsyncPromise
+        extends FileUploadingConfigurationStage {
 
     private final Consumer<String> onEachLine = x -> {};
 
     FileUploadingAsyncPromise(
-            DefaultOpenAIHttpExecutor<UploadFileRequest, O> executor,
+            UploadFileHttpExecutor executor,
             UploadFileRequest.Builder requestBuilder
     ) {
         super(
@@ -22,7 +21,8 @@ public class FileUploadingAsyncPromise<O extends Mergeable<O>>
         );
     }
 
-    public void then(Consumer<O> afterAll) {
+
+    public void then(Consumer<FileResponse> afterAll) {
         this.executor.executeAsync(
                 this.requestBuilder.build(),
                 this.onEachLine,

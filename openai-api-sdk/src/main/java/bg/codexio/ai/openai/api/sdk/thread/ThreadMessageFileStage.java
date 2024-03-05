@@ -6,7 +6,7 @@ import bg.codexio.ai.openai.api.payload.message.request.MessageRequest;
 import bg.codexio.ai.openai.api.payload.thread.request.ThreadRequest;
 import bg.codexio.ai.openai.api.payload.thread.request.ThreadRequestBuilder;
 import bg.codexio.ai.openai.api.payload.thread.response.ThreadResponse;
-import bg.codexio.ai.openai.api.sdk.file.FileSimplified;
+import bg.codexio.ai.openai.api.sdk.file.upload.FileUploadSimplified;
 
 import java.io.File;
 import java.util.Arrays;
@@ -31,8 +31,8 @@ public class ThreadMessageFileStage<R extends ThreadRequest>
 
     public ThreadResponse feed(File file) {
         return Optional.ofNullable(content)
-                       .map(c -> this.create(FileSimplified.simply(file)))
-                       .orElseGet(() -> this.createWithEmptyContent(FileSimplified.simply(file)));
+                       .map(c -> this.create(FileUploadSimplified.simply(file)))
+                       .orElseGet(() -> this.createWithEmptyContent(FileUploadSimplified.simply(file)));
     }
 
     public ThreadResponse feed(FileResponse fileResponse) {
@@ -50,7 +50,7 @@ public class ThreadMessageFileStage<R extends ThreadRequest>
     public ThreadAdvancedConfigurationStage<R> attach(File file) {
         return new ThreadAdvancedConfigurationStage<>(
                 this.httpExecutor,
-                this.buildWithoutContent(FileSimplified.simply(file))
+                this.buildWithoutContent(FileUploadSimplified.simply(file))
         );
     }
 
