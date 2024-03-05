@@ -40,7 +40,7 @@ public record MessageResult(
     public String download(File targetFolder) throws IOException {
         if (Objects.nonNull(this.fileResult)) {
             this.fileResult.build()
-                           .download(targetFolder);
+                           .downloadImmediate(targetFolder);
         } else if (Objects.nonNull(this.imageFileId)) {
             this.downloadImage(targetFolder);
 
@@ -62,7 +62,7 @@ public record MessageResult(
     ) throws IOException {
         if (Objects.nonNull(this.fileResult)) {
             this.fileResult.build()
-                           .download(
+                           .downloadImmediate(
                                    targetFolder,
                                    auth
                            );
@@ -90,7 +90,7 @@ public record MessageResult(
     ) throws IOException {
         if (Objects.nonNull(this.fileResult)) {
             this.fileResult.build()
-                           .download(
+                           .downloadImmediate(
                                    targetFolder,
                                    context
                            );
@@ -118,7 +118,7 @@ public record MessageResult(
     ) throws IOException {
         if (Objects.nonNull(this.fileResult)) {
             this.fileResult.build()
-                           .download(
+                           .downloadImmediate(
                                    targetFolder,
                                    httpExecutor
                            );

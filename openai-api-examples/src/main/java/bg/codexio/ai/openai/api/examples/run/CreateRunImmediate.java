@@ -5,7 +5,7 @@ import bg.codexio.ai.openai.api.sdk.assistant.Assistants;
 import bg.codexio.ai.openai.api.sdk.run.Runnables;
 import bg.codexio.ai.openai.api.sdk.thread.Threads;
 
-public class CreateRun {
+public class CreateRunImmediate {
 
     public static void main(String[] args) {
         var run = Runnables.defaults(Threads.defaults()
@@ -19,8 +19,12 @@ public class CreateRun {
                                                     .from(new CodeInterpreter())
                                                     .called("Cody")
                                                     .instruct("Be intuitive")
-                                                    .andRespond())
-                           .andRespond();
+                                                    .andRespond()
+                                                    .immediate()
+                                                    .finishRaw())
+                           .andRespond()
+                           .immediate()
+                           .executeRaw();
 
         System.out.println(run);
     }

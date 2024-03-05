@@ -42,7 +42,7 @@ public class FileResultTest {
             );
 
             this.downloadMockedExecution(downloadUtils);
-            var result = FILE_RESULT.download(TARGET_TEST_FOLDER);
+            var result = FILE_RESULT.downloadImmediate(TARGET_TEST_FOLDER);
             this.assertDownloadedFile(result);
         }
     }
@@ -60,7 +60,7 @@ public class FileResultTest {
             );
 
             this.downloadMockedExecution(downloadUtils);
-            var result = FILE_RESULT.download(
+            var result = FILE_RESULT.downloadImmediate(
                     TARGET_TEST_FOLDER,
                     FromDeveloper.doPass(new ApiCredentials(API_CREDENTIALS))
             );
@@ -83,7 +83,7 @@ public class FileResultTest {
             );
 
             this.downloadMockedExecution(downloadUtils);
-            var result = FILE_RESULT.download(
+            var result = FILE_RESULT.downloadImmediate(
                     TARGET_TEST_FOLDER,
                     new HttpExecutorContext(new ApiCredentials(API_CREDENTIALS))
             );
@@ -102,7 +102,7 @@ public class FileResultTest {
             mockFilesToDownloadingNameTypeStage(mockedFile);
             this.downloadMockedExecution(downloadUtils);
 
-            var result = FILE_RESULT.download(
+            var result = FILE_RESULT.downloadImmediate(
                     TARGET_TEST_FOLDER,
                     RETRIEVE_FILE_CONTENT_HTTP_EXECUTOR
             );

@@ -1,4 +1,4 @@
-package bg.codexio.ai.openai.api.sdk.file.download;
+package bg.codexio.ai.openai.api.payload.file.download;
 
 import java.io.File;
 

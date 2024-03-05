@@ -219,7 +219,7 @@ public class InternalAssertions {
 
     static void mockFileResultDownloadWithAuth(FileResult fileResult)
             throws IOException {
-        when(fileResult.download(
+        when(fileResult.downloadImmediate(
                 any(),
                 (SdkAuth) any()
         )).thenAnswer(res -> FILE);
@@ -235,7 +235,7 @@ public class InternalAssertions {
 
     static void mockFileResultDownloadWithHttpExecutor(FileResult fileResult)
             throws IOException {
-        when(fileResult.download(
+        when(fileResult.downloadImmediate(
                 any(),
                 (HttpExecutorContext) any()
         )).thenAnswer(res -> FILE);
@@ -251,7 +251,7 @@ public class InternalAssertions {
 
     static void mockFileResultDownloadWithRetrieveExecutor(FileResult fileResult)
             throws IOException {
-        when(fileResult.download(
+        when(fileResult.downloadImmediate(
                 any(),
                 (RetrieveFileContentHttpExecutor) any()
         )).thenAnswer(res -> FILE);

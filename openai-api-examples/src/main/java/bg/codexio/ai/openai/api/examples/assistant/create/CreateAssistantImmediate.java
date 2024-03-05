@@ -1,4 +1,4 @@
-package bg.codexio.ai.openai.api.examples.assistant;
+package bg.codexio.ai.openai.api.examples.assistant.create;
 
 import bg.codexio.ai.openai.api.payload.assistant.tool.CodeInterpreter;
 import bg.codexio.ai.openai.api.payload.assistant.tool.Retrieval;
@@ -6,12 +6,12 @@ import bg.codexio.ai.openai.api.sdk.assistant.Assistants;
 
 import java.io.File;
 
-public class CreateAssistant {
+public class CreateAssistantImmediate {
 
     public static void main(String[] args) {
-        var file = new File(CreateAssistant.class.getClassLoader()
-                                                 .getResource("fake-file.txt")
-                                                 .getPath());
+        var file = new File(CreateAssistantImmediate.class.getClassLoader()
+                                                          .getResource("fake-file.txt")
+                                                          .getPath());
 
         var assistant = Assistants.defaults()
                                   .and()
@@ -35,7 +35,9 @@ public class CreateAssistant {
                                   )
                                   .file()
                                   .feed(file)
-                                  .andRespond();
+                                  .andRespond()
+                                  .immediate()
+                                  .finishRaw();
 
         System.out.println(assistant);
     }

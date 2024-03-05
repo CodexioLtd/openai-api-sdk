@@ -8,6 +8,7 @@ import bg.codexio.ai.openai.api.sdk.ThreadOperationUtils;
 import bg.codexio.ai.openai.api.sdk.run.constant.RunnableDefaultValuesConstants;
 import bg.codexio.ai.openai.api.sdk.run.constant.RunnableEnvironmentVariableNameConstants;
 import bg.codexio.ai.openai.api.sdk.run.constant.RunnableStatusConstants;
+import bg.codexio.ai.openai.api.sdk.run.exception.NonInitializedRunnableException;
 
 import java.util.Objects;
 import java.util.Optional;
@@ -32,7 +33,9 @@ public class RunnableResultStage
     }
 
     public RunnableResponse waitForCompletionRaw() {
-        return this.sleepThenRefresh(this.run);
+        return Optional.ofNullable(this.run)
+                       .map(this::sleepThenRefresh)
+                       .orElseThrow(NonInitializedRunnableException::new);
     }
 
     public RunnableResponse waitForCompletionRaw(RunnableResponse run) {
@@ -43,7 +46,7 @@ public class RunnableResultStage
         return new RunnableAdvancedConfigurationStage(
                 this.httpExecutor,
                 this.requestBuilder,
-                this.sleepThenRefresh(this.run)
+                this.waitForCompletionRaw(this.run)
                     .threadId()
         );
     }

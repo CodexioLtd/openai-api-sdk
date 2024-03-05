@@ -3,7 +3,6 @@ package bg.codexio.ai.openai.api.sdk.run;
 import bg.codexio.ai.openai.api.http.run.RunnableHttpExecutor;
 import bg.codexio.ai.openai.api.payload.assistant.response.AssistantResponse;
 import bg.codexio.ai.openai.api.payload.run.request.RunnableRequest;
-import bg.codexio.ai.openai.api.payload.run.response.RunnableResponse;
 import bg.codexio.ai.openai.api.sdk.ObjectMapperSubtypesRegistrationUtils;
 
 import java.util.Optional;
@@ -24,66 +23,19 @@ public class RunnableInitializationStage
         );
     }
 
-    public RunnableResponse executeRaw(AssistantResponse assistantResponse) {
-        return this.processAssistantResponse(
+    public RunnableInitializationStage initialize(AssistantResponse assistantResponse) {
+        return this.processRunnableAssistantInitialization(
                 assistantResponse,
-                this::performExecution
+                this::performInitialization
         );
     }
 
-    public RunnableResponse executeRaw(String assistantId) {
-        return this.performExecution(assistantId);
-    }
-
-    public String execute(AssistantResponse assistantResponse) {
-        return this.processAssistantResponse(
-                           assistantResponse,
-                           this::performExecution
-                   )
-                   .id();
-    }
-
-    // issue with registration the assistant tools implementation to the
-    // object mapper, while only assistant id as
-    // parameter is used
-    public String execute(String assistantId) {
-        return this.performExecution(assistantId)
-                   .id();
-
-    }
-
-    public RunnableResultStage run(AssistantResponse assistantResponse) {
-        return new RunnableResultStage(
-                this.httpExecutor,
-                this.requestBuilder,
-                this.threadId,
-                this.processAssistantResponse(
-                        assistantResponse,
-                        this::performExecution
-                )
-        );
-    }
-
-    public RunnableResultStage run(String assistantID) {
-        return new RunnableResultStage(
-                this.httpExecutor,
-                this.requestBuilder,
-                this.threadId,
-                this.performExecution(assistantID)
-        );
-    }
-
-    public RunnableResultStage messaging() {
-        return new RunnableResultStage(
-                this.httpExecutor,
-                this.requestBuilder,
-                this.threadId,
-                null
-        );
+    public RunnableInitializationStage initialize(String assistantId) {
+        return this.performInitialization(assistantId);
     }
 
     public RunnableAdvancedConfigurationStage deepConfigure(AssistantResponse assistantResponse) {
-        return this.processAssistantResponse(
+        return this.processRunnableAssistantInitialization(
                 assistantResponse,
                 this::deepConfigure
         );
@@ -98,7 +50,15 @@ public class RunnableInitializationStage
         );
     }
 
-    private <T> T processAssistantResponse(
+    public RunnableRuntimeSelectionStage andRespond() {
+        return new RunnableRuntimeSelectionStage(
+                this.httpExecutor,
+                this.requestBuilder,
+                this.threadId
+        );
+    }
+
+    private <T> T processRunnableAssistantInitialization(
             AssistantResponse assistantResponse,
             Function<String, T> function
     ) {
@@ -117,10 +77,10 @@ public class RunnableInitializationStage
                        });
     }
 
-    private RunnableResponse performExecution(String assistantId) {
-        return this.httpExecutor.executeWithPathVariable(
-                this.requestBuilder.withAssistantId(assistantId)
-                                   .build(),
+    private RunnableInitializationStage performInitialization(String assistantId) {
+        return new RunnableInitializationStage(
+                this.httpExecutor,
+                this.requestBuilder.withAssistantId(assistantId),
                 this.threadId
         );
     }

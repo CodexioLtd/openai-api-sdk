@@ -58,7 +58,7 @@ public class MessageResultTest {
     void testDownload_expectCorrectResponse() throws IOException {
         this.initializeDefaultMessageResult();
 
-        when(this.fileResult.download(any())).thenAnswer(res -> FILE);
+        when(this.fileResult.downloadImmediate(any())).thenAnswer(res -> FILE);
 
         var result = this.messageResult.download(FILE);
 
@@ -70,7 +70,7 @@ public class MessageResultTest {
             throws IOException {
         this.initializeMessageResultWithoutMessage();
 
-        when(this.fileResult.download(any())).thenAnswer(res -> FILE);
+        when(this.fileResult.downloadImmediate(any())).thenAnswer(res -> FILE);
 
         var result = this.messageResult.download(FILE);
 

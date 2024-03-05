@@ -10,7 +10,7 @@ import java.util.Collections;
 import static bg.codexio.ai.openai.api.sdk.chat.InternalAssertions.*;
 import static org.junit.jupiter.api.Assertions.*;
 
-public class ToolStageTest {
+public class AssistantToolStageTest {
     private ToolStage toolStage;
 
     @BeforeEach

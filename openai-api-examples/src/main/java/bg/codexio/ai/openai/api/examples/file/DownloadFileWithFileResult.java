@@ -16,7 +16,7 @@ public class DownloadFileWithFileResult {
         var downloadedFile = new FileResult(
                 "file-zR7aSAvw1xFBjqLIGKnRpT1q",
                 "file.py"
-        ).download(targetFolder);
+        ).downloadImmediate(targetFolder);
 
         System.out.println(downloadedFile.getName());
     }

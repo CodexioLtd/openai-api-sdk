@@ -20,22 +20,22 @@ public class AIModelStage
         );
     }
 
-    public ToolStage poweredBy(ModelType modelType) {
-        return new ToolStage(
+    public AssistantToolStage poweredBy(ModelType modelType) {
+        return new AssistantToolStage(
                 this.httpExecutor,
                 this.requestBuilder.withModel(modelType.name())
         );
     }
 
-    public ToolStage poweredByGPT35() {
+    public AssistantToolStage poweredByGPT35() {
         return this.poweredBy(new GPT35TurboModel());
     }
 
-    public ToolStage poweredByGPT40() {
+    public AssistantToolStage poweredByGPT40() {
         return this.poweredBy(new GPT40Model());
     }
 
-    public ToolStage turboPowered() {
+    public AssistantToolStage turboPowered() {
         return this.poweredBy(new GPT401106Model());
     }
 }

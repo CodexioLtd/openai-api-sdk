@@ -70,7 +70,8 @@ public class RunnableAdvancedConfigurationStageTest {
     void testFinish_expectCorrectBuilder() {
         execute(this.runnableAdvancedConfigurationStage);
 
-        var nextStage = this.runnableAdvancedConfigurationStage.finish();
+        var nextStage =
+                this.runnableAdvancedConfigurationStage.finishImmediate();
 
         this.previousValuesRemainsUnchanged(nextStage);
     }

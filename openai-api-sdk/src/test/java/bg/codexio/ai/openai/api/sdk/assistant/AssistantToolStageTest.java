@@ -10,13 +10,13 @@ import static bg.codexio.ai.openai.api.sdk.assistant.InternalAssertions.*;
 import static org.junit.jupiter.api.Assertions.assertAll;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
-public class ToolStageTest {
+public class AssistantToolStageTest {
 
-    private ToolStage toolStage;
+    private AssistantToolStage assistantToolStage;
 
     @BeforeEach
     void setUp() {
-        this.toolStage = new ToolStage(
+        this.assistantToolStage = new AssistantToolStage(
                 ASSISTANT_HTTP_EXECUTOR,
                 AssistantRequest.builder()
                                 .withModel(ASSISTANT_MODEL_TYPE.name())
@@ -25,7 +25,7 @@ public class ToolStageTest {
 
     @Test
     void testFrom_withCodeInterpreter_expectAddedCodeInterpreterToolType() {
-        var nextStage = this.toolStage.from(new CodeInterpreter());
+        var nextStage = this.assistantToolStage.from(new CodeInterpreter());
         this.previousValuesRemainsUnchanged(nextStage);
 
         assertEquals(
@@ -38,7 +38,7 @@ public class ToolStageTest {
 
     @Test
     void testFrom_withRetrieval_expectAddedRetrievalToolType() {
-        var nextStage = this.toolStage.from(new Retrieval());
+        var nextStage = this.assistantToolStage.from(new Retrieval());
         this.previousValuesRemainsUnchanged(nextStage);
 
         assertEquals(
@@ -52,27 +52,27 @@ public class ToolStageTest {
     private void previousValuesRemainsUnchanged(AssistantConfigurationStage stage) {
         assertAll(
                 () -> modelRemainsUnchanged(
-                        this.toolStage,
+                        this.assistantToolStage,
                         stage
                 ),
                 () -> nameRemainsUnchanged(
-                        this.toolStage,
+                        this.assistantToolStage,
                         stage
                 ),
                 () -> descriptionRemainsUnchanged(
-                        this.toolStage,
+                        this.assistantToolStage,
                         stage
                 ),
                 () -> instructionsRemainsUnchanged(
-                        this.toolStage,
+                        this.assistantToolStage,
                         stage
                 ),
                 () -> fileIdsRemainsUnchanged(
-                        this.toolStage,
+                        this.assistantToolStage,
                         stage
                 ),
                 () -> metadataRemainsUnchanged(
-                        this.toolStage,
+                        this.assistantToolStage,
                         stage
                 )
         );

@@ -7,10 +7,10 @@ import bg.codexio.ai.openai.api.sdk.ObjectMapperSubtypesRegistrationUtils;
 
 import java.util.Arrays;
 
-public class ToolStage
+public class AssistantToolStage
         extends AssistantConfigurationStage {
 
-    ToolStage(
+    AssistantToolStage(
             AssistantHttpExecutor httpExecutor,
             AssistantRequest.Builder requestBuilder
     ) {

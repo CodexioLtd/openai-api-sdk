@@ -1,6 +1,7 @@
 package bg.codexio.ai.openai.api.sdk.file.download;
 
 import bg.codexio.ai.openai.api.http.file.RetrieveFileContentHttpExecutor;
+import bg.codexio.ai.openai.api.payload.file.download.FileDownloadingMeta;
 import bg.codexio.ai.openai.api.payload.file.request.UploadFileRequest;
 
 public class FileDownloadingNameTypeStage
