@@ -1,12 +1,11 @@
 package bg.codexio.ai.openai.api.sdk.thread;
 
 import bg.codexio.ai.openai.api.http.DefaultOpenAIHttpExecutor;
-import bg.codexio.ai.openai.api.payload.message.response.MessageResponse;
 import bg.codexio.ai.openai.api.payload.thread.request.ThreadRequest;
 import bg.codexio.ai.openai.api.payload.thread.request.ThreadRequestBuilder;
 import bg.codexio.ai.openai.api.payload.thread.response.ThreadResponse;
-import bg.codexio.ai.openai.api.sdk.message.MessageContentStage;
 import bg.codexio.ai.openai.api.sdk.message.Messages;
+import bg.codexio.ai.openai.api.sdk.message.chat.MessageContentStage;
 
 import java.util.Map;
 
@@ -43,7 +42,7 @@ public class ThreadModificationStage<R extends ThreadRequest>
         );
     }
 
-    public MessageContentStage<MessageResponse> chat() {
+    public MessageContentStage chat() {
         return Messages.defaults(this.respond())
                        .and()
                        .chat();

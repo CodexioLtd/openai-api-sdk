@@ -1,7 +1,6 @@
-package bg.codexio.ai.openai.api.sdk.message;
+package bg.codexio.ai.openai.api.sdk.message.chat;
 
-import bg.codexio.ai.openai.api.http.DefaultOpenAIHttpExecutor;
-import bg.codexio.ai.openai.api.payload.Mergeable;
+import bg.codexio.ai.openai.api.http.message.MessageHttpExecutor;
 import bg.codexio.ai.openai.api.payload.file.response.FileResponse;
 import bg.codexio.ai.openai.api.payload.message.request.MessageRequest;
 import bg.codexio.ai.openai.api.sdk.file.upload.FileUploadSimplified;
@@ -9,11 +8,11 @@ import bg.codexio.ai.openai.api.sdk.file.upload.FileUploadSimplified;
 import java.io.File;
 import java.util.Arrays;
 
-public class MessageFileStage<O extends Mergeable<O>>
-        extends MessageConfigurationStage<O> {
+public class MessageFileStage
+        extends MessageConfigurationStage {
 
     MessageFileStage(
-            DefaultOpenAIHttpExecutor<MessageRequest, O> httpExecutor,
+            MessageHttpExecutor httpExecutor,
             MessageRequest.Builder requestBuilder,
             String threadId
     ) {
@@ -24,24 +23,24 @@ public class MessageFileStage<O extends Mergeable<O>>
         );
     }
 
-    public MessageAdvancedConfigurationStage<O> feed(String... fileId) {
-        return new MessageAdvancedConfigurationStage<>(
+    public MessageAdvancedConfigurationStage feed(String... fileId) {
+        return new MessageAdvancedConfigurationStage(
                 this.httpExecutor,
                 this.requestBuilder.withFileIds(Arrays.asList(fileId)),
                 this.threadId
         );
     }
 
-    public MessageAdvancedConfigurationStage<O> feed(FileResponse fileResponse) {
-        return new MessageAdvancedConfigurationStage<>(
+    public MessageAdvancedConfigurationStage feed(FileResponse fileResponse) {
+        return new MessageAdvancedConfigurationStage(
                 this.httpExecutor,
                 this.requestBuilder.addFileIDs(fileResponse.id()),
                 this.threadId
         );
     }
 
-    public MessageAdvancedConfigurationStage<O> feed(File file) {
-        return new MessageAdvancedConfigurationStage<>(
+    public MessageAdvancedConfigurationStage feed(File file) {
+        return new MessageAdvancedConfigurationStage(
                 this.httpExecutor,
                 this.requestBuilder.addFileIDs(FileUploadSimplified.simply(file)),
                 this.threadId

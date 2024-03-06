@@ -1,12 +1,14 @@
 package bg.codexio.ai.openai.api.sdk.thread;
 
 import bg.codexio.ai.openai.api.http.DefaultOpenAIHttpExecutor;
-import bg.codexio.ai.openai.api.payload.message.response.MessageResponse;
 import bg.codexio.ai.openai.api.payload.thread.request.ThreadRequest;
 import bg.codexio.ai.openai.api.payload.thread.request.ThreadRequestBuilder;
 import bg.codexio.ai.openai.api.payload.thread.response.ThreadResponse;
-import bg.codexio.ai.openai.api.sdk.message.MessageContentStage;
 import bg.codexio.ai.openai.api.sdk.message.Messages;
+import bg.codexio.ai.openai.api.sdk.message.chat.MessageContentStage;
+import reactor.core.publisher.Mono;
+
+import java.util.function.Consumer;
 
 public class ThreadAdvancedConfigurationStage<R extends ThreadRequest>
         extends ThreadConfigurationStage<R> {
@@ -43,14 +45,36 @@ public class ThreadAdvancedConfigurationStage<R extends ThreadRequest>
         );
     }
 
-    public ThreadResponse andRespond() {
-        return this.httpExecutor.execute(this.requestBuilder.specificRequestCreator()
-                                                            .apply(this.requestBuilder.build()));
-    }
-
-    public MessageContentStage<MessageResponse> chat() {
-        return Messages.defaults(this.andRespond())
+    public MessageContentStage chatImmediate() {
+        return Messages.defaults(this.andRespond()
+                                     .immediate()
+                                     .finish())
                        .and()
                        .chat();
+    }
+
+    public void chatAsync(Consumer<MessageContentStage> consumer) {
+        this.andRespond()
+            .async()
+            .finishRaw()
+            .then(threadId -> consumer.accept(Messages.defaults(threadId)
+                                                      .and()
+                                                      .chat()));
+    }
+
+    public Mono<MessageContentStage> chatReactive() {
+        return this.andRespond()
+                   .reactive()
+                   .finish()
+                   .handle((response, sink) -> sink.next(Messages.defaults(response)
+                                                                 .and()
+                                                                 .chat()));
+    }
+
+    public ThreadRuntimeSelectionStage<R> andRespond() {
+        return new ThreadRuntimeSelectionStage<>(
+                this.httpExecutor,
+                this.requestBuilder
+        );
     }
 }

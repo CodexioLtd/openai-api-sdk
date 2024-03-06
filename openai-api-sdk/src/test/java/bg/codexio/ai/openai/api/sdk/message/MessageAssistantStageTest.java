@@ -5,6 +5,7 @@ import bg.codexio.ai.openai.api.payload.message.request.MessageRequest;
 import bg.codexio.ai.openai.api.payload.message.response.MessageResponse;
 import bg.codexio.ai.openai.api.sdk.Authenticator;
 import bg.codexio.ai.openai.api.sdk.auth.FromDeveloper;
+import bg.codexio.ai.openai.api.sdk.message.chat.MessageAssistantStage;
 import bg.codexio.ai.openai.api.sdk.run.Runnables;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;

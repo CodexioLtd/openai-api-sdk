@@ -1,6 +1,5 @@
-package bg.codexio.ai.openai.api.sdk.message;
+package bg.codexio.ai.openai.api.sdk.message.answer;
 
-import bg.codexio.ai.openai.api.http.message.RetrieveListMessagesHttpExecutor;
 import bg.codexio.ai.openai.api.payload.message.content.ImageFileContent;
 import bg.codexio.ai.openai.api.payload.message.content.MessageContent;
 import bg.codexio.ai.openai.api.payload.message.content.TextMessageContent;
@@ -9,8 +8,8 @@ import bg.codexio.ai.openai.api.payload.message.content.annotation.FileCitationA
 import bg.codexio.ai.openai.api.payload.message.content.annotation.FilePathAnnotation;
 import bg.codexio.ai.openai.api.payload.message.response.ListMessagesResponse;
 import bg.codexio.ai.openai.api.payload.message.response.MessageResponse;
-import bg.codexio.ai.openai.api.payload.thread.response.ThreadResponse;
 import bg.codexio.ai.openai.api.sdk.file.FileResult;
+import bg.codexio.ai.openai.api.sdk.message.MessageResult;
 
 import java.util.List;
 import java.util.Objects;
@@ -18,53 +17,14 @@ import java.util.Optional;
 
 public class MessageAnswersRetrievalTypeStage {
 
-    private final RetrieveListMessagesHttpExecutor listMessagesHttpExecutor;
-    private final String threadId;
+    private final ListMessagesResponse listMessagesResponse;
 
-    public MessageAnswersRetrievalTypeStage(
-            RetrieveListMessagesHttpExecutor listMessagesHttpExecutor,
-            String threadId
-    ) {
-        this.listMessagesHttpExecutor = listMessagesHttpExecutor;
-        this.threadId = threadId;
+    public MessageAnswersRetrievalTypeStage(ListMessagesResponse listMessagesResponse) {
+        this.listMessagesResponse = listMessagesResponse;
     }
 
-    public ListMessagesResponse answersRaw() {
-        return new MessageAnswerStage<>(
-                this.listMessagesHttpExecutor,
-                null,
-                this.threadId
-        ).answersRaw();
-    }
-
-    public ListMessagesResponse answersRaw(String threadId) {
-        return new MessageAnswerStage<>(
-                this.listMessagesHttpExecutor,
-                null,
-                null
-        ).answersRaw(threadId);
-    }
-
-    public ListMessagesResponse answersRaw(ThreadResponse threadResponse) {
-        return new MessageAnswerStage<>(
-                this.listMessagesHttpExecutor,
-                null,
-                null
-        ).answersRaw(threadResponse);
-    }
-
-    public MessageResult answers() {
-        return this.getResult(this.answersRaw()
-                                  .data());
-    }
-
-    public MessageResult answers(String threadId) {
-        return this.getResult(this.answersRaw(threadId)
-                                  .data());
-    }
-
-    public MessageResult answers(ThreadResponse threadResponse) {
-        return this.getResult(this.answersRaw(threadResponse)
+    public MessageResult retrieve() {
+        return this.getResult(this.listMessagesResponse
                                   .data());
     }
 

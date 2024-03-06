@@ -160,8 +160,8 @@ public class InternalAssertions {
     );
 
     static <O extends Mergeable<O>> void roleRemainsUnchanged(
-            MessageConfigurationStage<O> previousStage,
-            MessageConfigurationStage<O> nextStage
+            DefaultMessageConfigurationStage<O> previousStage,
+            DefaultMessageConfigurationStage<O> nextStage
     ) {
         assertEquals(
                 previousStage.requestBuilder.role(),
@@ -170,8 +170,8 @@ public class InternalAssertions {
     }
 
     static <O extends Mergeable<O>> void fileIdsRemainsUnchanged(
-            MessageConfigurationStage<O> previousStage,
-            MessageConfigurationStage<O> nextStage
+            DefaultMessageConfigurationStage<O> previousStage,
+            DefaultMessageConfigurationStage<O> nextStage
     ) {
         assertEquals(
                 previousStage.requestBuilder.fileIds(),
@@ -180,8 +180,8 @@ public class InternalAssertions {
     }
 
     static <O extends Mergeable<O>> void contentRemainsUnchanged(
-            MessageConfigurationStage<O> previousStage,
-            MessageConfigurationStage<O> nextStage
+            DefaultMessageConfigurationStage<O> previousStage,
+            DefaultMessageConfigurationStage<O> nextStage
     ) {
         assertEquals(
                 previousStage.requestBuilder.content(),
@@ -190,8 +190,8 @@ public class InternalAssertions {
     }
 
     static <O extends Mergeable<O>> void metadataRemainsUnchanged(
-            MessageConfigurationStage<O> previousStage,
-            MessageConfigurationStage<O> nextStage
+            DefaultMessageConfigurationStage<O> previousStage,
+            DefaultMessageConfigurationStage<O> nextStage
     ) {
         assertEquals(
                 previousStage.requestBuilder.metadata(),
@@ -199,7 +199,7 @@ public class InternalAssertions {
         );
     }
 
-    static void executeWithPathVariable(MessageConfigurationStage<MessageResponse> messageConfigurationStage) {
+    static void executeWithPathVariable(DefaultMessageConfigurationStage<MessageResponse> messageConfigurationStage) {
         when(messageConfigurationStage.httpExecutor.executeWithPathVariable(
                 any(),
                 any()
@@ -213,7 +213,7 @@ public class InternalAssertions {
         when(listMessagesHttpExecutor.executeWithPathVariables(any())).thenAnswer(res -> response);
     }
 
-    static void executeWithPathVariables(MessageConfigurationStage<ListMessagesResponse> messageConfigurationStage) {
+    static void executeWithPathVariables(DefaultMessageConfigurationStage<ListMessagesResponse> messageConfigurationStage) {
         when(messageConfigurationStage.httpExecutor.executeWithPathVariables(any())).thenAnswer(res -> LIST_MESSAGE_RESPONSE_WITH_TEXT_CONTENT);
     }
 

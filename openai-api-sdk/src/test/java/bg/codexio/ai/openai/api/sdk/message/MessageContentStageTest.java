@@ -2,6 +2,7 @@ package bg.codexio.ai.openai.api.sdk.message;
 
 import bg.codexio.ai.openai.api.payload.message.request.MessageRequest;
 import bg.codexio.ai.openai.api.payload.message.response.MessageResponse;
+import bg.codexio.ai.openai.api.sdk.message.chat.MessageContentStage;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -34,7 +35,7 @@ public class MessageContentStageTest {
         );
     }
 
-    private void previousValuesRemainsUnchanged(MessageConfigurationStage<MessageResponse> nextStage) {
+    private void previousValuesRemainsUnchanged(DefaultMessageConfigurationStage<MessageResponse> nextStage) {
         assertAll(
                 () -> roleRemainsUnchanged(
                         this.messageContentStage,

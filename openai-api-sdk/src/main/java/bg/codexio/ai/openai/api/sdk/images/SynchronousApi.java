@@ -30,7 +30,7 @@ public class SynchronousApi<R extends ImageRequest>
      * @return {@link SynchronousExecutor} to handle the HTTP response
      */
     public SynchronousExecutor<R> generate(String prompt) {
-        return new SynchronousExecutor<R>(
+        return new SynchronousExecutor<>(
                 this.executor,
                 this.builder.withPrompt(prompt)
         );

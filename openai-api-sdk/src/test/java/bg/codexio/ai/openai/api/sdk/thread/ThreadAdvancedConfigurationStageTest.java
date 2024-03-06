@@ -69,7 +69,8 @@ public class ThreadAdvancedConfigurationStageTest {
             authUtils.when(() -> Authenticator.autoAuthenticate(any()))
                      .thenReturn(auth);
 
-            var nextStage = this.threadAdvancedConfigurationStage.chat();
+            var nextStage =
+                    this.threadAdvancedConfigurationStage.chatImmediate();
 
             assertNotNull(nextStage);
         }

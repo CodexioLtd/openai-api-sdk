@@ -16,8 +16,7 @@ public class AssistantAskImmediate {
         var fileDownloadLocation = new File(
                 AssistantAskImmediate.class.getClassLoader()
                                            .getResource("")
-                                           .getPath()
-                                                    + "generated-files");
+                                           .getPath() + "generated-files");
 
         var answer = Threads.defaults()
                             .and()
@@ -26,13 +25,15 @@ public class AssistantAskImmediate {
                             .message()
                             .startWith("You are developer at Codexio.")
                             .attach(file)
-                            .chat()
-                            .withContent("Your language of choice is Java.")
+                            .chatImmediate()
+                            .withContent("What is java?")
                             .meta()
                             .awareOf(
                                     "key",
                                     "value"
                             )
+                            .file()
+                            .feed(file)
                             .assistant()
                             .assist(Assistants.defaults()
                                               .and()
@@ -54,7 +55,7 @@ public class AssistantAskImmediate {
                             .finishImmediate()
                             .waitForCompletion()
                             .result()
-                            .answers()
+                            .answersImmediate()
                             .download(fileDownloadLocation);
 
         System.out.println(answer);

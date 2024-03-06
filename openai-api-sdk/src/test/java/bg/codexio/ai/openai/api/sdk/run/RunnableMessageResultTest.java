@@ -48,7 +48,7 @@ public class RunnableMessageResultTest {
                          ));
             when(RETRIEVE_LIST_MESSAGES_HTTP_EXECUTOR.executeWithPathVariables(any())).thenAnswer(res -> LIST_MESSAGE_RESPONSE_WITH_TEXT_CONTENT);
 
-            var result = this.runnableMessageResult.answers();
+            var result = this.runnableMessageResult.answersImmediate();
             assertEquals(
                     messageResult,
                     result

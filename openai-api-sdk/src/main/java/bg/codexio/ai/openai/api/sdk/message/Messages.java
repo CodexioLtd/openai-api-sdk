@@ -4,11 +4,11 @@ import bg.codexio.ai.openai.api.http.HttpExecutorContext;
 import bg.codexio.ai.openai.api.http.message.MessageHttpExecutor;
 import bg.codexio.ai.openai.api.http.message.RetrieveListMessagesHttpExecutor;
 import bg.codexio.ai.openai.api.payload.message.request.MessageRequest;
-import bg.codexio.ai.openai.api.payload.message.response.ListMessagesResponse;
-import bg.codexio.ai.openai.api.payload.message.response.MessageResponse;
 import bg.codexio.ai.openai.api.payload.thread.response.ThreadResponse;
 import bg.codexio.ai.openai.api.sdk.HttpBuilder;
 import bg.codexio.ai.openai.api.sdk.auth.SdkAuth;
+import bg.codexio.ai.openai.api.sdk.message.answer.MessageAnswersRuntimeSelectionStage;
+import bg.codexio.ai.openai.api.sdk.message.chat.MessageContentStage;
 
 import static bg.codexio.ai.openai.api.sdk.Authenticator.autoAuthenticate;
 
@@ -17,46 +17,44 @@ public class Messages {
     private Messages() {
     }
 
-    public static MessageContentStage<MessageResponse> throughHttp(
+    public static MessageContentStage throughHttp(
             MessageHttpExecutor httpExecutor,
             String threadId
     ) {
-        return new MessageContentStage<>(
+        return new MessageContentStage(
                 httpExecutor,
                 MessageRequest.builder(),
                 threadId
         );
     }
 
-    public static MessageContentStage<MessageResponse> throughHttp(
+    public static MessageContentStage throughHttp(
             MessageHttpExecutor httpExecutor,
             ThreadResponse threadResponse
     ) {
-        return new MessageContentStage<>(
+        return new MessageContentStage(
                 httpExecutor,
                 MessageRequest.builder(),
                 threadResponse.id()
         );
     }
 
-    public static MessageAnswerStage<ListMessagesResponse> throughHttp(
+    public static MessageAnswersRuntimeSelectionStage throughHttp(
             RetrieveListMessagesHttpExecutor httpExecutor,
             String threadId
     ) {
-        return new MessageAnswerStage<>(
+        return new MessageAnswersRuntimeSelectionStage(
                 httpExecutor,
-                MessageRequest.builder(),
                 threadId
         );
     }
 
-    public static MessageAnswerStage<ListMessagesResponse> throughHttp(
+    public static MessageAnswersRuntimeSelectionStage throughHttp(
             RetrieveListMessagesHttpExecutor httpExecutor,
             ThreadResponse threadResponse
     ) {
-        return new MessageAnswerStage<>(
+        return new MessageAnswersRuntimeSelectionStage(
                 httpExecutor,
-                MessageRequest.builder(),
                 threadResponse.id()
         );
     }

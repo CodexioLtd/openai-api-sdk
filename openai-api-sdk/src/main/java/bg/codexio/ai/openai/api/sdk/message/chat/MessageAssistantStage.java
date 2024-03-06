@@ -1,17 +1,16 @@
-package bg.codexio.ai.openai.api.sdk.message;
+package bg.codexio.ai.openai.api.sdk.message.chat;
 
-import bg.codexio.ai.openai.api.http.DefaultOpenAIHttpExecutor;
-import bg.codexio.ai.openai.api.payload.Mergeable;
+import bg.codexio.ai.openai.api.http.message.MessageHttpExecutor;
 import bg.codexio.ai.openai.api.payload.assistant.response.AssistantResponse;
 import bg.codexio.ai.openai.api.payload.message.request.MessageRequest;
 import bg.codexio.ai.openai.api.sdk.run.RunnableAdvancedConfigurationStage;
 import bg.codexio.ai.openai.api.sdk.run.Runnables;
 
-public class MessageAssistantStage<O extends Mergeable<O>>
-        extends MessageConfigurationStage<O> {
+public class MessageAssistantStage
+        extends MessageConfigurationStage {
 
     MessageAssistantStage(
-            DefaultOpenAIHttpExecutor<MessageRequest, O> httpExecutor,
+            MessageHttpExecutor httpExecutor,
             MessageRequest.Builder requestBuilder,
             String threadId
     ) {
@@ -23,14 +22,25 @@ public class MessageAssistantStage<O extends Mergeable<O>>
     }
 
     public RunnableAdvancedConfigurationStage assist(String assistantId) {
+        this.execute();
+
         return Runnables.defaults(this.threadId)
                         .and()
                         .deepConfigure(assistantId);
     }
 
     public RunnableAdvancedConfigurationStage assist(AssistantResponse assistantResponse) {
+        this.execute();
+
         return Runnables.defaults(this.threadId)
                         .and()
                         .deepConfigure(assistantResponse);
+    }
+
+    private void execute() {
+        this.httpExecutor.executeWithPathVariable(
+                this.requestBuilder.build(),
+                this.threadId
+        );
     }
 }

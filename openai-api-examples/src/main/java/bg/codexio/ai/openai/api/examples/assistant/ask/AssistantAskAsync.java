@@ -25,7 +25,7 @@ public class AssistantAskAsync {
                .message()
                .startWith("You are developer at Codexio.")
                .attach(file)
-               .chat()
+               .chatImmediate()
                .withContent("Your language of choice is Java.")
                .meta()
                .awareOf(

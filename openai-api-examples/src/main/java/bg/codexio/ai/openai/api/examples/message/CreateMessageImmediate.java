@@ -3,7 +3,7 @@ package bg.codexio.ai.openai.api.examples.message;
 import bg.codexio.ai.openai.api.sdk.message.Messages;
 import bg.codexio.ai.openai.api.sdk.thread.Threads;
 
-public class CreateMessage {
+public class CreateMessageImmediate {
 
     public static void main(String[] args) {
         var messageResponse = Messages.defaults(Threads.defaults()
@@ -13,7 +13,9 @@ public class CreateMessage {
                                       .and()
                                       .chat()
                                       .withContent("How are you?")
-                                      .andRespond();
+                                      .andRespond()
+                                      .immediate()
+                                      .finish();
 
         System.out.println(messageResponse);
     }

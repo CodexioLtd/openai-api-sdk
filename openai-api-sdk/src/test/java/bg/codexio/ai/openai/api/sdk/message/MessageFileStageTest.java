@@ -8,6 +8,7 @@ import bg.codexio.ai.openai.api.sdk.MockedFileSimplifiedUtils;
 import bg.codexio.ai.openai.api.sdk.auth.FromDeveloper;
 import bg.codexio.ai.openai.api.sdk.file.Files;
 import bg.codexio.ai.openai.api.sdk.file.upload.FileUploadSimplified;
+import bg.codexio.ai.openai.api.sdk.message.chat.MessageFileStage;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -77,7 +78,7 @@ public class MessageFileStageTest {
         }
     }
 
-    private void previousValuesRemainsUnchanged(MessageConfigurationStage<MessageResponse> nextStage) {
+    private void previousValuesRemainsUnchanged(DefaultMessageConfigurationStage<MessageResponse> nextStage) {
         assertAll(
                 () -> roleRemainsUnchanged(
                         this.messageFileStage,

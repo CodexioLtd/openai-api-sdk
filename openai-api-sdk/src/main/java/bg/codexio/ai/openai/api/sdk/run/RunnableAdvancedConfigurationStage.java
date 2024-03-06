@@ -3,11 +3,9 @@ package bg.codexio.ai.openai.api.sdk.run;
 import bg.codexio.ai.openai.api.http.run.RunnableHttpExecutor;
 import bg.codexio.ai.openai.api.payload.run.request.RunnableRequest;
 import bg.codexio.ai.openai.api.payload.run.response.RunnableResponse;
-import bg.codexio.ai.openai.api.sdk.message.MessageResult;
 import reactor.core.publisher.Mono;
 
 import java.io.File;
-import java.io.IOException;
 import java.util.function.Consumer;
 
 public class RunnableAdvancedConfigurationStage
@@ -95,12 +93,11 @@ public class RunnableAdvancedConfigurationStage
             .async()
             .execute()
             .then(response -> {
-                try {
-                    result.accept(this.initializeToMessageResult(response)
-                                      .download(targetFolder));
-                } catch (IOException e) {
-                    throw new RuntimeException(e);
-                }
+                this.initializeToMessageResultAsync(
+                        response,
+                        result,
+                        targetFolder
+                );
             });
     }
 
@@ -113,14 +110,10 @@ public class RunnableAdvancedConfigurationStage
 
     public Mono<String> finishReactiveSimply(File targetFolder) {
         return this.finishReactive()
-                   .handle((response, sink) -> {
-                       try {
-                           sink.next(this.initializeToMessageResult(response)
-                                         .download(targetFolder));
-                       } catch (IOException e) {
-                           sink.error(new RuntimeException(e));
-                       }
-                   });
+                   .flatMap(run -> this.initializeToMessageResultReactive(
+                           run,
+                           targetFolder
+                   ));
     }
 
     private RunnableResultStage initializeRunnableResultStage(RunnableResponse run) {
@@ -132,10 +125,27 @@ public class RunnableAdvancedConfigurationStage
         );
     }
 
-    private MessageResult initializeToMessageResult(RunnableResponse run) {
+    private Mono<String> initializeToMessageResultReactive(
+            RunnableResponse run,
+            File targetFolder
+    ) {
         return this.initializeRunnableResultStage(run)
                    .waitForCompletion()
                    .result()
-                   .answers();
+                   .answersReactiveSimply(targetFolder);
+    }
+
+    private void initializeToMessageResultAsync(
+            RunnableResponse run,
+            Consumer<String> consumer,
+            File targetFolder
+    ) {
+        this.initializeRunnableResultStage(run)
+            .waitForCompletion()
+            .result()
+            .answersAsyncSimply(
+                    targetFolder,
+                    consumer
+            );
     }
 }

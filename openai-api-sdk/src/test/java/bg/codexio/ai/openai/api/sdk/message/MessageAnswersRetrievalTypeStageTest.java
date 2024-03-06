@@ -1,5 +1,6 @@
 package bg.codexio.ai.openai.api.sdk.message;
 
+import bg.codexio.ai.openai.api.sdk.message.answer.MessageAnswersRetrievalTypeStage;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -131,7 +132,7 @@ public class MessageAnswersRetrievalTypeStageTest {
                 RETRIEVE_LIST_MESSAGES_HTTP_EXECUTOR,
                 LIST_MESSAGE_RESPONSE
         );
-        var result = this.messageAnswersRetrievalTypeStage.answers();
+        var result = this.messageAnswersRetrievalTypeStage.retrieve();
 
         assertEquals(
                 MESSAGE_TEST_RESULT,
@@ -145,7 +146,7 @@ public class MessageAnswersRetrievalTypeStageTest {
                 RETRIEVE_LIST_MESSAGES_HTTP_EXECUTOR,
                 LIST_MESSAGE_RESPONSE_WITH_TEXT_CONTENT
         );
-        var result = this.messageAnswersRetrievalTypeStage.answers();
+        var result = this.messageAnswersRetrievalTypeStage.retrieve();
 
         assertEquals(
                 MESSAGE_TEST_RESULT_WITHOUT_IMAGE,
@@ -159,7 +160,7 @@ public class MessageAnswersRetrievalTypeStageTest {
                 RETRIEVE_LIST_MESSAGES_HTTP_EXECUTOR,
                 LIST_MESSAGE_RESPONSE_WITH_IMAGE_CONTENT
         );
-        var result = this.messageAnswersRetrievalTypeStage.answers();
+        var result = this.messageAnswersRetrievalTypeStage.retrieve();
 
         assertEquals(
                 MESSAGE_TEST_RESULT_WITHOUT_TEXT,
@@ -173,8 +174,7 @@ public class MessageAnswersRetrievalTypeStageTest {
                 RETRIEVE_LIST_MESSAGES_HTTP_EXECUTOR,
                 LIST_MESSAGE_RESPONSE
         );
-        var result =
-                this.messageAnswersRetrievalTypeStage.answers(THREAD_ID);
+        var result = this.messageAnswersRetrievalTypeStage.retrieve(THREAD_ID);
 
         assertEquals(
                 MESSAGE_TEST_RESULT,
@@ -188,7 +188,7 @@ public class MessageAnswersRetrievalTypeStageTest {
                 RETRIEVE_LIST_MESSAGES_HTTP_EXECUTOR,
                 LIST_MESSAGE_RESPONSE_WITH_TEXT_CONTENT
         );
-        var result = this.messageAnswersRetrievalTypeStage.answers(THREAD_ID);
+        var result = this.messageAnswersRetrievalTypeStage.retrieve(THREAD_ID);
 
         assertEquals(
                 MESSAGE_TEST_RESULT_WITHOUT_IMAGE,
@@ -202,8 +202,7 @@ public class MessageAnswersRetrievalTypeStageTest {
                 RETRIEVE_LIST_MESSAGES_HTTP_EXECUTOR,
                 LIST_MESSAGE_RESPONSE_WITH_IMAGE_CONTENT
         );
-        var result =
-                this.messageAnswersRetrievalTypeStage.answers(THREAD_ID);
+        var result = this.messageAnswersRetrievalTypeStage.retrieve(THREAD_ID);
         assertEquals(
                 MESSAGE_TEST_RESULT_WITHOUT_TEXT,
                 result
@@ -216,8 +215,7 @@ public class MessageAnswersRetrievalTypeStageTest {
                 RETRIEVE_LIST_MESSAGES_HTTP_EXECUTOR,
                 LIST_MESSAGE_RESPONSE
         );
-        var result =
-                this.messageAnswersRetrievalTypeStage.answers(THREAD_RESPONSE);
+        var result = this.messageAnswersRetrievalTypeStage.retrieve(THREAD_RESPONSE);
 
         assertEquals(
                 MESSAGE_TEST_RESULT,
@@ -231,8 +229,7 @@ public class MessageAnswersRetrievalTypeStageTest {
                 RETRIEVE_LIST_MESSAGES_HTTP_EXECUTOR,
                 LIST_MESSAGE_RESPONSE_WITH_TEXT_CONTENT
         );
-        var result =
-                this.messageAnswersRetrievalTypeStage.answers(THREAD_RESPONSE);
+        var result = this.messageAnswersRetrievalTypeStage.retrieve(THREAD_RESPONSE);
 
         assertEquals(
                 MESSAGE_TEST_RESULT_WITHOUT_IMAGE,
@@ -246,8 +243,7 @@ public class MessageAnswersRetrievalTypeStageTest {
                 RETRIEVE_LIST_MESSAGES_HTTP_EXECUTOR,
                 LIST_MESSAGE_RESPONSE_WITH_IMAGE_CONTENT
         );
-        var result =
-                this.messageAnswersRetrievalTypeStage.answers(THREAD_RESPONSE);
+        var result = this.messageAnswersRetrievalTypeStage.retrieve(THREAD_RESPONSE);
 
         assertEquals(
                 MESSAGE_TEST_RESULT_WITHOUT_TEXT,
