@@ -4,8 +4,9 @@ import bg.codexio.ai.openai.api.http.thread.CreateThreadHttpExecutor;
 import bg.codexio.ai.openai.api.http.thread.ModifyThreadHttpExecutor;
 import bg.codexio.ai.openai.api.payload.thread.request.ThreadCreationRequest;
 import bg.codexio.ai.openai.api.payload.thread.request.ThreadModificationRequest;
-import bg.codexio.ai.openai.api.payload.thread.request.ThreadRequestBuilder;
 import bg.codexio.ai.openai.api.payload.thread.response.ThreadResponse;
+import bg.codexio.ai.openai.api.sdk.thread.create.ThreadCreationStage;
+import bg.codexio.ai.openai.api.sdk.thread.modify.ThreadModificationStage;
 
 public class ThreadActionTypeStage {
 
@@ -21,31 +22,25 @@ public class ThreadActionTypeStage {
         this.modifyThreadHttpExecutor = modifyThreadHttpExecutor;
     }
 
-    public ThreadCreationStage<ThreadCreationRequest> creating() {
-        return new ThreadCreationStage<>(
+    public ThreadCreationStage creating() {
+        return new ThreadCreationStage(
                 this.createThreadHttpExecutor,
-                ThreadRequestBuilder.<ThreadCreationRequest>builder()
-                                    .withSpecificRequestCreator(threadRequestBuilder -> new ThreadCreationRequest(
-                                            threadRequestBuilder.messages(),
-                                            threadRequestBuilder.metadata()
-                                    ))
+                ThreadCreationRequest.builder()
         );
     }
 
-    public ThreadModificationStage<ThreadModificationRequest> modify(String threadId) {
-        return new ThreadModificationStage<>(
+    public ThreadModificationStage modify(String threadId) {
+        return new ThreadModificationStage(
                 this.modifyThreadHttpExecutor,
-                ThreadRequestBuilder.<ThreadModificationRequest>builder()
-                                    .withSpecificRequestCreator(threadRequestBuilder -> new ThreadModificationRequest(threadRequestBuilder.metadata())),
+                ThreadModificationRequest.builder(),
                 threadId
         );
     }
 
-    public ThreadModificationStage<ThreadModificationRequest> modify(ThreadResponse thread) {
-        return new ThreadModificationStage<>(
+    public ThreadModificationStage modify(ThreadResponse thread) {
+        return new ThreadModificationStage(
                 this.modifyThreadHttpExecutor,
-                ThreadRequestBuilder.<ThreadModificationRequest>builder()
-                                    .withSpecificRequestCreator(threadRequestBuilder -> new ThreadModificationRequest(threadRequestBuilder.metadata())),
+                ThreadModificationRequest.builder(),
                 thread.id()
         );
     }

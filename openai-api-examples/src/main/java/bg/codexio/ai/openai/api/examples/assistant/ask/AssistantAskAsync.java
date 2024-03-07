@@ -25,31 +25,45 @@ public class AssistantAskAsync {
                .message()
                .startWith("You are developer at Codexio.")
                .attach(file)
-               .chatImmediate()
-               .withContent("Your language of choice is Java.")
-               .meta()
-               .awareOf(
-                       "key",
-                       "value"
-               )
-               .assistant()
-               .assist(Assistants.defaults()
-                                 .and()
-                                 .poweredByGPT40()
-                                 .from(new CodeInterpreter())
-                                 .called("Cody")
-                                 .instruct("Please focus on " + "explaining"
-                                                   + " the " + "topics as "
-                                                   + "senior " + "developer.")
-                                 .andRespond()
-                                 .immediate()
-                                 .finishRaw())
-               .instruction()
-               .instruct(
-                       "It would be better to show me some " + "DevOps skills.")
-               .finishAsyncSimply(
-                       fileDownloadLocation,
-                       System.out::println
-               );
+               .chat()
+               .async(chat -> chat.withContent(
+                                          "Your language of choice " + "is " + "Java.")
+                                  .meta()
+                                  .awareOf(
+                                          "key",
+                                          "value"
+                                  )
+                                  .assistant()
+                                  .assistAsync(
+                                          Assistants.defaults()
+                                                    .and()
+                                                    .poweredByGPT40()
+                                                    .from(new CodeInterpreter())
+                                                    .called("Cody")
+                                                    .instruct("Please focus on "
+                                                                      +
+                                                                      "explaining"
+                                                                      + " the "
+                                                                      + "topics"
+                                                                      + " as "
+                                                                      +
+                                                                      "senior "
+                                                                      +
+                                                                      "developer.")
+                                                    .andRespond()
+                                                    .async()
+                                                    .finish()
+                                                    .then(),
+                                          run -> run.instruction()
+                                                    .instruct(
+                                                            "It would be better to show me "
+                                                                    + "some "
+                                                                    + "DevOps"
+                                                                    + " skills.")
+                                                    .finishAsyncSimply(
+                                                            fileDownloadLocation,
+                                                            System.out::println
+                                                    )
+                                  ));
     }
 }

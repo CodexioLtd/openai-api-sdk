@@ -7,6 +7,7 @@ import bg.codexio.ai.openai.api.payload.thread.request.ThreadModificationRequest
 import bg.codexio.ai.openai.api.payload.thread.request.ThreadRequest;
 import bg.codexio.ai.openai.api.payload.thread.request.ThreadRequestBuilder;
 import bg.codexio.ai.openai.api.payload.thread.response.ThreadResponse;
+import bg.codexio.ai.openai.api.sdk.thread.create.ThreadConfigurationStage;
 
 import static bg.codexio.ai.openai.api.sdk.CommonTestAssertions.METADATA_MAP;
 import static org.junit.jupiter.api.Assertions.assertAll;

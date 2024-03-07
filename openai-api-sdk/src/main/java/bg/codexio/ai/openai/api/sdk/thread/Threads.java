@@ -5,9 +5,10 @@ import bg.codexio.ai.openai.api.http.thread.CreateThreadHttpExecutor;
 import bg.codexio.ai.openai.api.http.thread.ModifyThreadHttpExecutor;
 import bg.codexio.ai.openai.api.payload.thread.request.ThreadCreationRequest;
 import bg.codexio.ai.openai.api.payload.thread.request.ThreadModificationRequest;
-import bg.codexio.ai.openai.api.payload.thread.request.ThreadRequestBuilder;
 import bg.codexio.ai.openai.api.sdk.HttpBuilder;
 import bg.codexio.ai.openai.api.sdk.auth.SdkAuth;
+import bg.codexio.ai.openai.api.sdk.thread.create.ThreadCreationStage;
+import bg.codexio.ai.openai.api.sdk.thread.modify.ThreadModificationStage;
 
 import static bg.codexio.ai.openai.api.sdk.Authenticator.autoAuthenticate;
 
@@ -16,20 +17,20 @@ public class Threads {
     private Threads() {
     }
 
-    public static ThreadCreationStage<ThreadCreationRequest> throughHttp(CreateThreadHttpExecutor httpExecutor) {
-        return new ThreadCreationStage<>(
+    public static ThreadCreationStage throughHttp(CreateThreadHttpExecutor httpExecutor) {
+        return new ThreadCreationStage(
                 httpExecutor,
-                ThreadRequestBuilder.builder()
+                ThreadCreationRequest.builder()
         );
     }
 
-    public static ThreadModificationStage<ThreadModificationRequest> throughHttp(
+    public static ThreadModificationStage throughHttp(
             ModifyThreadHttpExecutor httpExecutor,
             String threadId
     ) {
-        return new ThreadModificationStage<>(
+        return new ThreadModificationStage(
                 httpExecutor,
-                ThreadRequestBuilder.builder(),
+                ThreadModificationRequest.builder(),
                 threadId
         );
     }

@@ -25,7 +25,8 @@ public class AssistantAskImmediate {
                             .message()
                             .startWith("You are developer at Codexio.")
                             .attach(file)
-                            .chatImmediate()
+                            .chat()
+                            .immediate()
                             .withContent("What is java?")
                             .meta()
                             .awareOf(
@@ -35,20 +36,25 @@ public class AssistantAskImmediate {
                             .file()
                             .feed(file)
                             .assistant()
-                            .assist(Assistants.defaults()
-                                              .and()
-                                              .poweredByGPT40()
-                                              .from(new CodeInterpreter())
-                                              .called("Cody")
-                                              .instruct("Please focus on "
-                                                                + "explaining"
-                                                                + " the "
-                                                                + "topics as "
-                                                                + "senior "
-                                                                + "developer.")
-                                              .andRespond()
-                                              .immediate()
-                                              .finishRaw())
+                            .assistImmediate(Assistants.defaults()
+                                                       .and()
+                                                       .poweredByGPT40()
+                                                       .from(new CodeInterpreter())
+                                                       .called("Cody")
+                                                       .instruct("Please focus "
+                                                                         + "on "
+                                                                         +
+                                                                         "explaining"
+                                                                         + " the "
+                                                                         +
+                                                                         "topics as "
+                                                                         +
+                                                                         "senior "
+                                                                         +
+                                                                         "developer.")
+                                                       .andRespond()
+                                                       .immediate()
+                                                       .finishRaw())
                             .instruction()
                             .instruct("It would be better to show me some "
                                               + "DevOps skills.")

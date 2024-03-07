@@ -1,15 +1,15 @@
-package bg.codexio.ai.openai.api.examples.thread;
+package bg.codexio.ai.openai.api.examples.thread.create;
 
 import bg.codexio.ai.openai.api.sdk.thread.Threads;
 
 import java.io.File;
 
-public class CreateThread {
+public class CreateThreadImmediate {
 
     public static void main(String[] args) {
-        var file = new File(CreateThread.class.getClassLoader()
-                                              .getResource("fake-file.txt")
-                                              .getPath());
+        var file = new File(CreateThreadImmediate.class.getClassLoader()
+                                                       .getResource("fake-file.txt")
+                                                       .getPath());
 
         var thread = Threads.defaults()
                             .and()

@@ -42,7 +42,7 @@ public class MessageAssistantStageTest {
         try (var authUtils = mockStatic(Authenticator.class)) {
             authUtils.when(() -> Authenticator.autoAuthenticate(any()))
                      .thenReturn(auth);
-            this.messageAssistantStage.assist(ASSISTANT_ID);
+            this.messageAssistantStage.assistImmediate(ASSISTANT_ID);
         }
     }
 
@@ -55,7 +55,7 @@ public class MessageAssistantStageTest {
         try (var authUtils = mockStatic(Authenticator.class)) {
             authUtils.when(() -> Authenticator.autoAuthenticate(any()))
                      .thenReturn(auth);
-            this.messageAssistantStage.assist(ASSISTANT_RESPONSE);
+            this.messageAssistantStage.assistImmediate(ASSISTANT_RESPONSE);
         }
     }
 }

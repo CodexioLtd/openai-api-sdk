@@ -7,6 +7,8 @@ import bg.codexio.ai.openai.api.sdk.MockedFileSimplifiedUtils;
 import bg.codexio.ai.openai.api.sdk.auth.FromDeveloper;
 import bg.codexio.ai.openai.api.sdk.file.Files;
 import bg.codexio.ai.openai.api.sdk.file.upload.FileUploadSimplified;
+import bg.codexio.ai.openai.api.sdk.thread.create.ThreadConfigurationStage;
+import bg.codexio.ai.openai.api.sdk.thread.create.ThreadMessageFileStage;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 

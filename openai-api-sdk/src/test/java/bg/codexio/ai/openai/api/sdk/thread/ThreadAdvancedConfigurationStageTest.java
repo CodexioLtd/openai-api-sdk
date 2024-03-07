@@ -4,6 +4,8 @@ import bg.codexio.ai.openai.api.payload.credentials.ApiCredentials;
 import bg.codexio.ai.openai.api.payload.thread.request.ThreadCreationRequest;
 import bg.codexio.ai.openai.api.sdk.Authenticator;
 import bg.codexio.ai.openai.api.sdk.auth.FromDeveloper;
+import bg.codexio.ai.openai.api.sdk.thread.create.ThreadAdvancedConfigurationStage;
+import bg.codexio.ai.openai.api.sdk.thread.create.ThreadConfigurationStage;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 

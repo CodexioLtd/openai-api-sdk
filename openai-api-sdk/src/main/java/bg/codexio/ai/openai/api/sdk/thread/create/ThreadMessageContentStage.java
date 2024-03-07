@@ -1,21 +1,20 @@
-package bg.codexio.ai.openai.api.sdk.thread;
+package bg.codexio.ai.openai.api.sdk.thread.create;
 
-import bg.codexio.ai.openai.api.http.DefaultOpenAIHttpExecutor;
+import bg.codexio.ai.openai.api.http.thread.CreateThreadHttpExecutor;
 import bg.codexio.ai.openai.api.payload.message.request.MessageRequest;
-import bg.codexio.ai.openai.api.payload.thread.request.ThreadRequest;
-import bg.codexio.ai.openai.api.payload.thread.request.ThreadRequestBuilder;
-import bg.codexio.ai.openai.api.payload.thread.response.ThreadResponse;
+import bg.codexio.ai.openai.api.payload.thread.request.ThreadCreationRequest;
 
 import java.util.Arrays;
 
 import static bg.codexio.ai.openai.api.sdk.thread.constant.ThreadDefaultValuesConstants.MESSAGE_SENDER_ROLE;
 
-public class ThreadMessageContentStage<R extends ThreadRequest>
-        extends ThreadConfigurationStage<R> {
+public class ThreadMessageContentStage
+        extends ThreadConfigurationStage {
+
 
     ThreadMessageContentStage(
-            DefaultOpenAIHttpExecutor<R, ThreadResponse> httpExecutor,
-            ThreadRequestBuilder<R> requestBuilder
+            CreateThreadHttpExecutor httpExecutor,
+            ThreadCreationRequest.Builder requestBuilder
     ) {
         super(
                 httpExecutor,
@@ -23,8 +22,8 @@ public class ThreadMessageContentStage<R extends ThreadRequest>
         );
     }
 
-    public ThreadAdvancedConfigurationStage<R> startWith(String... content) {
-        return new ThreadAdvancedConfigurationStage<>(
+    public ThreadAdvancedConfigurationStage startWith(String... content) {
+        return new ThreadAdvancedConfigurationStage(
                 this.httpExecutor,
                 this.requestBuilder.withMessages(Arrays.stream(content)
                                                        .map(message -> MessageRequest.builder()
@@ -35,8 +34,8 @@ public class ThreadMessageContentStage<R extends ThreadRequest>
         );
     }
 
-    public ThreadMessageFileStage<R> startWith(String content) {
-        return new ThreadMessageFileStage<>(
+    public ThreadMessageFileStage startWith(String content) {
+        return new ThreadMessageFileStage(
                 this.httpExecutor,
                 this.requestBuilder,
                 content

@@ -2,6 +2,8 @@ package bg.codexio.ai.openai.api.sdk.thread;
 
 import bg.codexio.ai.openai.api.payload.message.request.MessageRequest;
 import bg.codexio.ai.openai.api.payload.thread.request.ThreadCreationRequest;
+import bg.codexio.ai.openai.api.sdk.thread.create.ThreadConfigurationStage;
+import bg.codexio.ai.openai.api.sdk.thread.create.ThreadMessageContentStage;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 

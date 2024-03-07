@@ -24,7 +24,8 @@ public class AssistantAskReactive {
                .message()
                .startWith("You are developer at Codexio.")
                .attach(file)
-               .chatReactive()
+               .chat()
+               .reactive()
                .flatMap(chat -> chat.withContent(
                                             "Your language " + "of " +
                                                     "choice " + "is " + "Java.")
@@ -34,30 +35,28 @@ public class AssistantAskReactive {
                                             "value"
                                     )
                                     .assistant()
-                                    .assist(Assistants.defaults()
-                                                      .and()
-                                                      .poweredByGPT40()
-                                                      .from(new CodeInterpreter())
-                                                      .called("Cody")
-                                                      .instruct(
-                                                              "Please focus on "
-                                                                      +
-                                                                      "explaining"
-                                                                      + " the "
-                                                                      +
-                                                                      "topics"
-                                                                      + " as "
-                                                                      +
-                                                                      "senior "
-                                                                      +
-                                                                      "developer.")
-                                                      .andRespond()
-                                                      .immediate()
-                                                      .finishRaw())
-                                    .instruction()
-                                    .instruct("It would be better to show me "
-                                                      + "some DevOps skills.")
-                                    .finishReactiveSimply(fileDownloadLocation))
+                                    .assistReactive(Assistants.defaults()
+                                                              .and()
+                                                              .poweredByGPT40()
+                                                              .from(new CodeInterpreter())
+                                                              .called("Cody")
+                                                              .instruct(
+                                                                      "Please focus on "
+                                                                              + "explaining"
+                                                                              + " the "
+                                                                              + "topics"
+                                                                              + " as "
+                                                                              + "senior "
+                                                                              + "developer.")
+                                                              .andRespond()
+                                                              .reactive()
+                                                              .finishRaw()
+                                                              .response()))
+               .flatMap(runnableConfiguration -> runnableConfiguration.instruction()
+                                                                      .instruct(
+                                                                              "It would be better to show me "
+                                                                                      + "some DevOps skills.")
+                                                                      .finishReactiveSimply(fileDownloadLocation))
                .subscribe(System.out::println);
     }
 }

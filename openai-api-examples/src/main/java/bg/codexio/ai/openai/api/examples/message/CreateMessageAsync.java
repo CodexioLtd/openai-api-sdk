@@ -6,16 +6,20 @@ import bg.codexio.ai.openai.api.sdk.thread.Threads;
 public class CreateMessageAsync {
 
     public static void main(String[] args) {
-        Messages.defaults(Threads.defaults()
-                                 .and()
-                                 .creating()
-                                 .empty())
-                .and()
-                .chat()
-                .withContent("How are you?")
-                .andRespond()
-                .async()
-                .finish()
-                .then(System.out::println);
+        Threads.defaults()
+               .and()
+               .creating()
+               .empty()
+               .async()
+               .finishRaw()
+               .then(thread -> Messages.defaults(thread)
+                                       .and()
+                                       .chat()
+                                       .withContent("How are you?")
+                                       .andRespond()
+                                       .async()
+                                       .finish()
+                                       .then(System.out::println));
+
     }
 }

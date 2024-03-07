@@ -7,10 +7,13 @@ import bg.codexio.ai.openai.api.sdk.thread.Threads;
 
 public class CreateRunAsync {
     public static void main(String[] args) {
+
         Runnables.defaults(Threads.defaults()
                                   .and()
                                   .creating()
-                                  .empty())
+                                  .empty()
+                                  .immediate()
+                                  .finish())
                  .and()
                  .initialize(Assistants.defaults()
                                        .and()
