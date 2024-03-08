@@ -56,7 +56,8 @@ public class AssistantAskReactive {
                                                                       .instruct(
                                                                               "It would be better to show me "
                                                                                       + "some DevOps skills.")
-                                                                      .finishReactiveSimply(fileDownloadLocation))
+                                                                      .finish()
+                                                                      .reactiveSimply(fileDownloadLocation))
                .subscribe(System.out::println);
     }
 }

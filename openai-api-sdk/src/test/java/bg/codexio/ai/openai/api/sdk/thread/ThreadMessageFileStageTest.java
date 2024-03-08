@@ -1,7 +1,6 @@
 package bg.codexio.ai.openai.api.sdk.thread;
 
 import bg.codexio.ai.openai.api.payload.credentials.ApiCredentials;
-import bg.codexio.ai.openai.api.payload.thread.request.ThreadCreationRequest;
 import bg.codexio.ai.openai.api.sdk.Authenticator;
 import bg.codexio.ai.openai.api.sdk.MockedFileSimplifiedUtils;
 import bg.codexio.ai.openai.api.sdk.auth.FromDeveloper;
@@ -20,11 +19,11 @@ import static org.mockito.Mockito.mockStatic;
 
 public class ThreadMessageFileStageTest {
 
-    private ThreadMessageFileStage<ThreadCreationRequest> threadMessageFileStage;
+    private ThreadMessageFileStage threadMessageFileStage;
 
     @BeforeEach
     void setUp() {
-        this.threadMessageFileStage = new ThreadMessageFileStage<>(
+        this.threadMessageFileStage = new ThreadMessageFileStage(
                 CREATE_THREAD_HTTP_EXECUTOR,
                 THREAD_CREATION_REQUEST_BUILDER,
                 THREAD_MESSAGE_CONTENT
@@ -107,7 +106,7 @@ public class ThreadMessageFileStageTest {
         assertNotNull(response);
     }
 
-    private void performFeedWithFile(ThreadConfigurationStage<ThreadCreationRequest> threadConfigurationStage) {
+    private void performFeedWithFile(ThreadConfigurationStage threadConfigurationStage) {
         var auth =
                 Files.authenticate(FromDeveloper.doPass(new ApiCredentials(API_CREDENTIALS)));
         try (
@@ -127,7 +126,7 @@ public class ThreadMessageFileStageTest {
         }
     }
 
-    private void performFeedWithFileResponse(ThreadConfigurationStage<ThreadCreationRequest> threadConfigurationStage) {
+    private void performFeedWithFileResponse(ThreadConfigurationStage threadConfigurationStage) {
         execute(threadConfigurationStage);
         var response = this.threadMessageFileStage.feed(FILE_RESPONSE);
 
@@ -135,7 +134,7 @@ public class ThreadMessageFileStageTest {
     }
 
     private void initializeStageWithEmptyContent() {
-        this.threadMessageFileStage = new ThreadMessageFileStage<>(
+        this.threadMessageFileStage = new ThreadMessageFileStage(
                 CREATE_THREAD_HTTP_EXECUTOR,
                 THREAD_CREATION_REQUEST_BUILDER,
                 null

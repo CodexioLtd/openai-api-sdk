@@ -13,11 +13,11 @@ import static org.junit.jupiter.api.Assertions.*;
 
 public class ThreadMessageContentStageTest {
 
-    private ThreadMessageContentStage<ThreadCreationRequest> threadMessageContentStage;
+    private ThreadMessageContentStage threadMessageContentStage;
 
     @BeforeEach
     void setUp() {
-        this.threadMessageContentStage = new ThreadMessageContentStage<>(
+        this.threadMessageContentStage = new ThreadMessageContentStage(
                 CREATE_THREAD_HTTP_EXECUTOR,
                 THREAD_CREATION_REQUEST_BUILDER
         );

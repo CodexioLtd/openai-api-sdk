@@ -1,6 +1,5 @@
 package bg.codexio.ai.openai.api.sdk.thread;
 
-import bg.codexio.ai.openai.api.payload.thread.request.ThreadModificationRequest;
 import bg.codexio.ai.openai.api.sdk.thread.create.ThreadMetaStage;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -13,11 +12,11 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 
 public class ThreadModificationMetaStageTest {
 
-    private ThreadMetaStage<ThreadModificationRequest> threadMetaStage;
+    private ThreadMetaStage threadMetaStage;
 
     @BeforeEach
     void setUp() {
-        this.threadMetaStage = new ThreadMetaStage<>(
+        this.threadMetaStage = new ThreadMetaStage(
                 MODIFY_THREAD_HTTP_EXECUTOR,
                 THREAD_MODIFICATION_REQUEST_THREAD_REQUEST_BUILDER
         );

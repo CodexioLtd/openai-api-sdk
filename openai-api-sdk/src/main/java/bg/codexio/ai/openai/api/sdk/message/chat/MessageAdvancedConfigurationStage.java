@@ -6,7 +6,7 @@ import bg.codexio.ai.openai.api.payload.message.request.MessageRequest;
 public class MessageAdvancedConfigurationStage
         extends MessageConfigurationStage {
 
-    MessageAdvancedConfigurationStage(
+    public MessageAdvancedConfigurationStage(
             MessageHttpExecutor httpExecutor,
             MessageRequest.Builder requestBuilder,
             String threadId

@@ -38,7 +38,7 @@ public class InternalAssertions {
     public static final MessageHttpExecutor MESSAGE_HTTP_EXECUTOR =
             mock(MessageHttpExecutor.class);
     public static final RetrieveListMessagesHttpExecutor RETRIEVE_LIST_MESSAGES_HTTP_EXECUTOR = mock(RetrieveListMessagesHttpExecutor.class);
-    static final String MESSAGE_CONTENT = "test_message_content";
+    public static final String MESSAGE_CONTENT = "test_message_content";
     static final String MESSAGE_RESULT_CONTENT_VALUE =
             "test_message_test_quote";
     static final MessageResponse MESSAGE_RESPONSE = new MessageResponse(
@@ -159,7 +159,7 @@ public class InternalAssertions {
             null
     );
 
-    static <O extends Mergeable<O>> void roleRemainsUnchanged(
+    public static <O extends Mergeable<O>> void roleRemainsUnchanged(
             DefaultMessageConfigurationStage<O> previousStage,
             DefaultMessageConfigurationStage<O> nextStage
     ) {
@@ -169,7 +169,7 @@ public class InternalAssertions {
         );
     }
 
-    static <O extends Mergeable<O>> void fileIdsRemainsUnchanged(
+    public static <O extends Mergeable<O>> void fileIdsRemainsUnchanged(
             DefaultMessageConfigurationStage<O> previousStage,
             DefaultMessageConfigurationStage<O> nextStage
     ) {
@@ -179,7 +179,7 @@ public class InternalAssertions {
         );
     }
 
-    static <O extends Mergeable<O>> void contentRemainsUnchanged(
+    public static <O extends Mergeable<O>> void contentRemainsUnchanged(
             DefaultMessageConfigurationStage<O> previousStage,
             DefaultMessageConfigurationStage<O> nextStage
     ) {

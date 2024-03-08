@@ -11,7 +11,7 @@ public class FileUploadingImmediateContextStage
         extends FileUploadingConfigurationStage
         implements RuntimeExecutor {
 
-    FileUploadingImmediateContextStage(
+    public FileUploadingImmediateContextStage(
             UploadFileHttpExecutor executor,
             UploadFileRequest.Builder requestBuilder
     ) {

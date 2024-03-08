@@ -2,6 +2,7 @@ package bg.codexio.ai.openai.api.sdk;
 
 import bg.codexio.ai.openai.api.http.file.RetrieveFileContentHttpExecutor;
 import bg.codexio.ai.openai.api.http.file.UploadFileHttpExecutor;
+import bg.codexio.ai.openai.api.payload.file.download.FileDownloadingMeta;
 import bg.codexio.ai.openai.api.payload.file.request.UploadFileRequest;
 import bg.codexio.ai.openai.api.sdk.file.FileActionTypeStage;
 import bg.codexio.ai.openai.api.sdk.file.Files;
@@ -58,10 +59,11 @@ public class CommonTestAssertions {
                           any(),
                           (String) any()
                   ))
-                  .thenReturn(new FileDownloadingNameTypeStage<>(
+                  .thenReturn(new FileDownloadingNameTypeStage(
                           RETRIEVE_FILE_CONTENT_HTTP_EXECUTOR,
                           UploadFileRequest.builder(),
-                          FILE_TEST_ID
+                          FileDownloadingMeta.builder()
+                                             .withFileId(FILE_TEST_ID)
                   ));
     }
 }

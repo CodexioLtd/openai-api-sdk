@@ -1,8 +1,7 @@
-package bg.codexio.ai.openai.api.sdk.message;
+package bg.codexio.ai.openai.api.sdk.message.chat;
 
 import bg.codexio.ai.openai.api.payload.message.request.MessageRequest;
-import bg.codexio.ai.openai.api.payload.message.response.MessageResponse;
-import bg.codexio.ai.openai.api.sdk.message.chat.MessageMetaStage;
+import bg.codexio.ai.openai.api.sdk.message.DefaultMessageConfigurationStage;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -15,11 +14,11 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 
 public class MessageMetaStageTest {
 
-    private MessageMetaStage<MessageResponse> messageMetaStage;
+    private MessageMetaStage messageMetaStage;
 
     @BeforeEach
     void setUp() {
-        this.messageMetaStage = new MessageMetaStage<>(
+        this.messageMetaStage = new MessageMetaStage(
                 MESSAGE_HTTP_EXECUTOR,
                 MessageRequest.builder()
                               .withContent(MESSAGE_CONTENT),
@@ -38,7 +37,7 @@ public class MessageMetaStageTest {
         );
     }
 
-    private void previousValuesRemainsUnchanged(DefaultMessageConfigurationStage<MessageResponse> nextStage) {
+    private void previousValuesRemainsUnchanged(DefaultMessageConfigurationStage nextStage) {
         assertAll(
                 () -> roleRemainsUnchanged(
                         this.messageMetaStage,

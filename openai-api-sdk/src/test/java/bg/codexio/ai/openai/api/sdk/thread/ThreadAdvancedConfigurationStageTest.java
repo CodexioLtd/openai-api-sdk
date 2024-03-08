@@ -18,12 +18,11 @@ import static org.mockito.Mockito.mockStatic;
 
 public class ThreadAdvancedConfigurationStageTest {
 
-    private ThreadAdvancedConfigurationStage<ThreadCreationRequest> threadAdvancedConfigurationStage;
+    private ThreadAdvancedConfigurationStage threadAdvancedConfigurationStage;
 
     @BeforeEach
     void setUp() {
-        this.threadAdvancedConfigurationStage =
-                new ThreadAdvancedConfigurationStage<>(
+        this.threadAdvancedConfigurationStage = new ThreadAdvancedConfigurationStage(
                 CREATE_THREAD_HTTP_EXECUTOR,
                 THREAD_CREATION_REQUEST_BUILDER
         );

@@ -60,7 +60,8 @@ public class AssistantAskAsync {
                                                                     + "some "
                                                                     + "DevOps"
                                                                     + " skills.")
-                                                    .finishAsyncSimply(
+                                                    .finish()
+                                                    .asyncSimply(
                                                             fileDownloadLocation,
                                                             System.out::println
                                                     )

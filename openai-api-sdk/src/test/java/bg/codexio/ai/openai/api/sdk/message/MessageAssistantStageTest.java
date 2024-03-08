@@ -2,10 +2,8 @@ package bg.codexio.ai.openai.api.sdk.message;
 
 import bg.codexio.ai.openai.api.payload.credentials.ApiCredentials;
 import bg.codexio.ai.openai.api.payload.message.request.MessageRequest;
-import bg.codexio.ai.openai.api.payload.message.response.MessageResponse;
 import bg.codexio.ai.openai.api.sdk.Authenticator;
 import bg.codexio.ai.openai.api.sdk.auth.FromDeveloper;
-import bg.codexio.ai.openai.api.sdk.message.chat.MessageAssistantStage;
 import bg.codexio.ai.openai.api.sdk.run.Runnables;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -21,11 +19,11 @@ import static org.mockito.Mockito.mockStatic;
 
 public class MessageAssistantStageTest {
 
-    private MessageAssistantStage<MessageResponse> messageAssistantStage;
+    private MessageAssistantStage messageAssistantStage;
 
     @BeforeEach
     void setUp() {
-        this.messageAssistantStage = new MessageAssistantStage<>(
+        this.messageAssistantStage = new MessageAssistantStage(
                 MESSAGE_HTTP_EXECUTOR,
                 MessageRequest.builder()
                               .withContent(MESSAGE_CONTENT),

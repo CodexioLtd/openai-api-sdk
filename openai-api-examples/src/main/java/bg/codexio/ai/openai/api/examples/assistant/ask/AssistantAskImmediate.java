@@ -58,7 +58,8 @@ public class AssistantAskImmediate {
                             .instruction()
                             .instruct("It would be better to show me some "
                                               + "DevOps skills.")
-                            .finishImmediate()
+                            .finish()
+                            .immediate()
                             .waitForCompletion()
                             .result()
                             .answersImmediate()

@@ -8,8 +8,7 @@ import bg.codexio.ai.openai.api.sdk.thread.modify.ThreadModificationStage;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-import static bg.codexio.ai.openai.api.sdk.CommonTestAssertions.API_CREDENTIALS;
-import static bg.codexio.ai.openai.api.sdk.CommonTestAssertions.METADATA_MAP;
+import static bg.codexio.ai.openai.api.sdk.CommonTestAssertions.*;
 import static bg.codexio.ai.openai.api.sdk.message.Messages.authenticate;
 import static bg.codexio.ai.openai.api.sdk.thread.InternalAssertions.*;
 import static org.junit.jupiter.api.Assertions.*;
@@ -18,20 +17,21 @@ import static org.mockito.Mockito.mockStatic;
 
 public class ThreadModificationStageTest {
 
-    private ThreadModificationStage<ThreadModificationRequest> threadModificationStage;
+    private ThreadModificationStage threadModificationStage;
 
     @BeforeEach
     void setUp() {
-        this.threadModificationStage = new ThreadModificationStage<>(
+        this.threadModificationStage = new ThreadModificationStage(
                 MODIFY_THREAD_HTTP_EXECUTOR,
-                THREAD_MODIFICATION_REQUEST_THREAD_REQUEST_BUILDER,
+                ThreadModificationRequest.builder(),
                 THREAD_ID
         );
     }
 
     @Test
     void testWithMeta_expectCorrectBuilder() {
-        var nextStage = this.threadModificationStage.withMeta(METADATA_MAP);
+        var nextStage =
+                this.threadModificationStage.withMeta(METADATA_VAR_ARGS);
 
         assertAll(
                 () -> assertEquals(

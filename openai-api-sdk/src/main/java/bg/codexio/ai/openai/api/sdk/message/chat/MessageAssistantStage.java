@@ -13,7 +13,7 @@ import java.util.function.Consumer;
 public class MessageAssistantStage
         extends MessageConfigurationStage {
 
-    MessageAssistantStage(
+    public MessageAssistantStage(
             MessageHttpExecutor httpExecutor,
             MessageRequest.Builder requestBuilder,
             String threadId

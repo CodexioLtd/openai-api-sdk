@@ -6,7 +6,7 @@ import bg.codexio.ai.openai.api.payload.message.request.MessageRequest;
 public class MessageMetaStage
         extends MessageConfigurationStage {
 
-    MessageMetaStage(
+    public MessageMetaStage(
             MessageHttpExecutor httpExecutor,
             MessageRequest.Builder requestBuilder,
             String threadId

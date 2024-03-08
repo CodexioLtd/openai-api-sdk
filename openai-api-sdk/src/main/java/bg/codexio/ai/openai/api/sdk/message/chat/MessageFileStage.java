@@ -11,7 +11,7 @@ import java.util.Arrays;
 public class MessageFileStage
         extends MessageConfigurationStage {
 
-    MessageFileStage(
+    public MessageFileStage(
             MessageHttpExecutor httpExecutor,
             MessageRequest.Builder requestBuilder,
             String threadId

@@ -1,6 +1,7 @@
 package bg.codexio.ai.openai.api.sdk.file;
 
 import bg.codexio.ai.openai.api.payload.file.request.UploadFileRequest;
+import bg.codexio.ai.openai.api.sdk.file.upload.FileUploadingImmediateContextStage;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -13,11 +14,11 @@ import static org.mockito.Mockito.when;
 
 public class FileUploadingStageTest {
 
-    private FileUploadingStage fileUploadingStage;
+    private FileUploadingImmediateContextStage fileUploadingStage;
 
     @BeforeEach
     public void setUp() {
-        this.fileUploadingStage = new FileUploadingStage(
+        this.fileUploadingStage = new FileUploadingImmediateContextStage(
                 UPLOAD_FILE_HTTP_EXECUTOR,
                 UploadFileRequest.builder()
                                  .withPurpose(InternalAssertions.ASSISTANT_PURPOSE_NAME)

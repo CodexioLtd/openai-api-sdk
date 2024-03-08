@@ -2,7 +2,6 @@ package bg.codexio.ai.openai.api.sdk.file;
 
 import bg.codexio.ai.openai.api.payload.file.purpose.AssistantPurpose;
 import bg.codexio.ai.openai.api.payload.file.request.UploadFileRequest;
-import bg.codexio.ai.openai.api.payload.file.response.FileResponse;
 import bg.codexio.ai.openai.api.sdk.file.upload.FileTargetingStage;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -12,11 +11,11 @@ import static org.junit.jupiter.api.Assertions.assertNotNull;
 
 public class FileTargetingStageTest {
 
-    private FileTargetingStage<FileResponse> fileTargetingStage;
+    private FileTargetingStage fileTargetingStage;
 
     @BeforeEach
     public void setUp() {
-        this.fileTargetingStage = new FileTargetingStage<>(
+        this.fileTargetingStage = new FileTargetingStage(
                 UPLOAD_FILE_HTTP_EXECUTOR,
                 UploadFileRequest.builder()
         );

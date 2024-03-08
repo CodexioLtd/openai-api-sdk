@@ -8,7 +8,7 @@ public class ThreadAdvancedConfigurationStage
         extends ThreadConfigurationStage {
 
 
-    ThreadAdvancedConfigurationStage(
+    public ThreadAdvancedConfigurationStage(
             CreateThreadHttpExecutor httpExecutor,
             ThreadCreationRequest.Builder requestBuilder
     ) {
