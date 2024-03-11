@@ -4,20 +4,17 @@ import bg.codexio.ai.openai.api.payload.message.request.MessageRequest;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-import static bg.codexio.ai.openai.api.sdk.CommonTestAssertions.METADATA_MAP;
-import static bg.codexio.ai.openai.api.sdk.CommonTestAssertions.METADATA_VAR_ARGS;
 import static bg.codexio.ai.openai.api.sdk.message.chat.InternalAssertions.*;
 import static bg.codexio.ai.openai.api.sdk.thread.InternalAssertions.THREAD_ID;
 import static org.junit.jupiter.api.Assertions.assertAll;
-import static org.junit.jupiter.api.Assertions.assertEquals;
 
-public class MessageMetaStageTest {
+public class MessageAsyncContextStageTest {
 
-    private MessageMetaStage messageMetaStage;
+    private MessageAsyncContextStage messageAsyncContextStage;
 
     @BeforeEach
     void setUp() {
-        this.messageMetaStage = new MessageMetaStage(
+        this.messageAsyncContextStage = new MessageAsyncContextStage(
                 MESSAGE_HTTP_EXECUTOR,
                 MessageRequest.builder()
                               .withContent(MESSAGE_CONTENT),
@@ -26,28 +23,28 @@ public class MessageMetaStageTest {
     }
 
     @Test
-    void testAwareOf_expectCorrectBuilder() {
-        var nextStage = this.messageMetaStage.awareOf(METADATA_VAR_ARGS);
-        this.previousValuesRemainsUnchanged(nextStage);
+    void testFinish_expectCorrectBuilder() {
+        var nextStage = this.messageAsyncContextStage.finish();
 
-        assertEquals(
-                METADATA_MAP,
-                nextStage.requestBuilder.metadata()
-        );
+        previousValuesRemainsUnchanged(nextStage);
     }
 
     private void previousValuesRemainsUnchanged(MessageConfigurationStage nextStage) {
         assertAll(
                 () -> roleRemainsUnchanged(
-                        this.messageMetaStage,
+                        this.messageAsyncContextStage,
+                        nextStage
+                ),
+                () -> metadataRemainsUnchanged(
+                        this.messageAsyncContextStage,
                         nextStage
                 ),
                 () -> fileIdsRemainsUnchanged(
-                        this.messageMetaStage,
+                        this.messageAsyncContextStage,
                         nextStage
                 ),
                 () -> contentRemainsUnchanged(
-                        this.messageMetaStage,
+                        this.messageAsyncContextStage,
                         nextStage
                 )
         );

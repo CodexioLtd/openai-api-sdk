@@ -37,7 +37,7 @@ public class AsyncCallbackUtils {
                     Consumer.class
             );
             callback.accept(rawResponse.substring(
-                    0,
+                    1,
                     rawResponse.length() / 2
             ));
             callback.accept(rawResponse.substring(rawResponse.length() / 2));
@@ -51,6 +51,69 @@ public class AsyncCallbackUtils {
             return null;
         }).when(executor)
           .executeAsync(
+                  any(),
+                  any(),
+                  any()
+          );
+    }
+
+    public static void mockAsyncWithPathVariableExecution(
+            OpenAIHttpExecutor executor,
+            Object response,
+            String rawResponse
+    ) {
+        doAnswer(invocation -> {
+            var callback = invocation.getArgument(
+                    2,
+                    Consumer.class
+            );
+            callback.accept(rawResponse.substring(
+                    1,
+                    rawResponse.length() / 2
+            ));
+            callback.accept(rawResponse.substring(rawResponse.length() / 2));
+
+            var finalizer = invocation.getArgument(
+                    3,
+                    Consumer.class
+            );
+            finalizer.accept(response);
+
+            return null;
+        }).when(executor)
+          .executeAsyncWithPathVariable(
+                  any(),
+                  any(),
+                  any(),
+                  any()
+          );
+    }
+
+    public static void mockAsyncWithPathVariablesExecution(
+            OpenAIHttpExecutor executor,
+            Object response,
+            String rawResponse
+    ) {
+        doAnswer(invocation -> {
+            var callback = invocation.getArgument(
+                    0,
+                    Consumer.class
+            );
+            callback.accept(rawResponse.substring(
+                    1,
+                    rawResponse.length() / 2
+            ));
+            callback.accept(rawResponse.substring(rawResponse.length() / 2));
+
+            var finalizer = invocation.getArgument(
+                    1,
+                    Consumer.class
+            );
+            finalizer.accept(response);
+
+            return null;
+        }).when(executor)
+          .executeAsyncWithPathVariables(
                   any(),
                   any(),
                   any()

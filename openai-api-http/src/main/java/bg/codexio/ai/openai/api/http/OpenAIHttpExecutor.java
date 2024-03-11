@@ -61,6 +61,18 @@ public interface OpenAIHttpExecutor<I extends Streamable,
             Consumer<O> finalizer
     );
 
+    void executeAsyncWithPathVariable(
+            I request,
+            String pathVariable,
+            Consumer<String> callBack,
+            Consumer<O> finalizer
+    );
+
+    void executeAsyncWithPathVariables(
+            Consumer<String> callBack,
+            Consumer<O> finalizer,
+            String... pathVariables
+    );
     /**
      * <p>
      * Executes HTTP request in reactive fashion.
@@ -76,6 +88,13 @@ public interface OpenAIHttpExecutor<I extends Streamable,
      * to each response line.
      */
     ReactiveExecution<O> executeReactive(I request);
+
+    ReactiveExecution<O> executeReactiveWithPathVariable(
+            I request,
+            String pathVariable
+    );
+
+    ReactiveExecution<O> executeReactiveWithPathVariables(String... pathVariables);
 
     /**
      * <p>

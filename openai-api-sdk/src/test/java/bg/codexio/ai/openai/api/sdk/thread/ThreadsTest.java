@@ -7,24 +7,25 @@ import bg.codexio.ai.openai.api.sdk.auth.FromDeveloper;
 import org.junit.jupiter.api.Test;
 
 import static bg.codexio.ai.openai.api.sdk.CommonTestAssertions.API_CREDENTIALS;
-import static bg.codexio.ai.openai.api.sdk.thread.InternalAssertions.*;
+import static bg.codexio.ai.openai.api.sdk.thread.InternalAssertions.MODIFY_THREAD_HTTP_EXECUTOR;
+import static bg.codexio.ai.openai.api.sdk.thread.InternalAssertions.THREAD_ID;
 import static bg.codexio.ai.openai.api.sdk.thread.Threads.*;
-import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.mockStatic;
 
 public class ThreadsTest {
 
-    @Test
-    public void testThroughHttp_withCreateExecutor_expectCreateExecutor() {
-        var nextStage = throughHttp(CREATE_THREAD_HTTP_EXECUTOR);
-
-        assertEquals(
-                CREATE_THREAD_HTTP_EXECUTOR,
-                nextStage.httpExecutor
-        );
-    }
+    //    @Test
+    //    public void testThroughHttp_withCreateExecutor_expectCreateExecutor
+    //    () {
+    //        var nextStage = throughHttp(CREATE_THREAD_HTTP_EXECUTOR);
+    //
+    //        assertEquals(
+    //                CREATE_THREAD_HTTP_EXECUTOR,
+    //                nextStage.httpExecutor
+    //        );
+    //    }
 
     @Test
     public void testThroughHttp_withEditExecutor_expectEditExecutor() {

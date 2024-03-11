@@ -1,12 +1,13 @@
-package bg.codexio.ai.openai.api.sdk.message;
+package bg.codexio.ai.openai.api.sdk.message.chat;
 
 import bg.codexio.ai.openai.api.payload.message.request.MessageRequest;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-import static bg.codexio.ai.openai.api.sdk.message.InternalAssertions.*;
+import static bg.codexio.ai.openai.api.sdk.message.chat.InternalAssertions.*;
 import static bg.codexio.ai.openai.api.sdk.thread.InternalAssertions.THREAD_ID;
 import static org.junit.jupiter.api.Assertions.assertAll;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
 public class MessageContentStageTest {
 
@@ -26,13 +27,13 @@ public class MessageContentStageTest {
         var nextStage = this.messageContentStage.withContent(MESSAGE_CONTENT);
         this.previousValuesRemainsUnchanged(nextStage);
 
-        //        assertEquals(
-        //                MESSAGE_CONTENT,
-        //                nextStage.requestBuilder.content()
-        //        );
+        assertEquals(
+                MESSAGE_CONTENT,
+                nextStage.requestBuilder.content()
+        );
     }
 
-    private void previousValuesRemainsUnchanged(DefaultMessageConfigurationStage nextStage) {
+    private void previousValuesRemainsUnchanged(MessageConfigurationStage nextStage) {
         assertAll(
                 () -> roleRemainsUnchanged(
                         this.messageContentStage,

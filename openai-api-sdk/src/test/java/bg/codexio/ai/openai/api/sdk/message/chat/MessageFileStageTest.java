@@ -1,4 +1,4 @@
-package bg.codexio.ai.openai.api.sdk.message;
+package bg.codexio.ai.openai.api.sdk.message.chat;
 
 import bg.codexio.ai.openai.api.payload.credentials.ApiCredentials;
 import bg.codexio.ai.openai.api.payload.message.request.MessageRequest;
@@ -10,11 +10,14 @@ import bg.codexio.ai.openai.api.sdk.file.upload.FileUploadSimplified;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-import static bg.codexio.ai.openai.api.sdk.CommonTestAssertions.API_CREDENTIALS;
-import static bg.codexio.ai.openai.api.sdk.CommonTestAssertions.FILE;
-import static bg.codexio.ai.openai.api.sdk.message.InternalAssertions.*;
+import java.util.Arrays;
+
+import static bg.codexio.ai.openai.api.sdk.CommonTestAssertions.*;
+import static bg.codexio.ai.openai.api.sdk.file.InternalAssertions.FILE_RESPONSE;
+import static bg.codexio.ai.openai.api.sdk.message.chat.InternalAssertions.*;
 import static bg.codexio.ai.openai.api.sdk.thread.InternalAssertions.THREAD_ID;
 import static org.junit.jupiter.api.Assertions.assertAll;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.Mockito.mockStatic;
 
 public class MessageFileStageTest {
@@ -31,33 +34,34 @@ public class MessageFileStageTest {
         );
     }
 
-    //    @Test
-    //    void testFeed_withFileIdsVarArgs_expectCorrectBuilder() {
-    //        var nextStage = this.messageFileStage.feed(FILE_IDS_VAR_ARGS);
-    //        this.previousValuesRemainsUnchanged(nextStage);
-    //
-    //        assertEquals(
-    //                Arrays.stream(FILE_IDS_VAR_ARGS)
-    //                      .toList(),
-    //                nextStage.requestBuilder.fileIds()
-    //        );
-    //    }
-    //
-    //    @Test
-    //    void testFeed_withFileResponse_expectCorrectBuilder() {
-    //        var nextStage = this.messageFileStage.feed(FILE_RESPONSE);
-    //        this.previousValuesRemainsUnchanged(nextStage);
-    //
-    //        assertEquals(
-    //                FILE_RESPONSE.id(),
-    //                nextStage.requestBuilder.fileIds()
-    //                                        .get(0)
-    //        );
-    //    }
+    @Test
+    void testFeed_withFileIdsVarArgs_expectCorrectBuilder() {
+        var nextStage = this.messageFileStage.feed(FILE_IDS_VAR_ARGS);
+        this.previousValuesRemainsUnchanged(nextStage);
+
+        assertEquals(
+                Arrays.stream(FILE_IDS_VAR_ARGS)
+                      .toList(),
+                nextStage.requestBuilder.fileIds()
+        );
+    }
+
+    @Test
+    void testFeed_withFileResponse_expectCorrectBuilder() {
+        var nextStage = this.messageFileStage.feed(FILE_RESPONSE);
+        this.previousValuesRemainsUnchanged(nextStage);
+
+        assertEquals(
+                FILE_RESPONSE.id(),
+                nextStage.requestBuilder.fileIds()
+                                        .get(0)
+        );
+    }
 
     @Test
     void testFeed_withFile_expectCorrectBuilder() {
-        var auth = Files.authenticate(FromDeveloper.doPass(new ApiCredentials(API_CREDENTIALS)));
+        var auth =
+                Files.authenticate(FromDeveloper.doPass(new ApiCredentials(API_CREDENTIALS)));
         try (
                 var authUtils = mockStatic(Authenticator.class);
                 var filesSimplified = mockStatic(FileUploadSimplified.class)
@@ -73,7 +77,7 @@ public class MessageFileStageTest {
         }
     }
 
-    private void previousValuesRemainsUnchanged(DefaultMessageConfigurationStage nextStage) {
+    private void previousValuesRemainsUnchanged(MessageConfigurationStage nextStage) {
         assertAll(
                 () -> roleRemainsUnchanged(
                         this.messageFileStage,

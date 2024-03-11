@@ -7,6 +7,7 @@ import bg.codexio.ai.openai.api.payload.file.request.UploadFileRequest;
 import bg.codexio.ai.openai.api.sdk.file.FileActionTypeStage;
 import bg.codexio.ai.openai.api.sdk.file.Files;
 import bg.codexio.ai.openai.api.sdk.file.download.FileDownloadingNameTypeStage;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import org.mockito.MockedStatic;
 
 import java.io.File;
@@ -35,6 +36,8 @@ public class CommonTestAssertions {
     public static final UploadFileHttpExecutor UPLOAD_FILE_HTTP_EXECUTOR =
             mock(UploadFileHttpExecutor.class);
     public static final RetrieveFileContentHttpExecutor RETRIEVE_FILE_CONTENT_HTTP_EXECUTOR = mock(RetrieveFileContentHttpExecutor.class);
+
+    public static final ObjectMapper OBJECT_MAPPER = new ObjectMapper();
 
     private CommonTestAssertions() {
     }

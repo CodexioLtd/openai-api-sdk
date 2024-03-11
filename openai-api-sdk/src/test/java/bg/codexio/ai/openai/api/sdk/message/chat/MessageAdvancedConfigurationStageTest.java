@@ -1,13 +1,12 @@
-package bg.codexio.ai.openai.api.sdk.message;
+package bg.codexio.ai.openai.api.sdk.message.chat;
 
 import bg.codexio.ai.openai.api.payload.message.request.MessageRequest;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-import static bg.codexio.ai.openai.api.sdk.message.InternalAssertions.*;
+import static bg.codexio.ai.openai.api.sdk.message.chat.InternalAssertions.*;
 import static bg.codexio.ai.openai.api.sdk.thread.InternalAssertions.THREAD_ID;
 import static org.junit.jupiter.api.Assertions.assertAll;
-import static org.junit.jupiter.api.Assertions.assertEquals;
 
 public class MessageAdvancedConfigurationStageTest {
 
@@ -15,7 +14,8 @@ public class MessageAdvancedConfigurationStageTest {
 
     @BeforeEach
     void setUp() {
-        this.messageAdvancedConfigurationStage = new MessageAdvancedConfigurationStage(
+        this.messageAdvancedConfigurationStage =
+                new MessageAdvancedConfigurationStage(
                 MESSAGE_HTTP_EXECUTOR,
                 MessageRequest.builder()
                               .withContent(MESSAGE_CONTENT),
@@ -43,16 +43,11 @@ public class MessageAdvancedConfigurationStageTest {
 
     @Test
     void testAndResponse_expectCorrectResponse() {
-        executeWithPathVariable(this.messageAdvancedConfigurationStage);
-        var response = this.messageAdvancedConfigurationStage.andRespond();
-
-        assertEquals(
-                MESSAGE_RESPONSE_WITH_TEXT_CONTENT,
-                response
-        );
+        var nextStage = this.messageAdvancedConfigurationStage.andRespond();
+        this.previousValuesRemainsUnchanged(nextStage);
     }
 
-    private void previousValuesRemainsUnchanged(DefaultMessageConfigurationStage nextStage) {
+    private void previousValuesRemainsUnchanged(MessageConfigurationStage nextStage) {
         assertAll(
                 () -> roleRemainsUnchanged(
                         this.messageAdvancedConfigurationStage,

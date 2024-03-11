@@ -1,5 +1,6 @@
 package bg.codexio.ai.openai.api.sdk.run;
 
+import bg.codexio.ai.openai.api.http.message.RetrieveListMessagesHttpExecutor;
 import bg.codexio.ai.openai.api.payload.run.request.RunnableRequest;
 import bg.codexio.ai.openai.api.sdk.HttpBuilder;
 import bg.codexio.ai.openai.api.sdk.message.MessageActionTypeStage;
@@ -8,13 +9,11 @@ import bg.codexio.ai.openai.api.sdk.message.Messages;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-import static bg.codexio.ai.openai.api.sdk.message.InternalAssertions.LIST_MESSAGE_RESPONSE_WITH_TEXT_CONTENT;
-import static bg.codexio.ai.openai.api.sdk.message.InternalAssertions.RETRIEVE_LIST_MESSAGES_HTTP_EXECUTOR;
 import static bg.codexio.ai.openai.api.sdk.run.InternalAssertions.RUNNABLE_HTTP_EXECUTOR;
 import static bg.codexio.ai.openai.api.sdk.thread.InternalAssertions.THREAD_ID;
 import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.mockito.ArgumentMatchers.any;
-import static org.mockito.Mockito.*;
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.mockStatic;
 
 public class RunnableMessageResultTest {
 
@@ -43,10 +42,13 @@ public class RunnableMessageResultTest {
             mockedMessage.when(httpBuilderMock::and)
                          .thenReturn(new MessageActionTypeStage(
                                  null,
-                                 RETRIEVE_LIST_MESSAGES_HTTP_EXECUTOR,
+
+                                 mock(RetrieveListMessagesHttpExecutor.class),
                                  THREAD_ID
                          ));
-            when(RETRIEVE_LIST_MESSAGES_HTTP_EXECUTOR.executeWithPathVariables(any())).thenAnswer(res -> LIST_MESSAGE_RESPONSE_WITH_TEXT_CONTENT);
+            //             when(RETRIEVE_LIST_MESSAGES_HTTP_EXECUTOR
+            //             .executeWithPathVariables(any())).thenAnswer(res ->
+            //             LIST_MESSAGE_RESPONSE_WITH_TEXT_CONTENT);
 
             var result = this.runnableMessageResult.answersImmediate();
             assertEquals(

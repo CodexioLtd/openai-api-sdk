@@ -4,7 +4,6 @@ import bg.codexio.ai.openai.api.http.HttpExecutorContext;
 import bg.codexio.ai.openai.api.http.file.RetrieveFileContentHttpExecutor;
 import bg.codexio.ai.openai.api.http.message.MessageHttpExecutor;
 import bg.codexio.ai.openai.api.http.message.RetrieveListMessagesHttpExecutor;
-import bg.codexio.ai.openai.api.payload.Mergeable;
 import bg.codexio.ai.openai.api.payload.credentials.ApiCredentials;
 import bg.codexio.ai.openai.api.payload.message.content.ImageFileContent;
 import bg.codexio.ai.openai.api.payload.message.content.TextContent;
@@ -35,10 +34,10 @@ import static org.mockito.Mockito.when;
 
 public class InternalAssertions {
 
-    public static final MessageHttpExecutor MESSAGE_HTTP_EXECUTOR =
+    static final MessageHttpExecutor MESSAGE_HTTP_EXECUTOR =
             mock(MessageHttpExecutor.class);
-    public static final RetrieveListMessagesHttpExecutor RETRIEVE_LIST_MESSAGES_HTTP_EXECUTOR = mock(RetrieveListMessagesHttpExecutor.class);
-    public static final String MESSAGE_CONTENT = "test_message_content";
+    static final RetrieveListMessagesHttpExecutor RETRIEVE_LIST_MESSAGES_HTTP_EXECUTOR = mock(RetrieveListMessagesHttpExecutor.class);
+    static final String MESSAGE_CONTENT = "test_message_content";
     static final String MESSAGE_RESULT_CONTENT_VALUE =
             "test_message_test_quote";
     static final MessageResponse MESSAGE_RESPONSE = new MessageResponse(
@@ -130,13 +129,14 @@ public class InternalAssertions {
             "list_message_test_second_id",
             false
     );
-    public static final ListMessagesResponse LIST_MESSAGE_RESPONSE_WITH_TEXT_CONTENT = new ListMessagesResponse(
-            "list_message_object",
-            List.of(MESSAGE_RESPONSE_WITH_TEXT_CONTENT),
-            "list_message_test_first_id",
-            "list_message_test_second_id",
-            false
-    );
+    //    public static final ListMessagesResponse
+    //    LIST_MESSAGE_RESPONSE_WITH_TEXT_CONTENT = new ListMessagesResponse(
+    //            "list_message_object",
+    //            List.of(MESSAGE_RESPONSE_WITH_TEXT_CONTENT),
+    //            "list_message_test_first_id",
+    //            "list_message_test_second_id",
+    //            false
+    //    );
     static final FileResult MESSAGE_FILE_RESULT = new FileResult(
             "file_path_test_id",
             "test.txt"
@@ -159,63 +159,71 @@ public class InternalAssertions {
             null
     );
 
-    public static <O extends Mergeable<O>> void roleRemainsUnchanged(
-            DefaultMessageConfigurationStage<O> previousStage,
-            DefaultMessageConfigurationStage<O> nextStage
-    ) {
-        assertEquals(
-                previousStage.requestBuilder.role(),
-                nextStage.requestBuilder.role()
-        );
-    }
+    //    static void roleRemainsUnchanged(
+    //            DefaultMessageConfigurationStage<O> previousStage,
+    //            DefaultMessageConfigurationStage<O> nextStage
+    //    ) {
+    //        assertEquals(
+    //                previousStage.requestBuilder.role(),
+    //                nextStage.requestBuilder.role()
+    //        );
+    //    }
+    //
+    //    static <O extends Mergeable<O>> void fileIdsRemainsUnchanged(
+    //            DefaultMessageConfigurationStage<O> previousStage,
+    //            DefaultMessageConfigurationStage<O> nextStage
+    //    ) {
+    //        assertEquals(
+    //                previousStage.requestBuilder.fileIds(),
+    //                nextStage.requestBuilder.fileIds()
+    //        );
+    //    }
+    //
+    //    static <O extends Mergeable<O>> void contentRemainsUnchanged(
+    //            DefaultMessageConfigurationStage<O> previousStage,
+    //            DefaultMessageConfigurationStage<O> nextStage
+    //    ) {
+    //        assertEquals(
+    //                previousStage.requestBuilder.content(),
+    //                nextStage.requestBuilder.content()
+    //        );
+    //    }
+    //
+    //    static <O extends Mergeable<O>> void metadataRemainsUnchanged(
+    //            DefaultMessageConfigurationStage<O> previousStage,
+    //            DefaultMessageConfigurationStage<O> nextStage
+    //    ) {
+    //        assertEquals(
+    //                previousStage.requestBuilder.metadata(),
+    //                nextStage.requestBuilder.metadata()
+    //        );
+    //    }
 
-    public static <O extends Mergeable<O>> void fileIdsRemainsUnchanged(
-            DefaultMessageConfigurationStage<O> previousStage,
-            DefaultMessageConfigurationStage<O> nextStage
-    ) {
-        assertEquals(
-                previousStage.requestBuilder.fileIds(),
-                nextStage.requestBuilder.fileIds()
-        );
-    }
-
-    public static <O extends Mergeable<O>> void contentRemainsUnchanged(
-            DefaultMessageConfigurationStage<O> previousStage,
-            DefaultMessageConfigurationStage<O> nextStage
-    ) {
-        assertEquals(
-                previousStage.requestBuilder.content(),
-                nextStage.requestBuilder.content()
-        );
-    }
-
-    static <O extends Mergeable<O>> void metadataRemainsUnchanged(
-            DefaultMessageConfigurationStage<O> previousStage,
-            DefaultMessageConfigurationStage<O> nextStage
-    ) {
-        assertEquals(
-                previousStage.requestBuilder.metadata(),
-                nextStage.requestBuilder.metadata()
-        );
-    }
-
-    static void executeWithPathVariable(DefaultMessageConfigurationStage<MessageResponse> messageConfigurationStage) {
-        when(messageConfigurationStage.httpExecutor.executeWithPathVariable(
-                any(),
-                any()
-        )).thenAnswer(res -> MESSAGE_RESPONSE_WITH_TEXT_CONTENT);
-    }
-
-    static void executeWithPathVariables(
-            RetrieveListMessagesHttpExecutor listMessagesHttpExecutor,
-            ListMessagesResponse response
-    ) {
-        when(listMessagesHttpExecutor.executeWithPathVariables(any())).thenAnswer(res -> response);
-    }
-
-    static void executeWithPathVariables(DefaultMessageConfigurationStage<ListMessagesResponse> messageConfigurationStage) {
-        when(messageConfigurationStage.httpExecutor.executeWithPathVariables(any())).thenAnswer(res -> LIST_MESSAGE_RESPONSE_WITH_TEXT_CONTENT);
-    }
+    //    static void executeWithPathVariable
+    //    (DefaultMessageConfigurationStage<MessageResponse>
+    //    messageConfigurationStage) {
+    //        when(messageConfigurationStage.httpExecutor
+    //        .executeWithPathVariable(
+    //                any(),
+    //                any()
+    //        )).thenAnswer(res -> MESSAGE_RESPONSE_WITH_TEXT_CONTENT);
+    //    }
+    //
+    //    static void executeWithPathVariables(
+    //            RetrieveListMessagesHttpExecutor listMessagesHttpExecutor,
+    //            ListMessagesResponse response
+    //    ) {
+    //        when(listMessagesHttpExecutor.executeWithPathVariables(any()))
+    //        .thenAnswer(res -> response);
+    //    }
+    //
+    //    static void executeWithPathVariables
+    //    (DefaultMessageConfigurationStage<ListMessagesResponse>
+    //    messageConfigurationStage) {
+    //        when(messageConfigurationStage.httpExecutor
+    //        .executeWithPathVariables(any())).thenAnswer(res ->
+    //        LIST_MESSAGE_RESPONSE_WITH_TEXT_CONTENT);
+    //    }
 
     static void mockFileResultDownloadWithAuth(FileResult fileResult)
             throws IOException {

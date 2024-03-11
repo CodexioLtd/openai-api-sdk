@@ -5,6 +5,7 @@ import bg.codexio.ai.openai.api.http.message.MessageHttpExecutor;
 import bg.codexio.ai.openai.api.payload.message.request.MessageRequest;
 import bg.codexio.ai.openai.api.payload.message.response.MessageResponse;
 import bg.codexio.ai.openai.api.sdk.RuntimeExecutor;
+import reactor.core.publisher.Mono;
 
 public class MessageReactiveContextStage
         extends MessageConfigurationStage
@@ -21,10 +22,15 @@ public class MessageReactiveContextStage
         );
     }
 
-    public ReactiveExecution<MessageResponse> finish() {
+    public ReactiveExecution<MessageResponse> finishRaw() {
         return this.httpExecutor.executeReactiveWithPathVariable(
                 this.requestBuilder.build(),
                 this.threadId
         );
+    }
+
+    public Mono<MessageResponse> finish() {
+        return this.finishRaw()
+                   .response();
     }
 }

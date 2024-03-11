@@ -17,7 +17,7 @@ public class CreateMessageReactive {
                                             .withContent("How are you?")
                                             .andRespond()
                                             .reactive()
-                                            .finish()
+                                            .finishRaw()
                                             .response())
 
                .subscribe(System.out::println);

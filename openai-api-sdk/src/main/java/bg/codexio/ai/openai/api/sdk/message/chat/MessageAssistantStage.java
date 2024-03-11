@@ -54,18 +54,44 @@ public class MessageAssistantStage
                                                    .deepConfigure(assistant))));
     }
 
+    public void assistAsync(
+            String assistantId,
+            Consumer<RunnableAdvancedConfigurationStage> consumer
+    ) {
+        new MessageAsyncPromiseStage(
+                this.httpExecutor,
+                this.requestBuilder,
+                this.threadId
+        ).then(message -> consumer.accept(Runnables.defaults(this.threadId)
+                                                   .and()
+                                                   .deepConfigure(assistantId)));
+    }
+
     public Mono<RunnableAdvancedConfigurationStage> assistReactive(Mono<AssistantResponse> assistantResponse) {
         return new MessageReactiveContextStage(
                 this.httpExecutor,
                 this.requestBuilder,
                 this.threadId
-        ).finish()
+        ).finishRaw()
          .response()
          .flatMap(message -> assistantResponse.flatMap(assistant -> Mono.just(Runnables.defaults(this.threadId)
                                                                                        .and()
                                                                                        .deepConfigure(assistant)))
 
          );
+    }
+
+    public Mono<RunnableAdvancedConfigurationStage> assistReactive(String assistantId) {
+        return new MessageReactiveContextStage(
+                this.httpExecutor,
+                this.requestBuilder,
+                this.threadId
+        ).finishRaw()
+         .response()
+         .flatMap(message -> Mono.just(Runnables.defaults(this.threadId)
+                                                .and()
+                                                .deepConfigure(assistantId)));
+
     }
 
     private void executeImmediate() {
