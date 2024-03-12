@@ -43,13 +43,11 @@ public class RunnableFinalizationStage
         this.initializeRuntimeSelection()
             .async()
             .execute()
-            .then(response -> {
-                this.initializeToMessageResultAsync(
-                        response,
-                        result,
-                        targetFolder
-                );
-            });
+            .then(response -> this.initializeToMessageResultAsync(
+                    response,
+                    result,
+                    targetFolder
+            ));
     }
 
     public Mono<RunnableResponse> reactive() {
@@ -65,15 +63,6 @@ public class RunnableFinalizationStage
                            run,
                            targetFolder
                    ));
-    }
-
-    private RunnableResultStage initializeRunnableResultStage(RunnableResponse run) {
-        return new RunnableResultStage(
-                this.httpExecutor,
-                this.requestBuilder,
-                this.threadId,
-                run
-        );
     }
 
     private Mono<String> initializeToMessageResultReactive(
@@ -98,6 +87,15 @@ public class RunnableFinalizationStage
                     targetFolder,
                     consumer
             );
+    }
+
+    private RunnableResultStage initializeRunnableResultStage(RunnableResponse run) {
+        return new RunnableResultStage(
+                this.httpExecutor,
+                this.requestBuilder,
+                this.threadId,
+                run
+        );
     }
 
     private RunnableRuntimeSelectionStage initializeRuntimeSelection() {

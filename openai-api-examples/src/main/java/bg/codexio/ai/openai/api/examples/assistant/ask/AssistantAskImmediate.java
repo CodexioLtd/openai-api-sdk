@@ -63,7 +63,7 @@ public class AssistantAskImmediate {
                             .waitForCompletion()
                             .result()
                             .answersImmediate()
-                            .download(fileDownloadLocation);
+                            .downloadImmediate(fileDownloadLocation);
 
         System.out.println(answer);
     }

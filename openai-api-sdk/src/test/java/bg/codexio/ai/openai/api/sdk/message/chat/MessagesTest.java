@@ -2,10 +2,10 @@ package bg.codexio.ai.openai.api.sdk.message.chat;
 
 import org.junit.jupiter.api.Test;
 
+import static bg.codexio.ai.openai.api.sdk.CommonTestAssertions.THREAD_ID;
+import static bg.codexio.ai.openai.api.sdk.CommonTestAssertions.THREAD_RESPONSE;
 import static bg.codexio.ai.openai.api.sdk.message.Messages.throughHttp;
 import static bg.codexio.ai.openai.api.sdk.message.chat.InternalAssertions.MESSAGE_HTTP_EXECUTOR;
-import static bg.codexio.ai.openai.api.sdk.thread.InternalAssertions.THREAD_ID;
-import static bg.codexio.ai.openai.api.sdk.thread.InternalAssertions.THREAD_RESPONSE;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 public class MessagesTest {

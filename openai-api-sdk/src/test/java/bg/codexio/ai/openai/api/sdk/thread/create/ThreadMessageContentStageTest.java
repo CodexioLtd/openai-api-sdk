@@ -1,6 +1,4 @@
-package bg.codexio.ai.openai.api.sdk.thread;
-
-import bg.codexio.ai.openai.api.sdk.thread.create.ThreadMessageContentStage;
+package bg.codexio.ai.openai.api.sdk.thread.create;
 
 public class ThreadMessageContentStageTest {
 

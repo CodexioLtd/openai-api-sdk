@@ -7,9 +7,6 @@ import org.junit.jupiter.api.Test;
 
 import static bg.codexio.ai.openai.api.sdk.assistant.InternalAssertions.*;
 import static org.junit.jupiter.api.Assertions.assertAll;
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.mockito.ArgumentMatchers.any;
-import static org.mockito.Mockito.when;
 
 public class AssistantAdvancedConfigurationTest {
 
@@ -30,35 +27,22 @@ public class AssistantAdvancedConfigurationTest {
 
     @Test
     public void testFile_expectCorrectBuilder() {
-        var nextStage = this.assistantAdvancedConfigurationStage.file();
-
-        this.previousValuesRemainsUnchanged(nextStage);
+        this.previousValuesRemainsUnchanged(this.assistantAdvancedConfigurationStage.file());
     }
 
     @Test
     public void testMeta_expectCorrectBuilder() {
-        var nextStage = this.assistantAdvancedConfigurationStage.meta();
-
-        this.previousValuesRemainsUnchanged(nextStage);
+        this.previousValuesRemainsUnchanged(this.assistantAdvancedConfigurationStage.meta());
     }
 
     @Test
     public void testDescription_expectCorrectBuilder() {
-        var nextStage = this.assistantAdvancedConfigurationStage.description();
-
-        this.previousValuesRemainsUnchanged(nextStage);
+        this.previousValuesRemainsUnchanged(this.assistantAdvancedConfigurationStage.description());
     }
 
     @Test
     public void testAndRespond_expectCorrectResponse() {
-        when(this.assistantAdvancedConfigurationStage.httpExecutor.execute(any())).thenAnswer(response -> ASSISTANT_RESPONSE);
-
-        var response = this.assistantAdvancedConfigurationStage.andRespond();
-
-        assertEquals(
-                ASSISTANT_RESPONSE,
-                response
-        );
+        this.previousValuesRemainsUnchanged(this.assistantAdvancedConfigurationStage.andRespond());
     }
 
     public void previousValuesRemainsUnchanged(AssistantConfigurationStage stage) {

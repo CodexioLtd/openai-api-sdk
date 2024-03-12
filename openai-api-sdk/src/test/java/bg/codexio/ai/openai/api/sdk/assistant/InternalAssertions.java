@@ -1,17 +1,22 @@
 package bg.codexio.ai.openai.api.sdk.assistant;
 
+import bg.codexio.ai.openai.api.http.OpenAIHttpExecutor;
 import bg.codexio.ai.openai.api.http.assistant.AssistantHttpExecutor;
 import bg.codexio.ai.openai.api.models.ModelType;
 import bg.codexio.ai.openai.api.models.v40.GPT40Model;
 import bg.codexio.ai.openai.api.payload.assistant.response.AssistantResponse;
 import bg.codexio.ai.openai.api.payload.assistant.tool.CodeInterpreter;
+import reactor.core.publisher.Flux;
+import reactor.core.publisher.Mono;
 
 import java.util.Arrays;
 import java.util.List;
 
 import static bg.codexio.ai.openai.api.sdk.CommonTestAssertions.METADATA_MAP;
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.when;
 
 public class InternalAssertions {
 
@@ -113,5 +118,16 @@ public class InternalAssertions {
                 previousStage.requestBuilder.metadata(),
                 nextStage.requestBuilder.metadata()
         );
+    }
+
+    static void mockImmediateExecution(AssistantConfigurationStage assistantConfigurationStage) {
+        when(assistantConfigurationStage.httpExecutor.execute(any())).thenAnswer(res -> ASSISTANT_RESPONSE);
+    }
+
+    static void mockReactiveExecution(AssistantConfigurationStage assistantConfigurationStage) {
+        when(assistantConfigurationStage.httpExecutor.executeReactive(any())).thenAnswer(res -> new OpenAIHttpExecutor.ReactiveExecution<>(
+                Flux.empty(),
+                Mono.just(ASSISTANT_RESPONSE)
+        ));
     }
 }

@@ -39,7 +39,7 @@ public class ThreadModificationStage
         return new ThreadChatStage(this.initializeModificationRuntimeSelection());
     }
 
-    public ThreadModificationRuntimeSelectionStage initializeModificationRuntimeSelection() {
+    private ThreadModificationRuntimeSelectionStage initializeModificationRuntimeSelection() {
         return new ThreadModificationRuntimeSelectionStage(
                 this.httpExecutor,
                 this.requestBuilder,

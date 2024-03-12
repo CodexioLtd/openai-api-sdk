@@ -6,6 +6,7 @@ import bg.codexio.ai.openai.api.sdk.auth.SdkAuth;
 import bg.codexio.ai.openai.api.sdk.file.download.FileDownloadingRuntimeSelectionStage;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import reactor.core.publisher.Mono;
 
 import java.io.File;
 import java.io.IOException;
@@ -86,28 +87,28 @@ public record FileResult(
              .whenDownloaded(consumer);
     }
 
+    public Mono<File> downloadReactiveRaw(File targetFolder) {
+        return Files.defaults()
+                    .and()
+                    .download(this)
+                    .reactive()
+                    .toFolder(targetFolder);
+    }
+
     public void downloadReactive(File targetFolder) {
-        Files.defaults()
-             .and()
-             .download(this)
-             .reactive()
-             .toFolder(targetFolder)
-             .subscribe(file -> log.info(
-                     FILE_DOWNLOAD_SUCCESS,
-                     file.getName()
-             ));
+        this.downloadReactiveRaw(targetFolder)
+            .subscribe(file -> log.info(
+                    FILE_DOWNLOAD_SUCCESS,
+                    file.getName()
+            ));
     }
 
     public void downloadReactive(
             File targetFolder,
             Consumer<File> consumer
     ) {
-        Files.defaults()
-             .and()
-             .download(this)
-             .reactive()
-             .toFolder(targetFolder)
-             .subscribe(consumer);
+        this.downloadReactiveRaw(targetFolder)
+            .subscribe(consumer);
     }
 
     public File downloadImmediate(

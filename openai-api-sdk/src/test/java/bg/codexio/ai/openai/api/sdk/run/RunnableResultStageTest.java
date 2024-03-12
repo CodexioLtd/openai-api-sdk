@@ -2,12 +2,13 @@ package bg.codexio.ai.openai.api.sdk.run;
 
 import bg.codexio.ai.openai.api.payload.run.request.RunnableRequest;
 import bg.codexio.ai.openai.api.sdk.ThreadOperationUtils;
+import bg.codexio.ai.openai.api.sdk.run.exception.NonInitializedRunnableException;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
+import static bg.codexio.ai.openai.api.sdk.CommonTestAssertions.THREAD_ID;
 import static bg.codexio.ai.openai.api.sdk.assistant.InternalAssertions.ASSISTANT_ID;
 import static bg.codexio.ai.openai.api.sdk.run.InternalAssertions.*;
-import static bg.codexio.ai.openai.api.sdk.thread.InternalAssertions.THREAD_ID;
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.mockStatic;
@@ -39,6 +40,22 @@ public class RunnableResultStageTest {
     }
 
     @Test
+    void testWaitForCompletionRaw_withNotPresentRunnableResponse_expectNonInitializedRunnableException() {
+        this.runnableResultStage = new RunnableResultStage(
+                RUNNABLE_HTTP_EXECUTOR,
+                RunnableRequest.builder()
+                               .withAssistantId(ASSISTANT_ID),
+                THREAD_ID,
+                null
+        );
+
+        assertThrows(
+                NonInitializedRunnableException.class,
+                () -> this.runnableResultStage.waitForCompletionRaw()
+        );
+    }
+
+    @Test
     void testWaitForCompletionRaw_withInterrupt_expectRuntimeException() {
         executeWithPathVariables(this.runnableResultStage);
         try (var t = mockStatic(ThreadOperationUtils.class)) {
@@ -55,7 +72,8 @@ public class RunnableResultStageTest {
     @Test
     void testWaitForCompletionRaw_withRunnableResponse_expectCorrectResponse() {
         executeWithPathVariables(this.runnableResultStage);
-        var response = this.runnableResultStage.waitForCompletionRaw(RUNNABLE_RESPONSE_WITH_COMPLETED_STATUS);
+        var response =
+                this.runnableResultStage.waitForCompletionRaw(RUNNABLE_RESPONSE_WITH_COMPLETED_STATUS);
 
         assertEquals(
                 RUNNABLE_COMPLETED_STATUS,

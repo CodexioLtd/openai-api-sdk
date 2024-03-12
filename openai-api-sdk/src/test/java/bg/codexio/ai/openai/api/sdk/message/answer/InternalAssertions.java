@@ -17,11 +17,9 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
-import static bg.codexio.ai.openai.api.sdk.CommonTestAssertions.FILE_IDS_VAR_ARGS;
-import static bg.codexio.ai.openai.api.sdk.CommonTestAssertions.METADATA_MAP;
+import static bg.codexio.ai.openai.api.sdk.CommonTestAssertions.*;
 import static bg.codexio.ai.openai.api.sdk.assistant.InternalAssertions.ASSISTANT_ID;
 import static bg.codexio.ai.openai.api.sdk.run.InternalAssertions.RUNNABLE_ID;
-import static bg.codexio.ai.openai.api.sdk.thread.InternalAssertions.THREAD_ID;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
@@ -46,36 +44,7 @@ public class InternalAssertions {
             "list_message_test_second_id",
             false
     );
-    public static final ListMessagesResponse LIST_MESSAGE_RESPONSE_WITH_TEXT_CONTENT_WITH_FILE_CITATION = new ListMessagesResponse(
-            "list_message_object",
-            List.of(new MessageResponse(
-                    "message_test_id",
-                    "message_test_object",
-                    0,
-                    THREAD_ID,
-                    "message_test_role",
-                    List.of(new TextMessageContent(new TextContent(
-                            "test_message_value",
-                            List.of(new FileCitationAnnotation(
-                                    "file_citation",
-                                    0,
-                                    0,
-                                    new FileCitation(
-                                            "test_file_citation_id",
-                                            "test_quote_"
-                                    )
-                            ))
-                    ))),
-                    ASSISTANT_ID,
-                    RUNNABLE_ID,
-                    Arrays.stream(FILE_IDS_VAR_ARGS)
-                          .toList(),
-                    METADATA_MAP
-            )),
-            "list_message_test_first_id",
-            "list_message_test_second_id",
-            false
-    );
+
     public static final ListMessagesResponse LIST_MESSAGE_RESPONSE_WITH_TEXT_CONTENT_WITH_FILE_PATH = new ListMessagesResponse(
             "list_message_object",
             List.of(new MessageResponse(
@@ -199,11 +168,6 @@ public class InternalAssertions {
             null,
             null,
             "test_file_id"
-    );
-    static MessageResult MESSAGE_TEST_RESULT_WITHOUT_IMAGE = new MessageResult(
-            "test_quote_test_message_value",
-            null,
-            null
     );
     static MessageResult MESSAGE_TEST_RESULT_WITH_FILE_RESULT =
             new MessageResult(

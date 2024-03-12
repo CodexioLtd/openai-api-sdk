@@ -55,24 +55,24 @@ public class MessageResultTest {
     }
 
     @Test
-    void testDownload_expectCorrectResponse() throws IOException {
+    void testDownloadImmediate_expectCorrectResponse() throws IOException {
         this.initializeDefaultMessageResult();
 
         when(this.fileResult.downloadImmediate(any())).thenAnswer(res -> FILE);
 
-        var result = this.messageResult.download(FILE);
+        var result = this.messageResult.downloadImmediate(FILE);
 
         isMessageResultNotChanged(result);
     }
 
     @Test
-    void testDownload_withEmptyMessage_expectDefaultMessageResponse()
+    void testDownloadImmediate_withEmptyMessage_expectDefaultMessageResponse()
             throws IOException {
         this.initializeMessageResultWithoutMessage();
 
         when(this.fileResult.downloadImmediate(any())).thenAnswer(res -> FILE);
 
-        var result = this.messageResult.download(FILE);
+        var result = this.messageResult.downloadImmediate(FILE);
 
         assertEquals(
                 EMPTY,
@@ -81,16 +81,16 @@ public class MessageResultTest {
     }
 
     @Test
-    void testDownload_withMessageOnly_expectCorrectResponse()
+    void testDownloadImmediate_withMessageOnly_expectCorrectResponse()
             throws IOException {
         this.initializeMessageResultWithMessageOnly();
-        var result = this.messageResult.download(FILE);
+        var result = this.messageResult.downloadImmediate(FILE);
 
         isMessageResultNotChanged(result);
     }
 
     @Test
-    void testDownload_withEmptyFileResult_expectCorrectResponse()
+    void testDownloadImmediate_withEmptyFileResult_expectCorrectResponse()
             throws IOException {
         this.initializeMessageResultWithImageFileId();
 
@@ -102,14 +102,14 @@ public class MessageResultTest {
                     mockedFile,
                     Files::defaults
             );
-            var result = this.messageResult.download(FILE);
+            var result = this.messageResult.downloadImmediate(FILE);
 
             isMessageResultNotChanged(result);
         }
     }
 
     @Test
-    void testDownload_withEmptyFileResultAndNotPresentMessage_expectDefaultMessageResponse()
+    void testDownloadImmediate_withEmptyFileResultAndNotPresentMessage_expectDefaultMessageResponse()
             throws IOException {
         this.initializeMessageResultWithImageFileIdAndEmptyMessage();
 
@@ -121,7 +121,7 @@ public class MessageResultTest {
                     mockedFile,
                     Files::defaults
             );
-            var result = this.messageResult.download(FILE);
+            var result = this.messageResult.downloadImmediate(FILE);
 
             assertEquals(
                     CREATED_IMAGE_FILE_MESSAGE,
@@ -131,7 +131,8 @@ public class MessageResultTest {
     }
 
     @Test
-    void testDownload_withAuth_expectCorrectResponse() throws IOException {
+    void testDownloadImmediate_withAuth_expectCorrectResponse()
+            throws IOException {
         this.initializeDefaultMessageResult();
         mockFileResultDownloadWithAuth(this.fileResult);
         var result = executeDownloadInMessageResultWithAuth(this.messageResult);
@@ -139,7 +140,7 @@ public class MessageResultTest {
     }
 
     @Test
-    void testDownload_withAuthAndEmptyMessage_expectCorrectResponse()
+    void testDownloadImmediate_withAuthAndEmptyMessage_expectCorrectResponse()
             throws IOException {
         this.initializeMessageResultWithoutMessage();
         mockFileResultDownloadWithAuth(this.fileResult);
@@ -151,7 +152,7 @@ public class MessageResultTest {
     }
 
     @Test
-    void testDownload_withAuthAndMessageOnly_expectCorrectResponse()
+    void testDownloadImmediate_withAuthAndMessageOnly_expectCorrectResponse()
             throws IOException {
         this.initializeMessageResultWithMessageOnly();
         var result = executeDownloadInMessageResultWithAuth(this.messageResult);
@@ -159,7 +160,7 @@ public class MessageResultTest {
     }
 
     @Test
-    void testDownload_withAuthAndEmptyFileResult_expectCorrectResponse()
+    void testDownloadImmediate_withAuthAndEmptyFileResult_expectCorrectResponse()
             throws IOException {
         this.initializeMessageResultWithImageFileId();
 
@@ -178,7 +179,7 @@ public class MessageResultTest {
     }
 
     @Test
-    void testDownload_withAuthAndEmptyFileResultAndNotPresentMessage_expectCorrectResponse()
+    void testDownloadImmediate_withAuthAndEmptyFileResultAndNotPresentMessage_expectCorrectResponse()
             throws IOException {
         this.initializeMessageResultWithImageFileIdAndEmptyMessage();
 
@@ -197,7 +198,7 @@ public class MessageResultTest {
     }
 
     @Test
-    void testDownload_withHttpExecutorContext_expectCorrectResponse()
+    void testDownloadImmediate_withHttpExecutorContext_expectCorrectResponse()
             throws IOException {
         this.initializeDefaultMessageResult();
         mockFileResultDownloadWithHttpExecutor(this.fileResult);
@@ -207,7 +208,7 @@ public class MessageResultTest {
     }
 
     @Test
-    void testDownload_withHttpExecutorContextAndEmptyMessage_expectCorrectResponse()
+    void testDownloadImmediate_withHttpExecutorContextAndEmptyMessage_expectCorrectResponse()
             throws IOException {
         this.initializeDefaultMessageResult();
         mockFileResultDownloadWithHttpExecutor(this.fileResult);
@@ -217,7 +218,7 @@ public class MessageResultTest {
     }
 
     @Test
-    void testDownload_withHttpExecutorContextWithMessageOnly_expectCorrectResponse()
+    void testDownloadImmediate_withHttpExecutorContextWithMessageOnly_expectCorrectResponse()
             throws IOException {
         this.initializeMessageResultWithMessageOnly();
         var result =
@@ -227,7 +228,7 @@ public class MessageResultTest {
     }
 
     @Test
-    void testDownload_withHttpExecutorContextAndEmptyFileResult_expectCorrectResponse()
+    void testDownloadImmediate_withHttpExecutorContextAndEmptyFileResult_expectCorrectResponse()
             throws IOException {
         this.initializeMessageResultWithImageFileId();
         try (
@@ -246,7 +247,7 @@ public class MessageResultTest {
     }
 
     @Test
-    void testDownload_withHttpExecutorContextAndEmptyFileResultAndEmptyMessage_expectCorrectResponse()
+    void testDownloadImmediate_withHttpExecutorContextAndEmptyFileResultAndEmptyMessage_expectCorrectResponse()
             throws IOException {
         this.initializeMessageResultWithImageFileIdAndEmptyMessage();
         try (
@@ -266,7 +267,7 @@ public class MessageResultTest {
 
 
     @Test
-    void testDownload_withRetrieveExecutor_expectCorrectResponse()
+    void testDownloadImmediate_withRetrieveExecutor_expectCorrectResponse()
             throws IOException {
         this.initializeDefaultMessageResult();
         mockFileResultDownloadWithRetrieveExecutor(this.fileResult);
@@ -277,7 +278,7 @@ public class MessageResultTest {
     }
 
     @Test
-    void testDownload_withRetrieveExecutorAndEmptyMessage_expectCorrectResponse()
+    void testDownloadImmediate_withRetrieveExecutorAndEmptyMessage_expectCorrectResponse()
             throws IOException {
         this.initializeMessageResultWithoutMessage();
         mockFileResultDownloadWithRetrieveExecutor(this.fileResult);
@@ -291,7 +292,7 @@ public class MessageResultTest {
     }
 
     @Test
-    void testDownload_withRetrieveExecutorAndMessageOnly_expectCorrectResponse()
+    void testDownloadImmediate_withRetrieveExecutorAndMessageOnly_expectCorrectResponse()
             throws IOException {
         this.initializeMessageResultWithMessageOnly();
         var result =
@@ -300,7 +301,7 @@ public class MessageResultTest {
     }
 
     @Test
-    void testDownload_withRetrieveExecutorAndEmptyFileResult_expectCorrectResponse()
+    void testDownloadImmediate_withRetrieveExecutorAndEmptyFileResult_expectCorrectResponse()
             throws IOException {
         this.initializeMessageResultWithImageFileId();
         try (
@@ -315,7 +316,7 @@ public class MessageResultTest {
     }
 
     @Test
-    void testDownload_withRetrieveExecutorAndEmptyFileResultAndEmptyMessage_expectCorrectResponse()
+    void testDownloadImmediate_withRetrieveExecutorAndEmptyFileResultAndEmptyMessage_expectCorrectResponse()
             throws IOException {
         this.initializeMessageResultWithImageFileIdAndEmptyMessage();
         try (

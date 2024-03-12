@@ -57,7 +57,7 @@ public class AsyncCallbackUtils {
           );
     }
 
-    public static void mockAsyncWithPathVariableExecution(
+    public static void mockAsyncExecutionWithPathVariable(
             OpenAIHttpExecutor executor,
             Object response,
             String rawResponse
@@ -89,7 +89,7 @@ public class AsyncCallbackUtils {
           );
     }
 
-    public static void mockAsyncWithPathVariablesExecution(
+    public static void mockAsyncExecutionWithPathVariables(
             OpenAIHttpExecutor executor,
             Object response,
             String rawResponse
@@ -137,6 +137,7 @@ public class AsyncCallbackUtils {
         }
 
         public T data() {
+
             return this.arr[0];
         }
     }

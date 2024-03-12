@@ -17,8 +17,8 @@ public class AssistantAsyncContextStage
         );
     }
 
-    public AssistantAsyncPromise finish() {
-        return new AssistantAsyncPromise(
+    public AssistantAsyncPromiseStage finish() {
+        return new AssistantAsyncPromiseStage(
                 this.httpExecutor,
                 this.requestBuilder
         );

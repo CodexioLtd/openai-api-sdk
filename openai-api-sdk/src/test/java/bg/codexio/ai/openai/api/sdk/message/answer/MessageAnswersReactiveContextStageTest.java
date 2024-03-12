@@ -6,9 +6,9 @@ import org.junit.jupiter.api.Test;
 import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
 
+import static bg.codexio.ai.openai.api.sdk.CommonTestAssertions.THREAD_ID;
 import static bg.codexio.ai.openai.api.sdk.message.answer.InternalAssertions.LIST_MESSAGE_RESPONSE;
 import static bg.codexio.ai.openai.api.sdk.message.answer.InternalAssertions.RETRIEVE_LIST_MESSAGES_HTTP_EXECUTOR;
-import static bg.codexio.ai.openai.api.sdk.thread.InternalAssertions.THREAD_ID;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.when;

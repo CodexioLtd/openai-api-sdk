@@ -7,9 +7,9 @@ import bg.codexio.ai.openai.api.payload.assistant.response.AssistantResponse;
 import java.util.concurrent.CompletableFuture;
 import java.util.function.Consumer;
 
-public class AssistantAsyncPromise
+public class AssistantAsyncPromiseStage
         extends AssistantConfigurationStage {
-    AssistantAsyncPromise(
+    AssistantAsyncPromiseStage(
             AssistantHttpExecutor httpExecutor,
             AssistantRequest.Builder requestBuilder
     ) {

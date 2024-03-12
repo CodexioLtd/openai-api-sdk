@@ -24,12 +24,10 @@ import java.util.stream.Stream;
 
 import static bg.codexio.ai.openai.api.sdk.AsyncCallbackUtils.mockAsyncExecution;
 import static bg.codexio.ai.openai.api.sdk.AsyncCallbackUtils.prepareCallback;
-import static bg.codexio.ai.openai.api.sdk.CommonTestAssertions.API_CREDENTIALS;
-import static bg.codexio.ai.openai.api.sdk.CommonTestAssertions.OBJECT_MAPPER;
+import static bg.codexio.ai.openai.api.sdk.CommonTestAssertions.*;
 import static bg.codexio.ai.openai.api.sdk.assistant.InternalAssertions.ASSISTANT_ID;
 import static bg.codexio.ai.openai.api.sdk.assistant.InternalAssertions.ASSISTANT_RESPONSE;
 import static bg.codexio.ai.openai.api.sdk.message.chat.InternalAssertions.*;
-import static bg.codexio.ai.openai.api.sdk.thread.InternalAssertions.THREAD_ID;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.*;

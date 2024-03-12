@@ -13,11 +13,9 @@ import bg.codexio.ai.openai.api.payload.message.response.MessageResponse;
 import java.util.Arrays;
 import java.util.List;
 
-import static bg.codexio.ai.openai.api.sdk.CommonTestAssertions.FILE_IDS_VAR_ARGS;
-import static bg.codexio.ai.openai.api.sdk.CommonTestAssertions.METADATA_MAP;
+import static bg.codexio.ai.openai.api.sdk.CommonTestAssertions.*;
 import static bg.codexio.ai.openai.api.sdk.assistant.InternalAssertions.ASSISTANT_ID;
 import static bg.codexio.ai.openai.api.sdk.run.InternalAssertions.RUNNABLE_ID;
-import static bg.codexio.ai.openai.api.sdk.thread.InternalAssertions.THREAD_ID;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.mock;

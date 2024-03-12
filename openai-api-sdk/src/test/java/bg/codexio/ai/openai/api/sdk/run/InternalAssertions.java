@@ -1,5 +1,7 @@
 package bg.codexio.ai.openai.api.sdk.run;
 
+import bg.codexio.ai.openai.api.http.OpenAIHttpExecutor;
+import bg.codexio.ai.openai.api.http.message.RetrieveListMessagesHttpExecutor;
 import bg.codexio.ai.openai.api.http.run.RunnableHttpExecutor;
 import bg.codexio.ai.openai.api.models.ModelType;
 import bg.codexio.ai.openai.api.models.v40.GPT40Model;
@@ -10,15 +12,19 @@ import bg.codexio.ai.openai.api.payload.run.response.action.RequiredAction;
 import bg.codexio.ai.openai.api.payload.run.response.action.SubmitToolOutput;
 import bg.codexio.ai.openai.api.payload.run.response.action.ToolCall;
 import bg.codexio.ai.openai.api.payload.run.response.error.LastError;
+import bg.codexio.ai.openai.api.sdk.HttpBuilder;
+import bg.codexio.ai.openai.api.sdk.message.MessageActionTypeStage;
+import bg.codexio.ai.openai.api.sdk.message.Messages;
+import org.mockito.MockedStatic;
+import reactor.core.publisher.Flux;
+import reactor.core.publisher.Mono;
 
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
-import static bg.codexio.ai.openai.api.sdk.CommonTestAssertions.FILE_IDS_VAR_ARGS;
-import static bg.codexio.ai.openai.api.sdk.CommonTestAssertions.METADATA_MAP;
+import static bg.codexio.ai.openai.api.sdk.CommonTestAssertions.*;
 import static bg.codexio.ai.openai.api.sdk.assistant.InternalAssertions.ASSISTANT_ID;
-import static bg.codexio.ai.openai.api.sdk.thread.InternalAssertions.THREAD_ID;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.eq;
@@ -199,5 +205,38 @@ public class InternalAssertions {
                 previousStage.requestBuilder.metadata(),
                 nextStage.requestBuilder.metadata()
         );
+    }
+
+    static void mockImmediateExecution(RunnableConfigurationStage runnableConfigurationStage) {
+        when(runnableConfigurationStage.httpExecutor.executeWithPathVariable(
+                any(),
+                any()
+        )).thenAnswer(res -> RUNNABLE_RESPONSE);
+    }
+
+    static void mockReactiveExecution(RunnableConfigurationStage runnableConfigurationStage) {
+        when(runnableConfigurationStage.httpExecutor.executeReactiveWithPathVariable(
+                any(),
+                any()
+        )).thenAnswer(res -> new OpenAIHttpExecutor.ReactiveExecution<>(
+                Flux.empty(),
+                Mono.just(RUNNABLE_RESPONSE)
+        ));
+    }
+
+    static RetrieveListMessagesHttpExecutor mockMessageProcessing(MockedStatic<Messages> mockedMessage) {
+        var httpBuilderMock = mock(HttpBuilder.class);
+        var retrieveMessageHttpExecutorMock =
+                mock(RetrieveListMessagesHttpExecutor.class);
+        mockedMessage.when(() -> Messages.defaults((String) any()))
+                     .thenReturn(httpBuilderMock);
+        mockedMessage.when(httpBuilderMock::and)
+                     .thenReturn(new MessageActionTypeStage(
+                             null,
+                             retrieveMessageHttpExecutorMock,
+                             THREAD_ID
+                     ));
+
+        return retrieveMessageHttpExecutorMock;
     }
 }

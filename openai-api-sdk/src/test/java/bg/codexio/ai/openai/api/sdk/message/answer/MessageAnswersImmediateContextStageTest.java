@@ -10,10 +10,10 @@ import org.junit.jupiter.params.provider.MethodSource;
 
 import java.util.stream.Stream;
 
+import static bg.codexio.ai.openai.api.sdk.CommonTestAssertions.THREAD_ID;
+import static bg.codexio.ai.openai.api.sdk.CommonTestAssertions.THREAD_RESPONSE;
 import static bg.codexio.ai.openai.api.sdk.message.answer.InternalAssertions.LIST_MESSAGE_RESPONSE;
 import static bg.codexio.ai.openai.api.sdk.message.answer.InternalAssertions.RETRIEVE_LIST_MESSAGES_HTTP_EXECUTOR;
-import static bg.codexio.ai.openai.api.sdk.thread.InternalAssertions.THREAD_ID;
-import static bg.codexio.ai.openai.api.sdk.thread.InternalAssertions.THREAD_RESPONSE;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.mockito.ArgumentMatchers.any;

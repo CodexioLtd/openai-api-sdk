@@ -4,11 +4,10 @@ import bg.codexio.ai.openai.api.payload.run.request.RunnableRequest;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
+import static bg.codexio.ai.openai.api.sdk.CommonTestAssertions.THREAD_ID;
 import static bg.codexio.ai.openai.api.sdk.assistant.InternalAssertions.ASSISTANT_ID;
 import static bg.codexio.ai.openai.api.sdk.run.InternalAssertions.*;
-import static bg.codexio.ai.openai.api.sdk.thread.InternalAssertions.THREAD_ID;
 import static org.junit.jupiter.api.Assertions.assertAll;
-import static org.junit.jupiter.api.Assertions.assertEquals;
 
 public class RunnableAdvancedConfigurationStageTest {
 
@@ -28,53 +27,38 @@ public class RunnableAdvancedConfigurationStageTest {
 
     @Test
     void testMeta_expectCorrectBuilder() {
-        var nextStage = this.runnableAdvancedConfigurationStage.meta();
-
-        this.previousValuesRemainsUnchanged(nextStage);
+        this.previousValuesRemainsUnchanged(this.runnableAdvancedConfigurationStage.meta());
     }
 
     @Test
     void testAiModel_expectCorrectBuilder() {
-        var nextStage = this.runnableAdvancedConfigurationStage.aiModel();
-
-        this.previousValuesRemainsUnchanged(nextStage);
+        this.previousValuesRemainsUnchanged(this.runnableAdvancedConfigurationStage.aiModel());
     }
 
     @Test
     void testInstruction_expectCorrectBuilder() {
-        var nextStage = this.runnableAdvancedConfigurationStage.instruction();
+        this.previousValuesRemainsUnchanged(this.runnableAdvancedConfigurationStage.instruction());
+    }
 
-        this.previousValuesRemainsUnchanged(nextStage);
+    @Test
+    void testMessaging_expectCorrectBuilder() {
+        this.previousValuesRemainsUnchanged(this.runnableAdvancedConfigurationStage.messaging());
     }
 
     @Test
     void testAndRespond_expectCorrectResponse() {
-        execute(this.runnableAdvancedConfigurationStage);
-
-        var response = this.runnableAdvancedConfigurationStage.andRespond();
-
-        assertEquals(
-                RUNNABLE_RESPONSE,
-                response
-        );
+        this.previousValuesRemainsUnchanged(this.runnableAdvancedConfigurationStage.andRespond());
     }
 
     @Test
     void testResult_expectCorrectBuilder() {
-        var nextStage = this.runnableAdvancedConfigurationStage.result();
-
-        this.previousValuesRemainsUnchanged(nextStage);
+        this.previousValuesRemainsUnchanged(this.runnableAdvancedConfigurationStage.result());
     }
 
     @Test
     void testFinish_expectCorrectBuilder() {
-        execute(this.runnableAdvancedConfigurationStage);
-
-        var nextStage = this.runnableAdvancedConfigurationStage.finish();
-
-        this.previousValuesRemainsUnchanged(nextStage);
+        this.previousValuesRemainsUnchanged(this.runnableAdvancedConfigurationStage.finish());
     }
-
 
     private void previousValuesRemainsUnchanged(RunnableConfigurationStage stage) {
         assertAll(

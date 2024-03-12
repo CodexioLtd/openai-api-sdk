@@ -8,7 +8,6 @@ import bg.codexio.ai.openai.api.sdk.message.answer.MessageAnswersRetrievalTypeSt
 import reactor.core.publisher.Mono;
 
 import java.io.File;
-import java.io.IOException;
 import java.util.function.Consumer;
 
 public class RunnableMessageResult
@@ -35,27 +34,23 @@ public class RunnableMessageResult
                        .retrieve();
     }
 
-    public void answersAsync(Consumer<MessageAnswersRetrievalTypeStage> result) {
+    public void answersAsync(Consumer<MessageResult> result) {
         Messages.defaults(this.threadId)
                 .and()
                 .respond()
                 .async()
                 .answers()
-                .then(res -> result.accept(new MessageAnswersRetrievalTypeStage(res)));
+                .then(res -> result.accept(new MessageAnswersRetrievalTypeStage(res).retrieve()));
     }
 
     public void answersAsyncSimply(
             File targetFolder,
             Consumer<String> result
     ) {
-        this.answersAsync(res -> {
-            try {
-                result.accept(res.retrieve()
-                                 .download(targetFolder));
-            } catch (IOException e) {
-                throw new RuntimeException(e);
-            }
-        });
+        this.answersAsync(res -> res.downloadAsync(
+                targetFolder,
+                result
+        ));
     }
 
     public Mono<MessageResult> answersReactive() {
@@ -69,12 +64,6 @@ public class RunnableMessageResult
 
     public Mono<String> answersReactiveSimply(File targetFolder) {
         return this.answersReactive()
-                   .handle((response, sink) -> {
-                       try {
-                           sink.next(response.download(targetFolder));
-                       } catch (IOException e) {
-                           sink.error(new RuntimeException(e));
-                       }
-                   });
+                   .handle((response, sink) -> sink.next(response.downloadReactive(targetFolder)));
     }
 }

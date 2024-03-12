@@ -1,123 +1,76 @@
 package bg.codexio.ai.openai.api.sdk.run;
 
+import bg.codexio.ai.openai.api.payload.assistant.response.AssistantResponse;
+import bg.codexio.ai.openai.api.payload.run.request.RunnableRequest;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.Arguments;
+import org.junit.jupiter.params.provider.MethodSource;
 
+import java.util.stream.Stream;
+
+import static bg.codexio.ai.openai.api.sdk.CommonTestAssertions.THREAD_ID;
 import static bg.codexio.ai.openai.api.sdk.assistant.InternalAssertions.ASSISTANT_ID;
 import static bg.codexio.ai.openai.api.sdk.assistant.InternalAssertions.ASSISTANT_RESPONSE;
-import static bg.codexio.ai.openai.api.sdk.run.InternalAssertions.execute;
+import static bg.codexio.ai.openai.api.sdk.run.InternalAssertions.RUNNABLE_HTTP_EXECUTOR;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 
 public class RunnableInitializationStageTest {
 
     private RunnableInitializationStage runnableInitializationStage;
 
-    //    @BeforeEach
-    //    void setUp() {
-    //        this.runnableInitializationStage = new
-    //        RunnableInitializationStage(
-    //                RUNNABLE_HTTP_EXECUTOR,
-    //                RunnableRequest.builder(),
-    //                THREAD_ID
-    //        );
-    //    }
-    //
-    //    @Test
-    //    void testExecuteRaw_withAssistantResponse_expectCorrectResponse() {
-    //        execute(this.runnableInitializationStage);
-    //        var response =
-    //                this.runnableInitializationStage.executeRaw
-    //                (ASSISTANT_RESPONSE);
-    //
-    //        assertEquals(
-    //                RUNNABLE_RESPONSE,
-    //                response
-    //        );
-    //    }
-    //
-    //    @Test
-    //    void testExecuteRaw_withAssistantId_expectCorrectResponse() {
-    //        execute(this.runnableInitializationStage);
-    //        var response =
-    //                this.runnableInitializationStage.executeRaw(ASSISTANT_ID);
-    //
-    //        assertEquals(
-    //                RUNNABLE_RESPONSE,
-    //                response
-    //        );
-    //    }
-    //
-    //    @Test
-    //    void testExecute_withAssistantResponse_expectCorrectResponse() {
-    //        execute(this.runnableInitializationStage);
-    //        var response =
-    //                this.runnableInitializationStage.execute
-    //                (ASSISTANT_RESPONSE);
-    //
-    //        assertEquals(
-    //                RUNNABLE_ID,
-    //                response
-    //        );
-    //    }
-    //
-    //    @Test
-    //    void testExecute_withAssistantId_expectCorrectResponse() {
-    //        execute(this.runnableInitializationStage);
-    //        var response = this.runnableInitializationStage.execute
-    //        (ASSISTANT_ID);
-    //
-    //        assertEquals(
-    //                RUNNABLE_ID,
-    //                response
-    //        );
-    //    }
-    //
-    //    @Test
-    //    void testRun_withAssistantResponse_expectCorrectBuilder() {
-    //        execute(this.runnableInitializationStage);
-    //        var nextStage =
-    //                this.runnableInitializationStage.run(ASSISTANT_RESPONSE);
-    //
-    //        assertNotNull(nextStage.requestBuilder.assistantId());
-    //    }
-    //
-    //    @Test
-    //    void testRun_withAssistantId_expectCorrectBuilder() {
-    //        execute(this.runnableInitializationStage);
-    //        var nextStage = this.runnableInitializationStage.run
-    //        (ASSISTANT_ID);
-    //
-    //        assertNotNull(nextStage.requestBuilder.assistantId());
-    //    }
-    //
-    //    @Test
-    //    void testMessaging_expectCorrectBuilder() {
-    //        this.runnableInitializationStage.messaging();
-    //
-    //        assertAll(
-    //                () -> assertNotNull(this.runnableInitializationStage
-    //                .threadId),
-    //                () -> assertNotNull(this.runnableInitializationStage
-    //                .httpExecutor),
-    //                () -> assertNotNull(this.runnableInitializationStage
-    //                .requestBuilder.assistantId())
-    //        );
-    //    }
+    private static Stream<Arguments> provideAssistantTestVariables() {
+        return Stream.of(
+                Arguments.of(ASSISTANT_ID),
+                Arguments.of(ASSISTANT_RESPONSE)
+        );
+    }
 
-    @Test
-    void testDeepConfigure_withAssistantResponse_expectCorrectBuilder() {
-        execute(this.runnableInitializationStage);
-        var nextStage =
-                this.runnableInitializationStage.deepConfigure(ASSISTANT_RESPONSE);
+    @BeforeEach
+    void setUp() {
+        this.runnableInitializationStage = new RunnableInitializationStage(
+                RUNNABLE_HTTP_EXECUTOR,
+                RunnableRequest.builder(),
+                THREAD_ID
+        );
+    }
 
-        assertNotNull(nextStage.requestBuilder.assistantId());
+    @ParameterizedTest
+    @MethodSource("provideAssistantTestVariables")
+    public void testInitialize_withAssistantTestVariables_expectCorrectResponse(Object assistantVariables) {
+        if (assistantVariables instanceof String assistantId) {
+            assertEquals(
+                    assistantId,
+                    this.runnableInitializationStage.initialize(assistantId).requestBuilder.assistantId()
+            );
+        } else if (assistantVariables instanceof AssistantResponse assistantResponse) {
+            assertEquals(
+                    assistantResponse.id(),
+                    this.runnableInitializationStage.initialize(assistantResponse).requestBuilder.assistantId()
+            );
+        }
+    }
+
+    @ParameterizedTest
+    @MethodSource("provideAssistantTestVariables")
+    public void testDeepConfigure_withAssistantTestVariables_expectCorrectResponse(Object assistantVariables) {
+        if (assistantVariables instanceof String assistantId) {
+            assertEquals(
+                    assistantId,
+                    this.runnableInitializationStage.deepConfigure(assistantId).requestBuilder.assistantId()
+            );
+        } else if (assistantVariables instanceof AssistantResponse assistantResponse) {
+            assertEquals(
+                    assistantResponse.id(),
+                    this.runnableInitializationStage.deepConfigure(assistantResponse).requestBuilder.assistantId()
+            );
+        }
     }
 
     @Test
-    void testDeepConfigure_withAssistantId_expectCorrectBuilder() {
-        execute(this.runnableInitializationStage);
-        var nextStage =
-                this.runnableInitializationStage.deepConfigure(ASSISTANT_ID);
-
-        assertNotNull(nextStage.requestBuilder.assistantId());
+    public void testAndRespond_expectCorrectBuilder() {
+        assertNotNull(this.runnableInitializationStage.andRespond());
     }
 }

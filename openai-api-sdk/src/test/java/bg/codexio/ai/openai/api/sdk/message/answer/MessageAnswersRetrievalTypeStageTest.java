@@ -9,6 +9,8 @@ import org.junit.jupiter.params.provider.MethodSource;
 
 import java.util.stream.Stream;
 
+import static bg.codexio.ai.openai.api.sdk.CommonTestAssertions.LIST_MESSAGE_RESPONSE_WITH_TEXT_CONTENT_WITH_FILE_CITATION;
+import static bg.codexio.ai.openai.api.sdk.CommonTestAssertions.MESSAGE_TEST_RESULT_WITHOUT_IMAGE;
 import static bg.codexio.ai.openai.api.sdk.message.answer.InternalAssertions.*;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
