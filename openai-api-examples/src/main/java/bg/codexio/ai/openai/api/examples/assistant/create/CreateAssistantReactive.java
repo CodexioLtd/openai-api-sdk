@@ -34,11 +34,11 @@ public class CreateAssistantReactive {
                           "value2"
                   )
                   .file()
-                  .feed(file)
-                  .andRespond()
-                  .reactive()
-                  .finishRaw()
-                  .lines()
-                  .subscribe(System.out::println);
+                  .feedReactive(file)
+                  .subscribe(config -> config.andRespond()
+                                             .reactive()
+                                             .finishRaw()
+                                             .lines()
+                                             .subscribe(System.out::println));
     }
 }

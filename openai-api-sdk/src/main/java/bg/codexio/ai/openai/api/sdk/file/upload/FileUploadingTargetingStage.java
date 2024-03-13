@@ -5,10 +5,10 @@ import bg.codexio.ai.openai.api.payload.file.purpose.AssistantPurpose;
 import bg.codexio.ai.openai.api.payload.file.purpose.Purpose;
 import bg.codexio.ai.openai.api.payload.file.request.UploadFileRequest;
 
-public class FileTargetingStage
+public class FileUploadingTargetingStage
         extends FileUploadingConfigurationStage {
 
-    public FileTargetingStage(
+    public FileUploadingTargetingStage(
             UploadFileHttpExecutor executor,
             UploadFileRequest.Builder requestBuilder
     ) {

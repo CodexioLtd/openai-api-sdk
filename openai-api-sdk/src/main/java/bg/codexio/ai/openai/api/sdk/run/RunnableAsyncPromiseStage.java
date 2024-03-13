@@ -3,11 +3,13 @@ package bg.codexio.ai.openai.api.sdk.run;
 import bg.codexio.ai.openai.api.http.run.RunnableHttpExecutor;
 import bg.codexio.ai.openai.api.payload.run.request.RunnableRequest;
 import bg.codexio.ai.openai.api.payload.run.response.RunnableResponse;
+import bg.codexio.ai.openai.api.sdk.AsyncPromiseStage;
 
 import java.util.function.Consumer;
 
 public class RunnableAsyncPromiseStage
-        extends RunnableConfigurationStage {
+        extends RunnableConfigurationStage
+        implements AsyncPromiseStage<RunnableResponse> {
 
     RunnableAsyncPromiseStage(
             RunnableHttpExecutor httpExecutor,
@@ -21,20 +23,10 @@ public class RunnableAsyncPromiseStage
         );
     }
 
-    public void then(Consumer<RunnableResponse> afterAll) {
-        this.then(
-                x -> {},
-                afterAll
-        );
-    }
-
-    public void onEachLine(Consumer<String> onEachLine) {
-        this.then(
-                onEachLine,
-                x -> {}
-        );
-    }
-
+    /**
+     * {@inheritDoc}
+     */
+    @Override
     public void then(
             Consumer<String> onEachLine,
             Consumer<RunnableResponse> afterAll

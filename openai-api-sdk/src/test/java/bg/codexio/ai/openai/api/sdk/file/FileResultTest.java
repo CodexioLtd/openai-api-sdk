@@ -42,7 +42,7 @@ public class FileResultTest {
             );
 
             this.downloadMockedExecution(downloadUtils);
-            var result = FILE_RESULT.downloadImmediate(TARGET_TEST_FOLDER);
+            var result = FILE_RESULT.downloadImmediate(FILE);
             this.assertDownloadedFile(result);
         }
     }
@@ -61,7 +61,7 @@ public class FileResultTest {
 
             this.downloadMockedExecution(downloadUtils);
             var result = FILE_RESULT.downloadImmediate(
-                    TARGET_TEST_FOLDER,
+                    FILE,
                     FromDeveloper.doPass(new ApiCredentials(API_CREDENTIALS))
             );
             this.assertDownloadedFile(result);
@@ -84,7 +84,7 @@ public class FileResultTest {
 
             this.downloadMockedExecution(downloadUtils);
             var result = FILE_RESULT.downloadImmediate(
-                    TARGET_TEST_FOLDER,
+                    FILE,
                     new HttpExecutorContext(new ApiCredentials(API_CREDENTIALS))
             );
             this.assertDownloadedFile(result);
@@ -103,7 +103,7 @@ public class FileResultTest {
             this.downloadMockedExecution(downloadUtils);
 
             var result = FILE_RESULT.downloadImmediate(
-                    TARGET_TEST_FOLDER,
+                    FILE,
                     RETRIEVE_FILE_CONTENT_HTTP_EXECUTOR
             );
             this.assertDownloadedFile(result);

@@ -107,8 +107,8 @@ public class AsyncPromiseStageTest {
         var finalizerData = prepareCallback(ChatMessageResponse.class);
 
         this.promiseStage.then(
-                finalizerData.callback(),
-                lineData.callback()
+                lineData.callback(),
+                finalizerData.callback()
         );
 
         assertAll(

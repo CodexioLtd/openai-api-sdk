@@ -2,7 +2,6 @@ package bg.codexio.ai.openai.api.sdk.file.download;
 
 import bg.codexio.ai.openai.api.http.file.RetrieveFileContentHttpExecutor;
 import bg.codexio.ai.openai.api.payload.file.download.FileDownloadingMeta;
-import bg.codexio.ai.openai.api.payload.file.request.UploadFileRequest;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -21,12 +20,10 @@ public class FileDownloadingAsyncPromise
 
     public FileDownloadingAsyncPromise(
             RetrieveFileContentHttpExecutor executor,
-            UploadFileRequest.Builder requestBuilder,
             FileDownloadingMeta.Builder fileDownloadingMeta
     ) {
         super(
                 executor,
-                requestBuilder,
                 fileDownloadingMeta
         );
     }

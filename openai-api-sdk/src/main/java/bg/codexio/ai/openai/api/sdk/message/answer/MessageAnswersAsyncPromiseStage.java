@@ -2,11 +2,13 @@ package bg.codexio.ai.openai.api.sdk.message.answer;
 
 import bg.codexio.ai.openai.api.http.message.RetrieveListMessagesHttpExecutor;
 import bg.codexio.ai.openai.api.payload.message.response.ListMessagesResponse;
+import bg.codexio.ai.openai.api.sdk.AsyncPromiseStage;
 
 import java.util.function.Consumer;
 
 public class MessageAnswersAsyncPromiseStage
-        extends MessageAnswersConfigurationStage {
+        extends MessageAnswersConfigurationStage
+        implements AsyncPromiseStage<ListMessagesResponse> {
     protected MessageAnswersAsyncPromiseStage(
             RetrieveListMessagesHttpExecutor httpExecutor,
             String threadId
@@ -17,20 +19,10 @@ public class MessageAnswersAsyncPromiseStage
         );
     }
 
-    public void then(Consumer<ListMessagesResponse> afterAll) {
-        this.then(
-                x -> {},
-                afterAll
-        );
-    }
-
-    public void onEachLine(Consumer<String> onEachLine) {
-        this.then(
-                onEachLine,
-                x -> {}
-        );
-    }
-
+    /**
+     * {@inheritDoc}
+     */
+    @Override
     public void then(
             Consumer<String> onEachLine,
             Consumer<ListMessagesResponse> afterAll

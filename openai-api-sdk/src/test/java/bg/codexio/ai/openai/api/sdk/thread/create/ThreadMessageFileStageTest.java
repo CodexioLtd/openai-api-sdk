@@ -1,17 +1,18 @@
 package bg.codexio.ai.openai.api.sdk.thread.create;
 
-import bg.codexio.ai.openai.api.payload.credentials.ApiCredentials;
 import bg.codexio.ai.openai.api.payload.thread.request.ThreadCreationRequest;
 import bg.codexio.ai.openai.api.sdk.Authenticator;
 import bg.codexio.ai.openai.api.sdk.MockedFileSimplifiedUtils;
-import bg.codexio.ai.openai.api.sdk.auth.FromDeveloper;
-import bg.codexio.ai.openai.api.sdk.file.Files;
-import bg.codexio.ai.openai.api.sdk.file.upload.FileUploadSimplified;
+import bg.codexio.ai.openai.api.sdk.file.upload.simply.FileAsyncUploadSimplified;
+import bg.codexio.ai.openai.api.sdk.file.upload.simply.FileImmediateUploadSimplified;
+import bg.codexio.ai.openai.api.sdk.file.upload.simply.FileReactiveUploadSimplified;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
+import java.util.Objects;
+
+import static bg.codexio.ai.openai.api.sdk.AsyncCallbackUtils.prepareCallback;
 import static bg.codexio.ai.openai.api.sdk.CommonTestAssertions.*;
-import static bg.codexio.ai.openai.api.sdk.file.InternalAssertions.FILE_RESPONSE;
 import static bg.codexio.ai.openai.api.sdk.thread.create.InternalAssertions.CREATE_THREAD_HTTP_EXECUTOR;
 import static bg.codexio.ai.openai.api.sdk.thread.create.InternalAssertions.THREAD_MESSAGE_CONTENT;
 import static org.junit.jupiter.api.Assertions.*;
@@ -31,42 +32,114 @@ public class ThreadMessageFileStageTest {
     }
 
     @Test
-    void testFeed_withFile_expectCorrectResponse() {
-        this.performFeedWithFile();
+    void testFeedImmediate_expectCorrectBuilder() {
+        this.performImmediateFeedWithFile();
     }
 
     @Test
-    void testFeed_withFileAndEmptyContent_expectCorrectResponse() {
+    void testFeedImmediate_withEmptyContent_expectCorrectBuilder() {
         this.initializeStageWithEmptyContent();
-        this.performFeedWithFile();
+        this.performImmediateFeedWithFile();
     }
 
     @Test
-    void testFeed_withFileResponse_expectCorrectResponse() {
+    void testFeedAsync_expectCorrectBuilder() {
+        this.performAsyncFeedWithFile();
+    }
+
+    @Test
+    void testFeedAsync_withEmptyContent_expectCorrectBuilder() {
+        this.initializeStageWithEmptyContent();
+        this.performAsyncFeedWithFile();
+    }
+
+    @Test
+    void testFeedReactive_expectCorrectBuilder() {
+        this.performReactiveFeedWithFile();
+    }
+
+    @Test
+    void testFeedReactive_withEmptyContent_expectCorrectBuilder() {
+        this.initializeStageWithEmptyContent();
+        this.performReactiveFeedWithFile();
+    }
+
+    @Test
+    void testFeed_withFileResponse_expectCorrectBuilder() {
         assertNotNull(this.threadMessageFileStage.feed(FILE_RESPONSE));
     }
 
     @Test
-    void testFeed_withFileResponseAndEmptyContent_expectCorrectResponse() {
+    void testFeed_withFileResponseAndEmptyContent_expectCorrectBuilder() {
         this.initializeStageWithEmptyContent();
         assertNotNull(this.threadMessageFileStage.feed(FILE_RESPONSE));
     }
 
     @Test
-    void testFeed_withFileIdVarArgs_expectCorrectResponse() {
+    void testFeed_withFileIdVarArgs_expectCorrectBuilder() {
         assertNotNull(this.threadMessageFileStage.feed(FILE_IDS_VAR_ARGS));
     }
 
     @Test
-    void testFeed_withFileIdVarArgsAndEmptyContent_expectCorrectResponse() {
+    void testFeed_withFileIdVarArgsAndEmptyContent_expectCorrectBuilder() {
         this.initializeStageWithEmptyContent();
         assertNotNull(this.threadMessageFileStage.feed(FILE_IDS_VAR_ARGS));
     }
 
-    // add file uploading mocking
     @Test
-    void testAttach_withFile_expectCorrectBuilder() {
-        this.performFileIdAssertion(this.threadMessageFileStage.attach(FILE));
+    void testAttachImmediate_expectCorrectBuilder() {
+        try (
+                var authUtils = mockStatic(Authenticator.class);
+                var filesSimplified =
+                        mockStatic(FileImmediateUploadSimplified.class)
+        ) {
+            MockedFileSimplifiedUtils.mockImmediateFileSimplified(
+                    authUtils,
+                    filesSimplified
+            );
+
+            this.performFileIdAssertion(this.threadMessageFileStage.attachImmediate(FILE));
+        }
+    }
+
+    @Test
+    void testAttachAsync_expectCorrectBuilder() {
+        var callback = prepareCallback(ThreadAdvancedConfigurationStage.class);
+
+        try (
+                var authUtils = mockStatic(Authenticator.class);
+                var filesSimplified =
+                        mockStatic(FileAsyncUploadSimplified.class)
+        ) {
+            MockedFileSimplifiedUtils.mockAsyncFileSimplified(
+                    authUtils,
+                    filesSimplified
+            );
+
+            this.threadMessageFileStage.attachAsync(
+                    FILE,
+                    callback.callback()
+            );
+
+            this.performFileIdAssertion(callback.data());
+        }
+    }
+
+    @Test
+    void testAttachReactive_expectCorrectBuilder() {
+        try (
+                var authUtils = mockStatic(Authenticator.class);
+                var filesSimplified =
+                        mockStatic(FileReactiveUploadSimplified.class)
+        ) {
+            MockedFileSimplifiedUtils.mockReactiveFileSimplified(
+                    authUtils,
+                    filesSimplified
+            );
+
+            this.performFileIdAssertion(Objects.requireNonNull(this.threadMessageFileStage.attachReactive(FILE)
+                                                                                          .block()));
+        }
     }
 
     @Test
@@ -75,7 +148,7 @@ public class ThreadMessageFileStageTest {
     }
 
     @Test
-    void testAttach_withFileIdVarArgs_expectCorrectResponse() {
+    void testAttach_withFileIdVarArgs_expectCorrectBuilder() {
         this.performFileIdAssertion(this.threadMessageFileStage.attach(FILE_IDS_VAR_ARGS));
     }
 
@@ -90,20 +163,55 @@ public class ThreadMessageFileStageTest {
         );
     }
 
-    private void performFeedWithFile() {
-        var auth =
-                Files.authenticate(FromDeveloper.doPass(new ApiCredentials(API_CREDENTIALS)));
+    private void performImmediateFeedWithFile() {
         try (
                 var authUtils = mockStatic(Authenticator.class);
-                var filesSimplified = mockStatic(FileUploadSimplified.class)
+                var filesSimplified =
+                        mockStatic(FileImmediateUploadSimplified.class)
         ) {
-            MockedFileSimplifiedUtils.mockFileSimplified(
+            MockedFileSimplifiedUtils.mockImmediateFileSimplified(
                     authUtils,
-                    auth,
                     filesSimplified
             );
 
-            assertNotNull(this.threadMessageFileStage.feed(FILE));
+            assertNotNull(this.threadMessageFileStage.feedImmediate(FILE));
+        }
+    }
+
+    private void performAsyncFeedWithFile() {
+        var callback = prepareCallback(ThreadRuntimeSelectionStage.class);
+
+        try (
+                var authUtils = mockStatic(Authenticator.class);
+                var filesSimplified =
+                        mockStatic(FileAsyncUploadSimplified.class)
+        ) {
+            MockedFileSimplifiedUtils.mockAsyncFileSimplified(
+                    authUtils,
+                    filesSimplified
+            );
+
+            this.threadMessageFileStage.feedAsync(
+                    FILE,
+                    callback.callback()
+            );
+
+            assertNotNull(callback.data());
+        }
+    }
+
+    private void performReactiveFeedWithFile() {
+        try (
+                var authUtils = mockStatic(Authenticator.class);
+                var filesSimplified =
+                        mockStatic(FileReactiveUploadSimplified.class)
+        ) {
+            MockedFileSimplifiedUtils.mockReactiveFileSimplified(
+                    authUtils,
+                    filesSimplified
+            );
+
+            assertNotNull(this.threadMessageFileStage.feedReactive(FILE));
         }
     }
 

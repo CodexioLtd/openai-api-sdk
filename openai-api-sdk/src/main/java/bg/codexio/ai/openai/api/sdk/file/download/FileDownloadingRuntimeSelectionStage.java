@@ -2,7 +2,6 @@ package bg.codexio.ai.openai.api.sdk.file.download;
 
 import bg.codexio.ai.openai.api.http.file.RetrieveFileContentHttpExecutor;
 import bg.codexio.ai.openai.api.payload.file.download.FileDownloadingMeta;
-import bg.codexio.ai.openai.api.payload.file.request.UploadFileRequest;
 import bg.codexio.ai.openai.api.sdk.RuntimeSelectionStage;
 
 public class FileDownloadingRuntimeSelectionStage
@@ -12,12 +11,10 @@ public class FileDownloadingRuntimeSelectionStage
 
     public FileDownloadingRuntimeSelectionStage(
             RetrieveFileContentHttpExecutor executor,
-            UploadFileRequest.Builder requestBuilder,
             FileDownloadingMeta.Builder fileDownloadingMeta
     ) {
         super(
                 executor,
-                requestBuilder,
                 fileDownloadingMeta
         );
     }
@@ -26,7 +23,6 @@ public class FileDownloadingRuntimeSelectionStage
     public FileDownloadingImmediateContextStage immediate() {
         return new FileDownloadingImmediateContextStage(
                 this.executor,
-                this.requestBuilder,
                 this.fileDownloadingMeta
         );
     }
@@ -35,7 +31,6 @@ public class FileDownloadingRuntimeSelectionStage
     public FileDownloadingAsyncContextStage async() {
         return new FileDownloadingAsyncContextStage(
                 this.executor,
-                this.requestBuilder,
                 this.fileDownloadingMeta
         );
     }
@@ -44,7 +39,6 @@ public class FileDownloadingRuntimeSelectionStage
     public FileDownloadingReactiveContextStage reactive() {
         return new FileDownloadingReactiveContextStage(
                 this.executor,
-                this.requestBuilder,
                 this.fileDownloadingMeta
         );
     }

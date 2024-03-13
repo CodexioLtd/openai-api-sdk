@@ -73,6 +73,7 @@ public interface OpenAIHttpExecutor<I extends Streamable,
             Consumer<O> finalizer,
             String... pathVariables
     );
+
     /**
      * <p>
      * Executes HTTP request in reactive fashion.

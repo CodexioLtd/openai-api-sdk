@@ -3,7 +3,7 @@ package bg.codexio.ai.openai.api.sdk;
 import bg.codexio.ai.openai.api.http.file.RetrieveFileContentHttpExecutor;
 import bg.codexio.ai.openai.api.http.file.UploadFileHttpExecutor;
 import bg.codexio.ai.openai.api.payload.file.download.FileDownloadingMeta;
-import bg.codexio.ai.openai.api.payload.file.request.UploadFileRequest;
+import bg.codexio.ai.openai.api.payload.file.response.FileResponse;
 import bg.codexio.ai.openai.api.payload.message.content.TextContent;
 import bg.codexio.ai.openai.api.payload.message.content.TextMessageContent;
 import bg.codexio.ai.openai.api.payload.message.content.annotation.FileCitation;
@@ -45,6 +45,14 @@ public class CommonTestAssertions {
             METADATA_VAR_ARGS[1]
     );
     public static final String FILE_TEST_ID = "test_id";
+    public static final FileResponse FILE_RESPONSE = new FileResponse(
+            FILE_TEST_ID,
+            "test_object",
+            0,
+            0,
+            "test_name",
+            "assistants"
+    );
     public static final UploadFileHttpExecutor UPLOAD_FILE_HTTP_EXECUTOR =
             mock(UploadFileHttpExecutor.class);
     public static final RetrieveFileContentHttpExecutor RETRIEVE_FILE_CONTENT_HTTP_EXECUTOR = mock(RetrieveFileContentHttpExecutor.class);
@@ -123,7 +131,6 @@ public class CommonTestAssertions {
                   ))
                   .thenReturn(new FileDownloadingNameTypeStage(
                           RETRIEVE_FILE_CONTENT_HTTP_EXECUTOR,
-                          UploadFileRequest.builder(),
                           FileDownloadingMeta.builder()
                                              .withFileId(FILE_TEST_ID)
                   ));

@@ -23,12 +23,16 @@ public class CreateThreadAsync {
                        "value2"
                )
                .file()
-               .attach(file)
-               .message()
-               .startWith("You're java developer.")
-               .feed(file)
-               .async()
-               .finishRaw()
-               .then(System.out::println);
+               .attachAsync(
+                       file,
+                       config -> config.message()
+                                       .startWith("You're java developer.")
+                                       .feedAsync(
+                                               file,
+                                               runtimeSelection -> runtimeSelection.async()
+                                                                                   .finishRaw()
+                                                                                   .then(System.out::println)
+                                       )
+               );
     }
 }

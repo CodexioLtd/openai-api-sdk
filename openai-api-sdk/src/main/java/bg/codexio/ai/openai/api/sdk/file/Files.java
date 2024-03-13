@@ -10,7 +10,7 @@ import bg.codexio.ai.openai.api.sdk.HttpBuilder;
 import bg.codexio.ai.openai.api.sdk.auth.SdkAuth;
 import bg.codexio.ai.openai.api.sdk.file.download.FileDownloadingNameTypeStage;
 import bg.codexio.ai.openai.api.sdk.file.download.FileDownloadingRuntimeSelectionStage;
-import bg.codexio.ai.openai.api.sdk.file.upload.FileTargetingStage;
+import bg.codexio.ai.openai.api.sdk.file.upload.FileUploadingTargetingStage;
 
 import static bg.codexio.ai.openai.api.sdk.Authenticator.autoAuthenticate;
 
@@ -19,8 +19,8 @@ public class Files {
     private Files() {
     }
 
-    public static FileTargetingStage throughHttp(UploadFileHttpExecutor httpExecutor) {
-        return new FileTargetingStage(
+    public static FileUploadingTargetingStage throughHttp(UploadFileHttpExecutor httpExecutor) {
+        return new FileUploadingTargetingStage(
                 httpExecutor,
                 UploadFileRequest.builder()
         );
@@ -32,7 +32,6 @@ public class Files {
     ) {
         return new FileDownloadingNameTypeStage(
                 httpExecutor,
-                UploadFileRequest.builder(),
                 FileDownloadingMeta.builder()
                                    .withFileId(fileId)
         );
@@ -44,7 +43,6 @@ public class Files {
     ) {
         return new FileDownloadingRuntimeSelectionStage(
                 httpExecutor,
-                UploadFileRequest.builder(),
                 FileDownloadingMeta.builder()
                                    .withFileId(fileResponse.id())
                                    .withFileName(fileResponse.filename())

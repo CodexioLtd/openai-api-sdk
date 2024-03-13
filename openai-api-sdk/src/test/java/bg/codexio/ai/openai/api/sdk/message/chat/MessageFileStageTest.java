@@ -1,19 +1,18 @@
 package bg.codexio.ai.openai.api.sdk.message.chat;
 
-import bg.codexio.ai.openai.api.payload.credentials.ApiCredentials;
 import bg.codexio.ai.openai.api.payload.message.request.MessageRequest;
 import bg.codexio.ai.openai.api.sdk.Authenticator;
 import bg.codexio.ai.openai.api.sdk.MockedFileSimplifiedUtils;
-import bg.codexio.ai.openai.api.sdk.auth.FromDeveloper;
-import bg.codexio.ai.openai.api.sdk.file.Files;
-import bg.codexio.ai.openai.api.sdk.file.upload.FileUploadSimplified;
+import bg.codexio.ai.openai.api.sdk.file.upload.simply.FileAsyncUploadSimplified;
+import bg.codexio.ai.openai.api.sdk.file.upload.simply.FileImmediateUploadSimplified;
+import bg.codexio.ai.openai.api.sdk.file.upload.simply.FileReactiveUploadSimplified;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import java.util.Arrays;
 
+import static bg.codexio.ai.openai.api.sdk.AsyncCallbackUtils.prepareCallback;
 import static bg.codexio.ai.openai.api.sdk.CommonTestAssertions.*;
-import static bg.codexio.ai.openai.api.sdk.file.InternalAssertions.FILE_RESPONSE;
 import static bg.codexio.ai.openai.api.sdk.message.chat.InternalAssertions.*;
 import static org.junit.jupiter.api.Assertions.assertAll;
 import static org.junit.jupiter.api.Assertions.assertEquals;
@@ -58,21 +57,58 @@ public class MessageFileStageTest {
     }
 
     @Test
-    void testFeed_withFile_expectCorrectBuilder() {
-        var auth =
-                Files.authenticate(FromDeveloper.doPass(new ApiCredentials(API_CREDENTIALS)));
+    void testFeedImmediate_expectCorrectBuilder() {
         try (
                 var authUtils = mockStatic(Authenticator.class);
-                var filesSimplified = mockStatic(FileUploadSimplified.class)
+                var filesSimplified =
+                        mockStatic(FileImmediateUploadSimplified.class)
         ) {
-            MockedFileSimplifiedUtils.mockFileSimplified(
+            MockedFileSimplifiedUtils.mockImmediateFileSimplified(
                     authUtils,
-                    auth,
                     filesSimplified
             );
-            var nextStage = this.messageFileStage.feed(FILE);
+            var nextStage = this.messageFileStage.feedImmediate(FILE);
 
             this.previousValuesRemainsUnchanged(nextStage);
+        }
+    }
+
+    @Test
+    void testFeedAsync_expectCorrectBuilder() {
+        var callback = prepareCallback(MessageAdvancedConfigurationStage.class);
+
+        try (
+                var authUtils = mockStatic(Authenticator.class);
+                var filesSimplified =
+                        mockStatic(FileAsyncUploadSimplified.class)
+        ) {
+            MockedFileSimplifiedUtils.mockAsyncFileSimplified(
+                    authUtils,
+                    filesSimplified
+            );
+            this.messageFileStage.feedAsync(
+                    FILE,
+                    callback.callback()
+            );
+
+            this.previousValuesRemainsUnchanged(callback.data());
+        }
+    }
+
+    @Test
+    void testFeedReactive_expectCorrectBuilder() {
+        try (
+                var authUtils = mockStatic(Authenticator.class);
+                var filesSimplified =
+                        mockStatic(FileReactiveUploadSimplified.class)
+        ) {
+            MockedFileSimplifiedUtils.mockReactiveFileSimplified(
+                    authUtils,
+                    filesSimplified
+            );
+
+            this.previousValuesRemainsUnchanged(this.messageFileStage.feedReactive(FILE)
+                                                                     .block());
         }
     }
 

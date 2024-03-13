@@ -7,7 +7,7 @@ import bg.codexio.ai.openai.api.payload.file.request.UploadFileRequest;
 import bg.codexio.ai.openai.api.payload.file.response.FileResponse;
 import bg.codexio.ai.openai.api.sdk.file.download.FileDownloadingNameTypeStage;
 import bg.codexio.ai.openai.api.sdk.file.download.FileDownloadingRuntimeSelectionStage;
-import bg.codexio.ai.openai.api.sdk.file.upload.FileTargetingStage;
+import bg.codexio.ai.openai.api.sdk.file.upload.FileUploadingTargetingStage;
 
 public class FileActionTypeStage {
 
@@ -22,8 +22,8 @@ public class FileActionTypeStage {
         this.retrieveFileContentHttpExecutor = retrieveFileContentHttpExecutor;
     }
 
-    public FileTargetingStage upload() {
-        return new FileTargetingStage(
+    public FileUploadingTargetingStage upload() {
+        return new FileUploadingTargetingStage(
                 this.uploadFileHttpExecutor,
                 UploadFileRequest.builder()
         );
@@ -32,7 +32,6 @@ public class FileActionTypeStage {
     public FileDownloadingNameTypeStage download(String fileId) {
         return new FileDownloadingNameTypeStage(
                 this.retrieveFileContentHttpExecutor,
-                UploadFileRequest.builder(),
                 FileDownloadingMeta.builder()
                                    .withFileId(fileId)
         );
@@ -41,7 +40,6 @@ public class FileActionTypeStage {
     public FileDownloadingRuntimeSelectionStage download(FileResult fileResult) {
         return new FileDownloadingRuntimeSelectionStage(
                 this.retrieveFileContentHttpExecutor,
-                UploadFileRequest.builder(),
                 FileDownloadingMeta.builder()
                                    .withFileId(fileResult.id())
                                    .withFileName(fileResult.fileName())
@@ -51,7 +49,6 @@ public class FileActionTypeStage {
     public FileDownloadingRuntimeSelectionStage download(FileResponse fileResponse) {
         return new FileDownloadingRuntimeSelectionStage(
                 this.retrieveFileContentHttpExecutor,
-                UploadFileRequest.builder(),
                 FileDownloadingMeta.builder()
                                    .withFileId(fileResponse.id())
                                    .withFileName(fileResponse.filename())

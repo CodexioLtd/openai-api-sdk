@@ -34,7 +34,7 @@ public class AssistantAskImmediate {
                                     "value"
                             )
                             .file()
-                            .feed(file)
+                            .feedImmediate(file)
                             .assistant()
                             .assistImmediate(Assistants.defaults()
                                                        .and()

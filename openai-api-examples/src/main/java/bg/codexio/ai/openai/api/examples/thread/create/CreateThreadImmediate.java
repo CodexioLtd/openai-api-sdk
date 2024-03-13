@@ -23,10 +23,10 @@ public class CreateThreadImmediate {
                                     "value2"
                             )
                             .file()
-                            .attach(file)
+                            .attachImmediate(file)
                             .message()
                             .startWith("You're java developer.")
-                            .feed(file);
+                            .feedImmediate(file);
 
         System.out.println(thread);
     }

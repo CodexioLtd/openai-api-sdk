@@ -48,5 +48,4 @@ public class ThreadActionTypeStageTest {
             assertNotNull(this.threadActionTypeStage.modify(threadResponse));
         }
     }
-
 }

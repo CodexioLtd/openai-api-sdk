@@ -34,7 +34,7 @@ public class CreateAssistantImmediate {
                                           "value2"
                                   )
                                   .file()
-                                  .feed(file)
+                                  .feedImmediate(file)
                                   .andRespond()
                                   .immediate()
                                   .finishRaw();

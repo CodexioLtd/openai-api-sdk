@@ -34,11 +34,13 @@ public class CreateAssistantAsync {
                           "value2"
                   )
                   .file()
-                  .feed(file)
-                  .andRespond()
-                  .async()
-                  .finish()
-                  .then(System.out::println);
+                  .feedAsync(
+                          file,
+                          config -> config.andRespond()
+                                          .async()
+                                          .finish()
+                                          .then(System.out::println)
+                  );
 
     }
 }

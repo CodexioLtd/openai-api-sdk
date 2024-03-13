@@ -1,18 +1,16 @@
-package bg.codexio.ai.openai.api.sdk.file;
+package bg.codexio.ai.openai.api.sdk.file.download;
 
 import bg.codexio.ai.openai.api.payload.file.download.FileDownloadingMeta;
-import bg.codexio.ai.openai.api.payload.file.request.UploadFileRequest;
 import bg.codexio.ai.openai.api.payload.file.response.FileContentResponse;
-import bg.codexio.ai.openai.api.sdk.file.download.DownloadExecutor;
-import bg.codexio.ai.openai.api.sdk.file.download.FileDownloadingImmediateContextStage;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import java.io.File;
 import java.io.IOException;
 
-import static bg.codexio.ai.openai.api.sdk.CommonTestAssertions.RETRIEVE_FILE_CONTENT_HTTP_EXECUTOR;
-import static bg.codexio.ai.openai.api.sdk.file.InternalAssertions.*;
+import static bg.codexio.ai.openai.api.sdk.CommonTestAssertions.*;
+import static bg.codexio.ai.openai.api.sdk.file.download.InternalAssertions.FILE_TEST_NAME;
+import static bg.codexio.ai.openai.api.sdk.file.download.InternalAssertions.FILE_TEST_PATH;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.mockStatic;
@@ -26,7 +24,6 @@ public class FileDownloadingImmediateContextStageTest {
     void setUp() {
         this.fileDownloadingStage = new FileDownloadingImmediateContextStage(
                 RETRIEVE_FILE_CONTENT_HTTP_EXECUTOR,
-                UploadFileRequest.builder(),
                 FileDownloadingMeta.builder()
                                    .withFileId(FILE_TEST_ID)
                                    .withFileName(FILE_TEST_NAME)
@@ -47,7 +44,7 @@ public class FileDownloadingImmediateContextStageTest {
                          ))
                          .thenReturn(new File(FILE_TEST_PATH));
 
-            var result = this.fileDownloadingStage.toFolder(TARGET_TEST_FOLDER);
+            var result = this.fileDownloadingStage.toFolder(FILE);
             assertEquals(
                     FILE_TEST_PATH.replace(
                             "/",

@@ -10,7 +10,8 @@ import java.util.function.Consumer;
  * Registers callbacks and sends request
  */
 public class AsyncPromiseStage
-        extends TranslationConfigurationStage {
+        extends TranslationConfigurationStage
+        implements bg.codexio.ai.openai.api.sdk.AsyncPromiseStage<SpeechTextResponse> {
 
 
     AsyncPromiseStage(
@@ -24,43 +25,9 @@ public class AsyncPromiseStage
     }
 
     /**
-     * Sends request in asynchronous fashion,
-     * registers a callback to be called when response arrives.
-     *
-     * @param afterAll a callback which accepts the {@link SpeechTextResponse}
+     * {@inheritDoc}
      */
-    public void then(Consumer<SpeechTextResponse> afterAll) {
-        this.then(
-                x -> {
-                },
-                afterAll
-        );
-    }
-
-    /**
-     * Sends request in asynchronous fashion,
-     * registers a callback to be called on each line of the response
-     *
-     * @param onEachLine a callback which accepts the String line of the
-     *                   response
-     */
-    public void onEachLine(Consumer<String> onEachLine) {
-        this.then(
-                onEachLine,
-                x -> {
-                }
-        );
-    }
-
-    /**
-     * Sends request in asynchronous fashion,
-     * registers callbacks to be called when response arrives and
-     * on each line of the response
-     *
-     * @param onEachLine a callback which accepts the String line of the
-     *                   response
-     * @param afterAll   a callback which accepts the {@link SpeechTextResponse}
-     */
+    @Override
     public void then(
             Consumer<String> onEachLine,
             Consumer<SpeechTextResponse> afterAll

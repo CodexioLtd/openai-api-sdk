@@ -1,7 +1,7 @@
 package bg.codexio.ai.openai.api.sdk.thread.modify;
 
 import bg.codexio.ai.openai.api.payload.thread.request.ThreadModificationRequest;
-import bg.codexio.ai.openai.api.payload.thread.response.ThreadResponse;
+import bg.codexio.ai.openai.api.sdk.thread.ThreadConsumer;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -71,14 +71,5 @@ public class ThreadModificationAsyncPromiseTest {
                 ).accept(any()),
                 () -> verify(finalizer).accept(THREAD_RESPONSE)
         );
-    }
-}
-
-class ThreadConsumer
-        implements Consumer<ThreadResponse> {
-
-    @Override
-    public void accept(ThreadResponse threadResponse) {
-
     }
 }

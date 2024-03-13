@@ -2,21 +2,20 @@ package bg.codexio.ai.openai.api.sdk.assistant;
 
 import bg.codexio.ai.openai.api.payload.assistant.request.AssistantRequest;
 import bg.codexio.ai.openai.api.payload.assistant.tool.CodeInterpreter;
-import bg.codexio.ai.openai.api.payload.credentials.ApiCredentials;
 import bg.codexio.ai.openai.api.sdk.Authenticator;
 import bg.codexio.ai.openai.api.sdk.MockedFileSimplifiedUtils;
-import bg.codexio.ai.openai.api.sdk.auth.FromDeveloper;
-import bg.codexio.ai.openai.api.sdk.file.Files;
-import bg.codexio.ai.openai.api.sdk.file.upload.FileUploadSimplified;
+import bg.codexio.ai.openai.api.sdk.file.upload.simply.FileAsyncUploadSimplified;
+import bg.codexio.ai.openai.api.sdk.file.upload.simply.FileImmediateUploadSimplified;
+import bg.codexio.ai.openai.api.sdk.file.upload.simply.FileReactiveUploadSimplified;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import java.util.Arrays;
 
-import static bg.codexio.ai.openai.api.sdk.CommonTestAssertions.API_CREDENTIALS;
+import static bg.codexio.ai.openai.api.sdk.AsyncCallbackUtils.prepareCallback;
 import static bg.codexio.ai.openai.api.sdk.CommonTestAssertions.FILE;
+import static bg.codexio.ai.openai.api.sdk.CommonTestAssertions.FILE_RESPONSE;
 import static bg.codexio.ai.openai.api.sdk.assistant.InternalAssertions.*;
-import static bg.codexio.ai.openai.api.sdk.file.InternalAssertions.FILE_RESPONSE;
 import static org.junit.jupiter.api.Assertions.assertAll;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.Mockito.mockStatic;
@@ -66,21 +65,60 @@ public class AssistantFileStageTest {
     }
 
     @Test
-    void testFeed_withFile_expectCorrectBuilder() {
-        var auth = Files.authenticate(FromDeveloper.doPass(new ApiCredentials(API_CREDENTIALS)));
+    void testFeedImmediate_expectCorrectBuilder() {
         try (
                 var authUtils = mockStatic(Authenticator.class);
-                var filesSimplified = mockStatic(FileUploadSimplified.class)
+                var filesSimplified =
+                        mockStatic(FileImmediateUploadSimplified.class)
         ) {
-            MockedFileSimplifiedUtils.mockFileSimplified(
+            MockedFileSimplifiedUtils.mockImmediateFileSimplified(
                     authUtils,
-                    auth,
                     filesSimplified
             );
 
-            var nextStage = this.assistantFileStage.feed(FILE);
+            var nextStage = this.assistantFileStage.feedImmediate(FILE);
 
             this.previousValuesRemainsUnchanged(nextStage);
+        }
+    }
+
+    @Test
+    void testFeedAsync_expectCorrectBuilder() {
+        var callBack =
+                prepareCallback(AssistantAdvancedConfigurationStage.class);
+        try (
+                var authUtils = mockStatic(Authenticator.class);
+                var filesSimplified =
+                        mockStatic(FileAsyncUploadSimplified.class)
+        ) {
+            MockedFileSimplifiedUtils.mockAsyncFileSimplified(
+                    authUtils,
+                    filesSimplified
+            );
+
+            this.assistantFileStage.feedAsync(
+                    FILE,
+                    callBack.callback()
+            );
+
+            this.previousValuesRemainsUnchanged(callBack.data());
+        }
+    }
+
+    @Test
+    void testFeedReactive_expectCorrectBuilder() {
+        try (
+                var authUtils = mockStatic(Authenticator.class);
+                var filesSimplified =
+                        mockStatic(FileReactiveUploadSimplified.class)
+        ) {
+            MockedFileSimplifiedUtils.mockReactiveFileSimplified(
+                    authUtils,
+                    filesSimplified
+            );
+
+            this.previousValuesRemainsUnchanged(this.assistantFileStage.feedReactive(FILE)
+                                                                       .block());
         }
     }
 

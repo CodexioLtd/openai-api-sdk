@@ -21,22 +21,9 @@ public class ThreadAsyncPromiseStage
         );
     }
 
-    @Override
-    public void then(Consumer<ThreadResponse> afterAll) {
-        this.then(
-                x -> {},
-                afterAll
-        );
-    }
-
-    @Override
-    public void onEachLine(Consumer<String> onEachLine) {
-        this.then(
-                onEachLine,
-                x -> {}
-        );
-    }
-
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public void then(
             Consumer<String> onEachLine,

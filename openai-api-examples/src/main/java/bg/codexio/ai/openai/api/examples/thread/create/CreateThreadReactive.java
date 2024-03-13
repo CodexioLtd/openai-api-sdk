@@ -1,6 +1,7 @@
 package bg.codexio.ai.openai.api.examples.thread.create;
 
 import bg.codexio.ai.openai.api.sdk.thread.Threads;
+import reactor.core.publisher.Mono;
 
 import java.io.File;
 
@@ -23,13 +24,13 @@ public class CreateThreadReactive {
                        "value2"
                )
                .file()
-               .attach(file)
-               .message()
-               .startWith("You're java developer.")
-               .feed(file)
-               .reactive()
-               .finishRaw()
-               .lines()
+               .attachReactive(file)
+               .flatMap(config -> Mono.just(config.message()
+                                                  .startWith("You're java developer.")
+                                                  .feedReactive(file)
+                                                  .flatMap(runtimeSelection -> runtimeSelection.reactive()
+                                                                                               .finishRaw()
+                                                                                               .response())))
                .subscribe(System.out::println);
     }
 }

@@ -16,7 +16,7 @@ public class UploadFileReactive {
              .upload()
              .forAssistants()
              .reactive()
-             .feed(file)
+             .feedRaw(file)
              .response()
              .subscribe(response -> System.out.println(response.id()));
     }
