@@ -37,7 +37,7 @@ public class AsyncCallbackUtils {
                     Consumer.class
             );
             callback.accept(rawResponse.substring(
-                    1,
+                    0,
                     rawResponse.length() / 2
             ));
             callback.accept(rawResponse.substring(rawResponse.length() / 2));

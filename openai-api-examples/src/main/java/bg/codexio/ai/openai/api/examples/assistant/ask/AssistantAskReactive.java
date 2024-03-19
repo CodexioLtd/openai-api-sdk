@@ -23,9 +23,9 @@ public class AssistantAskReactive {
                .deepConfigure()
                .message()
                .startWith("You are developer at Codexio.")
-               .attach(file)
-               .chat()
-               .reactive()
+               .attachReactive(file)
+               .flatMap(threadAdvancedConfigurationStage -> threadAdvancedConfigurationStage.chat()
+                                                                                            .reactive())
                .flatMap(chat -> chat.withContent(
                                             "Your language " + "of " +
                                                     "choice " + "is " + "Java.")

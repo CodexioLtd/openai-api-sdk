@@ -3,9 +3,11 @@ package bg.codexio.ai.openai.api.sdk.chat;
 import bg.codexio.ai.openai.api.payload.chat.request.ChatMessageRequest;
 import bg.codexio.ai.openai.api.payload.chat.response.ChatMessageResponse;
 import bg.codexio.ai.openai.api.sdk.AsyncCallbackUtils;
+import com.fasterxml.jackson.core.JsonProcessingException;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
+import static bg.codexio.ai.openai.api.sdk.CommonTestAssertions.OBJECT_MAPPER;
 import static bg.codexio.ai.openai.api.sdk.chat.InternalAssertions.*;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
@@ -71,9 +73,7 @@ public class AsyncContextStageTest {
                     FIRST_QUESTION,
                     SECOND_QUESTION
             )
-                              .then(r -> {
-                                  responses[0] = r;
-                              });
+                              .then(r -> responses[0] = r);
 
         assertEquals(
                 responses[0],
@@ -82,11 +82,12 @@ public class AsyncContextStageTest {
     }
 
     @Test
-    public void testOnEachLine_manualMessage_expectMessagesAsChoice() {
+    public void testOnEachLine_manualMessage_expectMessagesAsChoice()
+            throws JsonProcessingException {
         AsyncCallbackUtils.mockAsyncExecution(
                 CHAT_EXECUTOR,
                 CHAT_MESSAGE_RESPONSE,
-                "test-response"
+                OBJECT_MAPPER.writeValueAsString(CHAT_MESSAGE_RESPONSE)
         );
 
         var responses = new StringBuilder();
@@ -98,7 +99,7 @@ public class AsyncContextStageTest {
                               .onEachLine(responses::append);
 
         assertEquals(
-                "test-response",
+                OBJECT_MAPPER.writeValueAsString(CHAT_MESSAGE_RESPONSE),
                 responses.toString()
         );
     }

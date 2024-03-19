@@ -2,6 +2,7 @@ package bg.codexio.ai.openai.api.sdk.file.download;
 
 import bg.codexio.ai.openai.api.http.file.RetrieveFileContentHttpExecutor;
 import bg.codexio.ai.openai.api.payload.file.download.FileDownloadingMeta;
+import bg.codexio.ai.openai.api.sdk.download.FileDownloadExecutor;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -46,7 +47,7 @@ public class FileDownloadingAsyncPromise
                 this.onEachLine,
                 response -> CompletableFuture.supplyAsync(() -> {
                                                  try {
-                                                     return DownloadExecutor.downloadTo(
+                                                     return new FileDownloadExecutor().downloadTo(
                                                              this.fileDownloadingMeta.targetFolder(),
                                                              response,
                                                              this.fileDownloadingMeta.fileName()

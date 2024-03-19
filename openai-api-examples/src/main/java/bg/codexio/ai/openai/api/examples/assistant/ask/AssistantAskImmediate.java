@@ -24,7 +24,7 @@ public class AssistantAskImmediate {
                             .deepConfigure()
                             .message()
                             .startWith("You are developer at Codexio.")
-                            .attach(file)
+                            .attachImmediate(file)
                             .chat()
                             .immediate()
                             .withContent("What is java?")

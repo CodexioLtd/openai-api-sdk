@@ -1,4 +1,4 @@
-package bg.codexio.ai.openai.api.sdk.file.download;
+package bg.codexio.ai.openai.api.sdk.download;
 
 import bg.codexio.ai.openai.api.payload.file.response.FileContentResponse;
 
@@ -6,15 +6,22 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
-import java.util.UUID;
 
-import static bg.codexio.ai.openai.api.sdk.file.download.DownloadExecutor.Streams.outputStream;
+import static bg.codexio.ai.openai.api.sdk.download.FileDownloadExecutor.Streams.outputStream;
 
-public class DownloadExecutor {
-    private DownloadExecutor() {
+public class FileDownloadExecutor {
+
+    private final UniqueFileNameGenerator uniqueFileNameGenerator;
+
+    public FileDownloadExecutor() {
+        this(new UUIDNameGeneratorFactory().create());
     }
 
-    public static File downloadTo(
+    public FileDownloadExecutor(UniqueFileNameGenerator uniqueFileNameGenerator) {
+        this.uniqueFileNameGenerator = uniqueFileNameGenerator;
+    }
+
+    public File downloadTo(
             File targetFolder,
             FileContentResponse result,
             String fileName
@@ -23,9 +30,9 @@ public class DownloadExecutor {
             targetFolder.mkdirs();
         }
 
-        var uniqueFileName = UUID.randomUUID()
-                                 .toString()
-                                 .split("-")[0].concat(fileName);
+        var uniqueFileName =
+                this.uniqueFileNameGenerator.generateRandomNamePrefix()
+                                                         .concat(fileName);
         var targetFile = new File(targetFolder.getAbsolutePath()
                                               .concat("/".concat(uniqueFileName)));
 

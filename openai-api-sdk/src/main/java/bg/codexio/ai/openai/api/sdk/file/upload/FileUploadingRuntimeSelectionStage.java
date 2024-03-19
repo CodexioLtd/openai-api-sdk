@@ -8,7 +8,7 @@ public class FileUploadingRuntimeSelectionStage
         extends FileUploadingConfigurationStage
         implements RuntimeSelectionStage {
 
-    FileUploadingRuntimeSelectionStage(
+    public FileUploadingRuntimeSelectionStage(
             UploadFileHttpExecutor executor,
             UploadFileRequest.Builder requestBuilder
     ) {

@@ -1,51 +1,38 @@
 package bg.codexio.ai.openai.api.sdk.file.upload.simply;
 
 import bg.codexio.ai.openai.api.payload.file.purpose.AssistantPurpose;
-import bg.codexio.ai.openai.api.sdk.HttpBuilder;
-import bg.codexio.ai.openai.api.sdk.file.FileActionTypeStage;
-import bg.codexio.ai.openai.api.sdk.file.Files;
 import org.junit.jupiter.api.Test;
-import org.mockito.MockedStatic;
 
 import static bg.codexio.ai.openai.api.sdk.CommonTestAssertions.*;
+import static bg.codexio.ai.openai.api.sdk.file.upload.simply.InternalAssertions.mockFileUploadSimplified;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.mockito.ArgumentMatchers.any;
-import static org.mockito.Mockito.*;
+import static org.mockito.Mockito.when;
 
 public class FileImmediateUploadSimplifiedTest {
 
     @Test
-    void testSimply_expectCorrectResponse() {
-        try (var mockedFile = mockStatic(Files.class)) {
-            this.initializeToTargetingStage(mockedFile);
-            var id = FileImmediateUploadSimplified.simply(FILE);
-            assertNotNull(id);
-        }
+    void testSimplyRaw_expectCorrectResponse() {
+        mockFileUploadSimplified(
+                this::mockImmediateExecution,
+                () -> assertEquals(
+                        new AssistantPurpose().name(),
+                        FileImmediateUploadSimplified.simplyRaw(FILE)
+                                                     .purpose()
+                )
+        );
     }
 
     @Test
-    void testSimplyRaw_expectCorrectResponse() {
-        try (var mockedFile = mockStatic(Files.class)) {
-            this.initializeToTargetingStage(mockedFile);
-            var response = FileImmediateUploadSimplified.simplyRaw(FILE);
-            assertEquals(
-                    new AssistantPurpose().name(),
-                    response.purpose()
-            );
-        }
+    void testSimply_expectCorrectResponse() {
+        mockFileUploadSimplified(
+                this::mockImmediateExecution,
+                () -> assertNotNull(FileImmediateUploadSimplified.simply(FILE))
+        );
     }
 
-    private void initializeToTargetingStage(MockedStatic<Files> mockedFile) {
-        HttpBuilder<FileActionTypeStage> httpBuilderMock =
-                mock(HttpBuilder.class);
-        mockedFile.when(Files::defaults)
-                  .thenReturn(httpBuilderMock);
-        mockedFile.when(httpBuilderMock::and)
-                  .thenReturn(new FileActionTypeStage(
-                          UPLOAD_FILE_HTTP_EXECUTOR,
-                          RETRIEVE_FILE_CONTENT_HTTP_EXECUTOR
-                  ));
+    private void mockImmediateExecution() {
         when(UPLOAD_FILE_HTTP_EXECUTOR.execute(any())).thenAnswer(res -> FILE_RESPONSE);
     }
 }

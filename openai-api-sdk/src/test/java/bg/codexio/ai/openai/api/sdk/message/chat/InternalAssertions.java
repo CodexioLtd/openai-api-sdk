@@ -1,6 +1,7 @@
 package bg.codexio.ai.openai.api.sdk.message.chat;
 
 import bg.codexio.ai.openai.api.http.message.MessageHttpExecutor;
+import bg.codexio.ai.openai.api.payload.credentials.ApiCredentials;
 import bg.codexio.ai.openai.api.payload.message.content.ImageFileContent;
 import bg.codexio.ai.openai.api.payload.message.content.TextContent;
 import bg.codexio.ai.openai.api.payload.message.content.TextMessageContent;
@@ -9,6 +10,9 @@ import bg.codexio.ai.openai.api.payload.message.content.annotation.FileCitationA
 import bg.codexio.ai.openai.api.payload.message.content.annotation.FilePath;
 import bg.codexio.ai.openai.api.payload.message.content.annotation.FilePathAnnotation;
 import bg.codexio.ai.openai.api.payload.message.response.MessageResponse;
+import bg.codexio.ai.openai.api.sdk.Authenticator;
+import bg.codexio.ai.openai.api.sdk.auth.FromDeveloper;
+import bg.codexio.ai.openai.api.sdk.run.Runnables;
 
 import java.util.Arrays;
 import java.util.List;
@@ -18,8 +22,7 @@ import static bg.codexio.ai.openai.api.sdk.assistant.InternalAssertions.ASSISTAN
 import static bg.codexio.ai.openai.api.sdk.run.InternalAssertions.RUNNABLE_ID;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.ArgumentMatchers.any;
-import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.when;
+import static org.mockito.Mockito.*;
 
 public class InternalAssertions {
 
@@ -135,5 +138,17 @@ public class InternalAssertions {
                 previousStage.requestBuilder.metadata(),
                 nextStage.requestBuilder.metadata()
         );
+    }
+
+    static void mockToRunnableStage(Runnable runnable) {
+        try (var authUtils = mockStatic(Authenticator.class)) {
+            authUtils.when(() -> Authenticator.autoAuthenticate(any()))
+                     .thenReturn(Runnables.authenticate(
+                             FromDeveloper.doPass(new ApiCredentials(API_CREDENTIALS)),
+                             THREAD_ID
+                     ));
+
+            runnable.run();
+        }
     }
 }

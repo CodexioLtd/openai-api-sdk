@@ -22,7 +22,7 @@ import java.util.concurrent.CompletableFuture;
 import java.util.function.Consumer;
 import java.util.stream.Stream;
 
-import static bg.codexio.ai.openai.api.sdk.AsyncCallbackUtils.mockAsyncExecution;
+import static bg.codexio.ai.openai.api.sdk.AsyncCallbackUtils.mockAsyncExecutionWithPathVariable;
 import static bg.codexio.ai.openai.api.sdk.AsyncCallbackUtils.prepareCallback;
 import static bg.codexio.ai.openai.api.sdk.CommonTestAssertions.*;
 import static bg.codexio.ai.openai.api.sdk.assistant.InternalAssertions.ASSISTANT_ID;
@@ -74,7 +74,7 @@ public class MessageAssistantStageTest {
         var callBack =
                 prepareCallback(RunnableAdvancedConfigurationStage.class);
 
-        mockAsyncExecution(
+        mockAsyncExecutionWithPathVariable(
                 MESSAGE_HTTP_EXECUTOR,
                 MESSAGE_RESPONSE,
                 OBJECT_MAPPER.writeValueAsString(MESSAGE_RESPONSE)
@@ -92,27 +92,24 @@ public class MessageAssistantStageTest {
                 return null;
             });
 
-            try (var authUtils = mockStatic(Authenticator.class)) {
-                authUtils.when(() -> Authenticator.autoAuthenticate(any()))
-                         .thenReturn(authenticateRunnable());
+            mockToRunnableStage(() -> {
                 this.messageAssistantStage.assistAsync(
                         completableFutureMock,
                         callBack.callback()
                 );
 
                 assertNotNull(callBack.data());
-            }
+            });
+
         } else if (assistantIdentifier instanceof String assistantId) {
-            try (var authUtils = mockStatic(Authenticator.class)) {
-                authUtils.when(() -> Authenticator.autoAuthenticate(any()))
-                         .thenReturn(authenticateRunnable());
+            mockToRunnableStage(() -> {
                 this.messageAssistantStage.assistAsync(
                         assistantId,
                         callBack.callback()
                 );
 
                 assertNotNull(callBack.data());
-            }
+            });
         }
     }
 
@@ -128,25 +125,11 @@ public class MessageAssistantStageTest {
         ));
 
         if (assistantIdentifier instanceof AssistantResponse assistantResponse) {
-            try (var authUtils = mockStatic(Authenticator.class)) {
-                authUtils.when(() -> Authenticator.autoAuthenticate(any()))
-                         .thenReturn(authenticateRunnable());
-                var result =
-                        this.messageAssistantStage.assistReactive(Mono.just(assistantResponse))
-                                                       .block();
-
-                assertNotNull(result);
-            }
+            mockToRunnableStage(() -> assertNotNull(this.messageAssistantStage.assistReactive(Mono.just(assistantResponse))
+                                                                              .block()));
         } else if (assistantIdentifier instanceof String assistantId) {
-            try (var authUtils = mockStatic(Authenticator.class)) {
-                authUtils.when(() -> Authenticator.autoAuthenticate(any()))
-                         .thenReturn(authenticateRunnable());
-                var result =
-                        this.messageAssistantStage.assistReactive(assistantId)
-                                                       .block();
-
-                assertNotNull(result);
-            }
+            mockToRunnableStage(() -> assertNotNull(this.messageAssistantStage.assistReactive(assistantId)
+                                                                              .block()));
         }
     }
 

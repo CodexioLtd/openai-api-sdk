@@ -1,11 +1,11 @@
 package bg.codexio.ai.openai.api.sdk.file.download;
 
-import bg.codexio.ai.openai.api.payload.file.download.FileDownloadingMeta;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-import static bg.codexio.ai.openai.api.sdk.CommonTestAssertions.*;
-import static bg.codexio.ai.openai.api.sdk.file.download.InternalAssertions.FILE_TEST_NAME;
+import static bg.codexio.ai.openai.api.sdk.CommonTestAssertions.FILE;
+import static bg.codexio.ai.openai.api.sdk.CommonTestAssertions.RETRIEVE_FILE_CONTENT_HTTP_EXECUTOR;
+import static bg.codexio.ai.openai.api.sdk.file.download.InternalAssertions.FILE_DOWNLOADING_META_WITHOUT_FOLDER;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 public class FileDownloadingAsyncContextStageTest {
@@ -16,10 +16,8 @@ public class FileDownloadingAsyncContextStageTest {
     void setUp() {
         this.fileDownloadingAsyncContextStage =
                 new FileDownloadingAsyncContextStage(
-                RETRIEVE_FILE_CONTENT_HTTP_EXECUTOR,
-                FileDownloadingMeta.builder()
-                                   .withFileName(FILE_TEST_NAME)
-                                   .withFileId(FILE_TEST_ID)
+                        RETRIEVE_FILE_CONTENT_HTTP_EXECUTOR,
+                        FILE_DOWNLOADING_META_WITHOUT_FOLDER
         );
     }
 
