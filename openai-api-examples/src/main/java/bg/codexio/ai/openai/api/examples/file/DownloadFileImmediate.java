@@ -18,6 +18,7 @@ public class DownloadFileImmediate {
                                   .download("file-zR7aSAvw1xFBjqLIGKnRpT1q")
                                   .as("file.py")
                                   .immediate()
+                                  .standart()
                                   .toFolder(file);
 
         System.out.println(downloadedFile.getAbsoluteFile()

@@ -1,5 +1,6 @@
 package bg.codexio.ai.openai.api.payload.voice.response;
 
+import bg.codexio.ai.openai.api.payload.FileContentProvider;
 import bg.codexio.ai.openai.api.payload.Mergeable;
 
 import java.util.Arrays;
@@ -12,7 +13,8 @@ import java.util.Objects;
 public record AudioBinaryResponse(
         byte[] bytes
 )
-        implements Mergeable<AudioBinaryResponse> {
+        implements Mergeable<AudioBinaryResponse>,
+                   FileContentProvider {
     @Override
     public AudioBinaryResponse merge(AudioBinaryResponse other) {
         return new AudioBinaryResponse(Objects.requireNonNullElse(

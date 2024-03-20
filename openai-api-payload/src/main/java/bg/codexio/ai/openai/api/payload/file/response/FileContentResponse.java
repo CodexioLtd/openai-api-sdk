@@ -1,5 +1,6 @@
 package bg.codexio.ai.openai.api.payload.file.response;
 
+import bg.codexio.ai.openai.api.payload.FileContentProvider;
 import bg.codexio.ai.openai.api.payload.Mergeable;
 
 import java.util.Arrays;
@@ -8,7 +9,8 @@ import java.util.Objects;
 public record FileContentResponse(
         byte[] bytes
 )
-        implements Mergeable<FileContentResponse> {
+        implements Mergeable<FileContentResponse>,
+                   FileContentProvider {
     @Override
     public FileContentResponse merge(FileContentResponse other) {
         return new FileContentResponse(Objects.requireNonNullElse(

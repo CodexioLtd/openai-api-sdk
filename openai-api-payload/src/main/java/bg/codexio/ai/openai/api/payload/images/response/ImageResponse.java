@@ -1,7 +1,9 @@
 package bg.codexio.ai.openai.api.payload.images.response;
 
+import bg.codexio.ai.openai.api.payload.FileContentProvider;
 import bg.codexio.ai.openai.api.payload.Mergeable;
 
+import java.util.Base64;
 import java.util.Objects;
 
 public record ImageResponse(
@@ -9,7 +11,8 @@ public record ImageResponse(
         String url,
         String revisedPrompt
 )
-        implements Mergeable<ImageResponse> {
+        implements Mergeable<ImageResponse>,
+                   FileContentProvider {
     public static ImageResponse empty() {
         return new ImageResponse(
                 null,
@@ -34,5 +37,11 @@ public record ImageResponse(
                         other.revisedPrompt()
                 )
         );
+    }
+
+    @Override
+    public byte[] bytes() {
+        return Base64.getDecoder()
+                     .decode(b64Json);
     }
 }

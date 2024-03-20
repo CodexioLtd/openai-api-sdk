@@ -60,6 +60,7 @@ public record FileResult(
                     .and()
                     .download(this)
                     .immediate()
+                    .standart()
                     .toFolder(targetFolder);
     }
 
@@ -119,6 +120,7 @@ public record FileResult(
                     .and()
                     .download(this)
                     .immediate()
+                    .standart()
                     .toFolder(targetFolder);
     }
 
@@ -186,6 +188,7 @@ public record FileResult(
                     .and()
                     .download(this)
                     .immediate()
+                    .standart()
                     .toFolder(targetFolder);
     }
 
@@ -251,6 +254,7 @@ public record FileResult(
     ) throws IOException {
         return this.toRuntimeSelection(httpExecutor)
                    .immediate()
+                   .standart()
                    .toFolder(targetFolder);
     }
 

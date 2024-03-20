@@ -1,29 +1,71 @@
 package bg.codexio.ai.openai.api.sdk.download;
 
+import bg.codexio.ai.openai.api.payload.FileContentProvider;
 import bg.codexio.ai.openai.api.payload.images.Format;
 import bg.codexio.ai.openai.api.payload.images.response.ImageDataResponse;
-import bg.codexio.ai.openai.api.payload.images.response.ImageResponse;
+import bg.codexio.ai.openai.api.sdk.download.channel.ChannelProvider;
+import bg.codexio.ai.openai.api.sdk.download.channel.ChannelProviderFactory;
+import bg.codexio.ai.openai.api.sdk.download.context.DefaultDownloadExecutorFactoryContext;
+import bg.codexio.ai.openai.api.sdk.download.context.DownloadExecutorFactoryContext;
+import bg.codexio.ai.openai.api.sdk.download.name.UniqueFileNameGenerator;
+import bg.codexio.ai.openai.api.sdk.download.name.UniqueFileNameGeneratorFactory;
+import bg.codexio.ai.openai.api.sdk.download.stream.FileStreamProvider;
+import bg.codexio.ai.openai.api.sdk.download.stream.FileStreamProviderFactory;
+import bg.codexio.ai.openai.api.sdk.download.url.UrlStreamProvider;
+import bg.codexio.ai.openai.api.sdk.download.url.UrlStreamProviderFactory;
 
 import java.io.File;
-import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
 import java.io.IOException;
-import java.net.URI;
-import java.nio.channels.Channels;
-import java.util.Base64;
 
-import static bg.codexio.ai.openai.api.sdk.download.ImageDownloadExecutor.Streams.outputStream;
 
-public class ImageDownloadExecutor {
+public class ImageDownloadExecutor
+        implements DownloadExecutor {
 
     private final UniqueFileNameGenerator uniqueFileNameGenerator;
 
-    public ImageDownloadExecutor() {
-        this(new UUIDNameGeneratorFactory().create());
+    private final FileStreamProvider fileStreamProvider;
+
+    private final UrlStreamProvider urlStreamProvider;
+
+    private final ChannelProvider channelProvider;
+
+    public ImageDownloadExecutor(
+            UniqueFileNameGenerator uniqueFileNameGenerator,
+            FileStreamProvider fileStreamProvider,
+            UrlStreamProvider urlStreamProvider,
+            ChannelProvider channelProvider
+    ) {
+        this.uniqueFileNameGenerator = uniqueFileNameGenerator;
+        this.fileStreamProvider = fileStreamProvider;
+        this.urlStreamProvider = urlStreamProvider;
+        this.channelProvider = channelProvider;
     }
 
-    public ImageDownloadExecutor(UniqueFileNameGenerator uniqueFileNameGenerator) {
-        this.uniqueFileNameGenerator = uniqueFileNameGenerator;
+    public ImageDownloadExecutor(
+            UniqueFileNameGeneratorFactory uniqueFileNameGeneratorFactory,
+            FileStreamProviderFactory fileStreamProviderFactory,
+            UrlStreamProviderFactory urlStreamProviderFactory,
+            ChannelProviderFactory channelProviderFactory
+    ) {
+        this(
+                uniqueFileNameGeneratorFactory.create(),
+                fileStreamProviderFactory.create(),
+                urlStreamProviderFactory.create(),
+                channelProviderFactory.create()
+        );
+    }
+
+    public ImageDownloadExecutor(DownloadExecutorFactoryContext downloadExecutorFactoryContext) {
+        this(
+                downloadExecutorFactoryContext.getUniqueFileNameGeneratorFactory(),
+                downloadExecutorFactoryContext.getFileStreamProviderFactory(),
+                downloadExecutorFactoryContext.getUrlStreamProviderFactory(),
+                downloadExecutorFactoryContext.getChannelProviderFactory()
+        );
+    }
+
+    public ImageDownloadExecutor() {
+        this(DefaultDownloadExecutorFactoryContext.getInstance());
     }
 
     public File[] downloadTo(
@@ -36,54 +78,40 @@ public class ImageDownloadExecutor {
         }
 
         for (var image : response.data()) {
-            downloadFile(
+            this.downloadTo(
                     targetFolder,
-                    format,
-                    image
+                    image,
+                    format.val()
             );
         }
 
         return targetFolder.listFiles();
     }
 
-
-    public File downloadFile(
+    @Override
+    public File downloadTo(
             File targetFolder,
-            Format format,
-            ImageResponse image
+            FileContentProvider result,
+            String format
     ) throws IOException {
-        var fileName = targetFolder.getAbsoluteFile() + "/"
-                + this.uniqueFileNameGenerator.generateRandomNamePrefix()
-                + ".png";
-        try (var fos = outputStream(fileName)) {
-            if (format == Format.URL) {
-                var channel = Channels.newChannel(URI.create(image.url())
-                                                     .toURL()
-                                                     .openStream());
+        var file = new File(targetFolder.getAbsoluteFile() + "/"
+                                    + this.uniqueFileNameGenerator.generateRandomNamePrefix()
+                                    + ".png");
+        try (var fos = this.fileStreamProvider.createOutputStream(file)) {
+            if (format.equals(Format.URL.val())) {
+                var uri = this.urlStreamProvider.openStream(result.url());
+
                 fos.getChannel()
                    .transferFrom(
-                           channel,
+                           this.channelProvider.createChannel(uri),
                            0,
                            Long.MAX_VALUE
                    );
             } else {
-                fos.write(Base64.getDecoder()
-                                .decode(image.b64Json()));
+                fos.write(result.bytes());
             }
-
-            return new File(fileName);
         }
+
+        return file;
     }
-
-    protected static final class Streams {
-
-        private Streams() {
-        }
-
-        static FileOutputStream outputStream(String fileName)
-                throws FileNotFoundException {
-            return new FileOutputStream(fileName);
-        }
-    }
-
 }

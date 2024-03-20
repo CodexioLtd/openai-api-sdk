@@ -1,25 +1,50 @@
 package bg.codexio.ai.openai.api.sdk.download;
 
-import bg.codexio.ai.openai.api.payload.voice.response.AudioBinaryResponse;
+import bg.codexio.ai.openai.api.payload.FileContentProvider;
+import bg.codexio.ai.openai.api.sdk.download.context.DefaultDownloadExecutorFactoryContext;
+import bg.codexio.ai.openai.api.sdk.download.context.DownloadExecutorFactoryContext;
+import bg.codexio.ai.openai.api.sdk.download.name.UniqueFileNameGenerator;
+import bg.codexio.ai.openai.api.sdk.download.name.UniqueFileNameGeneratorFactory;
+import bg.codexio.ai.openai.api.sdk.download.stream.FileStreamProvider;
+import bg.codexio.ai.openai.api.sdk.download.stream.FileStreamProviderFactory;
 
 import java.io.File;
-import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
 import java.io.IOException;
 
-import static bg.codexio.ai.openai.api.sdk.download.SpeechDownloadExecutor.Streams.outputStream;
-
-public class SpeechDownloadExecutor {
+public class SpeechDownloadExecutor
+        implements DownloadExecutor {
 
     private final UniqueFileNameGenerator uniqueFileNameGenerator;
 
+    private final FileStreamProvider fileStreamProvider;
 
-    public SpeechDownloadExecutor() {
-        this(new UUIDNameGeneratorFactory().create());
+    public SpeechDownloadExecutor(
+            UniqueFileNameGenerator uniqueFileNameGenerator,
+            FileStreamProvider fileStreamProvider
+    ) {
+        this.uniqueFileNameGenerator = uniqueFileNameGenerator;
+        this.fileStreamProvider = fileStreamProvider;
     }
 
-    public SpeechDownloadExecutor(UniqueFileNameGenerator uniqueFileNameGenerator) {
-        this.uniqueFileNameGenerator = uniqueFileNameGenerator;
+    public SpeechDownloadExecutor(
+            UniqueFileNameGeneratorFactory uniqueFileNameGeneratorFactory,
+            FileStreamProviderFactory fileStreamProviderFactory
+    ) {
+        this(
+                uniqueFileNameGeneratorFactory.create(),
+                fileStreamProviderFactory.create()
+        );
+    }
+
+    public SpeechDownloadExecutor(DownloadExecutorFactoryContext downloadExecutorFactoryContext) {
+        this(
+                downloadExecutorFactoryContext.getUniqueFileNameGeneratorFactory(),
+                downloadExecutorFactoryContext.getFileStreamProviderFactory()
+        );
+    }
+
+    public SpeechDownloadExecutor() {
+        this(DefaultDownloadExecutorFactoryContext.getInstance());
     }
 
     /**
@@ -30,9 +55,10 @@ public class SpeechDownloadExecutor {
      * @throws IOException if the target folder does not exist, or it's not
      *                     writable
      */
+    @Override
     public File downloadTo(
             File targetFolder,
-            AudioBinaryResponse result,
+            FileContentProvider result,
             String mediaType
     ) throws IOException {
         if (!targetFolder.exists()) {
@@ -43,22 +69,10 @@ public class SpeechDownloadExecutor {
                                           + this.uniqueFileNameGenerator.generateRandomNamePrefix()
                                           + "." + mediaType);
 
-        try (var os = outputStream(targetFile)) {
+        try (var os = this.fileStreamProvider.createOutputStream(targetFile)) {
             os.write(result.bytes());
         }
 
         return targetFile;
-    }
-
-    static final class Streams {
-
-        private Streams() {
-
-        }
-
-        static FileOutputStream outputStream(File file)
-                throws FileNotFoundException {
-            return new FileOutputStream(file);
-        }
     }
 }

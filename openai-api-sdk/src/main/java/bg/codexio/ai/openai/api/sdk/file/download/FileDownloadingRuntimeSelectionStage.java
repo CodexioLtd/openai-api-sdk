@@ -20,8 +20,8 @@ public class FileDownloadingRuntimeSelectionStage
     }
 
     @Override
-    public FileDownloadingImmediateContextStage immediate() {
-        return new FileDownloadingImmediateContextStage(
+    public FileDownloadingImmediateContextConfigurationStage immediate() {
+        return new FileDownloadingImmediateContextConfigurationStage(
                 this.executor,
                 this.fileDownloadingMeta
         );

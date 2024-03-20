@@ -1,4 +1,4 @@
-package bg.codexio.ai.openai.api.sdk.download;
+package bg.codexio.ai.openai.api.sdk.download.name;
 
 public interface UniqueFileNameGeneratorFactory {
     UniqueFileNameGenerator create();

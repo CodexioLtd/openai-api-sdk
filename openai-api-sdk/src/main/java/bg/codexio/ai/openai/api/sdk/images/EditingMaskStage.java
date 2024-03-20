@@ -7,9 +7,12 @@ import bg.codexio.ai.openai.api.payload.images.response.ImageDataResponse;
 import bg.codexio.ai.openai.api.sdk.IntermediateStage;
 import bg.codexio.ai.openai.api.sdk.RuntimeSelectionStage;
 import bg.codexio.ai.openai.api.sdk.images.color.PopularColor;
+import bg.codexio.ai.openai.api.sdk.images.context.DefaultImageFactoryContext;
+import bg.codexio.ai.openai.api.sdk.images.context.ImageFactoryContext;
+import bg.codexio.ai.openai.api.sdk.images.operation.ImageOperations;
+import bg.codexio.ai.openai.api.sdk.images.operation.ImageOperationsFactory;
 import bg.codexio.ai.openai.api.sdk.images.tolerance.ColorDeviation;
 
-import javax.imageio.ImageIO;
 import java.awt.*;
 import java.awt.image.BufferedImage;
 import java.io.File;
@@ -43,16 +46,61 @@ public class EditingMaskStage<R extends ImageRequest,
 
     final Function<ImageRequestBuilder<R>, E> runtimeSelector;
 
+    private final ImageOperations imageOperations;
+
     EditingMaskStage(
             DefaultOpenAIHttpExecutor<R, ImageDataResponse> executor,
             ImageRequestBuilder<R> builder,
-            Function<ImageRequestBuilder<R>, E> runtimeSelector
+            Function<ImageRequestBuilder<R>, E> runtimeSelector,
+            ImageOperations imageOperations
     ) {
         super(
                 executor,
                 builder
         );
         this.runtimeSelector = runtimeSelector;
+        this.imageOperations = imageOperations;
+    }
+
+    EditingMaskStage(
+            DefaultOpenAIHttpExecutor<R, ImageDataResponse> executor,
+            ImageRequestBuilder<R> builder,
+            Function<ImageRequestBuilder<R>, E> runtimeSelector,
+            ImageOperationsFactory imageOperationsFactory
+    ) {
+        this(
+                executor,
+                builder,
+                runtimeSelector,
+                imageOperationsFactory.create()
+        );
+    }
+
+    EditingMaskStage(
+            DefaultOpenAIHttpExecutor<R, ImageDataResponse> executor,
+            ImageRequestBuilder<R> builder,
+            Function<ImageRequestBuilder<R>, E> runtimeSelector,
+            ImageFactoryContext imageFactoryContext
+    ) {
+        this(
+                executor,
+                builder,
+                runtimeSelector,
+                imageFactoryContext.getImageOperationsFactory()
+        );
+    }
+
+    EditingMaskStage(
+            DefaultOpenAIHttpExecutor<R, ImageDataResponse> executor,
+            ImageRequestBuilder<R> builder,
+            Function<ImageRequestBuilder<R>, E> runtimeSelector
+    ) {
+        this(
+                executor,
+                builder,
+                runtimeSelector,
+                DefaultImageFactoryContext.getInstance()
+        );
     }
 
     protected static boolean areColorsSimilar(
@@ -302,11 +350,7 @@ public class EditingMaskStage<R extends ImageRequest,
     }
 
     protected BufferedImage asImage() {
-        try {
-            return ImageIO.read(this.builder.image());
-        } catch (Exception e) {
-            throw new RuntimeException(e);
-        }
+        return this.imageOperations.read(this.builder.image());
     }
 
     protected BufferedImage withAlphaChannel(
@@ -364,14 +408,15 @@ public class EditingMaskStage<R extends ImageRequest,
                     "rgba-",
                     ".png"
             );
-            ImageIO.write(
+
+            this.imageOperations.write(
+                    tempImage,
                     this.withAlphaChannel(
                             image,
                             alphaZeroHex,
                             deviation
                     ),
-                    "PNG",
-                    tempImage
+                    "PNG"
             );
 
             this.builder = this.builder.withImage(tempImage);

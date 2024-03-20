@@ -195,6 +195,7 @@ public record MessageResult(
              .download(this.imageFileId)
              .as(IMAGE_FILE_EXTENSION)
              .immediate()
+             .standart()
              .toFolder(targetFolder);
     }
 
@@ -233,6 +234,7 @@ public record MessageResult(
              .download(this.imageFileId)
              .as(IMAGE_FILE_EXTENSION)
              .immediate()
+             .standart()
              .toFolder(targetFolder);
     }
 
@@ -245,6 +247,7 @@ public record MessageResult(
              .download(this.imageFileId)
              .as(IMAGE_FILE_EXTENSION)
              .immediate()
+             .standart()
              .toFolder(targetFolder);
 
     }
@@ -259,6 +262,7 @@ public record MessageResult(
              )
              .as(IMAGE_FILE_EXTENSION)
              .immediate()
+             .standart()
              .toFolder(targetFolder);
     }
 
