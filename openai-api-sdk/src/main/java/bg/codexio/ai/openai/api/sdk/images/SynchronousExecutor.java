@@ -28,9 +28,9 @@ public class SynchronousExecutor<R extends ImageRequest>
                 executor,
                 builder
         );
-        this.response =
-                this.executor.execute(this.builder.specificRequestCreator()
-                                                  .apply(this.builder));
+        this.response = this.executor.immediate()
+                                     .execute(this.builder.specificRequestCreator()
+                                                          .apply(this.builder));
     }
 
     /**

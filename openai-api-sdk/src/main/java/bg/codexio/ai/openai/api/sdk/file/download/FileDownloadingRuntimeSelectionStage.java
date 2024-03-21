@@ -36,8 +36,8 @@ public class FileDownloadingRuntimeSelectionStage
     }
 
     @Override
-    public FileDownloadingReactiveContextStage reactive() {
-        return new FileDownloadingReactiveContextStage(
+    public FileDownloadingReactiveContextConfigurationStage reactive() {
+        return new FileDownloadingReactiveContextConfigurationStage(
                 this.executor,
                 this.fileDownloadingMeta
         );

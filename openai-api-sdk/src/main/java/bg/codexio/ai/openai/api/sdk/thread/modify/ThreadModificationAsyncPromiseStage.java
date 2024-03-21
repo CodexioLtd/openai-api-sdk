@@ -31,11 +31,12 @@ public class ThreadModificationAsyncPromiseStage
             Consumer<String> onEachLine,
             Consumer<ThreadResponse> afterAll
     ) {
-        this.httpExecutor.executeAsyncWithPathVariable(
-                this.requestBuilder.build(),
-                this.threadId,
-                onEachLine,
-                afterAll
-        );
+        this.httpExecutor.async()
+                         .executeWithPathVariable(
+                                 this.requestBuilder.build(),
+                                 this.threadId,
+                                 onEachLine,
+                                 afterAll
+                         );
     }
 }

@@ -1,6 +1,6 @@
 package bg.codexio.ai.openai.api.sdk.assistant;
 
-import bg.codexio.ai.openai.api.http.OpenAIHttpExecutor.ReactiveExecution;
+import bg.codexio.ai.openai.api.http.ReactiveHttpExecutor.ReactiveExecution;
 import bg.codexio.ai.openai.api.http.assistant.AssistantHttpExecutor;
 import bg.codexio.ai.openai.api.payload.assistant.request.AssistantRequest;
 import bg.codexio.ai.openai.api.payload.assistant.response.AssistantResponse;
@@ -21,7 +21,8 @@ public class AssistantReactiveContextStage
     }
 
     public ReactiveExecution<AssistantResponse> finishRaw() {
-        return this.httpExecutor.executeReactive(this.requestBuilder.build());
+        return this.httpExecutor.reactive()
+                                .execute(this.requestBuilder.build());
     }
 
     public Mono<String> finish() {

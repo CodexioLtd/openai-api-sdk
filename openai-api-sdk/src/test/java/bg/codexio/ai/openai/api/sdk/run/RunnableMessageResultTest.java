@@ -38,7 +38,7 @@ public class RunnableMessageResultTest {
             var retrieveMessageHttpExecutorMock =
                     mockMessageProcessing(mockedMessage);
 
-            when(retrieveMessageHttpExecutorMock.executeWithPathVariables(any())).thenAnswer(res -> LIST_MESSAGE_RESPONSE_WITH_TEXT_CONTENT_WITH_FILE_CITATION);
+            when(retrieveMessageHttpExecutorMock.retrieve(any())).thenAnswer(res -> LIST_MESSAGE_RESPONSE_WITH_TEXT_CONTENT_WITH_FILE_CITATION);
 
             this.performMessageAssertion(this.runnableMessageResult.answersImmediate());
         }
@@ -96,7 +96,7 @@ public class RunnableMessageResultTest {
             var retrieveListMessagesHttpExecutor =
                     mockMessageProcessing(mockedMessage);
 
-            when(retrieveListMessagesHttpExecutor.executeReactiveWithPathVariables(any())).thenAnswer(res -> new OpenAIHttpExecutor.ReactiveExecution<>(
+            when(retrieveListMessagesHttpExecutor.retrieveReactive(any())).thenAnswer(res -> new OpenAIHttpExecutor.ReactiveExecution<>(
                     Flux.empty(),
                     Mono.just(LIST_MESSAGE_RESPONSE_WITH_TEXT_CONTENT_WITH_FILE_CITATION)
             ));
@@ -112,7 +112,7 @@ public class RunnableMessageResultTest {
             var retrieveListMessagesHttpExecutor =
                     mockMessageProcessing(mockedMessage);
 
-            when(retrieveListMessagesHttpExecutor.executeReactiveWithPathVariables(any())).thenAnswer(res -> new OpenAIHttpExecutor.ReactiveExecution<>(
+            when(retrieveListMessagesHttpExecutor.retrieveReactive(any())).thenAnswer(res -> new OpenAIHttpExecutor.ReactiveExecution<>(
                     Flux.empty(),
                     Mono.just(LIST_MESSAGE_RESPONSE_WITH_TEXT_CONTENT_WITH_FILE_CITATION)
             ));

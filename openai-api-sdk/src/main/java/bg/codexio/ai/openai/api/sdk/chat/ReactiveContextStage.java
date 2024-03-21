@@ -1,6 +1,6 @@
 package bg.codexio.ai.openai.api.sdk.chat;
 
-import bg.codexio.ai.openai.api.http.OpenAIHttpExecutor.ReactiveExecution;
+import bg.codexio.ai.openai.api.http.ReactiveHttpExecutor.ReactiveExecution;
 import bg.codexio.ai.openai.api.http.chat.ChatHttpExecutor;
 import bg.codexio.ai.openai.api.payload.chat.ChatMessage;
 import bg.codexio.ai.openai.api.payload.chat.request.ChatMessageRequest;
@@ -88,6 +88,7 @@ public class ReactiveContextStage
     }
 
     private ReactiveExecution<ChatMessageResponse> execute() {
-        return this.executor.executeReactive(this.requestBuilder.build());
+        return this.executor.reactive()
+                            .execute(this.requestBuilder.build());
     }
 }

@@ -30,7 +30,7 @@ public class FileDownloadingReactiveContextStageTest {
 
     @Test
     public void testToFolder_expectCorrectResponse() {
-        when(this.fileDownloadingReactiveContextStage.executor.executeReactiveWithPathVariables(any())).thenAnswer(res -> new OpenAIHttpExecutor.ReactiveExecution<>(
+        when(this.fileDownloadingReactiveContextStage.executor.retrieveReactive(any())).thenAnswer(res -> new OpenAIHttpExecutor.ReactiveExecution<>(
                 Flux.empty(),
                 Mono.just(FILE_CONTENT_RESPONSE)
         ));

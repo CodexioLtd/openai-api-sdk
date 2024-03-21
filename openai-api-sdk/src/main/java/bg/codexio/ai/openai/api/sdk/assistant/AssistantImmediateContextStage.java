@@ -20,7 +20,8 @@ public class AssistantImmediateContextStage
 
     // think about better name of this method
     public AssistantResponse finishRaw() {
-        return this.httpExecutor.execute(this.requestBuilder.build());
+        return this.httpExecutor.immediate()
+                                .execute(this.requestBuilder.build());
     }
 
     public String finish() {

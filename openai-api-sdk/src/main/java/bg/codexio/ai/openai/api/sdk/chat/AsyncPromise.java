@@ -29,14 +29,15 @@ public class AsyncPromise
      * @param onResponse a callback that receives the string answer
      */
     public void then(Consumer<String> onResponse) {
-        this.executor.executeAsync(
-                this.requestBuilder.build(),
-                x -> {
-                },
-                r -> onResponse.accept(r.choices()
-                                        .get(0)
-                                        .message()
-                                        .content())
-        );
+        this.executor.async()
+                     .execute(
+                             this.requestBuilder.build(),
+                             x -> {
+                             },
+                             r -> onResponse.accept(r.choices()
+                                                     .get(0)
+                                                     .message()
+                                                     .content())
+                     );
     }
 }

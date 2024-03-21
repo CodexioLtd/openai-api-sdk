@@ -37,7 +37,8 @@ public class ImmediateContextStage
      * @return raw {@link ChatMessageResponse}
      */
     public ChatMessageResponse askRaw(String... questions) {
-        return this.executor.execute(this.ask(Arrays.stream(questions)
+        return this.executor.immediate()
+                            .execute(this.ask(Arrays.stream(questions)
                                                     .map(q -> new ChatMessage(
                                                             "user",
                                                             q,

@@ -35,11 +35,12 @@ public class AsyncRawPromise
             Consumer<String> onEachLine,
             Consumer<ChatMessageResponse> onResponse
     ) {
-        this.executor.executeAsync(
-                this.requestBuilder.build(),
-                onEachLine,
-                onResponse
-        );
+        this.executor.async()
+                     .execute(
+                             this.requestBuilder.build(),
+                             onEachLine,
+                             onResponse
+                     );
     }
 
     /**

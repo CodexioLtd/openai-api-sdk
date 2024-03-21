@@ -69,7 +69,12 @@ public class ActionTypeStage<R extends ImageRequest>
      *              </a>
      *              endpoint
      */
-    public EditingMaskStage<EditImageRequest,
+    public EditingMaskStage<EditImageRequest, PromptfulImagesRuntimeSelectionStage<EditImageRequest>> editingStandart(File image) {
+        return new EditingActionTypeStage(this.editExecutor).editing(image)
+                                                            .standart();
+    }
+
+    public EditingMaskConfigurationStage<EditImageRequest,
             PromptfulImagesRuntimeSelectionStage<EditImageRequest>> editing(File image) {
         return new EditingActionTypeStage(this.editExecutor).editing(image);
     }

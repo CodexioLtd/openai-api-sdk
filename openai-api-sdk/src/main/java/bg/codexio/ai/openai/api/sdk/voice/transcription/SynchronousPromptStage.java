@@ -26,7 +26,8 @@ public class SynchronousPromptStage
      * configured format
      */
     public SpeechTextResponse guide(String prompt) {
-        return this.executor.execute(this.requestBuilder.withPrompt(prompt)
+        return this.executor.immediate()
+                            .execute(this.requestBuilder.withPrompt(prompt)
                                                         .build());
     }
 

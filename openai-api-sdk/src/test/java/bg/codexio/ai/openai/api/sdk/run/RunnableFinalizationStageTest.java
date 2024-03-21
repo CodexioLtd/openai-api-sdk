@@ -104,7 +104,8 @@ public class RunnableFinalizationStageTest {
 
     @Test
     public void testReactiveSimply_expectCorrectResponse() {
-        when(this.runnableFinalizationStage.httpExecutor.executeReactiveWithPathVariable(
+        when(this.runnableFinalizationStage.httpExecutor.reactive()
+                                                        .executeWithPathVariable(
                 any(),
                 any()
         )).thenAnswer(res -> new OpenAIHttpExecutor.ReactiveExecution<>(
@@ -117,7 +118,7 @@ public class RunnableFinalizationStageTest {
             var retrieveListMessagesHttpExecutor =
                     mockMessageProcessing(mockedMessage);
 
-            when(retrieveListMessagesHttpExecutor.executeReactiveWithPathVariables(any())).thenAnswer(res -> new OpenAIHttpExecutor.ReactiveExecution<>(
+            when(retrieveListMessagesHttpExecutor.retrieveReactive(any())).thenAnswer(res -> new OpenAIHttpExecutor.ReactiveExecution<>(
                     Flux.empty(),
                     Mono.just(LIST_MESSAGE_RESPONSE_WITH_TEXT_CONTENT_WITH_FILE_CITATION)
             ));

@@ -15,7 +15,7 @@ public class ImagesEditMaskByHexColor {
 
         var response = Images.defaults()
                              .and()
-                             .editing(inputImage)
+                             .editingStandart(inputImage)
                              .masked(
                                      "#6F4E00",
                                      ColorDeviation.BALANCED_TOLERANCE

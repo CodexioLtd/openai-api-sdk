@@ -27,7 +27,7 @@ public class FileDownloadingImmediateContextStageTest {
 
     @Test
     void testToFolder_expectCorrectResponse() {
-        when(RETRIEVE_FILE_CONTENT_HTTP_EXECUTOR.executeWithPathVariables(any())).thenReturn(FILE_CONTENT_RESPONSE);
+        when(RETRIEVE_FILE_CONTENT_HTTP_EXECUTOR.retrieve(any())).thenReturn(FILE_CONTENT_RESPONSE);
 
         mockDownloadExecutor(() -> {
             try {

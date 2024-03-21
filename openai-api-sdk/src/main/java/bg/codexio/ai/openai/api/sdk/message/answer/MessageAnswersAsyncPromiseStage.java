@@ -27,10 +27,11 @@ public class MessageAnswersAsyncPromiseStage
             Consumer<String> onEachLine,
             Consumer<ListMessagesResponse> afterAll
     ) {
-        this.httpExecutor.executeAsyncWithPathVariables(
-                onEachLine,
-                afterAll,
-                this.threadId
-        );
+        this.httpExecutor.async()
+                         .retrieve(
+                                 onEachLine,
+                                 afterAll,
+                                 this.threadId
+                         );
     }
 }

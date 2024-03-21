@@ -40,9 +40,9 @@ public class EditingActionTypeStage
      *              </a>
      *              endpoint
      */
-    public EditingMaskStage<EditImageRequest,
+    public EditingMaskConfigurationStage<EditImageRequest,
             PromptfulImagesRuntimeSelectionStage<EditImageRequest>> editing(File image) {
-        return new EditingMaskStage<>(
+        return new EditingMaskConfigurationStage<>(
                 this.editExecutor,
                 ImageRequestBuilder.<EditImageRequest>builder()
                                    .withSpecificRequestCreator(imageRequestBuilder -> new EditImageRequest(

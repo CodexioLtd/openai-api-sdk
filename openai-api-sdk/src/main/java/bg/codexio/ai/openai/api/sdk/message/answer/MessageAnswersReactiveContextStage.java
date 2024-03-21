@@ -19,7 +19,8 @@ public class MessageAnswersReactiveContextStage
 
 
     public Mono<MessageAnswersRetrievalTypeStage> answers() {
-        return this.httpExecutor.executeReactiveWithPathVariables(this.threadId)
+        return this.httpExecutor.reactive()
+                                .retrieve(this.threadId)
                                 .response()
                                 .map(MessageAnswersRetrievalTypeStage::new);
     }

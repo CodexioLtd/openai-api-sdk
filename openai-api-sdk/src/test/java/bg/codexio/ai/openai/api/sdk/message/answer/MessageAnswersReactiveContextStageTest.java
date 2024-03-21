@@ -28,7 +28,7 @@ public class MessageAnswersReactiveContextStageTest {
 
     @Test
     void testAnswers_expectCorrectBuilder() {
-        when(this.messageReactiveContextStage.httpExecutor.executeReactiveWithPathVariables(any())).thenAnswer(answer -> new OpenAIHttpExecutor.ReactiveExecution<>(
+        when(this.messageReactiveContextStage.httpExecutor.retrieveReactive(any())).thenAnswer(answer -> new OpenAIHttpExecutor.ReactiveExecution<>(
                 Flux.empty(),
                 Mono.just(LIST_MESSAGE_RESPONSE)
         ));

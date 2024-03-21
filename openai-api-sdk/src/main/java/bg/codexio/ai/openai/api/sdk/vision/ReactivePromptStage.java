@@ -1,6 +1,6 @@
 package bg.codexio.ai.openai.api.sdk.vision;
 
-import bg.codexio.ai.openai.api.http.OpenAIHttpExecutor.ReactiveExecution;
+import bg.codexio.ai.openai.api.http.ReactiveHttpExecutor.ReactiveExecution;
 import bg.codexio.ai.openai.api.http.vision.VisionHttpExecutor;
 import bg.codexio.ai.openai.api.payload.chat.response.ChatMessageResponse;
 import bg.codexio.ai.openai.api.payload.vision.request.QuestionVisionRequest;
@@ -39,12 +39,13 @@ public class ReactivePromptStage
      * @return {@link ReactiveExecution<ChatMessageResponse>}
      */
     public ReactiveExecution<ChatMessageResponse> describe(String prompt) {
-        return this.executor.executeReactive(this.requestContext.withMessageOn(
-                0,
-                this.requestContext.messages()
-                                   .get(0)
-                                   .withContent(new QuestionVisionRequest(prompt))
-        ));
+        return this.executor.reactive()
+                            .execute(this.requestContext.withMessageOn(
+                                    0,
+                                    this.requestContext.messages()
+                                                       .get(0)
+                                                       .withContent(new QuestionVisionRequest(prompt))
+                            ));
     }
 
     /**

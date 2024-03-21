@@ -22,10 +22,11 @@ public class RunnableImmediateContextStage
     }
 
     public RunnableResponse executeRaw() {
-        return this.httpExecutor.executeWithPathVariable(
-                this.requestBuilder.build(),
-                this.threadId
-        );
+        return this.httpExecutor.immediate()
+                                .executeWithPathVariable(
+                                        this.requestBuilder.build(),
+                                        this.threadId
+                                );
     }
 
     public String execute() {

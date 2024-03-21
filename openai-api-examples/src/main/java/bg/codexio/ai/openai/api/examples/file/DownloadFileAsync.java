@@ -17,7 +17,8 @@ public class DownloadFileAsync {
              .download("file-zR7aSAvw1xFBjqLIGKnRpT1q")
              .as("file.py")
              .async()
-             .downloadTo(targetFolder)
+             .toFolder(targetFolder)
+             .standart()
              .whenDownloaded(file -> System.out.println(file.getName()));
     }
 }

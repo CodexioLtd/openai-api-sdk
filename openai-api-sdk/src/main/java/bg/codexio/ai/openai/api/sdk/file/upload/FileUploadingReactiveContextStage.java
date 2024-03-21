@@ -1,6 +1,6 @@
 package bg.codexio.ai.openai.api.sdk.file.upload;
 
-import bg.codexio.ai.openai.api.http.OpenAIHttpExecutor.ReactiveExecution;
+import bg.codexio.ai.openai.api.http.ReactiveHttpExecutor.ReactiveExecution;
 import bg.codexio.ai.openai.api.http.file.UploadFileHttpExecutor;
 import bg.codexio.ai.openai.api.payload.file.request.UploadFileRequest;
 import bg.codexio.ai.openai.api.payload.file.response.FileResponse;
@@ -26,8 +26,9 @@ public class FileUploadingReactiveContextStage
     }
 
     public ReactiveExecution<FileResponse> feedRaw(File file) {
-        return this.executor.executeReactive(this.requestBuilder.withFile(file)
-                                                                .build());
+        return this.executor.reactive()
+                            .execute(this.requestBuilder.withFile(file)
+                                                        .build());
     }
 
     public Mono<String> feed(File file) {

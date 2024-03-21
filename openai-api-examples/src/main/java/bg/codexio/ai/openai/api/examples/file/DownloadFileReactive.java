@@ -17,8 +17,8 @@ public class DownloadFileReactive {
              .download("file-zR7aSAvw1xFBjqLIGKnRpT1q")
              .as("file.py")
              .reactive()
+             .standart()
              .toFolder(file)
              .subscribe(result -> System.out.println(result.getName()));
-
     }
 }

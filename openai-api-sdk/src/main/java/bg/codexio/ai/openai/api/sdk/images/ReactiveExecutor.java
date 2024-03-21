@@ -38,8 +38,9 @@ public class ReactiveExecutor<R extends ImageRequest>
      * received from the HTTP request
      */
     public Mono<ImageDataResponse> get() {
-        return this.executor.executeReactive(this.builder.specificRequestCreator()
-                                                         .apply(this.builder))
+        return this.executor.reactive()
+                            .execute(this.builder.specificRequestCreator()
+                                                 .apply(this.builder))
                             .response();
     }
 
@@ -50,8 +51,9 @@ public class ReactiveExecutor<R extends ImageRequest>
      * provided location
      */
     public Flux<File> download(File targetFolder) {
-        return this.executor.executeReactive(this.builder.specificRequestCreator()
-                                                         .apply(this.builder))
+        return this.executor.reactive()
+                            .execute(this.builder.specificRequestCreator()
+                                                 .apply(this.builder))
                             .response()
                             .flatMapMany(response -> Flux.fromIterable(response.data()))
                             .handle((image, sink) -> {

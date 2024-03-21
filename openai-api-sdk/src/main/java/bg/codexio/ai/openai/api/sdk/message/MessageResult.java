@@ -205,7 +205,8 @@ public record MessageResult(
              .download(this.imageFileId)
              .as(IMAGE_FILE_EXTENSION)
              .async()
-             .downloadTo(targetFolder)
+             .toFolder(targetFolder)
+             .standart()
              .whenDownloaded(image -> log.info(
                      MESSAGE_IMAGE_DOWNLOAD_SUCCESS,
                      image.getName()
@@ -218,6 +219,7 @@ public record MessageResult(
              .download(this.imageFileId)
              .as(IMAGE_FILE_EXTENSION)
              .reactive()
+             .standart()
              .toFolder(targetFolder)
              .subscribe(image -> log.info(
                      MESSAGE_IMAGE_DOWNLOAD_SUCCESS,

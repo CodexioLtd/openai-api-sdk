@@ -21,7 +21,8 @@ public class ThreadImmediateContextStage
 
     @Override
     public ThreadResponse finishRaw() {
-        return this.httpExecutor.execute(this.requestBuilder.build());
+        return this.httpExecutor.immediate()
+                                .execute(this.requestBuilder.build());
     }
 
     @Override

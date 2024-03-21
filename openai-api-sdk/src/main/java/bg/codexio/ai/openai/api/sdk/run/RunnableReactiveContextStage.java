@@ -1,6 +1,6 @@
 package bg.codexio.ai.openai.api.sdk.run;
 
-import bg.codexio.ai.openai.api.http.OpenAIHttpExecutor.ReactiveExecution;
+import bg.codexio.ai.openai.api.http.ReactiveHttpExecutor.ReactiveExecution;
 import bg.codexio.ai.openai.api.http.run.RunnableHttpExecutor;
 import bg.codexio.ai.openai.api.payload.run.request.RunnableRequest;
 import bg.codexio.ai.openai.api.payload.run.response.RunnableResponse;
@@ -23,10 +23,11 @@ public class RunnableReactiveContextStage
     }
 
     public ReactiveExecution<RunnableResponse> executeRaw() {
-        return this.httpExecutor.executeReactiveWithPathVariable(
-                this.requestBuilder.build(),
-                this.threadId
-        );
+        return this.httpExecutor.reactive()
+                                .executeWithPathVariable(
+                                        this.requestBuilder.build(),
+                                        this.threadId
+                                );
     }
 
     public Mono<String> execute() {

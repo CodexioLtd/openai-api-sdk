@@ -182,10 +182,10 @@ public class InternalAssertions {
             RetrieveListMessagesHttpExecutor listMessagesHttpExecutor,
             ListMessagesResponse response
     ) {
-        when(listMessagesHttpExecutor.executeWithPathVariables(any())).thenAnswer(res -> response);
+        when(listMessagesHttpExecutor.retrieve(any())).thenAnswer(res -> response);
     }
 
     static void executeWithPathVariables(RetrieveListMessagesHttpExecutor messageConfigurationStage) {
-        when(messageConfigurationStage.executeWithPathVariables(any())).thenAnswer(res -> LIST_MESSAGE_RESPONSE_WITH_TEXT_CONTENT_WITH_FILE_CITATION);
+        when(messageConfigurationStage.retrieve(any())).thenAnswer(res -> LIST_MESSAGE_RESPONSE_WITH_TEXT_CONTENT_WITH_FILE_CITATION);
     }
 }

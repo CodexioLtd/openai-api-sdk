@@ -153,14 +153,14 @@ public class InternalAssertions {
     }
 
     static void executeWithPathVariables(RunnableConfigurationStage runnableConfigurationStage) {
-        when(runnableConfigurationStage.httpExecutor.executeWithPathVariables(
+        when(runnableConfigurationStage.httpExecutor.retrieve(
                 any(),
                 any()
         )).thenAnswer(result -> RUNNABLE_RESPONSE);
     }
 
     static void executeWithPathVariablesWithCompletedStatus(RunnableConfigurationStage runnableConfigurationStage) {
-        when(runnableConfigurationStage.httpExecutor.executeWithPathVariables(
+        when(runnableConfigurationStage.httpExecutor.retrieve(
                 any(),
                 any()
         )).thenAnswer(res -> RUNNABLE_RESPONSE_WITH_COMPLETED_STATUS);

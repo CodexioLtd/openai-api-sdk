@@ -22,7 +22,8 @@ public class FileUploadingImmediateContextStage
     }
 
     public FileResponse feedRaw(File file) {
-        return this.executor.execute(this.requestBuilder.withFile(file)
+        return this.executor.immediate()
+                            .execute(this.requestBuilder.withFile(file)
                                                         .build());
     }
 

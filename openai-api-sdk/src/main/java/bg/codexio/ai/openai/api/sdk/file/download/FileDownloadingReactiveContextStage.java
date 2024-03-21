@@ -2,7 +2,6 @@ package bg.codexio.ai.openai.api.sdk.file.download;
 
 import bg.codexio.ai.openai.api.http.file.RetrieveFileContentHttpExecutor;
 import bg.codexio.ai.openai.api.payload.file.download.FileDownloadingMeta;
-import bg.codexio.ai.openai.api.sdk.RuntimeExecutor;
 import bg.codexio.ai.openai.api.sdk.download.DownloadExecutor;
 import bg.codexio.ai.openai.api.sdk.download.DownloadExecutorFactory;
 import bg.codexio.ai.openai.api.sdk.download.context.DefaultDownloadExecutorFactoryContext;
@@ -14,8 +13,7 @@ import java.io.File;
 import static bg.codexio.ai.openai.api.sdk.constant.FactoryConstantsUtils.FILE_EXECUTOR_IDENTIFIER;
 
 public class FileDownloadingReactiveContextStage
-        extends FileDownloadingConfigurationStage
-        implements RuntimeExecutor {
+        extends FileDownloadingConfigurationStage {
 
     private final DownloadExecutor downloadExecutor;
 
@@ -67,7 +65,8 @@ public class FileDownloadingReactiveContextStage
     }
 
     public Mono<File> toFolder(File targetFolder) {
-        return this.executor.executeReactiveWithPathVariables(this.fileDownloadingMeta.fileId())
+        return this.executor.reactive()
+                            .retrieve(this.fileDownloadingMeta.fileId())
                             .response()
                             .handle((response, sink) -> {
                                 try {

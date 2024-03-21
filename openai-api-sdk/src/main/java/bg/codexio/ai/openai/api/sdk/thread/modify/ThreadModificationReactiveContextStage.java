@@ -1,6 +1,6 @@
 package bg.codexio.ai.openai.api.sdk.thread.modify;
 
-import bg.codexio.ai.openai.api.http.OpenAIHttpExecutor.ReactiveExecution;
+import bg.codexio.ai.openai.api.http.ReactiveHttpExecutor.ReactiveExecution;
 import bg.codexio.ai.openai.api.http.thread.ModifyThreadHttpExecutor;
 import bg.codexio.ai.openai.api.payload.thread.request.ThreadModificationRequest;
 import bg.codexio.ai.openai.api.payload.thread.response.ThreadResponse;
@@ -24,10 +24,11 @@ public class ThreadModificationReactiveContextStage
 
     @Override
     public ReactiveExecution<ThreadResponse> finishRaw() {
-        return this.httpExecutor.executeReactiveWithPathVariable(
-                this.requestBuilder.build(),
-                this.threadId
-        );
+        return this.httpExecutor.reactive()
+                                .executeWithPathVariable(
+                                        this.requestBuilder.build(),
+                                        this.threadId
+                                );
     }
 
     @Override

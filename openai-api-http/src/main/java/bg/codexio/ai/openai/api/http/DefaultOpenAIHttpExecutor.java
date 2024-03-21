@@ -17,17 +17,12 @@ import org.jetbrains.annotations.NotNull;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.slf4j.event.Level;
-import reactor.core.publisher.Flux;
 
-import java.io.BufferedReader;
 import java.io.File;
 import java.io.IOException;
-import java.io.InputStreamReader;
 import java.lang.reflect.Field;
 import java.util.*;
 import java.util.function.Consumer;
-import java.util.function.Predicate;
-
 
 /**
  * <p>
@@ -209,450 +204,19 @@ public abstract class DefaultOpenAIHttpExecutor<I extends Streamable,
         }
     }
 
-    public void configureMappingExternally(Consumer<ObjectMapper> mappingConsumer) {
-        mappingConsumer.accept(this.objectMapper);
-    }
-
-    /**
-     * {@inheritDoc}
-     */
     @Override
-    public O execute(I request) {
-        var httpRequest = this.prepareRequest(request);
-
-        return this.performRequestExecution(httpRequest);
+    public AsynchronousHttpExecutor<I, O> async() {
+        return new DefaultAsynchronousHttpExecutor<>(this);
     }
 
     @Override
-    public O executeWithPathVariables(String... pathVariables) {
-        var httpRequest = this.prepareRequestWithPathVariables(pathVariables);
-
-        return this.performRequestExecution(httpRequest);
+    public SynchronousHttpExecutor<I, O> immediate() {
+        return new DefaultSynchronousHttpExecutor<>(this);
     }
 
     @Override
-    public O executeWithPathVariable(
-            I request,
-            String pathVariable
-    ) {
-        var httpRequest = this.prepareRequestWithPathVariable(
-                request,
-                pathVariable
-        );
-
-        return this.performRequestExecution(httpRequest);
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    public void executeAsync(
-            I request,
-            Consumer<String> callBack,
-            Consumer<O> finalizer
-    ) {
-        var httpRequest = prepareRequest(request);
-
-        this.client.newCall(httpRequest)
-                   .enqueue(new Callback() {
-                       @Override
-                       public void onFailure(
-                               @NotNull Call call,
-                               @NotNull IOException e
-                       ) {
-                           throw new HttpCallFailedException(
-                                   baseUrl + resourceUri,
-                                   e
-                           );
-                       }
-
-                       @Override
-                       public void onResponse(
-                               @NotNull Call call,
-                               @NotNull Response response
-                       ) throws IOException {
-                           var content = new StringBuilder();
-                           var responseContent = new ArrayList<O>();
-                           try (var httpResponseBody = response.body()) {
-                               throwOnError(response);
-
-                               var reader =
-                                       new BufferedReader(new InputStreamReader(httpResponseBody.byteStream()));
-                               var line = (String) null;
-                               while ((line = reader.readLine()) != null) {
-                                   if (canStream(request)) {
-                                       line = line.replace(
-                                                          "data:",
-                                                          ""
-                                                  )
-                                                  .trim();
-                                       if (line.equals("[DONE]")) {
-                                           break;
-                                       }
-                                   }
-
-                                   callBack.accept(line);
-                                   if (canStream(request)) {
-                                       responseContent.add(toResponse(line));
-                                   } else {
-                                       content.append(line);
-                                   }
-                               }
-                           }
-
-                           if (canStream(request)) {
-                               finalizer.accept(responseContent.stream()
-                                                               .reduce(Mergeable::doMerge)
-                                                               .orElse(null));
-                           } else {
-                               finalizer.accept(toResponse(content.toString()));
-                           }
-                       }
-                   });
-    }
-
-    public void executeAsyncWithPathVariable(
-            I request,
-            String pathVariable,
-            Consumer<String> callBack,
-            Consumer<O> finalizer
-    ) {
-        var httpRequest = prepareRequestWithPathVariable(
-                request,
-                pathVariable
-        );
-
-        this.client.newCall(httpRequest)
-                   .enqueue(new Callback() {
-                       @Override
-                       public void onFailure(
-                               @NotNull Call call,
-                               @NotNull IOException e
-                       ) {
-                           throw new HttpCallFailedException(
-                                   baseUrl + resourceUri,
-                                   e
-                           );
-                       }
-
-                       @Override
-                       public void onResponse(
-                               @NotNull Call call,
-                               @NotNull Response response
-                       ) throws IOException {
-                           var content = new StringBuilder();
-                           var responseContent = new ArrayList<O>();
-                           try (var httpResponseBody = response.body()) {
-                               throwOnError(response);
-
-                               var reader =
-                                       new BufferedReader(new InputStreamReader(httpResponseBody.byteStream()));
-                               var line = (String) null;
-                               while ((line = reader.readLine()) != null) {
-                                   if (canStream(request)) {
-                                       line = line.replace(
-                                                          "data:",
-                                                          ""
-                                                  )
-                                                  .trim();
-                                       if (line.equals("[DONE]")) {
-                                           break;
-                                       }
-                                   }
-
-                                   callBack.accept(line);
-                                   if (canStream(request)) {
-                                       responseContent.add(toResponse(line));
-                                   } else {
-                                       content.append(line);
-                                   }
-                               }
-                           }
-
-                           if (canStream(request)) {
-                               finalizer.accept(responseContent.stream()
-                                                               .reduce(Mergeable::doMerge)
-                                                               .orElse(null));
-                           } else {
-                               finalizer.accept(toResponse(content.toString()));
-                           }
-                       }
-                   });
-    }
-
-    public void executeAsyncWithPathVariables(
-            Consumer<String> callBack,
-            Consumer<O> finalizer,
-            String... pathVariables
-    ) {
-        var httpRequest = this.prepareRequestWithPathVariables(pathVariables);
-
-        this.client.newCall(httpRequest)
-                   .enqueue(new Callback() {
-                       @Override
-                       public void onFailure(
-                               @NotNull Call call,
-                               @NotNull IOException e
-                       ) {
-                           throw new HttpCallFailedException(
-                                   baseUrl + resourceUri,
-                                   e
-                           );
-                       }
-
-                       @Override
-                       public void onResponse(
-                               @NotNull Call call,
-                               @NotNull Response response
-                       ) throws IOException {
-                           var content = new StringBuilder();
-                           try (var httpResponseBody = response.body()) {
-                               throwOnError(response);
-
-                               var reader =
-                                       new BufferedReader(new InputStreamReader(httpResponseBody.byteStream()));
-                               var line = (String) null;
-                               while ((line = reader.readLine()) != null) {
-                                   callBack.accept(line);
-                                   content.append(line);
-                               }
-                           }
-                           finalizer.accept(toResponse(content.toString()));
-                       }
-                   });
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    public ReactiveExecution<O> executeReactive(I request) {
-        var lines =
-                Flux.<String>create(sink -> this.client.newCall(prepareRequest(request))
-                                                           .enqueue(new Callback() {
-                                                               @Override
-                                                               public void onFailure(
-                                                                       @NotNull Call call,
-                                                                       @NotNull IOException e
-                                                               ) {
-                                                                   throw new HttpCallFailedException(
-                                                                           baseUrl
-                                                                                   + resourceUri,
-                                                                           e
-                                                                   );
-                                                               }
-
-                                                               @Override
-                                                               public void onResponse(
-                                                                       @NotNull Call call,
-                                                                       @NotNull Response response
-                                                               ) throws
-                                                                 IOException {
-                                                                   try (var httpResponseBody = response.body()) {
-                                                                       try {
-                                                                           throwOnError(response);
-                                                                       } catch (Throwable throwable) {
-                                                                           sink.error(throwable);
-                                                                           return;
-                                                                       }
-
-                                                                       var reader = new BufferedReader(new InputStreamReader(httpResponseBody.byteStream()));
-                                                                       var line = (String) null;
-                                                                       while ((line = reader.readLine())
-                                                                               != null) {
-                                                                           if (canStream(request)) {
-                                                                               line = line.replace(
-                                                                                                  "data:",
-                                                                                                  ""
-                                                                                          )
-                                                                                          .trim();
-                                                                               if (line.equals("[DONE]")) {
-                                                                                   break;
-                                                                               }
-                                                                           }
-
-                                                                           sink.next(line);
-                                                                       }
-                                                                   } finally {
-                                                                       sink.complete();
-                                                                   }
-                                                               }
-                                                           }))
-                        .share();
-
-        if (this.canStream(request)) {
-            var response = lines.collectList()
-                                .mapNotNull(list -> list.stream()
-                                                        .filter(Objects::nonNull)
-                                                        .filter(Predicate.not(String::isBlank))
-                                                        .map(this::toResponse)
-                                                        .reduce(Mergeable::doMerge)
-                                                        .orElse(null));
-
-            return new ReactiveExecution<>(
-                    lines,
-                    response
-            );
-        }
-
-        var response = lines.collectList()
-                            .map(line -> String.join(
-                                    "",
-                                    line
-                            ))
-                            .map(this::toResponse);
-
-        return new ReactiveExecution<>(
-                lines,
-                response
-        );
-    }
-
-    // refactor later
-    public ReactiveExecution<O> executeReactiveWithPathVariable(
-            I request,
-            String pathVariable
-    ) {
-        var lines =
-                Flux.<String>create(sink -> this.client.newCall(prepareRequestWithPathVariable(
-                                                            request,
-                                                            pathVariable
-                                                    ))
-                                                           .enqueue(new Callback() {
-                                                               @Override
-                                                               public void onFailure(
-                                                                       @NotNull Call call,
-                                                                       @NotNull IOException e
-                                                               ) {
-                                                                   throw new HttpCallFailedException(
-                                                                           baseUrl
-                                                                                   + resourceUri,
-                                                                           e
-                                                                   );
-                                                               }
-
-                                                               @Override
-                                                               public void onResponse(
-                                                                       @NotNull Call call,
-                                                                       @NotNull Response response
-                                                               ) throws
-                                                                 IOException {
-                                                                   try (var httpResponseBody = response.body()) {
-                                                                       try {
-                                                                           throwOnError(response);
-                                                                       } catch (Throwable throwable) {
-                                                                           sink.error(throwable);
-                                                                           return;
-                                                                       }
-
-                                                                       var reader = new BufferedReader(new InputStreamReader(httpResponseBody.byteStream()));
-                                                                       var line = (String) null;
-                                                                       while ((line = reader.readLine())
-                                                                               != null) {
-                                                                           if (canStream(request)) {
-                                                                               line = line.replace(
-                                                                                                  "data:",
-                                                                                                  ""
-                                                                                          )
-                                                                                          .trim();
-                                                                               if (line.equals("[DONE]")) {
-                                                                                   break;
-                                                                               }
-                                                                           }
-
-                                                                           sink.next(line);
-                                                                       }
-                                                                   } finally {
-                                                                       sink.complete();
-                                                                   }
-                                                               }
-                                                           }))
-                        .share();
-
-        if (this.canStream(request)) {
-            var response = lines.collectList()
-                                .mapNotNull(list -> list.stream()
-                                                        .filter(Objects::nonNull)
-                                                        .filter(Predicate.not(String::isBlank))
-                                                        .map(this::toResponse)
-                                                        .reduce(Mergeable::doMerge)
-                                                        .orElse(null));
-
-            return new ReactiveExecution<>(
-                    lines,
-                    response
-            );
-        }
-
-        var response = lines.collectList()
-                            .map(line -> String.join(
-                                    "",
-                                    line
-                            ))
-                            .map(this::toResponse);
-
-        return new ReactiveExecution<>(
-                lines,
-                response
-        );
-    }
-
-    // refactor later
-    public ReactiveExecution<O> executeReactiveWithPathVariables(String... pathVariables) {
-        var lines =
-                Flux.<String>create(sink -> this.client.newCall(this.prepareRequestWithPathVariables(pathVariables))
-                                                           .enqueue(new Callback() {
-                                                               @Override
-                                                               public void onFailure(
-                                                                       @NotNull Call call,
-                                                                       @NotNull IOException e
-                                                               ) {
-                                                                   throw new HttpCallFailedException(
-                                                                           baseUrl
-                                                                                   + resourceUri,
-                                                                           e
-                                                                   );
-                                                               }
-
-                                                               @Override
-                                                               public void onResponse(
-                                                                       @NotNull Call call,
-                                                                       @NotNull Response response
-                                                               ) throws
-                                                                 IOException {
-                                                                   try (var httpResponseBody = response.body()) {
-                                                                       try {
-                                                                           throwOnError(response);
-                                                                       } catch (Throwable throwable) {
-                                                                           sink.error(throwable);
-                                                                           return;
-                                                                       }
-
-                                                                       var reader = new BufferedReader(new InputStreamReader(httpResponseBody.byteStream()));
-                                                                       var line = (String) null;
-                                                                       while ((line = reader.readLine())
-                                                                               != null) {
-                                                                           sink.next(line);
-                                                                       }
-                                                                   } finally {
-                                                                       sink.complete();
-                                                                   }
-                                                               }
-                                                           }))
-                        .share();
-
-        var response = lines.collectList()
-                            .map(line -> String.join(
-                                    "",
-                                    line
-                            ))
-                            .map(this::toResponse);
-
-        return new ReactiveExecution<>(
-                lines,
-                response
-        );
+    public ReactiveHttpExecutor<I, O> reactive() {
+        return new DefaultReactiveHttpExecutor<>(this);
     }
 
     /**
@@ -661,6 +225,10 @@ public abstract class DefaultOpenAIHttpExecutor<I extends Streamable,
     @Override
     public boolean canStream(I input) {
         return this.streamable && input.stream();
+    }
+
+    public void configureMappingExternally(Consumer<ObjectMapper> mappingConsumer) {
+        mappingConsumer.accept(this.objectMapper);
     }
 
     protected void configureObjectMapper() {
@@ -714,24 +282,6 @@ public abstract class DefaultOpenAIHttpExecutor<I extends Streamable,
                                     .build();
     }
 
-    protected O performRequestExecution(Request httpRequest) {
-        try (
-                var httpResponse = this.client.newCall(httpRequest)
-                                              .execute()
-        ) {
-            this.throwOnError(httpResponse);
-
-            return this.toResponse(httpResponse);
-        } catch (IOException e) {
-            throw new HttpCallFailedException(
-                    httpRequest.url()
-                               .toString(),
-                    e
-            );
-        }
-    }
-
-    @NotNull
     protected Request prepareRequestWithPathVariable(
             I request,
             String pathVariable
@@ -751,6 +301,17 @@ public abstract class DefaultOpenAIHttpExecutor<I extends Streamable,
                                             DEFAULT_MEDIA_TYPE
                                     ))
                                     .build();
+    }
+
+    protected HttpCallFailedException createHttpCallFailedException(
+            Request request,
+            Exception e
+    ) {
+        return new HttpCallFailedException(
+                request.url()
+                       .toString(),
+                e
+        );
     }
 
     protected O toResponse(Response response) throws IOException {

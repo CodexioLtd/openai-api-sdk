@@ -21,9 +21,10 @@ public class MessageImmediateContextStage
     }
 
     public MessageResponse finish() {
-        return this.httpExecutor.executeWithPathVariable(
-                this.requestBuilder.build(),
-                this.threadId
-        );
+        return this.httpExecutor.immediate()
+                                .executeWithPathVariable(
+                                        this.requestBuilder.build(),
+                                        this.threadId
+                                );
     }
 }

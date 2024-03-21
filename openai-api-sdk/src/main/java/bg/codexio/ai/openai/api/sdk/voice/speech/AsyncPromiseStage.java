@@ -140,28 +140,30 @@ public class AsyncPromiseStage
             Consumer<File> afterAll,
             Consumer<Throwable> onError
     ) {
-        this.executor.executeAsync(
-                this.requestBuilder.build(),
-                onEachLine,
-                response -> CompletableFuture.supplyAsync(() -> {
-                                                 try {
-                                                     return DownloadExecutor.downloadTo(
-                                                             targetFolder,
-                                                             response,
-                                                             this.requestBuilder.responseFormat()
-                                                     );
-                                                 } catch (IOException e) {
-                                                     throw new RuntimeException(e);
-                                                 }
-                                             })
-                                             .whenComplete((result, error) -> {
-                                                 if (error != null) {
-                                                     onError.accept(error);
-                                                 } else {
-                                                     afterAll.accept(result);
-                                                 }
-                                             })
-        );
+        this.executor.async()
+                     .execute(
+                             this.requestBuilder.build(),
+                             onEachLine,
+                             response -> CompletableFuture.supplyAsync(() -> {
+                                                              try {
+                                                                  return DownloadExecutor.downloadTo(
+                                                                          targetFolder,
+                                                                          response,
+                                                                          this.requestBuilder.responseFormat()
+                                                                  );
+                                                              } catch (IOException e) {
+                                                                  throw new RuntimeException(e);
+                                                              }
+                                                          })
+                                                          .whenComplete((result, error) -> {
+                                                              if (error
+                                                                      != null) {
+                                                                  onError.accept(error);
+                                                              } else {
+                                                                  afterAll.accept(result);
+                                                              }
+                                                          })
+                     );
     }
 
     File getTargetFolder() {

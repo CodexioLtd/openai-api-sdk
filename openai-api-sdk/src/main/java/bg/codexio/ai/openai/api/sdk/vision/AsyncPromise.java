@@ -38,11 +38,12 @@ public class AsyncPromise
             Consumer<String> onEachLine,
             Consumer<ChatMessageResponse> afterAll
     ) {
-        this.executor.executeAsync(
-                this.requestContext,
-                onEachLine,
-                afterAll
-        );
+        this.executor.async()
+                     .execute(
+                             this.requestContext,
+                             onEachLine,
+                             afterAll
+                     );
     }
 
 }

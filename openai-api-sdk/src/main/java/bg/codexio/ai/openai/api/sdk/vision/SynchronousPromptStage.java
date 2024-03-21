@@ -33,12 +33,13 @@ public class SynchronousPromptStage
      * @return raw {@link ChatMessageResponse}
      */
     public ChatMessageResponse describeRaw(String prompt) {
-        return this.executor.execute(this.requestContext.withMessageOn(
-                0,
-                this.requestContext.messages()
-                                   .get(0)
-                                   .withContent(new QuestionVisionRequest(prompt))
-        ));
+        return this.executor.immediate()
+                            .execute(this.requestContext.withMessageOn(
+                                    0,
+                                    this.requestContext.messages()
+                                                       .get(0)
+                                                       .withContent(new QuestionVisionRequest(prompt))
+                            ));
     }
 
 
@@ -49,12 +50,13 @@ public class SynchronousPromptStage
      * @return raw {@link ChatMessageResponse}
      */
     public ChatMessageResponse describeRaw() {
-        return this.executor.execute(this.requestContext.withMessageOn(
-                0,
-                this.requestContext.messages()
-                                   .get(0)
-                                   .withContent(new QuestionVisionRequest(DEFAULT_PROMPT))
-        ));
+        return this.executor.immediate()
+                            .execute(this.requestContext.withMessageOn(
+                                    0,
+                                    this.requestContext.messages()
+                                                       .get(0)
+                                                       .withContent(new QuestionVisionRequest(DEFAULT_PROMPT))
+                            ));
     }
 
     /**

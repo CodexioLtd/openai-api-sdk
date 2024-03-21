@@ -22,10 +22,11 @@ public class ThreadModificationImmediateContextStage
 
     @Override
     public ThreadResponse finishRaw() {
-        return this.httpExecutor.executeWithPathVariable(
-                this.requestBuilder.build(),
-                this.threadId
-        );
+        return this.httpExecutor.immediate()
+                                .executeWithPathVariable(
+                                        this.requestBuilder.build(),
+                                        this.threadId
+                                );
     }
 
     @Override

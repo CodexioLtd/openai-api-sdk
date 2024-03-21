@@ -87,27 +87,29 @@ public class FileDownloadingAsyncPromise
             Consumer<File> callback,
             Consumer<Throwable> errorHandler
     ) {
-        this.executor.executeAsyncWithPathVariables(
-                this.onEachLine,
-                response -> CompletableFuture.supplyAsync(() -> {
-                                                 try {
-                                                     return this.downloadExecutor.downloadTo(
-                                                             this.fileDownloadingMeta.targetFolder(),
-                                                             response,
-                                                             this.fileDownloadingMeta.fileName()
-                                                     );
-                                                 } catch (IOException e) {
-                                                     throw new RuntimeException(e);
-                                                 }
-                                             })
-                                             .whenComplete((result, error) -> {
-                                                 if (error != null) {
-                                                     errorHandler.accept(error);
-                                                 } else {
-                                                     callback.accept(result);
-                                                 }
-                                             }),
-                this.fileDownloadingMeta.fileId()
-        );
+        this.executor.async()
+                     .retrieve(
+                             this.onEachLine,
+                             response -> CompletableFuture.supplyAsync(() -> {
+                                                              try {
+                                                                  return this.downloadExecutor.downloadTo(
+                                                                          this.fileDownloadingMeta.targetFolder(),
+                                                                          response,
+                                                                          this.fileDownloadingMeta.fileName()
+                                                                  );
+                                                              } catch (IOException e) {
+                                                                  throw new RuntimeException(e);
+                                                              }
+                                                          })
+                                                          .whenComplete((result, error) -> {
+                                                              if (error
+                                                                      != null) {
+                                                                  errorHandler.accept(error);
+                                                              } else {
+                                                                  callback.accept(result);
+                                                              }
+                                                          }),
+                             this.fileDownloadingMeta.fileId()
+                     );
     }
 }

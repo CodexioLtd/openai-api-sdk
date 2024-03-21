@@ -69,7 +69,8 @@ public record FileResult(
              .and()
              .download(this)
              .async()
-             .downloadTo(targetFolder)
+             .toFolder(targetFolder)
+             .standart()
              .whenDownloaded(file -> log.info(
                      FILE_DOWNLOAD_SUCCESS,
                      file.getName()
@@ -84,7 +85,8 @@ public record FileResult(
              .and()
              .download(this)
              .async()
-             .downloadTo(targetFolder)
+             .toFolder(targetFolder)
+             .standart()
              .whenDownloaded(consumer);
     }
 
@@ -93,6 +95,7 @@ public record FileResult(
                     .and()
                     .download(this)
                     .reactive()
+                    .standart()
                     .toFolder(targetFolder);
     }
 
@@ -132,7 +135,8 @@ public record FileResult(
              .and()
              .download(this)
              .async()
-             .downloadTo(targetFolder)
+             .toFolder(targetFolder)
+             .standart()
              .whenDownloaded(file -> log.info(
                      FILE_DOWNLOAD_SUCCESS,
                      file.getName()
@@ -148,7 +152,8 @@ public record FileResult(
              .and()
              .download(this)
              .async()
-             .downloadTo(targetFolder)
+             .toFolder(targetFolder)
+             .standart()
              .whenDownloaded(consumer);
     }
 
@@ -160,6 +165,7 @@ public record FileResult(
              .and()
              .download(this)
              .reactive()
+             .standart()
              .toFolder(targetFolder)
              .subscribe(file -> log.info(
                      FILE_DOWNLOAD_SUCCESS,
@@ -176,6 +182,7 @@ public record FileResult(
              .and()
              .download(this)
              .reactive()
+             .standart()
              .toFolder(targetFolder)
              .subscribe(consumer);
     }
@@ -200,7 +207,8 @@ public record FileResult(
              .and()
              .download(this)
              .async()
-             .downloadTo(targetFolder)
+             .toFolder(targetFolder)
+             .standart()
              .whenDownloaded(file -> log.info(
                      FILE_DOWNLOAD_SUCCESS,
                      file.getName()
@@ -216,7 +224,8 @@ public record FileResult(
              .and()
              .download(this)
              .async()
-             .downloadTo(targetFolder)
+             .toFolder(targetFolder)
+             .standart()
              .whenDownloaded(consumer);
     }
 
@@ -228,6 +237,7 @@ public record FileResult(
              .and()
              .download(this)
              .reactive()
+             .standart()
              .toFolder(targetFolder)
              .subscribe(file -> log.info(
                      FILE_DOWNLOAD_SUCCESS,
@@ -244,6 +254,7 @@ public record FileResult(
              .and()
              .download(this)
              .reactive()
+             .standart()
              .toFolder(targetFolder)
              .subscribe(consumer);
     }
@@ -264,7 +275,8 @@ public record FileResult(
     ) {
         this.toRuntimeSelection(httpExecutor)
             .async()
-            .downloadTo(targetFolder)
+            .toFolder(targetFolder)
+            .standart()
             .whenDownloaded(file -> log.info(
                     FILE_DOWNLOAD_SUCCESS,
                     file.getName()
@@ -278,7 +290,8 @@ public record FileResult(
     ) {
         this.toRuntimeSelection(httpExecutor)
             .async()
-            .downloadTo(targetFolder)
+            .toFolder(targetFolder)
+            .standart()
             .whenDownloaded(consumer);
     }
 
@@ -288,6 +301,7 @@ public record FileResult(
     ) {
         this.toRuntimeSelection(httpExecutor)
             .reactive()
+            .standart()
             .toFolder(targetFolder)
             .subscribe(file -> log.info(
                     FILE_DOWNLOAD_SUCCESS,
@@ -302,6 +316,7 @@ public record FileResult(
     ) {
         this.toRuntimeSelection(httpExecutor)
             .reactive()
+            .standart()
             .toFolder(targetFolder)
             .subscribe(consumer);
     }

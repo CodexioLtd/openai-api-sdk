@@ -46,11 +46,12 @@ public class AsyncExecutor<R extends ImageRequest>
      *                 {@link ImageDataResponse} as a parameter
      */
     public void onResponse(Consumer<ImageDataResponse> callback) {
-        this.executor.executeAsync(
-                this.imageRequest,
-                this.onEachLine,
-                callback
-        );
+        this.executor.async()
+                     .execute(
+                             this.imageRequest,
+                             this.onEachLine,
+                             callback
+                     );
     }
 
     /**
@@ -95,28 +96,30 @@ public class AsyncExecutor<R extends ImageRequest>
             Consumer<File[]> callback,
             Consumer<Throwable> errorHandler
     ) {
-        this.executor.executeAsync(
-                this.imageRequest,
-                this.onEachLine,
-                response -> CompletableFuture.supplyAsync(() -> {
-                                                 try {
-                                                     return DownloadExecutor.FromResponse.downloadTo(
-                                                             targetFolder,
-                                                             response,
-                                                             Format.fromVal(this.builder.responseFormat())
-                                                     );
-                                                 } catch (IOException e) {
-                                                     throw new RuntimeException(e);
-                                                 }
-                                             })
-                                             .whenComplete((result, error) -> {
-                                                 if (error != null) {
-                                                     errorHandler.accept(error);
-                                                 } else {
-                                                     callback.accept(result);
-                                                 }
-                                             })
-        );
+        this.executor.async()
+                     .execute(
+                             this.imageRequest,
+                             this.onEachLine,
+                             response -> CompletableFuture.supplyAsync(() -> {
+                                                              try {
+                                                                  return DownloadExecutor.FromResponse.downloadTo(
+                                                                          targetFolder,
+                                                                          response,
+                                                                          Format.fromVal(this.builder.responseFormat())
+                                                                  );
+                                                              } catch (IOException e) {
+                                                                  throw new RuntimeException(e);
+                                                              }
+                                                          })
+                                                          .whenComplete((result, error) -> {
+                                                              if (error
+                                                                      != null) {
+                                                                  errorHandler.accept(error);
+                                                              } else {
+                                                                  callback.accept(result);
+                                                              }
+                                                          })
+                     );
     }
 
 }

@@ -40,7 +40,8 @@ public class ExecutorTests {
                 false
         ));
 
-        var response = executor.execute(requestDto);
+        var response = executor.immediate()
+                               .execute(requestDto);
 
         assertEquals(
                 responseDto,
@@ -70,10 +71,11 @@ public class ExecutorTests {
                 false
         ));
 
-        var response = executor.executeWithPathVariable(
-                requestDto,
-                pathVariable
-        );
+        var response = executor.immediate()
+                               .executeWithPathVariable(
+                                       requestDto,
+                                       pathVariable
+                               );
 
         assertEquals(
                 responseDto,
@@ -104,10 +106,11 @@ public class ExecutorTests {
 
         var exception = assertThrows(
                 OpenAIRespondedNot2xxException.class,
-                () -> executor.executeWithPathVariable(
-                        requestDto,
-                        pathVariable
-                )
+                () -> executor.immediate()
+                              .executeWithPathVariable(
+                                      requestDto,
+                                      pathVariable
+                              )
         );
 
         assertMessageAndStatus(exception);
@@ -130,7 +133,8 @@ public class ExecutorTests {
                 false
         ));
 
-        var response = executor.executeWithPathVariables(pathVariables);
+        var response = executor.immediate()
+                               .retrieve(pathVariables);
 
         assertEquals(
                 responseDto,
@@ -156,7 +160,8 @@ public class ExecutorTests {
 
         var exception = assertThrows(
                 OpenAIRespondedNot2xxException.class,
-                () -> executor.executeWithPathVariables(pathVariables)
+                () -> executor.immediate()
+                              .retrieve(pathVariables)
         );
 
         assertMessageAndStatus(exception);
@@ -181,7 +186,8 @@ public class ExecutorTests {
 
         var exception = assertThrows(
                 OpenAIRespondedNot2xxException.class,
-                () -> executor.execute(requestDto)
+                () -> executor.immediate()
+                              .execute(requestDto)
         );
 
         assertMessageAndStatus(exception);
@@ -205,7 +211,8 @@ public class ExecutorTests {
 
         assertThrows(
                 HttpCallFailedException.class,
-                () -> executor.execute(requestDto)
+                () -> executor.immediate()
+                              .execute(requestDto)
         );
     }
 
@@ -234,11 +241,12 @@ public class ExecutorTests {
         var response = (O[]) new Mergeable[1];
         Consumer<O> finalizer = r -> response[0] = r;
 
-        executor.executeAsync(
-                requestDto,
-                lineCb,
-                finalizer
-        );
+        executor.async()
+                .execute(
+                        requestDto,
+                        lineCb,
+                        finalizer
+                );
 
         assertAll(
                 () -> assertEquals(
@@ -280,13 +288,14 @@ public class ExecutorTests {
 
         var exception = assertThrows(
                 HttpCallFailedException.class,
-                () -> executor.executeAsync(
-                        stream
-                        ? streamRequestDto
-                        : requestDto,
-                        lineCb,
-                        finalizer
-                )
+                () -> executor.async()
+                              .execute(
+                                      stream
+                                      ? streamRequestDto
+                                      : requestDto,
+                                      lineCb,
+                                      finalizer
+                              )
         );
 
         assertEquals(
@@ -327,13 +336,14 @@ public class ExecutorTests {
 
         var exception = assertThrows(
                 OpenAIRespondedNot2xxException.class,
-                () -> executor.executeAsync(
-                        stream
-                        ? streamRequestDto
-                        : requestDto,
-                        lineCb,
-                        finalizer
-                )
+                () -> executor.async()
+                              .execute(
+                                      stream
+                                      ? streamRequestDto
+                                      : requestDto,
+                                      lineCb,
+                                      finalizer
+                              )
         );
 
         assertMessageAndStatus(exception);
@@ -364,11 +374,12 @@ public class ExecutorTests {
         var response = (O[]) new Mergeable[1];
         Consumer<O> finalizer = r -> response[0] = r;
 
-        executor.executeAsync(
-                requestDto,
-                lineCb,
-                finalizer
-        );
+        executor.async()
+                .execute(
+                        requestDto,
+                        lineCb,
+                        finalizer
+                );
 
         assertAll(
                 () -> verify(
@@ -404,7 +415,8 @@ public class ExecutorTests {
                 false
         ));
 
-        var execution = executor.executeReactive(requestDto);
+        var execution = executor.reactive()
+                                .execute(requestDto);
 
         assertEquals(
                 responseBody,
@@ -431,7 +443,8 @@ public class ExecutorTests {
                 false
         ));
 
-        var execution = executor.executeReactive(requestDto);
+        var execution = executor.reactive()
+                                .execute(requestDto);
 
         assertEquals(
                 responseDto,
@@ -461,9 +474,10 @@ public class ExecutorTests {
                 true
         ));
 
-        var execution = executor.executeReactive(stream
-                                                 ? streamRequestDto
-                                                 : requestDto);
+        var execution = executor.reactive()
+                                .execute(stream
+                                         ? streamRequestDto
+                                         : requestDto);
 
         var exception = assertThrows(
                 HttpCallFailedException.class,
@@ -501,9 +515,10 @@ public class ExecutorTests {
                 false
         ));
 
-        var execution = executor.executeReactive(stream
-                                                 ? streamRequestDto
-                                                 : requestDto);
+        var execution = executor.reactive()
+                                .execute(stream
+                                         ? streamRequestDto
+                                         : requestDto);
 
         var exception = assertThrows(
                 OpenAIRespondedNot2xxException.class,
@@ -532,7 +547,8 @@ public class ExecutorTests {
                 false
         ));
 
-        var execution = executor.executeReactive(requestDto);
+        var execution = executor.reactive()
+                                .execute(requestDto);
 
         assertEquals(
                 streamResponseBody,
@@ -560,7 +576,8 @@ public class ExecutorTests {
                 false
         ));
 
-        var execution = executor.executeReactive(requestDto);
+        var execution = executor.reactive()
+                                .execute(requestDto);
 
         assertEquals(
                 streamResponseDto,

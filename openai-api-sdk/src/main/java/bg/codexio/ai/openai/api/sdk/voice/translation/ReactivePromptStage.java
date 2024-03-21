@@ -1,6 +1,6 @@
 package bg.codexio.ai.openai.api.sdk.voice.translation;
 
-import bg.codexio.ai.openai.api.http.OpenAIHttpExecutor.ReactiveExecution;
+import bg.codexio.ai.openai.api.http.ReactiveHttpExecutor.ReactiveExecution;
 import bg.codexio.ai.openai.api.http.voice.TranslationHttpExecutor;
 import bg.codexio.ai.openai.api.payload.voice.request.TranslationRequest;
 import bg.codexio.ai.openai.api.payload.voice.response.SpeechTextResponse;
@@ -34,8 +34,9 @@ public class ReactivePromptStage
      * @return {@link ReactiveExecution <SpeechTextResponse>}
      */
     public ReactiveExecution<SpeechTextResponse> guide(String prompt) {
-        return this.executor.executeReactive(this.requestBuilder.withPrompt(prompt)
-                                                                .build());
+        return this.executor.reactive()
+                            .execute(this.requestBuilder.withPrompt(prompt)
+                                                        .build());
     }
 
     /**

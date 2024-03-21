@@ -2,14 +2,12 @@ package bg.codexio.ai.openai.api.sdk.file.download;
 
 import bg.codexio.ai.openai.api.http.file.RetrieveFileContentHttpExecutor;
 import bg.codexio.ai.openai.api.payload.file.download.FileDownloadingMeta;
-import bg.codexio.ai.openai.api.sdk.RuntimeExecutor;
 import bg.codexio.ai.openai.api.sdk.download.DownloadExecutor;
 
-public class FileDownloadingReactiveContextConfigurationStage
-        extends FileDownloadingConfigurationStage
-        implements RuntimeExecutor {
+public class FileDownloadingAsyncContextConfigurationStage
+        extends FileDownloadingConfigurationStage {
 
-    public FileDownloadingReactiveContextConfigurationStage(
+    public FileDownloadingAsyncContextConfigurationStage(
             RetrieveFileContentHttpExecutor executor,
             FileDownloadingMeta.Builder fileDownloadingMeta
     ) {
@@ -19,15 +17,15 @@ public class FileDownloadingReactiveContextConfigurationStage
         );
     }
 
-    public FileDownloadingReactiveContextStage standart() {
-        return new FileDownloadingReactiveContextStage(
+    public FileDownloadingAsyncPromise standart() {
+        return new FileDownloadingAsyncPromise(
                 this.executor,
                 this.fileDownloadingMeta
         );
     }
 
-    public FileDownloadingReactiveContextStage executor(DownloadExecutor downloadExecutor) {
-        return new FileDownloadingReactiveContextStage(
+    public FileDownloadingAsyncPromise executor(DownloadExecutor downloadExecutor) {
+        return new FileDownloadingAsyncPromise(
                 this.executor,
                 this.fileDownloadingMeta,
                 downloadExecutor

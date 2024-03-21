@@ -23,21 +23,22 @@ public class MessageAnswersImmediateContextStage
 
     public MessageAnswersRetrievalTypeStage answers() {
         return Optional.ofNullable(this.threadId)
-                       .map(this.httpExecutor::executeWithPathVariables)
+                       .map(id -> this.httpExecutor.immediate()
+                                                   .retrieve(id))
                        .map(MessageAnswersRetrievalTypeStage::new)
                        .orElseThrow(NonPresentThreadIdException::new);
     }
 
     public MessageAnswersRetrievalTypeStage answers(ThreadResponse threadResponse) {
-        var listMessageResponse =
-                this.httpExecutor.executeWithPathVariables(threadResponse.id());
+        var listMessageResponse = this.httpExecutor.immediate()
+                                                   .retrieve(threadResponse.id());
 
         return new MessageAnswersRetrievalTypeStage(listMessageResponse);
     }
 
     public MessageAnswersRetrievalTypeStage answers(String threadId) {
-        var listMessageResponse =
-                this.httpExecutor.executeWithPathVariables(threadId);
+        var listMessageResponse = this.httpExecutor.immediate()
+                                                   .retrieve(threadId);
 
         return new MessageAnswersRetrievalTypeStage(listMessageResponse);
     }

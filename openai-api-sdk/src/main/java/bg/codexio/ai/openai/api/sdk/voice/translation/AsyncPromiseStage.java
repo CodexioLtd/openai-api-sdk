@@ -32,10 +32,11 @@ public class AsyncPromiseStage
             Consumer<String> onEachLine,
             Consumer<SpeechTextResponse> afterAll
     ) {
-        this.executor.executeAsync(
-                this.requestBuilder.build(),
-                onEachLine,
-                afterAll
-        );
+        this.executor.async()
+                     .execute(
+                             this.requestBuilder.build(),
+                             onEachLine,
+                             afterAll
+                     );
     }
 }

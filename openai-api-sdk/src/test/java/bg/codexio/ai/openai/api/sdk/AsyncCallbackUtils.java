@@ -113,7 +113,7 @@ public class AsyncCallbackUtils {
 
             return null;
         }).when(executor)
-          .executeAsyncWithPathVariables(
+          .retrieveAsync(
                   any(),
                   any(),
                   any()

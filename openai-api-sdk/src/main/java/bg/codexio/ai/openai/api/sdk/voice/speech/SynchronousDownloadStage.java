@@ -35,7 +35,8 @@ public class SynchronousDownloadStage
     public File downloadTo(File targetFolder) throws IOException {
         return DownloadExecutor.downloadTo(
                 targetFolder,
-                this.executor.execute(this.requestBuilder.build()),
+                this.executor.immediate()
+                             .execute(this.requestBuilder.build()),
                 this.requestBuilder.responseFormat()
         );
     }

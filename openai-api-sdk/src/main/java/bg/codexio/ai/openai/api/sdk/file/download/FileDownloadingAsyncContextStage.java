@@ -20,8 +20,8 @@ public class FileDownloadingAsyncContextStage
         );
     }
 
-    public FileDownloadingAsyncPromise downloadTo(File targetFolder) {
-        return new FileDownloadingAsyncPromise(
+    public FileDownloadingAsyncContextConfigurationStage toFolder(File targetFolder) {
+        return new FileDownloadingAsyncContextConfigurationStage(
                 this.executor,
                 this.fileDownloadingMeta.withTargetFolder(targetFolder)
         );

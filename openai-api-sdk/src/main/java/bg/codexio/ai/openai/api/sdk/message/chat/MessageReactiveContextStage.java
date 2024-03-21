@@ -1,6 +1,6 @@
 package bg.codexio.ai.openai.api.sdk.message.chat;
 
-import bg.codexio.ai.openai.api.http.OpenAIHttpExecutor.ReactiveExecution;
+import bg.codexio.ai.openai.api.http.ReactiveHttpExecutor.ReactiveExecution;
 import bg.codexio.ai.openai.api.http.message.MessageHttpExecutor;
 import bg.codexio.ai.openai.api.payload.message.request.MessageRequest;
 import bg.codexio.ai.openai.api.payload.message.response.MessageResponse;
@@ -23,10 +23,11 @@ public class MessageReactiveContextStage
     }
 
     public ReactiveExecution<MessageResponse> finishRaw() {
-        return this.httpExecutor.executeReactiveWithPathVariable(
-                this.requestBuilder.build(),
-                this.threadId
-        );
+        return this.httpExecutor.reactive()
+                                .executeWithPathVariable(
+                                        this.requestBuilder.build(),
+                                        this.threadId
+                                );
     }
 
     public Mono<MessageResponse> finish() {

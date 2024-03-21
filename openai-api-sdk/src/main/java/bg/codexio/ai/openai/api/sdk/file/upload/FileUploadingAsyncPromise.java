@@ -29,10 +29,11 @@ public class FileUploadingAsyncPromise
             Consumer<String> onEachLine,
             Consumer<FileResponse> afterAll
     ) {
-        this.executor.executeAsync(
-                this.requestBuilder.build(),
-                onEachLine,
-                afterAll
-        );
+        this.executor.async()
+                     .execute(
+                             this.requestBuilder.build(),
+                             onEachLine,
+                             afterAll
+                     );
     }
 }

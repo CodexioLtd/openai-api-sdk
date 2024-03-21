@@ -29,10 +29,11 @@ public class ThreadAsyncPromiseStage
             Consumer<String> onEachLine,
             Consumer<ThreadResponse> afterAll
     ) {
-        this.httpExecutor.executeAsync(
-                this.requestBuilder.build(),
-                onEachLine,
-                afterAll
-        );
+        this.httpExecutor.async()
+                         .execute(
+                                 this.requestBuilder.build(),
+                                 onEachLine,
+                                 afterAll
+                         );
     }
 }

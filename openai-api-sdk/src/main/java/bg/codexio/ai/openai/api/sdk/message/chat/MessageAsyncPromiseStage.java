@@ -30,11 +30,12 @@ public class MessageAsyncPromiseStage
             Consumer<String> onEachLine,
             Consumer<MessageResponse> afterAll
     ) {
-        this.httpExecutor.executeAsyncWithPathVariable(
-                this.requestBuilder.build(),
-                this.threadId,
-                onEachLine,
-                afterAll
-        );
+        this.httpExecutor.async()
+                         .executeWithPathVariable(
+                                 this.requestBuilder.build(),
+                                 this.threadId,
+                                 onEachLine,
+                                 afterAll
+                         );
     }
 }

@@ -30,7 +30,8 @@ public class ReactiveDownloadStage
      * @return {@link Mono<File>} to subscribe when the file is downloaded
      */
     public Mono<File> downloadTo(File targetFolder) {
-        return this.executor.executeReactive(this.requestBuilder.build())
+        return this.executor.reactive()
+                            .execute(this.requestBuilder.build())
                             .response()
                             .handle((response, sink) -> {
                                 try {

@@ -21,7 +21,7 @@ public class InternalAssertions {
 
 
     static void executeFileContentResponse() {
-        when(RETRIEVE_FILE_CONTENT_HTTP_EXECUTOR.executeWithPathVariables(any())).thenReturn(new FileContentResponse(new byte[]{
+        when(RETRIEVE_FILE_CONTENT_HTTP_EXECUTOR.retrieve(any())).thenReturn(new FileContentResponse(new byte[]{
                 1, 2, 3
         }));
     }

@@ -60,10 +60,11 @@ public class RunnableResultStage
     // object mapper, while only assistant id as
     // parameter is used
     public RunnableResponse from(String runnableId) {
-        return this.httpExecutor.executeWithPathVariables(
-                this.threadId,
-                runnableId
-        );
+        return this.httpExecutor.immediate()
+                                .retrieve(
+                                        this.threadId,
+                                        runnableId
+                                );
     }
 
     public RunnableResponse from(RunnableResponse runnableResponse) {
@@ -73,16 +74,18 @@ public class RunnableResultStage
                     this.httpExecutor,
                     runnableResponse.tools()
             );
-            return this.httpExecutor.executeWithPathVariables(
-                    runnableResponse.threadId(),
-                    runnableResponse.id()
-            );
+            return this.httpExecutor.immediate()
+                                    .retrieve(
+                                            runnableResponse.threadId(),
+                                            runnableResponse.id()
+                                    );
         }
 
-        return this.httpExecutor.executeWithPathVariables(
-                runnableResponse.threadId(),
-                runnableResponse.id()
-        );
+        return this.httpExecutor.immediate()
+                                .retrieve(
+                                        runnableResponse.threadId(),
+                                        runnableResponse.id()
+                                );
     }
 
     // same issue here
@@ -90,10 +93,11 @@ public class RunnableResultStage
             String threadId,
             String runnableId
     ) {
-        return this.httpExecutor.executeWithPathVariables(
-                threadId,
-                runnableId
-        );
+        return this.httpExecutor.immediate()
+                                .retrieve(
+                                        threadId,
+                                        runnableId
+                                );
     }
 
     private RunnableResponse sleepThenRefresh(RunnableResponse run) {

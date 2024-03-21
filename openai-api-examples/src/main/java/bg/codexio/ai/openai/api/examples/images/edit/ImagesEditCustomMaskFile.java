@@ -18,7 +18,7 @@ public class ImagesEditCustomMaskFile {
 
         var response = Images.defaults()
                              .and()
-                             .editing(imageToEdit)
+                             .editingStandart(imageToEdit)
                              .masked(imageMask)
                              .singleChoice()
                              .mediumSquare()

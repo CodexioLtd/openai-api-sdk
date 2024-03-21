@@ -31,11 +31,12 @@ public class RunnableAsyncPromiseStage
             Consumer<String> onEachLine,
             Consumer<RunnableResponse> afterAll
     ) {
-        this.httpExecutor.executeAsyncWithPathVariable(
-                this.requestBuilder.build(),
-                this.threadId,
-                onEachLine,
-                afterAll
-        );
+        this.httpExecutor.async()
+                         .executeWithPathVariable(
+                                 this.requestBuilder.build(),
+                                 this.threadId,
+                                 onEachLine,
+                                 afterAll
+                         );
     }
 }

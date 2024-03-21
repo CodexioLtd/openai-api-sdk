@@ -40,13 +40,14 @@ public class AssistantAsyncPromiseStage
         var assistantResponseFuture =
                 new CompletableFuture<AssistantResponse>();
 
-        this.httpExecutor.executeAsync(
-                this.requestBuilder.build(),
-                onEachLine,
-                response -> {
-                    assistantResponseFuture.complete(response);
-                    afterAll.accept(response);
-                }
-        );
+        this.httpExecutor.async()
+                         .execute(
+                                 this.requestBuilder.build(),
+                                 onEachLine,
+                                 response -> {
+                                     assistantResponseFuture.complete(response);
+                                     afterAll.accept(response);
+                                 }
+                         );
     }
 }
