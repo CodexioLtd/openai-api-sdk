@@ -1,6 +1,6 @@
 package bg.codexio.ai.openai.api.sdk.message.chat;
 
-import bg.codexio.ai.openai.api.http.OpenAIHttpExecutor;
+import bg.codexio.ai.openai.api.http.ReactiveHttpExecutor;
 import bg.codexio.ai.openai.api.payload.assistant.response.AssistantResponse;
 import bg.codexio.ai.openai.api.payload.credentials.ApiCredentials;
 import bg.codexio.ai.openai.api.payload.message.request.MessageRequest;
@@ -22,7 +22,7 @@ import java.util.concurrent.CompletableFuture;
 import java.util.function.Consumer;
 import java.util.stream.Stream;
 
-import static bg.codexio.ai.openai.api.sdk.AsyncCallbackUtils.mockAsyncExecutionWithPathVariable;
+import static bg.codexio.ai.openai.api.sdk.AsyncCallbackUtils.mockExecutionWithPathVariable;
 import static bg.codexio.ai.openai.api.sdk.AsyncCallbackUtils.prepareCallback;
 import static bg.codexio.ai.openai.api.sdk.CommonTestAssertions.*;
 import static bg.codexio.ai.openai.api.sdk.assistant.InternalAssertions.ASSISTANT_ID;
@@ -74,7 +74,7 @@ public class MessageAssistantStageTest {
         var callBack =
                 prepareCallback(RunnableAdvancedConfigurationStage.class);
 
-        mockAsyncExecutionWithPathVariable(
+        mockExecutionWithPathVariable(
                 MESSAGE_HTTP_EXECUTOR,
                 MESSAGE_RESPONSE,
                 OBJECT_MAPPER.writeValueAsString(MESSAGE_RESPONSE)
@@ -116,10 +116,11 @@ public class MessageAssistantStageTest {
     @ParameterizedTest
     @MethodSource("provideTestVariables")
     void testReactive_withAssistantIdentifiers_expectCorrectBuilder(Object assistantIdentifier) {
-        when(this.messageAssistantStage.httpExecutor.executeReactiveWithPathVariable(
-                any(),
-                any()
-        )).thenAnswer(answer -> new OpenAIHttpExecutor.ReactiveExecution<>(
+        when(this.messageAssistantStage.httpExecutor.reactive()
+                                                    .executeWithPathVariable(
+                                                            any(),
+                                                            any()
+                                                    )).thenAnswer(answer -> new ReactiveHttpExecutor.ReactiveExecution<>(
                 Flux.empty(),
                 Mono.just(MESSAGE_RESPONSE)
         ));

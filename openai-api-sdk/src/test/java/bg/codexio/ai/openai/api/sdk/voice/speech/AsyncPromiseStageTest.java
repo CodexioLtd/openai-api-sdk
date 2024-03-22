@@ -109,7 +109,8 @@ public class AsyncPromiseStageTest {
 
                 return null;
             }).when(executor)
-              .executeAsync(
+              .async()
+              .execute(
                       any(),
                       any(),
                       any()

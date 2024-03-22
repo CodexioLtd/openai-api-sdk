@@ -26,10 +26,11 @@ public class MessageImmediateContextStageTest {
 
     @Test
     public void testFinish_expectCorrectResponse() {
-        when(this.messageImmediateContextStage.httpExecutor.executeWithPathVariable(
-                any(),
-                any()
-        )).thenAnswer(res -> MESSAGE_RESPONSE);
+        when(this.messageImmediateContextStage.httpExecutor.immediate()
+                                                           .executeWithPathVariable(
+                                                                   any(),
+                                                                   any()
+                                                           )).thenAnswer(res -> MESSAGE_RESPONSE);
 
         var response = this.messageImmediateContextStage.finish();
 

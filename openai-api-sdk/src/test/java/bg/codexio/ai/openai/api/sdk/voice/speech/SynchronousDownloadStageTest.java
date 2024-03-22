@@ -80,7 +80,8 @@ public class SynchronousDownloadStageTest {
         var targetFolder = new File("imaginaryFolder");
         var response = new AudioBinaryResponse(new byte[]{1, 2, 3});
 
-        when(this.httpExecutor.execute(any())).thenReturn(response);
+        when(this.httpExecutor.immediate()
+                              .execute(any())).thenReturn(response);
 
         var downloadUtils = mockStatic(DownloadExecutor.class);
 

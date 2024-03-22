@@ -30,7 +30,7 @@ public class RunnableResultStageTest {
 
     @Test
     void testWaitForCompletionRaw_expectCorrectResponse() {
-        executeWithPathVariables(this.runnableResultStage);
+        mockImmediateExecution(this.runnableResultStage);
         var response = this.runnableResultStage.waitForCompletionRaw();
 
         assertEquals(
@@ -57,7 +57,7 @@ public class RunnableResultStageTest {
 
     @Test
     void testWaitForCompletionRaw_withInterrupt_expectRuntimeException() {
-        executeWithPathVariables(this.runnableResultStage);
+        mockImmediateExecutionWithPathVariablesWithCompletedStatus(this.runnableResultStage);
         try (var t = mockStatic(ThreadOperationUtils.class)) {
             t.when(() -> ThreadOperationUtils.sleep(any()))
              .thenThrow(InterruptedException.class);
@@ -71,7 +71,7 @@ public class RunnableResultStageTest {
 
     @Test
     void testWaitForCompletionRaw_withRunnableResponse_expectCorrectResponse() {
-        executeWithPathVariables(this.runnableResultStage);
+        mockImmediateExecutionWithPathVariablesWithCompletedStatus(this.runnableResultStage);
         var response =
                 this.runnableResultStage.waitForCompletionRaw(RUNNABLE_RESPONSE_WITH_COMPLETED_STATUS);
 
@@ -83,7 +83,7 @@ public class RunnableResultStageTest {
 
     @Test
     void testWaitForCompletion_expectCorrectBuilder() {
-        executeWithPathVariablesWithCompletedStatus(this.runnableResultStage);
+        mockImmediateExecutionWithPathVariablesWithCompletedStatus(this.runnableResultStage);
         var response = this.runnableResultStage.waitForCompletion();
 
         assertAll(
@@ -95,7 +95,7 @@ public class RunnableResultStageTest {
 
     @Test
     void testWaitForCompletion_withRunnableResponse_expectCorrectThreadId() {
-        executeWithPathVariablesWithCompletedStatus(this.runnableResultStage);
+        mockImmediateExecutionWithPathVariablesWithCompletedStatus(this.runnableResultStage);
         var response =
                 this.runnableResultStage.waitForCompletion(RUNNABLE_RESPONSE);
 
@@ -107,7 +107,8 @@ public class RunnableResultStageTest {
 
     @Test
     void testFrom_withRunnableId_expectCorrectResponse() {
-        executeWithPathVariables(this.runnableResultStage);
+        //  executeWithPathVariables(this.runnableResultStage);
+        mockImmediateExecutionWithPathVariablesWithCompletedStatus(this.runnableResultStage);
         var response = this.runnableResultStage.from(RUNNABLE_ID);
 
         assertNotNull(response);
@@ -115,7 +116,7 @@ public class RunnableResultStageTest {
 
     @Test
     void testFrom_withRunnableResponse_expectCorrectResponse() {
-        executeWithPathVariables(this.runnableResultStage);
+        mockImmediateExecutionWithPathVariablesWithCompletedStatus(this.runnableResultStage);
         var response = this.runnableResultStage.from(RUNNABLE_RESPONSE);
 
         assertNotNull(response);
@@ -123,7 +124,7 @@ public class RunnableResultStageTest {
 
     @Test
     void testFrom_withRunnableResponseAndEmptyTools_expectCorrectResponse() {
-        executeWithPathVariables(this.runnableResultStage);
+        mockImmediateExecutionWithPathVariablesWithCompletedStatus(this.runnableResultStage);
         var response =
                 this.runnableResultStage.from(RUNNABLE_RESPONSE_WITH_EMPTY_TOOLS);
 
@@ -132,7 +133,7 @@ public class RunnableResultStageTest {
 
     @Test
     void testFrom_withThreadIdAndRunnableId_expectCorrectResponse() {
-        executeWithPathVariables(this.runnableResultStage);
+        mockImmediateExecutionWithPathVariablesWithCompletedStatus(this.runnableResultStage);
         var response = this.runnableResultStage.from(
                 THREAD_ID,
                 RUNNABLE_ID

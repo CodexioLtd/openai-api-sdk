@@ -1,6 +1,6 @@
 package bg.codexio.ai.openai.api.sdk.run;
 
-import bg.codexio.ai.openai.api.http.OpenAIHttpExecutor;
+import bg.codexio.ai.openai.api.http.ReactiveHttpExecutor;
 import bg.codexio.ai.openai.api.payload.run.request.RunnableRequest;
 import bg.codexio.ai.openai.api.sdk.message.MessageResult;
 import bg.codexio.ai.openai.api.sdk.message.Messages;
@@ -10,7 +10,7 @@ import org.junit.jupiter.api.Test;
 import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
 
-import static bg.codexio.ai.openai.api.sdk.AsyncCallbackUtils.mockAsyncExecutionWithPathVariables;
+import static bg.codexio.ai.openai.api.sdk.AsyncCallbackUtils.mockRetrieve;
 import static bg.codexio.ai.openai.api.sdk.AsyncCallbackUtils.prepareCallback;
 import static bg.codexio.ai.openai.api.sdk.CommonTestAssertions.*;
 import static bg.codexio.ai.openai.api.sdk.run.InternalAssertions.RUNNABLE_HTTP_EXECUTOR;
@@ -38,7 +38,8 @@ public class RunnableMessageResultTest {
             var retrieveMessageHttpExecutorMock =
                     mockMessageProcessing(mockedMessage);
 
-            when(retrieveMessageHttpExecutorMock.retrieve(any())).thenAnswer(res -> LIST_MESSAGE_RESPONSE_WITH_TEXT_CONTENT_WITH_FILE_CITATION);
+            when(retrieveMessageHttpExecutorMock.immediate()
+                                                .retrieve(any())).thenAnswer(res -> LIST_MESSAGE_RESPONSE_WITH_TEXT_CONTENT_WITH_FILE_CITATION);
 
             this.performMessageAssertion(this.runnableMessageResult.answersImmediate());
         }
@@ -51,7 +52,7 @@ public class RunnableMessageResultTest {
             var retrieveListMessagesHttpExecutor =
                     mockMessageProcessing(mockedMessage);
 
-            mockAsyncExecutionWithPathVariables(
+            mockRetrieve(
                     retrieveListMessagesHttpExecutor,
                     LIST_MESSAGE_RESPONSE_WITH_TEXT_CONTENT_WITH_FILE_CITATION,
                     OBJECT_MAPPER.writeValueAsString(LIST_MESSAGE_RESPONSE_WITH_TEXT_CONTENT_WITH_FILE_CITATION)
@@ -73,7 +74,7 @@ public class RunnableMessageResultTest {
             var retrieveListMessagesHttpExecutor =
                     mockMessageProcessing(mockedMessage);
 
-            mockAsyncExecutionWithPathVariables(
+            mockRetrieve(
                     retrieveListMessagesHttpExecutor,
                     LIST_MESSAGE_RESPONSE_WITH_TEXT_CONTENT_WITH_FILE_CITATION,
                     OBJECT_MAPPER.writeValueAsString(LIST_MESSAGE_RESPONSE_WITH_TEXT_CONTENT_WITH_FILE_CITATION)
@@ -96,7 +97,8 @@ public class RunnableMessageResultTest {
             var retrieveListMessagesHttpExecutor =
                     mockMessageProcessing(mockedMessage);
 
-            when(retrieveListMessagesHttpExecutor.retrieveReactive(any())).thenAnswer(res -> new OpenAIHttpExecutor.ReactiveExecution<>(
+            when(retrieveListMessagesHttpExecutor.reactive()
+                                                 .retrieve(any())).thenAnswer(res -> new ReactiveHttpExecutor.ReactiveExecution<>(
                     Flux.empty(),
                     Mono.just(LIST_MESSAGE_RESPONSE_WITH_TEXT_CONTENT_WITH_FILE_CITATION)
             ));
@@ -112,7 +114,8 @@ public class RunnableMessageResultTest {
             var retrieveListMessagesHttpExecutor =
                     mockMessageProcessing(mockedMessage);
 
-            when(retrieveListMessagesHttpExecutor.retrieveReactive(any())).thenAnswer(res -> new OpenAIHttpExecutor.ReactiveExecution<>(
+            when(retrieveListMessagesHttpExecutor.reactive()
+                                                 .retrieve(any())).thenAnswer(res -> new ReactiveHttpExecutor.ReactiveExecution<>(
                     Flux.empty(),
                     Mono.just(LIST_MESSAGE_RESPONSE_WITH_TEXT_CONTENT_WITH_FILE_CITATION)
             ));

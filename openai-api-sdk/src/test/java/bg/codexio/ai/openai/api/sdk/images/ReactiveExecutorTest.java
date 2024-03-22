@@ -1,7 +1,7 @@
 package bg.codexio.ai.openai.api.sdk.images;
 
 import bg.codexio.ai.openai.api.http.DefaultOpenAIHttpExecutor;
-import bg.codexio.ai.openai.api.http.OpenAIHttpExecutor;
+import bg.codexio.ai.openai.api.http.ReactiveHttpExecutor.ReactiveExecution;
 import bg.codexio.ai.openai.api.payload.images.Format;
 import bg.codexio.ai.openai.api.payload.images.request.*;
 import bg.codexio.ai.openai.api.payload.images.response.ImageDataResponse;
@@ -70,7 +70,8 @@ public class ReactiveExecutorTest<R extends ImageRequest> {
             ImageRequestBuilder<R> builder,
             Class<R> classType
     ) {
-        when(executor.executeReactive(any(classType))).thenAnswer(answer -> new OpenAIHttpExecutor.ReactiveExecution<>(
+        when(executor.reactive()
+                     .execute(any(classType))).thenAnswer(answer -> new ReactiveExecution<>(
                 Flux.empty(),
                 Mono.just(IMAGE_DATA_RESPONSE)
         ));
@@ -98,7 +99,8 @@ public class ReactiveExecutorTest<R extends ImageRequest> {
         var targetFolder = new File("imaginaryFolder");
         var path = TEST_FILE_PATH;
 
-        when(executor.executeReactive(any(classType))).thenAnswer(answer -> new OpenAIHttpExecutor.ReactiveExecution<>(
+        when(executor.reactive()
+                     .execute(any(classType))).thenAnswer(answer -> new ReactiveExecution<>(
                 Flux.empty(),
                 Mono.just(IMAGE_DATA_RESPONSE)
         ));
@@ -143,7 +145,8 @@ public class ReactiveExecutorTest<R extends ImageRequest> {
         );
         var targetFolder = new File("imaginaryFolder");
 
-        when(executor.executeReactive(any(classType))).thenAnswer(answer -> new OpenAIHttpExecutor.ReactiveExecution<>(
+        when(executor.reactive()
+                     .execute(any(classType))).thenAnswer(answer -> new ReactiveExecution<>(
                 Flux.empty(),
                 Mono.just(IMAGE_DATA_RESPONSE)
         ));

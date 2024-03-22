@@ -12,7 +12,7 @@ import org.junit.jupiter.api.Test;
 
 import java.util.List;
 
-import static bg.codexio.ai.openai.api.sdk.AsyncCallbackUtils.mockAsyncExecution;
+import static bg.codexio.ai.openai.api.sdk.AsyncCallbackUtils.mockExecution;
 import static bg.codexio.ai.openai.api.sdk.AsyncCallbackUtils.prepareCallback;
 import static bg.codexio.ai.openai.api.sdk.vision.InternalAssertions.*;
 import static org.junit.jupiter.api.Assertions.assertAll;
@@ -81,7 +81,7 @@ public class AsyncPromiseStageTest {
 
     @Test
     public void testThen_withFinalizer_shouldBeInvokedWithCorrectResponse() {
-        mockAsyncExecution(
+        mockExecution(
                 TEST_EXECUTOR,
                 RESPONSE_DTO,
                 RAW_RESPONSE
@@ -98,7 +98,7 @@ public class AsyncPromiseStageTest {
 
     @Test
     public void testThen_withTwoCallbacks_shouldBeInvokedWithCorrectResponseAndLines() {
-        mockAsyncExecution(
+        mockExecution(
                 TEST_EXECUTOR,
                 RESPONSE_DTO,
                 RAW_RESPONSE
@@ -125,7 +125,7 @@ public class AsyncPromiseStageTest {
 
     @Test
     public void testOnEachLine_withTwoLinesOfResponse_shouldBeCalledTwice() {
-        mockAsyncExecution(
+        mockExecution(
                 TEST_EXECUTOR,
                 RESPONSE_DTO,
                 RAW_RESPONSE

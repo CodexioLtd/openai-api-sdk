@@ -28,7 +28,8 @@ public class SynchronousPromptStageTest {
 
     @Test
     public void testGuide_withUserValue_expectUserValue() {
-        when(TEST_EXECUTOR.execute(any(TranslationRequest.class))).thenAnswer(answer -> new SpeechTextResponse(answer.getArgument(0)
+        when(TEST_EXECUTOR.immediate()
+                          .execute(any(TranslationRequest.class))).thenAnswer(answer -> new SpeechTextResponse(answer.getArgument(0)
                                                                                                                      .toString()));
 
         var result = this.synchronousPromptStage.guide(TEST_INPUT);
@@ -43,7 +44,8 @@ public class SynchronousPromptStageTest {
 
     @Test
     public void testUnguided_expectNoValue() {
-        when(TEST_EXECUTOR.execute(any(TranslationRequest.class))).thenAnswer(answer -> new SpeechTextResponse(answer.getArgument(0)
+        when(TEST_EXECUTOR.immediate()
+                          .execute(any(TranslationRequest.class))).thenAnswer(answer -> new SpeechTextResponse(answer.getArgument(0)
                                                                                                                      .toString()));
 
         var result = this.synchronousPromptStage.unguided();

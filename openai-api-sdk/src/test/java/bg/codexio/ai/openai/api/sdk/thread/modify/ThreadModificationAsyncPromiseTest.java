@@ -8,7 +8,7 @@ import org.junit.jupiter.api.Test;
 
 import java.util.function.Consumer;
 
-import static bg.codexio.ai.openai.api.sdk.AsyncCallbackUtils.mockAsyncExecutionWithPathVariable;
+import static bg.codexio.ai.openai.api.sdk.AsyncCallbackUtils.mockExecutionWithPathVariable;
 import static bg.codexio.ai.openai.api.sdk.CommonTestAssertions.*;
 import static bg.codexio.ai.openai.api.sdk.thread.modify.InternalAssertions.MODIFY_THREAD_HTTP_EXECUTOR;
 import static org.junit.jupiter.api.Assertions.assertAll;
@@ -28,7 +28,7 @@ public class ThreadModificationAsyncPromiseTest {
                 THREAD_ID
         );
 
-        mockAsyncExecutionWithPathVariable(
+        mockExecutionWithPathVariable(
                 MODIFY_THREAD_HTTP_EXECUTOR,
                 THREAD_RESPONSE,
                 OBJECT_MAPPER.writeValueAsString(THREAD_RESPONSE)

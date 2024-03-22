@@ -9,7 +9,7 @@ import org.junit.jupiter.api.Test;
 
 import java.util.function.Consumer;
 
-import static bg.codexio.ai.openai.api.sdk.AsyncCallbackUtils.mockAsyncExecution;
+import static bg.codexio.ai.openai.api.sdk.AsyncCallbackUtils.mockExecution;
 import static bg.codexio.ai.openai.api.sdk.CommonTestAssertions.OBJECT_MAPPER;
 import static bg.codexio.ai.openai.api.sdk.assistant.InternalAssertions.*;
 import static org.junit.jupiter.api.Assertions.assertAll;
@@ -32,7 +32,7 @@ public class AssistantAsyncPromiseStageTest {
                                 .withInstructions(ASSISTANT_INSTRUCTION)
         );
 
-        mockAsyncExecution(
+        mockExecution(
                 ASSISTANT_HTTP_EXECUTOR,
                 ASSISTANT_RESPONSE,
                 OBJECT_MAPPER.writeValueAsString(ASSISTANT_RESPONSE)

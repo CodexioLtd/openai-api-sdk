@@ -1,6 +1,6 @@
 package bg.codexio.ai.openai.api.sdk.assistant;
 
-import bg.codexio.ai.openai.api.http.OpenAIHttpExecutor;
+import bg.codexio.ai.openai.api.http.ReactiveHttpExecutor;
 import bg.codexio.ai.openai.api.http.assistant.AssistantHttpExecutor;
 import bg.codexio.ai.openai.api.models.ModelType;
 import bg.codexio.ai.openai.api.models.v40.GPT40Model;
@@ -121,11 +121,13 @@ public class InternalAssertions {
     }
 
     static void mockImmediateExecution(AssistantConfigurationStage assistantConfigurationStage) {
-        when(assistantConfigurationStage.httpExecutor.execute(any())).thenAnswer(res -> ASSISTANT_RESPONSE);
+        when(assistantConfigurationStage.httpExecutor.immediate()
+                                                     .execute(any())).thenAnswer(res -> ASSISTANT_RESPONSE);
     }
 
     static void mockReactiveExecution(AssistantConfigurationStage assistantConfigurationStage) {
-        when(assistantConfigurationStage.httpExecutor.executeReactive(any())).thenAnswer(res -> new OpenAIHttpExecutor.ReactiveExecution<>(
+        when(assistantConfigurationStage.httpExecutor.reactive()
+                                                     .execute(any())).thenAnswer(res -> new ReactiveHttpExecutor.ReactiveExecution<>(
                 Flux.empty(),
                 Mono.just(ASSISTANT_RESPONSE)
         ));

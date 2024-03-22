@@ -3,12 +3,8 @@ package bg.codexio.ai.openai.api.sdk.file.download;
 import bg.codexio.ai.openai.api.payload.file.download.FileDownloadingMeta;
 import bg.codexio.ai.openai.api.payload.file.response.FileContentResponse;
 
-import java.io.File;
-
 import static bg.codexio.ai.openai.api.sdk.CommonTestAssertions.FILE;
 import static bg.codexio.ai.openai.api.sdk.CommonTestAssertions.FILE_TEST_ID;
-import static org.mockito.ArgumentMatchers.any;
-import static org.mockito.Mockito.mockStatic;
 
 public class InternalAssertions {
     static final String FILE_TEST_NAME = "test_name";
@@ -28,16 +24,16 @@ public class InternalAssertions {
             1, 2, 3
     });
 
-    static void mockDownloadExecutor(Runnable execution) {
-        try (var downloadUtils = mockStatic(DownloadExecutor.class)) {
-            downloadUtils.when(() -> DownloadExecutor.downloadTo(
-                                 any(),
-                                 any(),
-                                 any()
-                         ))
-                         .thenReturn(new File(FILE_TEST_PATH));
-
-            execution.run();
-        }
-    }
+    //    static void mockDownloadExecutor(Runnable execution) {
+    //        try (var downloadUtils = mockStatic(DownloadExecutor.class)) {
+    //            downloadUtils.when(() -> DownloadExecutor.downloadTo(
+    //                                 any(),
+    //                                 any(),
+    //                                 any()
+    //                         ))
+    //                         .thenReturn(new File(FILE_TEST_PATH));
+    //
+    //            execution.run();
+    //        }
+    //    }
 }

@@ -1,14 +1,17 @@
 package bg.codexio.ai.openai.api.sdk;
 
+import bg.codexio.ai.openai.api.http.AsynchronousHttpExecutor;
 import bg.codexio.ai.openai.api.http.OpenAIHttpExecutor;
 
 import java.util.function.Consumer;
 
 import static org.mockito.ArgumentMatchers.any;
-import static org.mockito.Mockito.doAnswer;
-import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.*;
 
 public class AsyncCallbackUtils {
+
+    private final static AsynchronousHttpExecutor<?, ?> asyncExecution =
+            mock(AsynchronousHttpExecutor.class);
 
     public static <T> CallbackData<T> prepareCallback(Class<T> type) {
         T[] arr = (T[]) new Object[1];
@@ -26,11 +29,12 @@ public class AsyncCallbackUtils {
         );
     }
 
-    public static void mockAsyncExecution(
+    public static void mockExecution(
             OpenAIHttpExecutor executor,
             Object response,
             String rawResponse
     ) {
+        when(executor.async()).thenReturn(asyncExecution);
         doAnswer(invocation -> {
             var callback = invocation.getArgument(
                     1,
@@ -49,19 +53,21 @@ public class AsyncCallbackUtils {
             finalizer.accept(response);
 
             return null;
-        }).when(executor)
-          .executeAsync(
+        }).when(asyncExecution)
+          .execute(
                   any(),
                   any(),
                   any()
           );
     }
 
-    public static void mockAsyncExecutionWithPathVariable(
+    public static void mockExecutionWithPathVariable(
             OpenAIHttpExecutor executor,
             Object response,
             String rawResponse
     ) {
+        when(executor.async()).thenReturn(asyncExecution);
+
         doAnswer(invocation -> {
             var callback = invocation.getArgument(
                     2,
@@ -80,8 +86,8 @@ public class AsyncCallbackUtils {
             finalizer.accept(response);
 
             return null;
-        }).when(executor)
-          .executeAsyncWithPathVariable(
+        }).when(asyncExecution)
+          .executeWithPathVariable(
                   any(),
                   any(),
                   any(),
@@ -89,11 +95,13 @@ public class AsyncCallbackUtils {
           );
     }
 
-    public static void mockAsyncExecutionWithPathVariables(
+    public static void mockRetrieve(
             OpenAIHttpExecutor executor,
             Object response,
             String rawResponse
     ) {
+        when(executor.async()).thenReturn(asyncExecution);
+
         doAnswer(invocation -> {
             var callback = invocation.getArgument(
                     0,
@@ -112,8 +120,8 @@ public class AsyncCallbackUtils {
             finalizer.accept(response);
 
             return null;
-        }).when(executor)
-          .retrieveAsync(
+        }).when(asyncExecution)
+          .retrieve(
                   any(),
                   any(),
                   any()

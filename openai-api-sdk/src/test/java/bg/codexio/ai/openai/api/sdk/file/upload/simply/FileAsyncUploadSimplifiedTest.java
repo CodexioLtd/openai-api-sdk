@@ -4,7 +4,7 @@ import bg.codexio.ai.openai.api.payload.file.response.FileResponse;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import org.junit.jupiter.api.Test;
 
-import static bg.codexio.ai.openai.api.sdk.AsyncCallbackUtils.mockAsyncExecution;
+import static bg.codexio.ai.openai.api.sdk.AsyncCallbackUtils.mockExecution;
 import static bg.codexio.ai.openai.api.sdk.AsyncCallbackUtils.prepareCallback;
 import static bg.codexio.ai.openai.api.sdk.CommonTestAssertions.*;
 import static bg.codexio.ai.openai.api.sdk.file.upload.simply.InternalAssertions.mockFileUploadSimplified;
@@ -49,7 +49,7 @@ public class FileAsyncUploadSimplifiedTest {
         mockFileUploadSimplified(
                 () -> {
                     try {
-                        mockAsyncExecution(
+                        mockExecution(
                                 UPLOAD_FILE_HTTP_EXECUTOR,
                                 FILE_RESPONSE,
                                 OBJECT_MAPPER.writeValueAsString(FILE_RESPONSE)

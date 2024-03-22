@@ -1,6 +1,6 @@
 package bg.codexio.ai.openai.api.sdk.thread.modify;
 
-import bg.codexio.ai.openai.api.http.OpenAIHttpExecutor;
+import bg.codexio.ai.openai.api.http.ReactiveHttpExecutor;
 import bg.codexio.ai.openai.api.payload.thread.request.ThreadModificationRequest;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -52,10 +52,11 @@ public class ThreadModificationReactiveContextTest {
     }
 
     private void mockReactiveExecution() {
-        when(this.threadModificationReactiveContextStage.httpExecutor.executeReactiveWithPathVariable(
+        when(this.threadModificationReactiveContextStage.httpExecutor.reactive()
+                                                                     .executeWithPathVariable(
                 any(),
                 any()
-        )).thenAnswer(res -> new OpenAIHttpExecutor.ReactiveExecution<>(
+                                                                     )).thenAnswer(res -> new ReactiveHttpExecutor.ReactiveExecution<>(
                 Flux.empty(),
                 Mono.just(THREAD_RESPONSE)
         ));

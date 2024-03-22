@@ -1,6 +1,6 @@
 package bg.codexio.ai.openai.api.sdk.run;
 
-import bg.codexio.ai.openai.api.http.OpenAIHttpExecutor;
+import bg.codexio.ai.openai.api.http.ReactiveHttpExecutor;
 import bg.codexio.ai.openai.api.payload.run.request.RunnableRequest;
 import bg.codexio.ai.openai.api.sdk.message.Messages;
 import com.fasterxml.jackson.core.JsonProcessingException;
@@ -49,7 +49,7 @@ public class RunnableFinalizationStageTest {
             throws JsonProcessingException {
         var callback = prepareCallback(RunnableResultStage.class);
 
-        mockAsyncExecutionWithPathVariable(
+        mockExecutionWithPathVariable(
                 RUNNABLE_HTTP_EXECUTOR,
                 RUNNABLE_RESPONSE,
                 OBJECT_MAPPER.writeValueAsString(RUNNABLE_RESPONSE)
@@ -65,7 +65,7 @@ public class RunnableFinalizationStageTest {
             throws JsonProcessingException {
         var callback = prepareCallback(String.class);
 
-        mockAsyncExecutionWithPathVariable(
+        mockExecutionWithPathVariable(
                 RUNNABLE_HTTP_EXECUTOR,
                 RUNNABLE_RESPONSE_WITH_COMPLETED_STATUS,
                 OBJECT_MAPPER.writeValueAsString(RUNNABLE_RESPONSE)
@@ -76,7 +76,7 @@ public class RunnableFinalizationStageTest {
             var retrieveListMessagesHttpExecutor =
                     mockMessageProcessing(mockedMessage);
 
-            mockAsyncExecutionWithPathVariables(
+            mockRetrieve(
                     retrieveListMessagesHttpExecutor,
                     LIST_MESSAGE_RESPONSE_WITH_TEXT_CONTENT_WITH_FILE_CITATION,
                     OBJECT_MAPPER.writeValueAsString(LIST_MESSAGE_RESPONSE_WITH_TEXT_CONTENT_WITH_FILE_CITATION)
@@ -106,9 +106,9 @@ public class RunnableFinalizationStageTest {
     public void testReactiveSimply_expectCorrectResponse() {
         when(this.runnableFinalizationStage.httpExecutor.reactive()
                                                         .executeWithPathVariable(
-                any(),
-                any()
-        )).thenAnswer(res -> new OpenAIHttpExecutor.ReactiveExecution<>(
+                                                                any(),
+                                                                any()
+                                                        )).thenAnswer(res -> new ReactiveHttpExecutor.ReactiveExecution<>(
                 Flux.empty(),
                 Mono.just(RUNNABLE_RESPONSE_WITH_COMPLETED_STATUS)
         ));
@@ -118,7 +118,8 @@ public class RunnableFinalizationStageTest {
             var retrieveListMessagesHttpExecutor =
                     mockMessageProcessing(mockedMessage);
 
-            when(retrieveListMessagesHttpExecutor.retrieveReactive(any())).thenAnswer(res -> new OpenAIHttpExecutor.ReactiveExecution<>(
+            when(retrieveListMessagesHttpExecutor.reactive()
+                                                 .retrieve(any())).thenAnswer(res -> new ReactiveHttpExecutor.ReactiveExecution<>(
                     Flux.empty(),
                     Mono.just(LIST_MESSAGE_RESPONSE_WITH_TEXT_CONTENT_WITH_FILE_CITATION)
             ));

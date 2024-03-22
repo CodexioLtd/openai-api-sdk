@@ -62,7 +62,8 @@ public class SynchronousPromptStageTest {
     public void testDescribe_withoutPrompt_expectDefaultPrompt() {
         var expectedRequest = this.expectWith("What’s in this image?");
 
-        when(TEST_EXECUTOR.execute(eq(expectedRequest))).thenReturn(mockResponse());
+        when(TEST_EXECUTOR.immediate()
+                          .execute(eq(expectedRequest))).thenReturn(mockResponse());
 
         var result = this.promptStage.describe();
 
@@ -76,7 +77,8 @@ public class SynchronousPromptStageTest {
     public void testDescribe_expectManualPrompt() {
         var expectedRequest = this.expectWith("What is this?");
 
-        when(TEST_EXECUTOR.execute(eq(expectedRequest))).thenReturn(mockResponse());
+        when(TEST_EXECUTOR.immediate()
+                          .execute(eq(expectedRequest))).thenReturn(mockResponse());
 
         var result = this.promptStage.describe("What is this?");
 
@@ -90,7 +92,8 @@ public class SynchronousPromptStageTest {
     public void testDescribeRaw_withoutPrompt_expectDefaultPrompt() {
         var expectedRequest = this.expectWith("What’s in this image?");
 
-        when(TEST_EXECUTOR.execute(eq(expectedRequest))).thenReturn(mockResponse());
+        when(TEST_EXECUTOR.immediate()
+                          .execute(eq(expectedRequest))).thenReturn(mockResponse());
 
         var result = this.promptStage.describeRaw();
 
@@ -104,7 +107,8 @@ public class SynchronousPromptStageTest {
     public void testDescribeRaw_expectManualPrompt() {
         var expectedRequest = this.expectWith("What is this?");
 
-        when(TEST_EXECUTOR.execute(eq(expectedRequest))).thenReturn(mockResponse());
+        when(TEST_EXECUTOR.immediate()
+                          .execute(eq(expectedRequest))).thenReturn(mockResponse());
 
         var result = this.promptStage.describeRaw("What is this?");
 

@@ -8,7 +8,7 @@ import org.junit.jupiter.api.Test;
 
 import java.util.function.Consumer;
 
-import static bg.codexio.ai.openai.api.sdk.AsyncCallbackUtils.mockAsyncExecution;
+import static bg.codexio.ai.openai.api.sdk.AsyncCallbackUtils.mockExecution;
 import static bg.codexio.ai.openai.api.sdk.CommonTestAssertions.*;
 import static bg.codexio.ai.openai.api.sdk.file.upload.InternalAssertions.ASSISTANT_PURPOSE_NAME;
 import static org.junit.jupiter.api.Assertions.assertAll;
@@ -27,7 +27,7 @@ public class FileUploadingAsyncPromiseStageTest {
                                  .withPurpose(ASSISTANT_PURPOSE_NAME)
         );
 
-        mockAsyncExecution(
+        mockExecution(
                 UPLOAD_FILE_HTTP_EXECUTOR,
                 FILE_RESPONSE,
                 OBJECT_MAPPER.writeValueAsString(FILE_RESPONSE)

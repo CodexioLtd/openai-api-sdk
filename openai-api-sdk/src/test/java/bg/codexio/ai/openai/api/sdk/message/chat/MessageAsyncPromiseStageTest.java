@@ -8,7 +8,7 @@ import org.junit.jupiter.api.Test;
 
 import java.util.function.Consumer;
 
-import static bg.codexio.ai.openai.api.sdk.AsyncCallbackUtils.mockAsyncExecutionWithPathVariable;
+import static bg.codexio.ai.openai.api.sdk.AsyncCallbackUtils.mockExecutionWithPathVariable;
 import static bg.codexio.ai.openai.api.sdk.CommonTestAssertions.OBJECT_MAPPER;
 import static bg.codexio.ai.openai.api.sdk.CommonTestAssertions.THREAD_ID;
 import static bg.codexio.ai.openai.api.sdk.message.chat.InternalAssertions.*;
@@ -28,7 +28,7 @@ public class MessageAsyncPromiseStageTest {
                 THREAD_ID
         );
 
-        mockAsyncExecutionWithPathVariable(
+        mockExecutionWithPathVariable(
                 MESSAGE_HTTP_EXECUTOR,
                 MESSAGE_RESPONSE,
                 OBJECT_MAPPER.writeValueAsString(MESSAGE_RESPONSE)

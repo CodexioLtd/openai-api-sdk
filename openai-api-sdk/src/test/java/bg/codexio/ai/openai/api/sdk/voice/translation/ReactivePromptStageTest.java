@@ -1,6 +1,6 @@
 package bg.codexio.ai.openai.api.sdk.voice.translation;
 
-import bg.codexio.ai.openai.api.http.OpenAIHttpExecutor;
+import bg.codexio.ai.openai.api.http.ReactiveHttpExecutor;
 import bg.codexio.ai.openai.api.payload.voice.request.TranslationRequest;
 import bg.codexio.ai.openai.api.payload.voice.response.SpeechTextResponse;
 import org.junit.jupiter.api.BeforeEach;
@@ -31,7 +31,8 @@ public class ReactivePromptStageTest {
 
     @Test
     public void testGuide_withUserValue_expectUserValue() {
-        when(TEST_EXECUTOR.executeReactive(any(TranslationRequest.class))).thenAnswer(answer -> new OpenAIHttpExecutor.ReactiveExecution<>(
+        when(TEST_EXECUTOR.reactive()
+                          .execute(any(TranslationRequest.class))).thenAnswer(answer -> new ReactiveHttpExecutor.ReactiveExecution<>(
                 Flux.empty(),
                 Mono.just(new SpeechTextResponse(answer.getArgument(0)
                                                        .toString()))
@@ -51,7 +52,8 @@ public class ReactivePromptStageTest {
 
     @Test
     public void testUnguided_expectNoValue() {
-        when(TEST_EXECUTOR.executeReactive(any(TranslationRequest.class))).thenAnswer(answer -> new OpenAIHttpExecutor.ReactiveExecution<>(
+        when(TEST_EXECUTOR.reactive()
+                          .execute(any(TranslationRequest.class))).thenAnswer(answer -> new ReactiveHttpExecutor.ReactiveExecution<>(
                 Flux.empty(),
                 Mono.just(new SpeechTextResponse(answer.getArgument(0)
                                                        .toString()))
@@ -67,5 +69,4 @@ public class ReactivePromptStageTest {
                       .text()
         );
     }
-
 }

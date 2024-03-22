@@ -1,5 +1,6 @@
 package bg.codexio.ai.openai.api.sdk.thread.create;
 
+import bg.codexio.ai.openai.api.http.SynchronousHttpExecutor;
 import bg.codexio.ai.openai.api.payload.thread.request.ThreadCreationRequest;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -8,6 +9,7 @@ import static bg.codexio.ai.openai.api.sdk.CommonTestAssertions.THREAD_RESPONSE;
 import static bg.codexio.ai.openai.api.sdk.thread.create.InternalAssertions.CREATE_THREAD_HTTP_EXECUTOR;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
 public class ThreadImmediateContextStageTest {
@@ -43,6 +45,9 @@ public class ThreadImmediateContextStageTest {
     }
 
     private void mockThreadExecution() {
-        when(this.threadImmediateContextStage.httpExecutor.execute(any())).thenAnswer(res -> THREAD_RESPONSE);
+        var mockedSynchronousExecution = mock(SynchronousHttpExecutor.class);
+        when(this.threadImmediateContextStage.httpExecutor.immediate()).thenReturn(mockedSynchronousExecution);
+        when(this.threadImmediateContextStage.httpExecutor.immediate()
+                                                          .execute(any())).thenReturn(THREAD_RESPONSE);
     }
 }

@@ -1,6 +1,6 @@
 package bg.codexio.ai.openai.api.sdk.file.upload;
 
-import bg.codexio.ai.openai.api.http.OpenAIHttpExecutor;
+import bg.codexio.ai.openai.api.http.ReactiveHttpExecutor;
 import bg.codexio.ai.openai.api.payload.file.request.UploadFileRequest;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -51,7 +51,8 @@ public class FileUploadingReactiveContextStageTest {
     }
 
     private void mockReactiveExecution() {
-        when(this.fileUploadingReactiveContextStage.executor.executeReactive(any())).thenAnswer(res -> new OpenAIHttpExecutor.ReactiveExecution<>(
+        when(this.fileUploadingReactiveContextStage.executor.reactive()
+                                                            .execute(any())).thenAnswer(res -> new ReactiveHttpExecutor.ReactiveExecution<>(
                 Flux.empty(),
                 Mono.just(FILE_RESPONSE)
         ));

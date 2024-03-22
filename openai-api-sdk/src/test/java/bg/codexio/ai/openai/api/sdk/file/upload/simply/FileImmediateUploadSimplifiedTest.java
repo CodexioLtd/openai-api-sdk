@@ -33,6 +33,7 @@ public class FileImmediateUploadSimplifiedTest {
     }
 
     private void mockImmediateExecution() {
-        when(UPLOAD_FILE_HTTP_EXECUTOR.execute(any())).thenAnswer(res -> FILE_RESPONSE);
+        when(UPLOAD_FILE_HTTP_EXECUTOR.immediate()
+                                      .execute(any())).thenAnswer(res -> FILE_RESPONSE);
     }
 }

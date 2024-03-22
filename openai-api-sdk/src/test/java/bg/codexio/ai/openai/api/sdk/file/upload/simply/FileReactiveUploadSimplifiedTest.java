@@ -1,6 +1,6 @@
 package bg.codexio.ai.openai.api.sdk.file.upload.simply;
 
-import bg.codexio.ai.openai.api.http.OpenAIHttpExecutor;
+import bg.codexio.ai.openai.api.http.ReactiveHttpExecutor;
 import org.junit.jupiter.api.Test;
 import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
@@ -43,7 +43,8 @@ public class FileReactiveUploadSimplifiedTest {
     }
 
     private void mockReactiveExecution() {
-        when(UPLOAD_FILE_HTTP_EXECUTOR.executeReactive(any())).thenAnswer(res -> new OpenAIHttpExecutor.ReactiveExecution<>(
+        when(UPLOAD_FILE_HTTP_EXECUTOR.reactive()
+                                      .execute(any())).thenAnswer(res -> new ReactiveHttpExecutor.ReactiveExecution<>(
                 Flux.empty(),
                 Mono.just(FILE_RESPONSE)
         ));

@@ -41,7 +41,8 @@ public class MessageAnswersImmediateContextStageTest {
 
     @Test
     public void testAnswers_expectCorrectResponse() {
-        when(this.messageAnswersImmediateContextStage.httpExecutor.retrieve(any())).thenAnswer(res -> LIST_MESSAGE_RESPONSE);
+        when(this.messageAnswersImmediateContextStage.httpExecutor.immediate()
+                                                                  .retrieve(any())).thenAnswer(res -> LIST_MESSAGE_RESPONSE);
         assertNotNull(this.messageAnswersImmediateContextStage.answers());
     }
 
@@ -62,7 +63,8 @@ public class MessageAnswersImmediateContextStageTest {
     @ParameterizedTest
     @MethodSource("provideTestVariables")
     public void testAnswers_withThreadIdentifier_expectCorrectResponse(Object threadIdentifier) {
-        when(this.messageAnswersImmediateContextStage.httpExecutor.retrieve(any())).thenAnswer(res -> LIST_MESSAGE_RESPONSE);
+        when(this.messageAnswersImmediateContextStage.httpExecutor.immediate()
+                                                                  .retrieve(any())).thenAnswer(res -> LIST_MESSAGE_RESPONSE);
 
         if (threadIdentifier instanceof String threadId) {
             assertNotNull(this.messageAnswersImmediateContextStage.answers(threadId));

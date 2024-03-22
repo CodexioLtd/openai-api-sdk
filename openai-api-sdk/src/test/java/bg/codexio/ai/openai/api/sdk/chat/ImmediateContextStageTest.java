@@ -34,7 +34,8 @@ public class ImmediateContextStageTest {
 
     @Test
     public void testAskRaw_expectCorrectResponse() {
-        when(this.immediateContextStage.executor.execute(any())).thenAnswer(answer -> CHAT_MESSAGE_RESPONSE);
+        when(this.immediateContextStage.executor.immediate()
+                                                .execute(any())).thenAnswer(answer -> CHAT_MESSAGE_RESPONSE);
 
         var response = immediateContextStage.askRaw("Test Question");
 
@@ -46,36 +47,38 @@ public class ImmediateContextStageTest {
 
     @Test
     public void testAsk_expectCorrectResponse() {
-        when(this.immediateContextStage.executor.execute(any())).thenAnswer(answer -> CHAT_MESSAGE_RESPONSE);
+        when(this.immediateContextStage.executor.immediate()
+                                                .execute(any())).thenAnswer(answer -> CHAT_MESSAGE_RESPONSE);
 
         var response = immediateContextStage.ask("Test Question");
 
         assertEquals(
                 this.getChatMessage(CHAT_MESSAGE_RESPONSE)
-                                     .content(),
+                    .content(),
                 response
         );
     }
 
     @Test
     public void testAsk_withToolCalls_expectCorrectResponse() {
-        when(immediateContextStage.executor.execute(any())).thenAnswer(answer -> CHAT_MESSAGE_RESPONSE_2);
+        when(immediateContextStage.executor.immediate()
+                                           .execute(any())).thenAnswer(answer -> CHAT_MESSAGE_RESPONSE_2);
 
         var response = immediateContextStage.ask("Test Question");
 
         assertEquals(
                 this.getChatMessage(CHAT_MESSAGE_RESPONSE_2)
-                        .toolCalls()
-                        .get(0)
-                        .function()
-                        .arguments(),
+                    .toolCalls()
+                    .get(0)
+                    .function()
+                    .arguments(),
                 response
         );
     }
 
     private ChatMessage getChatMessage(ChatMessageResponse chatMessageResponse) {
         return chatMessageResponse.choices()
-                .get(0)
-                .message();
+                                  .get(0)
+                                  .message();
     }
 }

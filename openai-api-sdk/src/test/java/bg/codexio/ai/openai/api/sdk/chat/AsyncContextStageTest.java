@@ -34,7 +34,7 @@ public class AsyncContextStageTest {
 
     @Test
     public void testAsk_manualMessage_expectMessagesAsChoice() {
-        AsyncCallbackUtils.mockAsyncExecution(
+        AsyncCallbackUtils.mockExecution(
                 CHAT_EXECUTOR,
                 CHAT_MESSAGE_RESPONSE,
                 "test-response"
@@ -61,7 +61,7 @@ public class AsyncContextStageTest {
 
     @Test
     public void testAskRaw_manualMessage_expectMessagesAsChoice() {
-        AsyncCallbackUtils.mockAsyncExecution(
+        AsyncCallbackUtils.mockExecution(
                 CHAT_EXECUTOR,
                 CHAT_MESSAGE_RESPONSE,
                 "test-response"
@@ -84,7 +84,7 @@ public class AsyncContextStageTest {
     @Test
     public void testOnEachLine_manualMessage_expectMessagesAsChoice()
             throws JsonProcessingException {
-        AsyncCallbackUtils.mockAsyncExecution(
+        AsyncCallbackUtils.mockExecution(
                 CHAT_EXECUTOR,
                 CHAT_MESSAGE_RESPONSE,
                 OBJECT_MAPPER.writeValueAsString(CHAT_MESSAGE_RESPONSE)

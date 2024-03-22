@@ -1,6 +1,6 @@
 package bg.codexio.ai.openai.api.sdk.voice.speech;
 
-import bg.codexio.ai.openai.api.http.OpenAIHttpExecutor;
+import bg.codexio.ai.openai.api.http.ReactiveHttpExecutor;
 import bg.codexio.ai.openai.api.http.voice.SpeechHttpExecutor;
 import bg.codexio.ai.openai.api.payload.voice.AudioFormat;
 import bg.codexio.ai.openai.api.payload.voice.request.SpeechRequest;
@@ -84,12 +84,13 @@ public class ReactiveDownloadStageTest {
     private MockData startMocking() {
         var targetFolder = new File("imaginaryFolder");
         var response = new AudioBinaryResponse(new byte[]{1, 2, 3});
-        var reactiveExecution = new OpenAIHttpExecutor.ReactiveExecution<>(
+        var reactiveExecution = new ReactiveHttpExecutor.ReactiveExecution<>(
                 Flux.empty(),
                 Mono.just(response)
         );
 
-        when(this.httpExecutor.executeReactive(any())).thenReturn(reactiveExecution);
+        when(this.httpExecutor.reactive()
+                              .execute(any())).thenReturn(reactiveExecution);
 
         var downloadUtils = mockStatic(DownloadExecutor.class);
 

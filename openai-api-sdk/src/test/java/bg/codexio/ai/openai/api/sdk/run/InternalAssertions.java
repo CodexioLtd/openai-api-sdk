@@ -1,6 +1,6 @@
 package bg.codexio.ai.openai.api.sdk.run;
 
-import bg.codexio.ai.openai.api.http.OpenAIHttpExecutor;
+import bg.codexio.ai.openai.api.http.ReactiveHttpExecutor;
 import bg.codexio.ai.openai.api.http.message.RetrieveListMessagesHttpExecutor;
 import bg.codexio.ai.openai.api.http.run.RunnableHttpExecutor;
 import bg.codexio.ai.openai.api.models.ModelType;
@@ -27,7 +27,6 @@ import static bg.codexio.ai.openai.api.sdk.CommonTestAssertions.*;
 import static bg.codexio.ai.openai.api.sdk.assistant.InternalAssertions.ASSISTANT_ID;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.ArgumentMatchers.any;
-import static org.mockito.ArgumentMatchers.eq;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
@@ -145,22 +144,9 @@ public class InternalAssertions {
             METADATA_MAP
     );
 
-    static void execute(RunnableConfigurationStage runnableConfigurationStage) {
-        when(runnableConfigurationStage.httpExecutor.executeWithPathVariable(
-                any(),
-                eq(THREAD_ID)
-        )).thenAnswer(response -> RUNNABLE_RESPONSE);
-    }
-
-    static void executeWithPathVariables(RunnableConfigurationStage runnableConfigurationStage) {
-        when(runnableConfigurationStage.httpExecutor.retrieve(
-                any(),
-                any()
-        )).thenAnswer(result -> RUNNABLE_RESPONSE);
-    }
-
-    static void executeWithPathVariablesWithCompletedStatus(RunnableConfigurationStage runnableConfigurationStage) {
-        when(runnableConfigurationStage.httpExecutor.retrieve(
+    static void mockImmediateExecutionWithPathVariablesWithCompletedStatus(RunnableConfigurationStage runnableConfigurationStage) {
+        when(runnableConfigurationStage.httpExecutor.immediate()
+                                                    .retrieve(
                 any(),
                 any()
         )).thenAnswer(res -> RUNNABLE_RESPONSE_WITH_COMPLETED_STATUS);
@@ -208,17 +194,19 @@ public class InternalAssertions {
     }
 
     static void mockImmediateExecution(RunnableConfigurationStage runnableConfigurationStage) {
-        when(runnableConfigurationStage.httpExecutor.executeWithPathVariable(
+        when(runnableConfigurationStage.httpExecutor.immediate()
+                                                    .executeWithPathVariable(
                 any(),
                 any()
         )).thenAnswer(res -> RUNNABLE_RESPONSE);
     }
 
     static void mockReactiveExecution(RunnableConfigurationStage runnableConfigurationStage) {
-        when(runnableConfigurationStage.httpExecutor.executeReactiveWithPathVariable(
+        when(runnableConfigurationStage.httpExecutor.reactive()
+                                                    .executeWithPathVariable(
                 any(),
                 any()
-        )).thenAnswer(res -> new OpenAIHttpExecutor.ReactiveExecution<>(
+                                                    )).thenAnswer(res -> new ReactiveHttpExecutor.ReactiveExecution<>(
                 Flux.empty(),
                 Mono.just(RUNNABLE_RESPONSE)
         ));

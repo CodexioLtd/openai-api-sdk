@@ -1,6 +1,6 @@
 package bg.codexio.ai.openai.api.sdk.chat;
 
-import bg.codexio.ai.openai.api.http.OpenAIHttpExecutor;
+import bg.codexio.ai.openai.api.http.ReactiveHttpExecutor;
 import bg.codexio.ai.openai.api.models.ModelTypeAbstract;
 import bg.codexio.ai.openai.api.models.v40.GPT4032kModel;
 import bg.codexio.ai.openai.api.payload.chat.request.ChatMessageRequest;
@@ -40,7 +40,8 @@ public class ReactiveContextStageTest {
 
     @Test
     public void testAskRaw_manualMessage_expectRawAnswer() {
-        when(this.reactiveContextStage.executor.executeReactive(any())).thenAnswer(answer -> new OpenAIHttpExecutor.ReactiveExecution<>(
+        when(this.reactiveContextStage.executor.reactive()
+                                               .execute(any())).thenAnswer(answer -> new ReactiveHttpExecutor.ReactiveExecution<>(
                 Flux.empty(),
                 Mono.just(CHAT_MESSAGE_RESPONSE)
         ));
@@ -57,7 +58,8 @@ public class ReactiveContextStageTest {
 
     @Test
     public void testAsk_manualMessage_expectAnswer() {
-        when(this.reactiveContextStage.executor.executeReactive(any())).thenAnswer(answer -> new OpenAIHttpExecutor.ReactiveExecution<>(
+        when(this.reactiveContextStage.executor.reactive()
+                                               .execute(any())).thenAnswer(answer -> new ReactiveHttpExecutor.ReactiveExecution<>(
                 Flux.empty(),
                 Mono.just(CHAT_MESSAGE_RESPONSE)
         ));
@@ -73,6 +75,4 @@ public class ReactiveContextStageTest {
                 response
         );
     }
-
-
 }

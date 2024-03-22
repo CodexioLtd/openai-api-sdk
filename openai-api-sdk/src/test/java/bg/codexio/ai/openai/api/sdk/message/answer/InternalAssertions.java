@@ -20,9 +20,7 @@ import java.util.List;
 import static bg.codexio.ai.openai.api.sdk.CommonTestAssertions.*;
 import static bg.codexio.ai.openai.api.sdk.assistant.InternalAssertions.ASSISTANT_ID;
 import static bg.codexio.ai.openai.api.sdk.run.InternalAssertions.RUNNABLE_ID;
-import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.when;
 
 public class InternalAssertions {
     public static final ListMessagesResponse LIST_MESSAGE_RESPONSE_WITH_IMAGE_CONTENT = new ListMessagesResponse(
@@ -177,15 +175,4 @@ public class InternalAssertions {
                       .withFileName("test_name"),
             null
     );
-
-    static void executeWithPathVariables(
-            RetrieveListMessagesHttpExecutor listMessagesHttpExecutor,
-            ListMessagesResponse response
-    ) {
-        when(listMessagesHttpExecutor.retrieve(any())).thenAnswer(res -> response);
-    }
-
-    static void executeWithPathVariables(RetrieveListMessagesHttpExecutor messageConfigurationStage) {
-        when(messageConfigurationStage.retrieve(any())).thenAnswer(res -> LIST_MESSAGE_RESPONSE_WITH_TEXT_CONTENT_WITH_FILE_CITATION);
-    }
 }

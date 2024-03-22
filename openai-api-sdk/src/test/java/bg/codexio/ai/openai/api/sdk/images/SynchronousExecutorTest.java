@@ -1,6 +1,7 @@
 package bg.codexio.ai.openai.api.sdk.images;
 
 import bg.codexio.ai.openai.api.http.DefaultOpenAIHttpExecutor;
+import bg.codexio.ai.openai.api.http.SynchronousHttpExecutor;
 import bg.codexio.ai.openai.api.payload.images.Format;
 import bg.codexio.ai.openai.api.payload.images.request.*;
 import bg.codexio.ai.openai.api.payload.images.response.ImageDataResponse;
@@ -18,8 +19,7 @@ import static org.junit.jupiter.api.Assertions.assertAll;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.eq;
-import static org.mockito.Mockito.mockStatic;
-import static org.mockito.Mockito.when;
+import static org.mockito.Mockito.*;
 
 public class SynchronousExecutorTest<R extends ImageRequest> {
 
@@ -68,7 +68,8 @@ public class SynchronousExecutorTest<R extends ImageRequest> {
             ImageRequestBuilder<R> builder,
             Class<R> classType
     ) {
-        when(executor.execute(any(classType))).thenAnswer(answer -> IMAGE_DATA_RESPONSE);
+        when(this.mockImmediateExecution(executor)
+                 .execute(any(classType))).thenAnswer(answer -> IMAGE_DATA_RESPONSE);
 
         var synchronousExecutor = new SynchronousExecutor<R>(
                 executor,
@@ -92,7 +93,8 @@ public class SynchronousExecutorTest<R extends ImageRequest> {
         var path = TEST_FILE_PATH;
         var response = new File[]{new File(path)};
 
-        when(executor.execute(any())).thenReturn(IMAGE_DATA_RESPONSE);
+        when(this.mockImmediateExecution(executor)
+                 .execute(any())).thenReturn(IMAGE_DATA_RESPONSE);
 
         var synchronousExecutor = new SynchronousExecutor<R>(
                 executor,
@@ -122,5 +124,13 @@ public class SynchronousExecutorTest<R extends ImageRequest> {
         }
     }
 
+    private SynchronousHttpExecutor mockImmediateExecution(
+            DefaultOpenAIHttpExecutor<R, ImageDataResponse> executor
+    ) {
+        var immediateExecution = mock(SynchronousHttpExecutor.class);
+        when(executor.immediate()).thenReturn(immediateExecution);
+
+        return immediateExecution;
+    }
 }
 

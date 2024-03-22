@@ -8,7 +8,7 @@ import org.junit.jupiter.api.Test;
 
 import java.util.function.Consumer;
 
-import static bg.codexio.ai.openai.api.sdk.AsyncCallbackUtils.mockAsyncExecution;
+import static bg.codexio.ai.openai.api.sdk.AsyncCallbackUtils.mockExecution;
 import static bg.codexio.ai.openai.api.sdk.CommonTestAssertions.OBJECT_MAPPER;
 import static bg.codexio.ai.openai.api.sdk.CommonTestAssertions.THREAD_RESPONSE;
 import static bg.codexio.ai.openai.api.sdk.thread.create.InternalAssertions.CREATE_THREAD_HTTP_EXECUTOR;
@@ -27,7 +27,7 @@ public class ThreadAsyncPromiseStageTest {
                 ThreadCreationRequest.builder()
         );
 
-        mockAsyncExecution(
+        mockExecution(
                 CREATE_THREAD_HTTP_EXECUTOR,
                 THREAD_RESPONSE,
                 OBJECT_MAPPER.writeValueAsString(THREAD_RESPONSE)

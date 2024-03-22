@@ -1,6 +1,6 @@
 package bg.codexio.ai.openai.api.sdk.message.answer;
 
-import bg.codexio.ai.openai.api.http.OpenAIHttpExecutor;
+import bg.codexio.ai.openai.api.http.ReactiveHttpExecutor;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import reactor.core.publisher.Flux;
@@ -28,7 +28,8 @@ public class MessageAnswersReactiveContextStageTest {
 
     @Test
     void testAnswers_expectCorrectBuilder() {
-        when(this.messageReactiveContextStage.httpExecutor.retrieveReactive(any())).thenAnswer(answer -> new OpenAIHttpExecutor.ReactiveExecution<>(
+        when(this.messageReactiveContextStage.httpExecutor.reactive()
+                                                          .retrieve(any())).thenAnswer(answer -> new ReactiveHttpExecutor.ReactiveExecution<>(
                 Flux.empty(),
                 Mono.just(LIST_MESSAGE_RESPONSE)
         ));

@@ -94,7 +94,8 @@ public class InternalAssertions {
     );
 
     static void executeWithPathVariable(MessageConfigurationStage messageConfigurationStage) {
-        when(messageConfigurationStage.httpExecutor.executeWithPathVariable(
+        when(messageConfigurationStage.httpExecutor.immediate()
+                                                   .executeWithPathVariable(
                 any(),
                 any()
         )).thenAnswer(res -> MESSAGE_RESPONSE_WITH_TEXT_CONTENT);

@@ -46,7 +46,8 @@ public class ThreadModificationImmediateContextStageTest {
     }
 
     private void mockImmediateExecution() {
-        when(this.threadModificationImmediateContextStage.httpExecutor.executeWithPathVariable(
+        when(this.threadModificationImmediateContextStage.httpExecutor.immediate()
+                                                                      .executeWithPathVariable(
                 any(),
                 any()
         )).thenAnswer(res -> THREAD_RESPONSE);

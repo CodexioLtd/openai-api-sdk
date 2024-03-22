@@ -43,6 +43,7 @@ public class FileUploadingImmediateContextStageTest {
     }
 
     private void mockImmediateFileExecution() {
-        when(UPLOAD_FILE_HTTP_EXECUTOR.execute(any())).thenAnswer(response -> FILE_RESPONSE);
+        when(UPLOAD_FILE_HTTP_EXECUTOR.immediate()
+                                      .execute(any())).thenAnswer(response -> FILE_RESPONSE);
     }
 }

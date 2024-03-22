@@ -1,5 +1,6 @@
 package bg.codexio.ai.openai.api.sdk.images;
 
+import bg.codexio.ai.openai.api.http.AsynchronousHttpExecutor;
 import bg.codexio.ai.openai.api.http.DefaultOpenAIHttpExecutor;
 import bg.codexio.ai.openai.api.payload.images.request.*;
 import bg.codexio.ai.openai.api.payload.images.response.ImageDataResponse;
@@ -314,6 +315,8 @@ public class AsyncExecutorTest<R extends ImageRequest> {
     private void mockExecutorFlow(
             DefaultOpenAIHttpExecutor<R, ImageDataResponse> executor
     ) {
+        var asyncExecutor = mock(AsynchronousHttpExecutor.class);
+        when(executor.async()).thenReturn(asyncExecutor);
         doAnswer(invocation -> {
             invocation.getArgument(
                               2,
@@ -321,8 +324,8 @@ public class AsyncExecutorTest<R extends ImageRequest> {
                       )
                       .accept(IMAGE_DATA_RESPONSE);
             return null;
-        }).when(executor)
-          .executeAsync(
+        }).when(asyncExecutor)
+          .execute(
                   any(),
                   any(),
                   any()

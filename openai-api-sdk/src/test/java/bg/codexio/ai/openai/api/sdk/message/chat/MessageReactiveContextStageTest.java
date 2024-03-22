@@ -1,6 +1,6 @@
 package bg.codexio.ai.openai.api.sdk.message.chat;
 
-import bg.codexio.ai.openai.api.http.OpenAIHttpExecutor;
+import bg.codexio.ai.openai.api.http.ReactiveHttpExecutor;
 import bg.codexio.ai.openai.api.payload.message.request.MessageRequest;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import org.junit.jupiter.api.BeforeEach;
@@ -32,10 +32,11 @@ public class MessageReactiveContextStageTest {
     @Test
     public void testFinishRaw_expectCorrectResponse()
             throws JsonProcessingException {
-        when(this.messageReactiveContextStage.httpExecutor.executeReactiveWithPathVariable(
-                any(),
-                any()
-        )).thenAnswer(answer -> new OpenAIHttpExecutor.ReactiveExecution<>(
+        when(this.messageReactiveContextStage.httpExecutor.reactive()
+                                                          .executeWithPathVariable(
+                                                                  any(),
+                                                                  any()
+                                                          )).thenAnswer(answer -> new ReactiveHttpExecutor.ReactiveExecution<>(
                 Flux.just(OBJECT_MAPPER.writeValueAsString(MESSAGE_RESPONSE)),
                 Mono.empty()
         ));
@@ -51,10 +52,11 @@ public class MessageReactiveContextStageTest {
 
     @Test
     public void testFinish_expectCorrectResponse() {
-        when(this.messageReactiveContextStage.httpExecutor.executeReactiveWithPathVariable(
-                any(),
-                any()
-        )).thenAnswer(answer -> new OpenAIHttpExecutor.ReactiveExecution<>(
+        when(this.messageReactiveContextStage.httpExecutor.reactive()
+                                                          .executeWithPathVariable(
+                                                                  any(),
+                                                                  any()
+                                                          )).thenAnswer(answer -> new ReactiveHttpExecutor.ReactiveExecution<>(
                 Flux.empty(),
                 Mono.just(MESSAGE_RESPONSE)
         ));

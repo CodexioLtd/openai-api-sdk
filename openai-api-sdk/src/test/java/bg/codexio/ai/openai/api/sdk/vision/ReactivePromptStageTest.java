@@ -1,6 +1,6 @@
 package bg.codexio.ai.openai.api.sdk.vision;
 
-import bg.codexio.ai.openai.api.http.OpenAIHttpExecutor;
+import bg.codexio.ai.openai.api.http.ReactiveHttpExecutor;
 import bg.codexio.ai.openai.api.payload.chat.ChatMessage;
 import bg.codexio.ai.openai.api.payload.chat.response.ChatChoiceResponse;
 import bg.codexio.ai.openai.api.payload.chat.response.ChatMessageResponse;
@@ -82,11 +82,12 @@ public class ReactivePromptStageTest {
 
     private void testExecution(
             String prompt,
-            Supplier<OpenAIHttpExecutor.ReactiveExecution<?>> executionSupplier
+            Supplier<ReactiveHttpExecutor.ReactiveExecution<?>> executionSupplier
     ) {
         var expectedRequest = this.expectWith(prompt);
 
-        when(TEST_EXECUTOR.executeReactive(eq(expectedRequest))).thenReturn(new OpenAIHttpExecutor.ReactiveExecution<>(
+        when(TEST_EXECUTOR.reactive()
+                          .execute(eq(expectedRequest))).thenReturn(new ReactiveHttpExecutor.ReactiveExecution<>(
                 Flux.fromStream(Stream.of(
                         "first",
                         "second"

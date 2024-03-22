@@ -7,7 +7,7 @@ import org.junit.jupiter.api.Test;
 
 import java.util.function.Consumer;
 
-import static bg.codexio.ai.openai.api.sdk.AsyncCallbackUtils.mockAsyncExecutionWithPathVariables;
+import static bg.codexio.ai.openai.api.sdk.AsyncCallbackUtils.mockRetrieve;
 import static bg.codexio.ai.openai.api.sdk.CommonTestAssertions.OBJECT_MAPPER;
 import static bg.codexio.ai.openai.api.sdk.CommonTestAssertions.THREAD_ID;
 import static bg.codexio.ai.openai.api.sdk.message.answer.InternalAssertions.LIST_MESSAGE_RESPONSE;
@@ -28,7 +28,7 @@ public class MessageAnswersAsyncPromiseStageTest {
                 THREAD_ID
         );
 
-        mockAsyncExecutionWithPathVariables(
+        mockRetrieve(
                 RETRIEVE_LIST_MESSAGES_HTTP_EXECUTOR,
                 LIST_MESSAGE_RESPONSE,
                 OBJECT_MAPPER.writeValueAsString(LIST_MESSAGE_RESPONSE)
